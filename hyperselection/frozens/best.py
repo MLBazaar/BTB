@@ -1,5 +1,5 @@
 from hyperselection.frozens import FrozenSelector, UCB1
-from hyperselection.bandit import UCB1Bandit, FrozenArm
+from hyperselection.bandit import ucb1_bandit
 import random
 import numpy as np
 
@@ -20,31 +20,25 @@ class BestKReward(FrozenSelector):
 
     def select(self, choice_scores):
         """
-        Keeps the frozen set counts intact but only uses the top k learner's
-        scores for usage in rewards for the bandit calculation
-        TODO: are all of these stateless?
+        Keeps the choice counts intact, but only let the bandit see the top k
+        learners' scores.
         """
         # if we don't have enough scores to do K-selection, fall back to UCB1
         if min([len(s) for s in choice_scores.values()]) < K_MIN:
             return self.ucb1.select(choice_scores)
 
-        # sort each list of scores in ascending order
+        # sort each list of scores in descending order, then take the five best
+        # and replace the rest of them with zeros.
         # only use scores from our set of possible choices
-        sorted_scores = {c: sorted(s) for c, s in choice_scores.items()
-                         if c in self.choices}
+        best_k_scores = {}
+        for c, s in choice_scores.items():
+            if c not in self.choices:
+                continue
+            zeros = (len(s) - self.k) * [0]
+            best_k_scores[c] = sorted(s, reverse=True)[:self.k] + zeros
 
-        arms = []
-        for choice, scores in sorted_scores.items():
-            count = len(scores)
-            rewards = sum(scores[-self.k:])
-            arms.append(FrozenArm(count, rewards, choice))
-
-        total_rewards = sum(a.rewards for a in arms)
-        total_count = sum(a.count for a in arms)
-
-        random.shuffle(arms)
-        bandit = UCB1Bandit(arms, total_count, total_rewards)
-        return bandit.score_arms()
+        # use the bandit function to choose an arm
+        return ucb1_bandit(best_k_scores)
 
 
 class BestKVelocity(FrozenSelector):
@@ -67,22 +61,20 @@ class BestKVelocity(FrozenSelector):
         if min([len(s) for s in choice_scores.values()]) < K_MIN:
             return self.ucb1.select(choice_scores)
 
-        # sort each list of scores in ascending order
-        sorted_scores = {c: sorted(s) for c, s in choice_scores.items()
-                         if c in self.choices}
+        # sort each list of scores in descending order, then compute velocity of
+        # five best scores and pad out the list with zeros.
+        # only use scores from our set of possible choices
+        best_k_velocities = {}
+        for c, s in choice_scores.items():
+            if c not in self.choices:
+                continue
+            # take the k + 1 best scores so we can get k velocities
+            best_scores = sorted(scores, reverse=True)[:self.k+1]
+            velocities = [best_scores[i] - best_scores[i+1] for i in
+                          range(len(best_scores) - 1)])
+            # pad the list out with zeros, so the length of the list is
+            # maintained
+            zeros = (len(s) - self.k) * [0]
+            best_k_velocities[c] = velocities + zeros
 
-        arms = []
-        for choice, scores in sorted_scores.items():
-            count = len(scores)
-            # truncate to the highest k scores and compute the velocity of those
-            scores = scores[-self.k:]
-            velocity = np.mean([scores[i+1] - scores[i] for i in
-                                range(len(scores) - 1)])
-            arms.append(FrozenArm(count, velocity, choice))
-
-        total_rewards = sum(a.rewards for a in arms)
-        total_count = sum(a.count for a in arms)
-
-        random.shuffle(arms)    # so arms are not picked in ordinal ID order
-        bandit = UCB1Bandit(arms, total_count, total_rewards)
-        return bandit.score_arms()
+        return ucb1_bandit(best_k_velocities)

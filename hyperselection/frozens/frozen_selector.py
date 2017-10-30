@@ -1,5 +1,5 @@
 import random
-from hyperselection.bandit import UCB1Bandit, FrozenArm
+from hyperselection.bandit import ucb1_bandit
 
 
 class FrozenSelector(object):
@@ -47,16 +47,4 @@ class UCB1(FrozenSelector):
         """
         choice_scores = {c: s for c, s in choice_scores.items()
                          if c in self.choices}
-        arms = []
-        for choice, scores in choice_scores.items():
-            count = len(scores)
-            rewards = sum(scores)
-            arms.append(FrozenArm(count, rewards, choice))
-
-        total_rewards = sum(a.rewards for a in arms)
-        total_count = sum(a.count for a in arms)
-
-        # so arms are not picked in ordinal ID order
-        random.shuffle(arms)
-        bandit = UCB1Bandit(arms, total_count, total_rewards)
-        return bandit.score_arms()
+        return ucb1_bandit(choice_scores)

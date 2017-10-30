@@ -1,5 +1,5 @@
 from hyperselection.frozens import FrozenSelector, UCB1
-from hyperselection.bandit import UCB1Bandit, FrozenArm
+from hyperselection.bandit import ucb1_bandit
 
 import random
 
@@ -8,8 +8,8 @@ class HierarchicalByAlgorithm(FrozenSelector):
     def __init__(self, choices, **kwargs):
         """
         Needs:
-            by_algorithm: {str -> list} grouping of frozen set choices by ML
-                algorithm
+            by_algorithm: {str -> list[choice]} grouping of frozen set choices
+                by ML algorithm
         """
         super(HierarchicalByAlgorithm, self).__init__(choices, **kwargs)
         self.by_algorithm = kwargs.pop('by_algorithm')
@@ -24,25 +24,18 @@ class HierarchicalByAlgorithm(FrozenSelector):
         choice_scores = {c: s for c, s in choice_scores.items()
                          if c in self.choices}
 
-        # create arms and choose algorithm
-        algorithm_arms = []
+        # choose algorithm using a bandit
+        alg_scores = {}
         for algorithm, choices in self.by_algorithm.iteritems():
             # only make arms for algorithms that have options
             if not set(choices) & set(choice_scores.keys()):
                 continue
+            # list of all the scores from any run of this algorithm
+            alg_scores[algorithm] = sum(choice_scores.get(c, [])
+                                        for c in choices)
+        best_algorithm = ucb1_bandit(alg_scores)
 
-            count = sum(len(choice_scores.get(c, [])) for c in choices)
-            rewards = sum(sum(choice_scores.get(c, [])) for c in choices)
-            frozen_arms.append(FrozenArm(count, rewards, algorithm))
-
-        total_rewards = sum(a.rewards for a in algorithm_arms)
-        total_count = sum(a.count for a in algorithm_arms)
-
-        random.shuffle(algorithm_arms)
-        bandit = UCB1Bandit(algorithm_arms, total_count, total_rewards)
-        best_algorithm = bandit.score_arms()
-
-        # now use only the frozen sets from the chosen best algorithm
+        # now use only the frozen sets from the chosen algorithm
         best_subset = self.by_algorithm[best_algorithm]
         normal_ucb1 = UCB1(choices=best_subset)
         return normal_ucb1.select(choice_scores)

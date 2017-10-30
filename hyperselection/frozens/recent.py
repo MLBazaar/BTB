@@ -1,5 +1,5 @@
 from hyperselection.frozens import FrozenSelector, UCB1
-from hyperselection.bandit import UCB1Bandit, FrozenArm
+from hyperselection.bandit import ucb1_bandit
 import random
 import numpy as np
 
@@ -27,21 +27,15 @@ class RecentKReward(FrozenSelector):
         if min([len(s) for s in choice_scores.values()]) < K_MIN:
             return self.ucb1.select(choice_scores)
 
-        choice_scores = {c: s for c, s in choice_scores.items()
-                         if c in self.choices}
-        arms = []
+        recent_k_scores = {}
         # all scores are already in chronological order
         for choice, scores in choice_scores.items():
-            count = len(scores)
-            rewards = sum(scores[-self.k:])
-            arms.append(FrozenArm(count, rewards, choice))
+            if choice not in self.choices:
+                continue
+            zeros = (len(scores) - self.k) * [0]
+            recent_k_scores[choice] = scores[-self.k:] + zeros
 
-        total_rewards = sum(a.rewards for a in arms)
-        total_count = sum(a.count for a in arms)
-
-        random.shuffle(arms) # so arms are not picked in ordinal ID order
-        bandit = UCB1Bandit(arms, total_count, total_rewards)
-        return bandit.score_arms()
+        return ucb1_bandit(recent_k_scores)
 
 
 class RecentKVelocity(FrozenSelector):
@@ -64,21 +58,18 @@ class RecentKVelocity(FrozenSelector):
         if min([len(s) for s in choice_scores.values()]) < K_MIN:
             return self.ucb1.select(choice_scores)
 
-        choice_scores = {c: s for c, s in choice_scores.items()
-                         if c in self.choices}
-        arms = []
+        recent_k_velocities = {}
         # all scores are already in chronological order
         for choice, scores in choice_scores.items():
-            count = len(scores)
-            # truncate to the highest k scores and compute the velocity of those
-            scores = scores[-self.k:]
-            velocity = np.mean([scores[i+1] - scores[i] for i in
-                                range(len(scores) - 1)])
-            arms.append(FrozenArm(count, velocity, choice))
+            if choice not in self.choices:
+                continue
+            # take the k + 1 most recent scores so we can get k velocities
+            recent_scores = scores[:-self.k-2:-1]
+            velocities = [recent_scores[i] - recent_scores[i+1] for i in
+                          range(len(recent_scores) - 1)])
+            # pad the list out with zeros, so the length of the list is
+            # maintained
+            zeros = (len(s) - self.k) * [0]
+            recent_k_velocities[c] = velocities + zeros
 
-        total_rewards = sum(a.rewards for a in arms)
-        total_count = sum(a.count for a in arms)
-
-        random.shuffle(arms)    # so arms are not picked in ordinal ID order
-        bandit = UCB1Bandit(arms, total_count, total_rewards)
-        return bandit.score_arms()
+        return ucb1_bandit(recent_k_velocities)
