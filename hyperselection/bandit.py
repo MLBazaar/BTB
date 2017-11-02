@@ -1,5 +1,6 @@
 import math
 import random
+import numpy as np
 
 
 def ucb1_bandit(arms):
@@ -15,7 +16,7 @@ def ucb1_bandit(arms):
     total_pulls = sum(len(r) for r in arms.values())
     scores = {}
     for choice, rewards in arms.items():
-        error = math.sqrt(2.0 * math.log(total_pulls) / float(len(reward)))
+        error = math.sqrt(2.0 * math.log(total_pulls) / float(len(rewards)))
         scores[choice] = np.mean(rewards) + error
 
     best_choice = sorted(scores.keys(), key=scores.get)[-1]

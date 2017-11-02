@@ -71,7 +71,7 @@ class BestKVelocity(FrozenSelector):
             # take the k + 1 best scores so we can get k velocities
             best_scores = sorted(scores, reverse=True)[:self.k+1]
             velocities = [best_scores[i] - best_scores[i+1] for i in
-                          range(len(best_scores) - 1)])
+                          range(len(best_scores) - 1)]
             # pad the list out with zeros, so the length of the list is
             # maintained
             zeros = (len(s) - self.k) * [0]
