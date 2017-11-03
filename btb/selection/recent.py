@@ -1,6 +1,5 @@
 from btb.selection import Selector, UCB1
 from btb.bandit import ucb1_bandit
-import random
 import numpy as np
 
 # the minimum number of scores that each choice must have in order to use best-K

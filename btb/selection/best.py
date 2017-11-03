@@ -1,6 +1,5 @@
 from btb.selection import Selector, UCB1
 from btb.bandit import ucb1_bandit
-import random
 import numpy as np
 
 # the minimum number of scores that each choice must have in order to use best-K
@@ -31,11 +30,11 @@ class BestKReward(Selector):
 
         print 'BestK: using Best K bandit selection'
 
-        # sort each list of scores in descending order, then take the five best
-        # and replace the rest of them with zeros.
-        # only use scores from our set of possible choices
+        # sort each list of scores in descending order, then keep the five best
+        # scores and replace the rest of them with zeros.
         best_k_scores = {}
         for c, s in choice_scores.items():
+            # only use choices from our set of possibilities
             if c not in self.choices:
                 continue
             zeros = (len(s) - self.k) * [0]
@@ -66,10 +65,10 @@ class BestKVelocity(Selector):
             return self.ucb1.select(choice_scores)
 
         # sort each list of scores in descending order, then compute velocity of
-        # five best scores and pad out the list with zeros.
-        # only use scores from our set of possible choices
+        # the five best scores and pad out the list with zeros.
         best_k_velocities = {}
         for c, s in choice_scores.items():
+            # only use choices from our set of possibilities
             if c not in self.choices:
                 continue
             # take the k + 1 best scores so we can get k velocities

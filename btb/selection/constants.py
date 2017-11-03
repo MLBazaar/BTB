@@ -7,4 +7,3 @@ class Selectors:
     RECENT_K = "recentk"
     RECENT_K_VEL = "recentkvel"
     HIER_ALG = "hieralg"
-    #HIER_RAND = "hierrand"

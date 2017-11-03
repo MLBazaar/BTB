@@ -1,8 +1,6 @@
 from btb.selection import Selector, UCB1
 from btb.bandit import ucb1_bandit
 
-import random
-
 
 class HierarchicalByAlgorithm(Selector):
     def __init__(self, choices, **kwargs):
@@ -30,7 +28,8 @@ class HierarchicalByAlgorithm(Selector):
             # only make arms for algorithms that have options
             if not set(choices) & set(choice_scores.keys()):
                 continue
-            # list of all the scores from any run of this algorithm
+            # sum up lists to get a list of all the scores from any run of this
+            # algorithm
             alg_scores[algorithm] = sum(choice_scores.get(c, [])
                                         for c in choices)
         best_algorithm = ucb1_bandit(alg_scores)
@@ -39,14 +38,3 @@ class HierarchicalByAlgorithm(Selector):
         best_subset = self.by_algorithm[best_algorithm]
         normal_ucb1 = UCB1(choices=best_subset)
         return normal_ucb1.select(choice_scores)
-
-
-class HierarchicalRandom(Selector):
-	def select(self):
-		"""
-        Groups the frozen sets randomly and first chooses a random subset based
-        on the traditional UCB1 criteria.
-
-        Next, from that random set's frozen sets, makes the final set choice.
-		"""
-		pass

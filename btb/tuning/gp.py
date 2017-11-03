@@ -32,7 +32,7 @@ class GP(Tuner):
 
         # old gaussian process code
         #self.gp = GaussianProcess(theta0=1e-2, thetaL=1e-4, thetaU=1e-1,
-                                  #nugget=np.finfo(np.double).eps * 1000)
+        #                          nugget=np.finfo(np.double).eps * 1000)
         self.gp = GaussianProcessRegressor(normalize_y=True)
         self.gp.fit(X, y)
 
@@ -75,9 +75,7 @@ class GPEi(GP):
             stdev:  uncertainty of the GP's prediction
         """
         z_score = (self.best_y - y_est) / stdev
-        standard_normal = norm()
-        ei = stdev * (z_score * standard_normal.cdf(z_score) +\
-                      standard_normal.pdf(z_score))
+        ei = stdev * (z_score * norm.cdf(z_score) + norm.pdf(z_score))
         return ei
 
     def fit(self, X, y):
@@ -112,7 +110,7 @@ class GPEi(GP):
 
 class GPEiVelocity(GPEi):
     MULTIPLIER = -100   # magic number; modify with care
-    N_BEST_Y = 5        # this doesn't matter as much
+    N_BEST_Y = 5        # number of top values w/w to compute velocity
 
     def fit(self, X, y):
         """
