@@ -1,8 +1,8 @@
 import random
-from hyperselection.bandit import ucb1_bandit
+from btb.bandit import ucb1_bandit
 
 
-class FrozenSelector(object):
+class Selector(object):
     def __init__(self, choices, **kwargs):
         """
         choices: a list of discrete choices from which the selector must choose
@@ -27,7 +27,7 @@ class FrozenSelector(object):
         pass
 
 
-class Uniform(FrozenSelector):
+class Uniform(Selector):
     """
     Select a choice uniformly at random.
     """
@@ -35,9 +35,9 @@ class Uniform(FrozenSelector):
         return self.choices[random.randint(0, len(self.choices) - 1)]
 
 
-class UCB1(FrozenSelector):
+class UCB1(Selector):
     """
-    The default FrozenSelector implementation.
+    The default Selector implementation.
     Uses the scores to create a vanilla UCB1 bandit and return its best arm.
     """
     def select(self, choice_scores):

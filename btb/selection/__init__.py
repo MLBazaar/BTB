@@ -1,4 +1,4 @@
-from frozen_selector import FrozenSelector, Uniform, UCB1
+from selector import Selector, Uniform, UCB1
 from best import BestKReward, BestKVelocity
 from pure import PureBestKVelocity
 from recent import RecentKReward, RecentKVelocity

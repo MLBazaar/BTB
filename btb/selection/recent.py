@@ -1,14 +1,15 @@
-from hyperselection.frozens import FrozenSelector, UCB1
-from hyperselection.bandit import ucb1_bandit
+from btb.selection import Selector, UCB1
+from btb.bandit import ucb1_bandit
 import random
 import numpy as np
 
-# minimum number of examples required for ALL frozen
-# sets to have evaluated in order to use recent K optimizations
+# the minimum number of scores that each choice must have in order to use best-K
+# optimizations. If not all choices meet this threshold, default UCB1 selection
+# will be used.
 K_MIN = 2
 
 
-class RecentKReward(FrozenSelector):
+class RecentKReward(Selector):
     def __init__(self, choices, **kwargs):
         """
         Needs:
@@ -20,7 +21,7 @@ class RecentKReward(FrozenSelector):
 
     def select(self, choice_scores):
         """
-        Keeps the frozen set counts intact but only uses the top k learner's
+        Keeps the choice counts intact but only uses the top k learner's
         scores for usage in rewards for the bandit calculation
         """
         # if we don't have enough scores to do K-selection, fall back to UCB1
@@ -38,7 +39,7 @@ class RecentKReward(FrozenSelector):
         return ucb1_bandit(recent_k_scores)
 
 
-class RecentKVelocity(FrozenSelector):
+class RecentKVelocity(Selector):
     def __init__(self, **kwargs):
         """
         Needs:
@@ -50,7 +51,7 @@ class RecentKVelocity(FrozenSelector):
 
     def select(self, choice_scores):
         """
-        Keeps the frozen set counts intact but only uses the top k learner's
+        Keeps the choice counts intact but only uses the top k learner's
         velocities over their last for usage in rewards for the bandit
         calculation
         """

@@ -2,10 +2,10 @@ import numpy as np
 import random
 import math
 
-from hyperselection import ParamTypes
+from btb import ParamTypes
 
 
-class SampleSelector(object):
+class Tuner(object):
     def __init__(self, optimizables, **kwargs):
         """
         Accepts a list of pamameter metadata structures.
@@ -77,14 +77,3 @@ class SampleSelector(object):
         predictions = self.predict(candidate_params)
         best = np.argmax(predictions)
         return candidate_params[best, :]
-
-
-class Uniform(SampleSelector):
-    """
-    Very bare_bones selector that returns a random set of parameters each time.
-    """
-    def propose(self):
-        """
-        Generate and return a random set of parameters.
-        """
-        return self.create_candidates(1)[0, :]

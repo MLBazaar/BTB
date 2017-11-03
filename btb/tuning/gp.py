@@ -2,11 +2,11 @@ from __future__ import division
 import numpy as np
 from scipy.stats import norm
 
-from hyperselection.samples import SampleSelector, Uniform
+from btb.tuning import Tuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 
-class GP(SampleSelector):
+class GP(Tuner):
     def __init__(self, optimizables, **kwargs):
         """
         r_min: the minimum number of past results this selector needs in order

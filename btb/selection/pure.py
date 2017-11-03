@@ -1,13 +1,17 @@
-from hyperselection.frozens import FrozenSelector
+from btb.selection import Selector
 import numpy as np
 
+# the minimum number of scores that each choice must have in order to use best-K
+# optimizations. If not all choices meet this threshold, default UCB1 selection
+# will be used.
 K_MIN = 3
 
-class PureBestKVelocity(FrozenSelector):
+
+class PureBestKVelocity(Selector):
     def __init__(self, choices, **kwargs):
         """
-        Needs:
-        k, frozen_sets, metric
+        Simply returns the choice with the best best-K velocity -- no bandits
+        involved.
         """
         super(PureBestKVelocity, self).__init__(choices, **kwargs)
         self.k = kwargs.pop('k', K_MIN)

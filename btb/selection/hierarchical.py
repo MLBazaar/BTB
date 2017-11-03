@@ -1,10 +1,10 @@
-from hyperselection.frozens import FrozenSelector, UCB1
-from hyperselection.bandit import ucb1_bandit
+from btb.selection import Selector, UCB1
+from btb.bandit import ucb1_bandit
 
 import random
 
 
-class HierarchicalByAlgorithm(FrozenSelector):
+class HierarchicalByAlgorithm(Selector):
     def __init__(self, choices, **kwargs):
         """
         Needs:
@@ -41,7 +41,7 @@ class HierarchicalByAlgorithm(FrozenSelector):
         return normal_ucb1.select(choice_scores)
 
 
-class HierarchicalRandom(FrozenSelector):
+class HierarchicalRandom(Selector):
 	def select(self):
 		"""
         Groups the frozen sets randomly and first chooses a random subset based

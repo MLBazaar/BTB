@@ -1,4 +1,5 @@
-from sample_selector import SampleSelector, Uniform
+from tuner import Tuner
+from uniform import Uniform
 from gp import GP, GPEi, GPEiVelocity
 from grid import Grid
 

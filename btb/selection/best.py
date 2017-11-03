@@ -1,14 +1,15 @@
-from hyperselection.frozens import FrozenSelector, UCB1
-from hyperselection.bandit import ucb1_bandit
+from btb.selection import Selector, UCB1
+from btb.bandit import ucb1_bandit
 import random
 import numpy as np
 
-# minimum number of examples required for ALL frozen
-# sets to have evaluated in order to use best K optimizations
+# the minimum number of scores that each choice must have in order to use best-K
+# optimizations. If not all choices meet this threshold, default UCB1 selection
+# will be used.
 K_MIN = 2
 
 
-class BestKReward(FrozenSelector):
+class BestKReward(Selector):
     def __init__(self, choices, **kwargs):
         """
         Needs:
@@ -25,7 +26,10 @@ class BestKReward(FrozenSelector):
         """
         # if we don't have enough scores to do K-selection, fall back to UCB1
         if min([len(s) for s in choice_scores.values()]) < K_MIN:
+            print 'BestK: Not enough choices to do K-selection; using UCB1'
             return self.ucb1.select(choice_scores)
+
+        print 'BestK: using Best K bandit selection'
 
         # sort each list of scores in descending order, then take the five best
         # and replace the rest of them with zeros.
@@ -41,7 +45,7 @@ class BestKReward(FrozenSelector):
         return ucb1_bandit(best_k_scores)
 
 
-class BestKVelocity(FrozenSelector):
+class BestKVelocity(Selector):
     def __init__(self, **kwargs):
         """
         Needs:

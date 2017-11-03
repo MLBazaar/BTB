@@ -13,10 +13,14 @@ def ucb1_bandit(arms):
     arms: maps choice IDs to lists of rewards.
         {choice -> list[float]}
     """
-    total_pulls = sum(len(r) for r in arms.values())
+    # total_pulls is capped below at 1, so that log() will not fail
+    total_pulls = max(sum(len(r) for r in arms.values()), 1)
     scores = {}
+    choices = arms.items()
+    choices.shuffle()
     for choice, rewards in arms.items():
-        error = math.sqrt(2.0 * math.log(total_pulls) / float(len(rewards)))
+        choice_pulls = max(len(rewards), 1)
+        error = math.sqrt(2.0 * math.log(total_pulls) / choice_pulls)
         scores[choice] = np.mean(rewards) + error
 
     best_choice = sorted(scores.keys(), key=scores.get)[-1]

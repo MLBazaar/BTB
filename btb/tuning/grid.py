@@ -1,11 +1,11 @@
 import math
 import numpy as np
 
-from hyperselection import ParamTypes
-from hyperselection.samples import SampleSelector
+from btb import ParamTypes
+from btb.tuning import Tuner
 
 
-class Grid(SampleSelector):
+class Grid(Tuner):
     def __init__(self, optimizables, **kwargs):
         """
         Grid space selector.
