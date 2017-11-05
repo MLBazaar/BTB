@@ -24,6 +24,8 @@ class GP(Tuner):
             X: np.ndarray of feature vectors (vectorized parameters)
             y: np.ndarray of scores
         """
+        super(GP, self).fit(X, y)
+
         if X.shape[0] < self.r_min:
             self.uniform = True
             return
@@ -46,7 +48,15 @@ class GP(Tuner):
         """
         # old gaussian process code
         #return self.gp.predict(X, eval_MSE=True)
-        return self.gp.predict(X)
+        y, stdev = self.gp.predict(X, return_std=True)
+        return np.array(zip(y, stdev))
+
+    def acquire(self, predictions):
+        """
+        Predictions from the GP will be in the form (prediction, error).
+        Default acquisition function just returns the highest prediction.
+        """
+        return np.argmax(predictions[0, :])
 
     def propose(self):
         """
@@ -65,47 +75,19 @@ class GP(Tuner):
 
 
 class GPEi(GP):
-    def _expected_improvement(self, y_est, stdev):
+    def acquire(self, predictions):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
-
-        Args:
-            y_est:  what the GP estimates the value of y will be
-            stdev:  uncertainty of the GP's prediction
         """
-        z_score = (self.best_y - y_est) / stdev
+        y_est, stdev = predictions.T
+        best_y = max(self.y)
+
+        # even though best_y is scalar and the others are vectors, this works
+        z_score = (best_y - y_est) / stdev
         ei = stdev * (z_score * norm.cdf(z_score) + norm.pdf(z_score))
-        return ei
 
-    def fit(self, X, y):
-        """
-        Args:
-            X: np.ndarray of feature vectors (vectorized parameters)
-            y: np.ndarray of scores
-        """
-        super(GPEi, self).fit(X, y)
-
-        # the only extra thing to do here is save the best y
-        if len(y):
-            self.best_y = max(y)
-
-    def predict(self, X):
-        """
-        This is mostly the same as the regular GP selector except that we
-        compute the expected improvement of each predicted y after the initial
-        predict() call.
-
-        Args:
-            X: np.ndarray of feature vectors (vectorized parameters)
-
-        returns:
-            y: np.ndarray of predicted scores
-        """
-        y, stdev = self.gp.predict(X, return_std=True)
-        ei_y = [self._expected_improvement(y[i], stdev[i])
-                for i in range(len(y))]
-        return np.array(ei_y)
+        return np.argmax(ei)
 
 
 class GPEiVelocity(GPEi):
