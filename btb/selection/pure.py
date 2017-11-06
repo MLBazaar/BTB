@@ -41,7 +41,7 @@ class PureBestKVelocity(Selector):
             print 'PureBestKVelocity: using Pure Best K velocity selection'
             reward_func = self.compute_rewards
         else:
-            print 'PureBestKVelocity: Not enough choices to do K-selection; '
+            print 'PureBestKVelocity: Not enough choices to do K-selection; '\
                 'returning choice with fewest scores'
             # reward choices with the fewest scores
             reward_func = lambda s: [1] if len(s) == min_num_scores else [0]

@@ -19,7 +19,7 @@ class BestKReward(UCB1):
     def compute_rewards(self, scores):
         """ Retain the K best scores, and replace the rest with zeros """
         kth_best = sorted(scores, reverse=True)[self.k - 1]
-        return [s for s in scores if s >= kth_best else 0.]
+        return [s if s >= kth_best else 0. for s in scores]
 
     def select(self, choice_scores):
         """

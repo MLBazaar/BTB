@@ -2,7 +2,7 @@ import numpy as np
 import random
 import math
 
-from btb import ParamTypes
+from btb import ParamTypes, EXP_TYPES
 
 
 class Tuner(object):
@@ -68,7 +68,7 @@ class Tuner(object):
         grid_points = []
         for i, val in enumerate(params):
             axis = self._grid_axes[i]
-            if self.optimizables[i].type in exp_types:
+            if self.optimizables[i].type in EXP_TYPES:
                 # if this is an exponential parameter, take the log of
                 # everything before finding the closest grid point.
                 # e.g. abs(4-1) < abs(4-10), but
@@ -122,13 +122,13 @@ class Tuner(object):
             past_vecs = set(tuple(v) for v in self.X)
 
             # if every point has been used before, gridding is done.
-            total_points = self.grid_size ** len(self.optimizables)
-            if len(past_vecs) == total_points:
+            num_points = self.grid_size ** len(self.optimizables)
+            if len(past_vecs) == num_points:
                 return None
 
-            # if fewer than n total points haven't been seen yet, just return
-            # all grid points not in past_vecs
-            if total_points - len(past_vecs), n):
+            # if fewer than n total points have yet to be seen, just return all
+            # grid points not in past_vecs
+            if num_points - len(past_vecs) <= n:
                 # generate all possible points in the grid
                 indices = np.indices(self._grid_axes)
                 all_vecs = set(indices.T.reshape(-1, indices.shape[0]))

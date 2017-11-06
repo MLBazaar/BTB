@@ -11,3 +11,6 @@ class ParamTypes:
 	STRING = "STRING"
 	BOOL = "BOOL"
 
+
+# List of exponential hyperparameter types
+EXP_TYPES = [ParamTypes.INT_EXP, ParamTypes.FLOAT_EXP]

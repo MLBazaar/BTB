@@ -1,1 +1,1 @@
-from hyper_parameter import HyperParameter, ParamTypes
+from hyper_parameter import *

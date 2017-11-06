@@ -4,6 +4,3 @@ class Tuners:
     GP = "gp"
     GP_EI = "gp_ei"
     GP_EI_VEL = "gp_eivel"
-
-# List of exponential hyperparameter types
-exp_types = [ParamTypes.INT_EXP, ParamTypes.FLOAT_EXP]
