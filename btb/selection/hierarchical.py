@@ -1,8 +1,7 @@
 from btb.selection import Selector, UCB1
-from btb.bandit import ucb1_bandit
 
 
-class HierarchicalByAlgorithm(Selector):
+class HierarchicalByAlgorithm(UCB1):
     def __init__(self, choices, **kwargs):
         """
         Needs:
@@ -19,9 +18,6 @@ class HierarchicalByAlgorithm(Selector):
 
         Next, from that algorithm's frozen sets, makes the final set choice.
         """
-        choice_scores = {c: s for c, s in choice_scores.items()
-                         if c in self.choices}
-
         # choose algorithm using a bandit
         alg_scores = {}
         for algorithm, choices in self.by_algorithm.iteritems():
@@ -32,7 +28,8 @@ class HierarchicalByAlgorithm(Selector):
             # algorithm
             alg_scores[algorithm] = sum(choice_scores.get(c, [])
                                         for c in choices)
-        best_algorithm = ucb1_bandit(alg_scores)
+
+        best_algorithm = self.bandit(alg_scores)
 
         # now use only the frozen sets from the chosen algorithm
         best_subset = self.by_algorithm[best_algorithm]

@@ -1,5 +1,4 @@
 from btb.selection import Selector, UCB1
-from btb.bandit import ucb1_bandit
 import numpy as np
 
 # the minimum number of scores that each choice must have in order to use best-K
@@ -8,15 +7,19 @@ import numpy as np
 K_MIN = 2
 
 
-class BestKReward(Selector):
+class BestKReward(UCB1):
     def __init__(self, choices, **kwargs):
         """
-        Needs:
+        Extra args:
             k: number of best scores to consider
         """
         super(BestKReward, self).__init__(choices, **kwargs)
         self.k = kwargs.pop('k', K_MIN)
-        self.ucb1 = UCB1(choices, **kwargs)
+
+    def compute_rewards(self, scores):
+        """ Retain the K best scores, and replace the rest with zeros """
+        kth_best = sorted(scores, reverse=True)[self.k - 1]
+        return [s for s in scores if s >= kth_best else 0.]
 
     def select(self, choice_scores):
         """
@@ -24,60 +27,35 @@ class BestKReward(Selector):
         learners' scores.
         """
         # if we don't have enough scores to do K-selection, fall back to UCB1
-        if min([len(s) for s in choice_scores.values()]) < K_MIN:
-            print 'BestK: Not enough choices to do K-selection; using UCB1'
-            return self.ucb1.select(choice_scores)
+        min_num_scores = min([len(s) for s in choice_scores.values()])
+        if min_num_scores >= K_MIN:
+            print 'BestK: using Best K bandit selection'
+            reward_func = self.compute_rewards
+        else:
+            print 'BestK: Not enough choices to do K-selection; using plain UCB1'
+            reward_func = super(BestKReward, self).compute_rewards
 
-        print 'BestK: using Best K bandit selection'
-
-        # sort each list of scores in descending order, then keep the five best
-        # scores and replace the rest of them with zeros.
-        best_k_scores = {}
-        for c, s in choice_scores.items():
-            # only use choices from our set of possibilities
-            if c not in self.choices:
+        choice_rewards = {}
+        for choice, scores in choice_scores.items():
+            if choice not in self.choices:
                 continue
-            zeros = (len(s) - self.k) * [0]
-            best_k_scores[c] = sorted(s, reverse=True)[:self.k] + zeros
+            choice_rewards[choice] = reward_func(scores)
 
-        # use the bandit function to choose an arm
-        return ucb1_bandit(best_k_scores)
+        choice = self.bandit(choice_rewards)
 
 
-class BestKVelocity(Selector):
-    def __init__(self, **kwargs):
+class BestKVelocity(BestKReward):
+    def compute_rewards(self, scores):
         """
-        Needs:
-            k: number of best scores to consider
+        Compute the "velocity" of (average distance between) the k+1 best
+        scores. Return a list with those k velocities padded out with zeros so
+        that the count remains the same.
         """
-        super(BestKVelocity, self).__init__(choices, **kwargs)
-        self.k = kwargs.get('k', K_MIN)
-        self.ucb1 = UCB1(choices, **kwargs)
+        # get the k + 1 best scores in descending order
+        best_scores = sorted(scores, reverse=True)[:self.k+1]
+        velocities = [best_scores[i] - best_scores[i+1]
+                      for i in range(len(best_scores) - 1)]
 
-    def select(self, choice_scores):
-        """
-        Keeps the frozen set counts intact but only uses the top k learner's
-        velocities over their last for usage in rewards for the bandit
-        calculation
-        """
-        # if we don't have enough scores to do K-selection, fall back to UCB1
-        if min([len(s) for s in choice_scores.values()]) < K_MIN:
-            return self.ucb1.select(choice_scores)
-
-        # sort each list of scores in descending order, then compute velocity of
-        # the five best scores and pad out the list with zeros.
-        best_k_velocities = {}
-        for c, s in choice_scores.items():
-            # only use choices from our set of possibilities
-            if c not in self.choices:
-                continue
-            # take the k + 1 best scores so we can get k velocities
-            best_scores = sorted(scores, reverse=True)[:self.k+1]
-            velocities = [best_scores[i] - best_scores[i+1] for i in
-                          range(len(best_scores) - 1)]
-            # pad the list out with zeros, so the length of the list is
-            # maintained
-            zeros = (len(s) - self.k) * [0]
-            best_k_velocities[c] = velocities + zeros
-
-        return ucb1_bandit(best_k_velocities)
+        # pad the list out with zeros to maintain the lenghth of the list
+        zeros = (len(s) - self.k) * [0]
+        return velocities + zeros

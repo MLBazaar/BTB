@@ -1,5 +1,4 @@
 from btb.selection import Selector, UCB1
-from btb.bandit import ucb1_bandit
 import numpy as np
 
 # the minimum number of scores that each choice must have in order to use best-K
@@ -8,7 +7,7 @@ import numpy as np
 K_MIN = 2
 
 
-class RecentKReward(Selector):
+class RecentKReward(UCB1):
     def __init__(self, choices, **kwargs):
         """
         Needs:
@@ -16,7 +15,13 @@ class RecentKReward(Selector):
         """
         super(RecentKReward, self).__init__(choices, **kwargs)
         self.k = kwargs.pop('k', K_MIN)
-        self.ucb1 = UCB1(choices, **kwargs)
+
+    def compute_rewards(self, scores):
+        """ Retain the K most recent scores, and replace the rest with zeros """
+        for i in range(len(scores)):
+            if i >= self.k:
+                scores[i] = 0.
+        return scores
 
     def select(self, choice_scores):
         """
@@ -24,52 +29,35 @@ class RecentKReward(Selector):
         scores for usage in rewards for the bandit calculation
         """
         # if we don't have enough scores to do K-selection, fall back to UCB1
-        if min([len(s) for s in choice_scores.values()]) < K_MIN:
-            return self.ucb1.select(choice_scores)
+        min_num_scores = min([len(s) for s in choice_scores.values()])
+        if min_num_scores >= K_MIN:
+            print 'RecentK: using Best K bandit selection'
+            reward_func = self.compute_rewards
+        else:
+            print 'RecentK: Not enough choices to do K-selection; using plain UCB1'
+            reward_func = super(BestKReward, self).compute_rewards
 
-        recent_k_scores = {}
-        # all scores are already in chronological order
+        choice_rewards = {}
         for choice, scores in choice_scores.items():
             if choice not in self.choices:
                 continue
-            zeros = (len(scores) - self.k) * [0]
-            recent_k_scores[choice] = scores[-self.k:] + zeros
+            choice_rewards[choice] = reward_func(scores)
 
-        return ucb1_bandit(recent_k_scores)
+        choice = self.bandit(choice_rewards)
 
 
-class RecentKVelocity(Selector):
-    def __init__(self, **kwargs):
+class RecentKVelocity(RecentKReward):
+    def compute_rewards(self, scores):
         """
-        Needs:
-            k: number of best scores to consider
+        Compute the "velocity" of (average distance between) the k+1 most recent
+        scores. Return a list with those k velocities padded out with zeros so
+        that the count remains the same.
         """
-        super(RecentKVelocity, self).__init__(choices, **kwargs)
-        self.k = kwargs.get('k', K_MIN)
-        self.ucb1 = UCB1(choices, **kwargs)
-
-    def select(self, choice_scores):
-        """
-        Keeps the choice counts intact but only uses the top k learner's
-        velocities over their last for usage in rewards for the bandit
-        calculation
-        """
-        # if we don't have enough scores to do K-selection, fall back to UCB1
-        if min([len(s) for s in choice_scores.values()]) < K_MIN:
-            return self.ucb1.select(choice_scores)
-
-        recent_k_velocities = {}
-        # all scores are already in chronological order
-        for choice, scores in choice_scores.items():
-            if choice not in self.choices:
-                continue
-            # take the k + 1 most recent scores so we can get k velocities
-            recent_scores = scores[:-self.k-2:-1]
-            velocities = [recent_scores[i] - recent_scores[i+1] for i in
-                          range(len(recent_scores) - 1)]
-            # pad the list out with zeros, so the length of the list is
-            # maintained
-            zeros = (len(s) - self.k) * [0]
-            recent_k_velocities[c] = velocities + zeros
-
-        return ucb1_bandit(recent_k_velocities)
+        # take the k + 1 most recent scores so we can get k velocities
+        recent_scores = scores[:-self.k-2:-1]
+        velocities = [recent_scores[i] - recent_scores[i+1] for i in
+                      range(len(recent_scores) - 1)]
+        # pad the list out with zeros, so the length of the list is
+        # maintained
+        zeros = (len(s) - self.k) * [0]
+        return velocities + zeros

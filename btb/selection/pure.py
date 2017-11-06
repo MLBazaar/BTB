@@ -10,32 +10,47 @@ K_MIN = 3
 class PureBestKVelocity(Selector):
     def __init__(self, choices, **kwargs):
         """
-        Simply returns the choice with the best best-K velocity -- no bandits
-        involved.
+        Simply returns the choice with the best best-K velocity.
         """
         super(PureBestKVelocity, self).__init__(choices, **kwargs)
         self.k = kwargs.pop('k', K_MIN)
+
+    def compute_rewards(self, scores):
+        """
+        Compute the "velocity" of (average distance between) the k+1 best
+        scores. Return a list with those k velocities padded out with zeros so
+        that the count remains the same.
+        """
+        # get the k + 1 best scores in descending order
+        best_scores = sorted(scores, reverse=True)[:self.k+1]
+        velocities = [best_scores[i] - best_scores[i+1]
+                      for i in range(len(best_scores) - 1)]
+
+        # pad the list out with zeros to maintain the lenghth of the list
+        zeros = (len(s) - self.k) * [0]
+        return velocities + zeros
 
     def select(self, choice_scores):
         """
         Select the choice with the highest best-K velocity. If any choices
         don't have MIN_K scores yet, return the one with the fewest.
         """
-        choice_scores = {c: s for c, s in choice_scores.items()
-                         if c in self.choices}
-        score_counts = {c: len(s) for c, s in choice_scores.items()}
-        if min(score_counts.values()) < K_MIN:
-            print "We don't have enough frozen trials for this k! Attempt to "\
-                  "get all sets to same K_MIN..."
-            # return the choice with the fewest scores so far
-            return min(score_counts, key=score_counts.get)
+        # if we don't have enough scores to do K-selection, fall back to UCB1
+        min_num_scores = min([len(s) for s in choice_scores.values()])
+        if min_num_scores >= K_MIN:
+            print 'PureBestKVelocity: using Pure Best K velocity selection'
+            reward_func = self.compute_rewards
+        else:
+            print 'PureBestKVelocity: Not enough choices to do K-selection; '
+                'returning choice with fewest scores'
+            # reward choices with the fewest scores
+            reward_func = lambda s: [1] if len(s) == min_num_scores else [0]
 
-        velocities = {}
-        for c, scores in choice_scores.items():
-            # truncate to the highest k scores and compute the velocity of those
-            scores = sorted(scores)[-self.k:]
-            velocities[c] = np.mean([scores[i+1] - scores[i] for i in
-                                     range(len(scores) - 1)])
+        choice_rewards = {}
+        for choice, scores in choice_scores.items():
+            if choice not in self.choices:
+                continue
+            choice_rewards[choice] = reward_func(scores)
 
-        # return the frozen set with higest average velocity
-        return max(velocities, key=velocities.get)
+        # the default bandit returns the choice with the highest mean reward
+        choice = self.bandit(choice_rewards)

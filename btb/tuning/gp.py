@@ -7,14 +7,15 @@ from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 
 class GP(Tuner):
-    def __init__(self, optimizables, **kwargs):
+    def __init__(self, optimizables, grid=False, **kwargs):
         """
-        r_min: the minimum number of past results this selector needs in order
-            to use gaussian process for prediction. If not enough results are
-            present during a fit(), subsequent calls to propose() will revert to
-            uniform selection.
+        Extra args:
+            r_min: the minimum number of past results this selector needs in
+                order to use gaussian process for prediction. If not enough
+                results are present during a fit(), subsequent calls to
+                propose() will revert to uniform selection.
         """
-        super(GP, self).__init__(optimizables, **kwargs)
+        super(GP, self).__init__(optimizables, grid=False, **kwargs)
         self.r_min = kwargs.pop('r_min', 2)
 
     def fit(self, X, y):
@@ -66,13 +67,17 @@ class GPEi(GP):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
+        Args:
+            predictions: np.array of (estimated y, estimated error) tuples that
+                the gaussian process generated for a series of
+                proposed hyperparameters.
         """
-        y_est, stdev = predictions.T
+        y_est, stderr = predictions.T
         best_y = max(self.y)
 
         # even though best_y is scalar and the others are vectors, this works
-        z_score = (best_y - y_est) / stdev
-        ei = stdev * (z_score * norm.cdf(z_score) + norm.pdf(z_score))
+        z_score = (best_y - y_est) / stderr
+        ei = stderr * (z_score * norm.cdf(z_score) + norm.pdf(z_score))
 
         return np.argmax(ei)
 
