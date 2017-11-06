@@ -16,7 +16,7 @@ class Selector(object):
         rewards. Normally, the length of the list will be preserved, even if
         some of the scores are dropped.
         """
-        return scores
+        return list(scores)
 
     def bandit(self, choice_rewards):
         """
@@ -54,4 +54,4 @@ class Selector(object):
                 continue
             choice_rewards[choice] = self.compute_rewards(scores)
 
-        choice = self.bandit(choice_rewards)
+        return self.bandit(choice_rewards)

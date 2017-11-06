@@ -43,7 +43,7 @@ class RecentKReward(UCB1):
                 continue
             choice_rewards[choice] = reward_func(scores)
 
-        choice = self.bandit(choice_rewards)
+        return self.bandit(choice_rewards)
 
 
 class RecentKVelocity(RecentKReward):

@@ -18,8 +18,11 @@ class BestKReward(UCB1):
 
     def compute_rewards(self, scores):
         """ Retain the K best scores, and replace the rest with zeros """
-        kth_best = sorted(scores, reverse=True)[self.k - 1]
-        return [s if s >= kth_best else 0. for s in scores]
+        if len(scores) > self.k:
+            kth_best = sorted(scores, reverse=True)[self.k - 1]
+            return [(s if s >= kth_best else 0.) for s in scores]
+        else:
+            return list(scores)
 
     def select(self, choice_scores):
         """
@@ -41,7 +44,7 @@ class BestKReward(UCB1):
                 continue
             choice_rewards[choice] = reward_func(scores)
 
-        choice = self.bandit(choice_rewards)
+        return self.bandit(choice_rewards)
 
 
 class BestKVelocity(BestKReward):

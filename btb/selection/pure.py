@@ -53,4 +53,4 @@ class PureBestKVelocity(Selector):
             choice_rewards[choice] = reward_func(scores)
 
         # the default bandit returns the choice with the highest mean reward
-        choice = self.bandit(choice_rewards)
+        return self.bandit(choice_rewards)
