@@ -10,27 +10,20 @@ class GP(Tuner):
     def __init__(self, optimizables, **kwargs):
         """
         r_min: the minimum number of past results this selector needs in order
-        to use gaussian process for prediction. If not enough results are
-        present during a fit(), subsequent calls to propose() will revert to
-        uniform selection.
+            to use gaussian process for prediction. If not enough results are
+            present during a fit(), subsequent calls to propose() will revert to
+            uniform selection.
         """
         super(GP, self).__init__(optimizables, **kwargs)
         self.r_min = kwargs.pop('r_min', 2)
-        self.uniform = True
 
     def fit(self, X, y):
-        """
-        Args:
-            X: np.ndarray of feature vectors (vectorized parameters)
-            y: np.ndarray of scores
-        """
+        """ Use X and y to train a Gaussian process. """
         super(GP, self).fit(X, y)
 
+        # skip training the process if there aren't enough samples
         if X.shape[0] < self.r_min:
-            self.uniform = True
             return
-        else:
-            self.uniform = False
 
         # old gaussian process code
         #self.gp = GaussianProcess(theta0=1e-2, thetaL=1e-4, thetaU=1e-1,
@@ -39,13 +32,6 @@ class GP(Tuner):
         self.gp.fit(X, y)
 
     def predict(self, X):
-        """
-        Args:
-            X: np.ndarray of feature vectors (vectorized parameters)
-
-        returns:
-            y: np.ndarray of predicted scores
-        """
         # old gaussian process code
         #return self.gp.predict(X, eval_MSE=True)
         y, stdev = self.gp.predict(X, return_std=True)
@@ -54,17 +40,18 @@ class GP(Tuner):
     def acquire(self, predictions):
         """
         Predictions from the GP will be in the form (prediction, error).
-        Default acquisition function just returns the highest prediction.
+        The default acquisition function returns the index with the highest
+        predicted value, not factoring in error.
         """
-        return np.argmax(predictions[0, :])
+        return np.argmax(predictions[:, 0])
 
     def propose(self):
         """
-        Using the probability_of_random value we computed in fit, either return
-        the value with the best expected improvement or choose parameters
-        randomly.
+        If we haven't seen at least self.r_min values, choose parameters
+        using a Uniform tuner (randomly). Otherwise perform the usual
+        create-predict-propose pipeline.
         """
-        if self.uniform:
+        if self.X.shape[0] < self.r_min:
             # we probably don't have enough
             print 'GP: not enough data, falling back to uniform sampler'
             return Uniform(self.optimizables).propose()
@@ -96,32 +83,30 @@ class GPEiVelocity(GPEi):
 
     def fit(self, X, y):
         """
-        Args:
-            X: np.ndarray of feature vectors (vectorized parameters)
-            y: np.ndarray of scores
+        Train a gaussian process like normal, then compute a "Probability Of
+        Uniform selection" (POU) value.
         """
         # first, train a gaussian process like normal
         super(GPEiVelocity, self).fit(X, y)
 
-        self.probability_of_random = 0
+        # probability of uniform
+        self.POU = 0
         if len(y) >= self.r_min:
             # get the best few scores so far, and compute the average distance
             # between them.
             top_y = sorted(y)[-self.N_BEST_Y:]
             velocities = [top_y[i+1] - top_y[i] for i in range(len(top_y) - 1)]
 
-            # the probability of returning random params scales inversely with
-            # density of top scores.
-            self.probability_of_random = np.exp(self.MULTIPLIER *
-                                                np.mean(velocities))
+            # the probability of returning random parameters scales inversely with
+            # the "velocity" of top scores.
+            self.POU = np.exp(self.MULTIPLIER * np.mean(velocities))
 
     def propose(self):
         """
-        Using the probability_of_random value we computed in fit, either return
-        the value with the best expected improvement or choose parameters
-        randomly.
+        Use the POU value we computed in fit to choose randomly between GPEi and
+        uniform random selection.
         """
-        if np.random.random() < self.probability_of_random:
+        if np.random.random() < self.POU:
             # choose params at random to avoid local minima
             return Uniform(self.optimizables).propose()
         else:

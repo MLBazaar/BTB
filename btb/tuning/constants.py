@@ -1,7 +1,9 @@
+# Enum class for mapping symbols to string names
 class Tuners:
     UNIFORM = "uniform"
     GP = "gp"
     GP_EI = "gp_ei"
-    GP_EI_TIME = "gp_eitime"
     GP_EI_VEL = "gp_eivel"
-    GRID = "grid"
+
+# List of exponential hyperparameter types
+exp_types = [ParamTypes.INT_EXP, ParamTypes.FLOAT_EXP]
