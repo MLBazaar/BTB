@@ -7,7 +7,7 @@ from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 
 class GP(Tuner):
-    def __init__(self, optimizables, grid=False, **kwargs):
+    def __init__(self, optimizables, gridding=False, **kwargs):
         """
         Extra args:
             r_min: the minimum number of past results this selector needs in
@@ -15,7 +15,7 @@ class GP(Tuner):
                 results are present during a fit(), subsequent calls to
                 propose() will revert to uniform selection.
         """
-        super(GP, self).__init__(optimizables, grid=False, **kwargs)
+        super(GP, self).__init__(optimizables, gridding=False, **kwargs)
         self.r_min = kwargs.pop('r_min', 2)
 
     def fit(self, X, y):

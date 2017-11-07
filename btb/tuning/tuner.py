@@ -6,7 +6,7 @@ from btb import ParamTypes, EXP_TYPES
 
 
 class Tuner(object):
-    def __init__(self, optimizables, grid=False, **kwargs):
+    def __init__(self, optimizables, gridding=0, **kwargs):
         """
         Args:
             optimizables: Ordered list of hyperparameter names and metadata
@@ -18,14 +18,14 @@ class Tuner(object):
                  ('coef0', HyperParameter((0, 1), 'INT', False)),
                  ('C', HyperParameter((1e-05, 100000), 'FLOAT_EXP', False)),
                  ('gamma', HyperParameter((1e-05, 100000), 'FLOAT_EXP', False))]
-            grid: Boolean. Indicates whether or not this tuner will map
-                hyperparameter vectors to fixed points on a finite grid.
+            gridding: int. If a positive integer, controls the number of points
+                on each axis of the grid. If 0, gridding does not occur.
         """
         self.optimizables = optimizables
-        self.grid = grid
+        self.grid = gridding > 0
 
-        if grid:
-            self.grid_size = kwargs.pop('grid_size', 3)
+        if self.grid:
+            self.grid_size = gridding
             self._define_grid()
 
     def _define_grid(self):
@@ -68,7 +68,7 @@ class Tuner(object):
         grid_points = []
         for i, val in enumerate(params):
             axis = self._grid_axes[i]
-            if self.optimizables[i].type in EXP_TYPES:
+            if self.optimizables[i][1].type in EXP_TYPES:
                 # if this is an exponential parameter, take the log of
                 # everything before finding the closest grid point.
                 # e.g. abs(4-1) < abs(4-10), but
@@ -85,7 +85,8 @@ class Tuner(object):
 
     def _grid_to_params(self, grid_points):
         """
-        Get a vector mapping Map indices of grid points to continuous values
+        Map a single point on the grid, represented by indices into each axis,
+        to a continuous-valued parameter vector.
         """
         params = [self._grid_axes[i][p] for i, p in enumerate(grid_points)]
         return np.array(params)
@@ -97,11 +98,7 @@ class Tuner(object):
                 shape = (n_samples, len(optimizables))
             y: np.array of scores, shape = (n_samples,)
         """
-        if self.grid:
-            # If we're using gridding, map everything to indices on the grid
-            self.X = np.array(map(self._params_to_grid, X))
-        else:
-            self.X = X
+        self.X = X
         self.y = y
 
     def create_candidates(self, n=1000):
@@ -118,8 +115,9 @@ class Tuner(object):
         """
         # If using a grid, generate a list of previously unused grid points
         if self.grid:
-            # convert numpy array to set of tuples for easier comparison
-            past_vecs = set(tuple(v) for v in self.X)
+            # convert numpy array to set of tuples of grid indices for easier
+            # comparison
+            past_vecs = set(tuple(self._params_to_grid(v)) for v in self.X)
 
             # if every point has been used before, gridding is done.
             num_points = self.grid_size ** len(self.optimizables)
@@ -131,19 +129,23 @@ class Tuner(object):
             if num_points - len(past_vecs) <= n:
                 # generate all possible points in the grid
                 indices = np.indices(self._grid_axes)
-                all_vecs = set(indices.T.reshape(-1, indices.shape[0]))
+                all_vecs = set(tuple(v) for v in
+                               indices.T.reshape(-1, indices.shape[0]))
                 vec_list = list(all_vecs - past_vecs)
             else:
                 # generate n random vectors of grid-point indices
+                vec_list = []
                 for i in xrange(n):
                     # TODO: only choose from set of unused values
                     while True:
                         vec = np.random.randint(self.grid_size,
                                                 size=len(self.optimizables))
-                        if vec not in past_vecs:
+                        if tuple(vec) not in past_vecs:
                             break
                     vec_list.append(vec)
-            candidates = np.array(vec_list)
+
+            # map the points back to continuous values and return
+            return np.array([self._grid_to_params(v) for v in vec_list])
 
         # If not using a grid, generate a list of vectors where each parameter
         # is chosen uniformly at random
@@ -153,6 +155,7 @@ class Tuner(object):
             for i, (k, struct) in enumerate(self.optimizables):
                 lo, hi = struct.range
 
+                # TODO: move this to a HyperParameter class
                 if struct.type == ParamTypes.INT:
                     column = np.random.randint(lo, hi + 1, size=n)
                 elif struct.type == ParamTypes.FLOAT:
@@ -221,11 +224,4 @@ class Tuner(object):
         # acquire() evaluates the list of predictions, selects one, and returns
         # its index.
         idx = self.acquire(predictions)
-
-        if self.grid:
-            # If we're using gridding, candidate_params is a list of points as
-            # indices into the grid axes; they need to be converted to
-            # continuous parameter vectors before being returned.
-            return self._grid_to_params(candidate_params[idx, :])
-        else:
-            return candidate_params[idx, :]
+        return candidate_params[idx, :]
