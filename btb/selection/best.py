@@ -29,7 +29,8 @@ class BestKReward(UCB1):
         Keeps the choice counts intact, but only let the bandit see the top k
         learners' scores.
         """
-        # if we don't have enough scores to do K-selection, fall back to UCB1
+        # if we don't have enough scores to do K-selection, use the default UCB1
+        # reward function
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
             print 'BestK: using Best K bandit selection'
@@ -38,6 +39,7 @@ class BestKReward(UCB1):
             print 'BestK: Not enough choices to do K-selection; using plain UCB1'
             reward_func = super(BestKReward, self).compute_rewards
 
+        # convert the raw scores lists to "rewards" lists for each choice
         choice_rewards = {}
         for choice, scores in choice_scores.items():
             if choice not in self.choices:

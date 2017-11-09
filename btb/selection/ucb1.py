@@ -32,8 +32,11 @@ class UCB1(Selector):
             # compute the 2-stdev error for the estimate of this choice
             error = np.sqrt(2.0 * np.log(total_pulls) / choice_pulls)
 
+            # compute the average reward, or default to 0
+            avg_reward = np.mean(rewards) if rewards else 0
+
             # this choice's score is the upper bound of what we think is possible
-            scores[choice] = np.mean(rewards) + error
+            scores[choice] = avg_reward + error
 
         best_choice = sorted(scores.keys(), key=scores.get)[-1]
         return best_choice
