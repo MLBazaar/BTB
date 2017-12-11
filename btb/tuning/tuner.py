@@ -10,14 +10,12 @@ class Tuner(object):
         """
         Args:
             optimizables: Ordered list of hyperparameter names and metadata
-                structures. These describe the hyperparameters that this Tuner will
+                objects. These describe the hyperparameters that this Tuner will
                 be tuning. e.g.:
-                [('degree', HyperParameter(range=(2, 4),
-                                           type='INT',
-                                           is_categorical=False)),
-                 ('coef0', HyperParameter((0, 1), 'INT', False)),
-                 ('C', HyperParameter((1e-05, 100000), 'FLOAT_EXP', False)),
-                 ('gamma', HyperParameter((1e-05, 100000), 'FLOAT_EXP', False))]
+                [('degree', HyperParameter(type='INT', range=(2, 4))),
+                 ('coef0', HyperParameter('INT', (0, 1))),
+                 ('C', HyperParameter('FLOAT_EXP', (1e-05, 100000))),
+                 ('gamma', HyperParameter('FLOAT_EXP', (1e-05, 100000)))]
             gridding: int. If a positive integer, controls the number of points
                 on each axis of the grid. If 0, gridding does not occur.
         """
@@ -34,25 +32,25 @@ class Tuner(object):
         hyperparameters.
         """
         self._grid_axes = []
-        for _, struct in self.optimizables:
-            if struct.type == ParamTypes.INT:
-                vals = np.round(np.linspace(struct.range[0], struct.range[1],
+        for _, param in self.optimizables:
+            if param.type == ParamTypes.INT:
+                vals = np.round(np.linspace(param.range[0], param.range[1],
                                             self.grid_size))
 
-            elif struct.type == ParamTypes.FLOAT:
-                vals = np.round(np.linspace(struct.range[0], struct.range[1],
+            elif param.type == ParamTypes.FLOAT:
+                vals = np.round(np.linspace(param.range[0], param.range[1],
                                             self.grid_size), decimals=5)
 
             # for exponential types, generate the grid in logarithm space so
             # that grid points will be expnentially distributed.
-            elif struct.type == ParamTypes.INT_EXP:
-                vals = np.round(10.0 ** np.linspace(math.log10(struct.range[0]),
-                                                    math.log10(struct.range[1]),
+            elif param.type == ParamTypes.INT_EXP:
+                vals = np.round(10.0 ** np.linspace(math.log10(param.range[0]),
+                                                    math.log10(param.range[1]),
                                                     self.grid_size))
 
-            elif struct.type == ParamTypes.FLOAT_EXP:
-                vals = np.round(10.0 ** np.linspace(math.log10(struct.range[0]),
-                                                    math.log10(struct.range[1]),
+            elif param.type == ParamTypes.FLOAT_EXP:
+                vals = np.round(10.0 ** np.linspace(math.log10(param.range[0]),
+                                                    math.log10(param.range[1]),
                                                     self.grid_size), decimals=5)
 
             self._grid_axes.append(vals)
@@ -152,23 +150,25 @@ class Tuner(object):
         else:
             # generate a matrix of random parameters, column by column.
             candidates = np.zeros((n, len(self.optimizables)))
-            for i, (k, struct) in enumerate(self.optimizables):
-                lo, hi = struct.range
+            for i, (k, param) in enumerate(self.optimizables):
+                lo, hi = param.range
 
                 # TODO: move this to a HyperParameter class
-                if struct.type == ParamTypes.INT:
+                if param.type == ParamTypes.INT:
                     column = np.random.randint(lo, hi + 1, size=n)
-                elif struct.type == ParamTypes.FLOAT:
+                elif param.type == ParamTypes.FLOAT:
                     diff = hi - lo
                     column = lo + diff * np.random.rand(n)
-                elif struct.type == ParamTypes.INT_EXP:
+                elif param.type == ParamTypes.INT_EXP:
                     column = 10.0 ** np.random.randint(math.log10(lo),
                                                        math.log10(hi) + 1,
                                                        size=n)
-                elif struct.type == ParamTypes.FLOAT_EXP:
+                elif param.type == ParamTypes.FLOAT_EXP:
                     diff = math.log10(hi) - math.log10(lo)
                     floats = math.log10(lo) + diff * np.random.rand(n)
                     column = 10.0 ** floats
+                else:
+                    print param.type
 
                 candidates[:, i] = column
                 i += 1

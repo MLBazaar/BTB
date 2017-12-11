@@ -33,7 +33,7 @@ class UCB1(Selector):
             error = np.sqrt(2.0 * np.log(total_pulls) / choice_pulls)
 
             # compute the average reward, or default to 0
-            avg_reward = np.mean(rewards) if rewards else 0
+            avg_reward = np.mean(rewards) if len(rewards) else 0
 
             # this choice's score is the upper bound of what we think is possible
             scores[choice] = avg_reward + error
