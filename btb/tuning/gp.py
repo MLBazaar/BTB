@@ -7,7 +7,7 @@ from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 
 class GP(Tuner):
-    def __init__(self, optimizables, gridding=False, **kwargs):
+    def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:
             r_min: the minimum number of past results this selector needs in
@@ -15,7 +15,7 @@ class GP(Tuner):
                 results are present during a fit(), subsequent calls to
                 propose() will revert to uniform selection.
         """
-        super(GP, self).__init__(optimizables, gridding=False, **kwargs)
+        super(GP, self).__init__(tunables, gridding=gridding, **kwargs)
         self.r_min = kwargs.pop('r_min', 2)
 
     def fit(self, X, y):
@@ -55,7 +55,7 @@ class GP(Tuner):
         if self.X.shape[0] < self.r_min:
             # we probably don't have enough
             print 'GP: not enough data, falling back to uniform sampler'
-            return Uniform(self.optimizables).propose()
+            return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal generate-predict thing
             print 'GP: using gaussian process to select parameters'
@@ -113,7 +113,7 @@ class GPEiVelocity(GPEi):
         """
         if np.random.random() < self.POU:
             # choose params at random to avoid local minima
-            return Uniform(self.optimizables).propose()
+            return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal GPEi thing
             return super(GPEiVelocity, self).propose()

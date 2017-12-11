@@ -6,10 +6,10 @@ from btb import ParamTypes, EXP_TYPES
 
 
 class Tuner(object):
-    def __init__(self, optimizables, gridding=0, **kwargs):
+    def __init__(self, tunables, gridding=0, **kwargs):
         """
         Args:
-            optimizables: Ordered list of hyperparameter names and metadata
+            tunables: Ordered list of hyperparameter names and metadata
                 objects. These describe the hyperparameters that this Tuner will
                 be tuning. e.g.:
                 [('degree', HyperParameter(type='INT', range=(2, 4))),
@@ -19,7 +19,7 @@ class Tuner(object):
             gridding: int. If a positive integer, controls the number of points
                 on each axis of the grid. If 0, gridding does not occur.
         """
-        self.optimizables = optimizables
+        self.tunables = tunables
         self.grid = gridding > 0
 
         if self.grid:
@@ -28,11 +28,11 @@ class Tuner(object):
 
     def _define_grid(self):
         """
-        Define the range of possible values for each of the optimizable
+        Define the range of possible values for each of the tunable
         hyperparameters.
         """
         self._grid_axes = []
-        for _, param in self.optimizables:
+        for _, param in self.tunables:
             if param.type == ParamTypes.INT:
                 vals = np.round(np.linspace(param.range[0], param.range[1],
                                             self.grid_size))
@@ -66,7 +66,7 @@ class Tuner(object):
         grid_points = []
         for i, val in enumerate(params):
             axis = self._grid_axes[i]
-            if self.optimizables[i][1].type in EXP_TYPES:
+            if self.tunables[i][1].type in EXP_TYPES:
                 # if this is an exponential parameter, take the log of
                 # everything before finding the closest grid point.
                 # e.g. abs(4-1) < abs(4-10), but
@@ -93,7 +93,7 @@ class Tuner(object):
         """
         Args:
             X: np.array of hyperparameters,
-                shape = (n_samples, len(optimizables))
+                shape = (n_samples, len(tunables))
             y: np.array of scores, shape = (n_samples,)
         """
         self.X = X
@@ -102,14 +102,14 @@ class Tuner(object):
     def create_candidates(self, n=1000):
         """
         Generate a number of random hyperparameter vectors based on the
-        specifications in self.optimizables
+        specifications in self.tunables
 
         Args:
             n (optional): number of candidates to generate
 
         Returns:
             np.array of candidate hyperparameter vectors,
-                shape = (n_samples, len(optimizables))
+                shape = (n_samples, len(tunables))
         """
         # If using a grid, generate a list of previously unused grid points
         if self.grid:
@@ -118,7 +118,7 @@ class Tuner(object):
             past_vecs = set(tuple(self._params_to_grid(v)) for v in self.X)
 
             # if every point has been used before, gridding is done.
-            num_points = self.grid_size ** len(self.optimizables)
+            num_points = self.grid_size ** len(self.tunables)
             if len(past_vecs) == num_points:
                 return None
 
@@ -137,7 +137,7 @@ class Tuner(object):
                     # TODO: only choose from set of unused values
                     while True:
                         vec = np.random.randint(self.grid_size,
-                                                size=len(self.optimizables))
+                                                size=len(self.tunables))
                         if tuple(vec) not in past_vecs:
                             break
                     vec_list.append(vec)
@@ -149,8 +149,8 @@ class Tuner(object):
         # is chosen uniformly at random
         else:
             # generate a matrix of random parameters, column by column.
-            candidates = np.zeros((n, len(self.optimizables)))
-            for i, (k, param) in enumerate(self.optimizables):
+            candidates = np.zeros((n, len(self.tunables)))
+            for i, (k, param) in enumerate(self.tunables):
                 lo, hi = param.range
 
                 # TODO: move this to a HyperParameter class
@@ -179,7 +179,7 @@ class Tuner(object):
         """
         Args:
             X: np.array of hyperparameters,
-                shape = (n_samples, len(optimizables))
+                shape = (n_samples, len(tunables))
 
         Returns:
             y: np.array of predicted scores, shape = (n_samples)
@@ -208,7 +208,7 @@ class Tuner(object):
 
         Returns:
             proposal: np.array of proposed hyperparameter values, in the same
-                order as self.optimizables
+                order as self.tunables
         """
         # generate a list of random candidate vectors. If self.grid == True,
         # each candidate will be a vector that has not been used before.
