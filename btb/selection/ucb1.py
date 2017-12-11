@@ -10,20 +10,23 @@ class UCB1(Selector):
     """
     def bandit(self, choice_rewards):
         """
-        MAB method which chooses the arm for which the upper confidence bound
-        (UCB) of expected reward is greatest.
+        Multi-armed bandit method which chooses the arm for which the upper
+        confidence bound (UCB) of expected reward is greatest.
         An explanation is here:
         https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf
+
+        choice_rewards: a dict, {choice -> [rewards]}, mapping each potential
+            choice to a series of "rewards" granted for its past behavior.
+
+        Returns: the single choice (one of choice_rewards.keys()) which we
+            expect will perform best.
         """
         # count the total number of times all "levers" have been "pulled" so far.
         # don't let the value go below 1, so that log() and division still work.
         total_pulls = max(sum(len(r) for r in choice_rewards.values()), 1)
-        scores = {}
 
-        # shuffle the arms so that if all else is equal, we don't choose the same
-        # one every time
         choices = choice_rewards.items()
-        random.shuffle(choices)
+        scores = {}
 
         for choice, rewards in choices:
             # count the number of pulls for this choice, with a floor of 1
@@ -33,10 +36,14 @@ class UCB1(Selector):
             error = np.sqrt(2.0 * np.log(total_pulls) / choice_pulls)
 
             # compute the average reward, or default to 0
-            avg_reward = np.mean(rewards) if rewards else 0
+            avg_reward = np.mean(rewards) if len(rewards) else 0
 
             # this choice's score is the upper bound of what we think is possible
             scores[choice] = avg_reward + error
 
-        best_choice = sorted(scores.keys(), key=scores.get)[-1]
-        return best_choice
+        # there may be many choices which are equally desirable
+        best_score = max(scores.values())
+        best_choices = [k for k, v in scores.items() if v == best_score]
+
+        # make sure we don't choose the same one every time
+        return random.choice(best_choices)

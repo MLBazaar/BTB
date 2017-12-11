@@ -39,9 +39,10 @@ class BestKReward(UCB1):
             print 'BestK: Not enough choices to do K-selection; using plain UCB1'
             reward_func = super(BestKReward, self).compute_rewards
 
-        # convert the raw scores lists to "rewards" lists for each choice
+        # convert the raw scores list for each choice to a "rewards" list
         choice_rewards = {}
         for choice, scores in choice_scores.items():
+            # only consider choices that this object was initialized with
             if choice not in self.choices:
                 continue
             choice_rewards[choice] = reward_func(scores)
