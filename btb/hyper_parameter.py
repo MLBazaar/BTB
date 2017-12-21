@@ -19,16 +19,18 @@ CAT_TYPES = [ParamTypes.INT_CAT, ParamTypes.STRING, ParamTypes.BOOL]
 # our HyperParameter object
 class HyperParameter(object):
     def __init__(self, typ, rang):
-        for i in range(len(rang)):
+        for i, val in enumerate(rang):
+            if val is None:
+                continue
             if typ in [ParamTypes.INT, ParamTypes.INT_EXP,
                        ParamTypes.INT_CAT]:
-                rang[i] = int(rang[i])
+                rang[i] = int(val)
             elif typ in [ParamTypes.FLOAT, ParamTypes.FLOAT_EXP]:
-                rang[i] = float(rang[i])
+                rang[i] = float(val)
             elif typ == ParamTypes.STRING:
-                rang[i] = str(rang[i])
+                rang[i] = str(val)
             elif typ == ParamTypes.BOOL:
-                rang[i] = bool(rang[i])
+                rang[i] = bool(val)
         self.type = typ
         self.range = rang
 
