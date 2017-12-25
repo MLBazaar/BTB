@@ -1,5 +1,6 @@
-from __future__ import division
-from __future__ import print_function
+from __future__ import division, print_function
+from builtins import zip, range
+
 import numpy as np
 from scipy.stats import norm
 
@@ -37,7 +38,7 @@ class GP(Tuner):
         # old gaussian process code
         #return self.gp.predict(X, eval_MSE=True)
         y, stdev = self.gp.predict(X, return_std=True)
-        return np.array(zip(y, stdev))
+        return np.array(list(zip(y, stdev)))
 
     def acquire(self, predictions):
         """

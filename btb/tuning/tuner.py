@@ -1,4 +1,5 @@
 from __future__ import print_function
+from builtins import range, object
 import numpy as np
 import random
 import math
@@ -134,7 +135,7 @@ class Tuner(object):
             else:
                 # generate n random vectors of grid-point indices
                 vec_list = []
-                for i in xrange(n):
+                for i in range(n):
                     # TODO: only choose from set of unused values
                     while True:
                         vec = np.random.randint(self.grid_size,

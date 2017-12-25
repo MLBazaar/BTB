@@ -1,6 +1,8 @@
+from builtins import str
+from builtins import object
 from collections import namedtuple
 
-class ParamTypes:
+class ParamTypes(object):
 	INT = "int"
 	INT_EXP = "int_exp"
 	INT_CAT = "int_cat"

@@ -20,7 +20,7 @@ class HierarchicalByAlgorithm(UCB1):
         """
         # choose algorithm using a bandit
         alg_scores = {}
-        for algorithm, choices in self.by_algorithm.iteritems():
+        for algorithm, choices in self.by_algorithm.items():
             # only make arms for algorithms that have options
             if not set(choices) & set(choice_scores.keys()):
                 continue
