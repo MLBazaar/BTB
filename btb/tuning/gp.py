@@ -1,4 +1,5 @@
 from __future__ import division
+from __future__ import print_function
 import numpy as np
 from scipy.stats import norm
 
@@ -54,11 +55,11 @@ class GP(Tuner):
         """
         if self.X.shape[0] < self.r_min:
             # we probably don't have enough
-            print 'GP: not enough data, falling back to uniform sampler'
+            print('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal generate-predict thing
-            print 'GP: using gaussian process to select parameters'
+            print('GP: using gaussian process to select parameters')
             return super(GP, self).propose()
 
 

@@ -1,3 +1,4 @@
+from __future__ import print_function
 from btb.selection import Selector
 import numpy as np
 
@@ -38,11 +39,11 @@ class PureBestKVelocity(Selector):
         # if we don't have enough scores to do K-selection, fall back to UCB1
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
-            print 'PureBestKVelocity: using Pure Best K velocity selection'
+            print('PureBestKVelocity: using Pure Best K velocity selection')
             reward_func = self.compute_rewards
         else:
-            print 'PureBestKVelocity: Not enough choices to do K-selection; '\
-                'returning choice with fewest scores'
+            print('PureBestKVelocity: Not enough choices to do K-selection; '
+                  'returning choice with fewest scores')
             # reward choices with the fewest scores
             reward_func = lambda s: [1] if len(s) == min_num_scores else [0]
 

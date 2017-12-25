@@ -1,3 +1,4 @@
+from __future__ import print_function
 import numpy as np
 import random
 import math
@@ -168,7 +169,7 @@ class Tuner(object):
                     floats = math.log10(lo) + diff * np.random.rand(n)
                     column = 10.0 ** floats
                 else:
-                    print param.type
+                    print(param.type)
 
                 candidates[:, i] = column
                 i += 1

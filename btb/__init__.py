@@ -1,1 +1,2 @@
-from hyper_parameter import *
+from __future__ import absolute_import
+from .hyper_parameter import *

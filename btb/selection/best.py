@@ -1,3 +1,4 @@
+from __future__ import print_function
 from btb.selection import Selector, UCB1
 import numpy as np
 
@@ -33,10 +34,10 @@ class BestKReward(UCB1):
         # reward function
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
-            print 'BestK: using Best K bandit selection'
+            print('BestK: using Best K bandit selection')
             reward_func = self.compute_rewards
         else:
-            print 'BestK: Not enough choices to do K-selection; using plain UCB1'
+            print('BestK: Not enough choices to do K-selection; using plain UCB1')
             reward_func = super(BestKReward, self).compute_rewards
 
         # convert the raw scores list for each choice to a "rewards" list
