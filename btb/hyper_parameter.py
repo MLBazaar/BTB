@@ -6,6 +6,7 @@ class ParamTypes:
 	INT_CAT = "int_cat"
 	FLOAT = "float"
 	FLOAT_EXP = "float_exp"
+	FLOAT_CAT = "float_cat"
 	STRING = "string"
 	BOOL = "bool"
 
@@ -13,7 +14,8 @@ class ParamTypes:
 EXP_TYPES = [ParamTypes.INT_EXP, ParamTypes.FLOAT_EXP]
 
 # List of categorical hyperparameter types
-CAT_TYPES = [ParamTypes.INT_CAT, ParamTypes.STRING, ParamTypes.BOOL]
+CAT_TYPES = [ParamTypes.INT_CAT, ParamTypes.FLOAT_CAT, ParamTypes.STRING,
+             ParamTypes.BOOL]
 
 
 # our HyperParameter object
@@ -21,11 +23,13 @@ class HyperParameter(object):
     def __init__(self, typ, rang):
         for i, val in enumerate(rang):
             if val is None:
+                # the value None is allowed for every parameter type
                 continue
             if typ in [ParamTypes.INT, ParamTypes.INT_EXP,
                        ParamTypes.INT_CAT]:
                 rang[i] = int(val)
-            elif typ in [ParamTypes.FLOAT, ParamTypes.FLOAT_EXP]:
+            elif typ in [ParamTypes.FLOAT, ParamTypes.FLOAT_EXP,
+                         ParamTypes.FLOAT_CAT]:
                 rang[i] = float(val)
             elif typ == ParamTypes.STRING:
                 rang[i] = str(val)
