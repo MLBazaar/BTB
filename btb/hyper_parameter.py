@@ -1,5 +1,4 @@
-from builtins import str
-from builtins import object
+from builtins import object, str as newstr
 from collections import namedtuple
 
 class ParamTypes(object):
@@ -34,7 +33,7 @@ class HyperParameter(object):
                          ParamTypes.FLOAT_CAT]:
                 rang[i] = float(val)
             elif typ == ParamTypes.STRING:
-                rang[i] = str(val)
+                rang[i] = str(newstr(val))
             elif typ == ParamTypes.BOOL:
                 rang[i] = bool(val)
         self.type = typ
