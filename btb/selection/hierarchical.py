@@ -26,8 +26,8 @@ class HierarchicalByAlgorithm(UCB1):
                 continue
             # sum up lists to get a list of all the scores from any run of this
             # algorithm
-            alg_scores[algorithm] = sum(choice_scores.get(c, [])
-                                        for c in choices)
+            sublists = [choice_scores.get(c, []) for c in choices]
+            alg_scores[algorithm] = sum(sublists, [])
 
         best_algorithm = self.bandit(alg_scores)
 
