@@ -19,7 +19,7 @@ setup(
     # https://packaging.python.org/en/latest/single_source_version.html
     version='0.0.1',
 
-    description='A framework for selecting hyperparameters',
+    description='A framework for Bayesian hyperparameter selection and tuning',
 
     # The project's main homepage.
     url='https://github.com/HDI-project/BTB',
@@ -46,7 +46,7 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        # TODO: python 3 support
+        'Programming Language :: Python :: 3',
     ],
 
     # What does your project relate to?
@@ -54,13 +54,13 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages()
+    packages=find_packages(),
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     # TODO
-    #install_requires=[],
+    install_requires=['future'],
 )
 
