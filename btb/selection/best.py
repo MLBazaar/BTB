@@ -65,5 +65,5 @@ class BestKVelocity(BestKReward):
                       for i in range(len(best_scores) - 1)]
 
         # pad the list out with zeros to maintain the lenghth of the list
-        zeros = (len(s) - self.k) * [0]
+        zeros = (len(scores) - self.k) * [0]
         return velocities + zeros
