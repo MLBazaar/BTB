@@ -1,4 +1,4 @@
-from __future__ import division, print_function
+from __future__ import division
 from builtins import zip, range
 
 import numpy as np
@@ -56,11 +56,11 @@ class GP(Tuner):
         """
         if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
-            print('GP: not enough data, falling back to uniform sampler')
+            logging.warn('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal generate-predict thing
-            print('GP: using gaussian process to select parameters')
+            logging.warn('GP: using gaussian process to select parameters')
             return super(GP, self).propose()
 
 
