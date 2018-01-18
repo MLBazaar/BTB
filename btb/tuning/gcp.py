@@ -22,10 +22,12 @@ def make_cdf(kernel_pdf):
 
     lowerB = kernel_pdf.dataset.min()
     upperB = kernel_pdf.dataset.max()
-    mid = (lowerB + upperB) / 2
-    lowerB = lowerB - mid * 2
-    upperB = upperB + mid * 2
+    mid = (upperB-lowerB) / 2
+    Nmid = -0.2
+    lowerB = lowerB - mid * Nmid
+    upperB = upperB + mid * Nmid
     num = int(10 ** (np.log10(upperB - lowerB)) // 1)
+    if num == 0: num = 100
     y_range = np.linspace(lowerB, upperB, num=num)
     u_range = np_cdf(kernel_pdf, y_range)
     funI = interp1d(y_range, u_range)  # <-- use linear interpolation
@@ -51,10 +53,12 @@ def make_ppf(kernel_pdf):
 
     lowerB = kernel_pdf.dataset.min()
     upperB = kernel_pdf.dataset.max()
-    mid = (lowerB + upperB) / 2
-    lowerB = lowerB - mid * 2
-    upperB = upperB + mid * 2
+    mid = (upperB-lowerB) / 2
+    Nmid = -0.2
+    lowerB = lowerB - mid * Nmid
+    upperB = upperB + mid * Nmid
     num = int(10 ** (np.log10(upperB - lowerB)) // 1)
+    if num == 0: num = 100
     y_range = np.linspace(lowerB, upperB, num=num)
     kernel_cdf = make_cdf(kernel_pdf)
     u_range = kernel_cdf(y_range)
@@ -80,9 +84,7 @@ def make_ppf(kernel_pdf):
 
     return kernel_ppf
 
-
 class GCP(Tuner):
-    
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:
@@ -95,38 +97,70 @@ class GCP(Tuner):
         self.r_min = kwargs.pop('r_min', 2)
 
     def fit(self, X, y):
+
         # Use X and y to train a Gaussian Copula Process.
         super(GCP, self).fit(X, y)
 
         # skip training the process if there aren't enough samples
+
+        strMessage = "################################## %d, %d ##################################" % (X.shape[0], self.r_min)
+        print(strMessage)
+
         if X.shape[0] < self.r_min:
             return
 
-        #-- Non-parametric model of 'y', estimated with kernel density
+        # -- Non-parametric model of 'y', estimated with kernel density
         kernel_pdf = st.gaussian_kde(y)
         kernel_cdf = make_cdf(kernel_pdf)
         kernel_ppf = make_ppf(kernel_pdf)
-        kernel_model = {'pdf': kernel_pdf, 'cdf': kernel_cdf, 'ppf': kernel_ppf}
-        self.kernel_model = kernel_model
-        #- Transform y-->F-->uF
-        uF = kernel_model['cdf'](y)
-        #- Transform uF-->norm.ppf-->u
-        u = st.norm.ppf(uF)
-        #- Instantiate a GP and fit it
-        self.gcp = GaussianProcessRegressor()#(normalize_y=True)
-        self.gcp.fit(X, u)
+        y_kernel_model = {'pdf': kernel_pdf, 'cdf': kernel_cdf, 'ppf': kernel_ppf}
+        self.y_kernel_model = y_kernel_model
+
+        # - Transform y-->F-->vF-->norm.ppf-->v
+        vF = y_kernel_model['cdf'](y)
+        v = st.norm.ppf(vF)
+
+        # -- Non-parametric model of each feature in 'X', estimated with kernel density
+        X_kernel_model=[]
+        for ki in range(X.shape[1]):
+            kernel_pdf = st.gaussian_kde(X[:,ki])
+            kernel_cdf = make_cdf(kernel_pdf)
+            kernel_ppf = make_ppf(kernel_pdf)
+            kernel_model = {'pdf': kernel_pdf, 'cdf': kernel_cdf, 'ppf': kernel_ppf}
+            X_kernel_model.append(kernel_model)
+        self.X_kernel_model = X_kernel_model
+
+        # -- Transform X-->F-->uF-->norm.ppf-->U
+        U = np.empty_like(X)
+        for ki in range(X.shape[1]):
+            uF = X_kernel_model[ki]['cdf'](X[:,ki])
+            U[:,ki] = st.norm.ppf(uF)
+
+        # - Instantiate a GP and fit it with (U,v)
+        self.gcp = GaussianProcessRegressor(normalize_y=True)
+        self.gcp.fit(U, v)
 
     def predict(self, X):
-        #-- Load non-parametric model
-        kernel_model = self.kernel_model
-        #-- use GP tp estimate mean and stdev of new_u for new_X=X
-        mu_u, stdev_u = self.gcp.predict(X, return_std=True)
-        #-- Transform back mu_u-->NormStd-->mu_uF
-        mu_uF = st.norm.cdf(mu_u)
-        stdev_uF = st.norm.cdf(stdev_u)
+        # -- Load non-parametric model
+        x_kernel_model = self.X_kernel_model
+        y_kernel_model = self.y_kernel_model
+
+        # -- Transform X into U before using the GP learned
+        U = np.empty_like(X)
+        for ki in range(X.shape[1]):
+            uF = x_kernel_model[ki]['cdf'](X[:,ki])
+            U[:,ki] = st.norm.ppf(uF)
+
+        # -- use GP tp estimate mean and stdev of new_u for new_X=X
+        mu_v, stdev_v = self.gcp.predict(U, return_std=True)
+
+        # -- Transform back mu_u-->NormStd-->mu_uF
+        mu_vF = st.norm.cdf(mu_v)
+        stdev_vF = st.norm.cdf(stdev_v)
+
         # -- Transform back mu_uF-->F.ppf-->mu_y
-        mu_y = kernel_model['ppf'](mu_uF)
-        stdev_y = kernel_model['ppf'](stdev_uF)
+        mu_y = y_kernel_model['ppf'](mu_vF)
+        stdev_y = y_kernel_model['ppf'](stdev_vF)
 
         return np.array(list(zip(mu_y, stdev_y)))
 
@@ -154,7 +188,7 @@ class GCP(Tuner):
             return super(GCP, self).propose()
 
 
-class GPEi(GCP):
+class GCPEi(GCP):
     #-- question: I have changed GPEi(GP) for GPEi(GCP), is that ok?
     def acquire(self, predictions):
         """
@@ -175,7 +209,7 @@ class GPEi(GCP):
         return np.argmax(ei)
 
 
-class GPEiVelocity(GPEi):
+class GCPEiVelocity(GCPEi):
     MULTIPLIER = -100   # magic number; modify with care
     N_BEST_Y = 5        # number of top values w/w to compute velocity
 
