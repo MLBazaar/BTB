@@ -27,7 +27,7 @@ def make_cdf(kernel_pdf):
     lowerB = lowerB - mid * Nmid
     upperB = upperB + mid * Nmid
     num = int(10 ** (np.log10(upperB - lowerB)) // 1)
-    if num == 0: num = 100
+    if num < 100: num = 100
     y_range = np.linspace(lowerB, upperB, num=num)
     u_range = np_cdf(kernel_pdf, y_range)
     funI = interp1d(y_range, u_range)  # <-- use linear interpolation
@@ -58,7 +58,7 @@ def make_ppf(kernel_pdf):
     lowerB = lowerB - mid * Nmid
     upperB = upperB + mid * Nmid
     num = int(10 ** (np.log10(upperB - lowerB)) // 1)
-    if num == 0: num = 100
+    if num < 100: num = 100
     y_range = np.linspace(lowerB, upperB, num=num)
     kernel_cdf = make_cdf(kernel_pdf)
     u_range = kernel_cdf(y_range)
@@ -98,14 +98,23 @@ class GCP(Tuner):
 
     def fit(self, X, y):
 
+        def jitter(x, range):
+            y = np.copy(x)
+            scale_exp_min = np.abs(np.ceil(np.log10(range[0])))
+            scale_exp_max = np.abs(np.ceil(np.log10(range[1])))
+            scale_exp = (scale_exp_max + scale_exp_min) /2.
+            r = np.random.rand(y.size) / (10**scale_exp)
+            y = y + r
+            return y
+
+        # Print msg. when going into gcp.fit
+        strMessage = "rows in X = %d, r_min = %d" % (X.shape[0], self.r_min)
+        print(strMessage)
+
         # Use X and y to train a Gaussian Copula Process.
         super(GCP, self).fit(X, y)
 
         # skip training the process if there aren't enough samples
-
-        strMessage = "################################## %d, %d ##################################" % (X.shape[0], self.r_min)
-        print(strMessage)
-
         if X.shape[0] < self.r_min:
             return
 
@@ -123,7 +132,10 @@ class GCP(Tuner):
         # -- Non-parametric model of each feature in 'X', estimated with kernel density
         X_kernel_model=[]
         for ki in range(X.shape[1]):
-            kernel_pdf = st.gaussian_kde(X[:,ki])
+            columnX = X[:,ki]
+            if self.tunables[ki][1].type != 'float':
+                columnX = jitter(columnX,self.tunables[ki][1].range)
+            kernel_pdf = st.gaussian_kde(columnX)
             kernel_cdf = make_cdf(kernel_pdf)
             kernel_ppf = make_ppf(kernel_pdf)
             kernel_model = {'pdf': kernel_pdf, 'cdf': kernel_cdf, 'ppf': kernel_ppf}
@@ -141,6 +153,14 @@ class GCP(Tuner):
         self.gcp.fit(U, v)
 
     def predict(self, X):
+
+        def get_valid_row(U):
+            ind_OK = np.full(U.shape[0],1,dtype=bool)
+            for ki in range(U.shape[1]):
+                ind_OK = np.logical_and(ind_OK, np.logical_not(np.isinf(U[:,ki])) )
+            V = np.copy(U[ind_OK,:])
+            return V, ind_OK
+
         # -- Load non-parametric model
         x_kernel_model = self.X_kernel_model
         y_kernel_model = self.y_kernel_model
@@ -151,16 +171,35 @@ class GCP(Tuner):
             uF = x_kernel_model[ki]['cdf'](X[:,ki])
             U[:,ki] = st.norm.ppf(uF)
 
-        # -- use GP tp estimate mean and stdev of new_u for new_X=X
-        mu_v, stdev_v = self.gcp.predict(U, return_std=True)
+        #-- Get U_safe and print msg. to inform of how many rows are valid
+        U_safe,ind_OK = get_valid_row(U)
+        strMessage = "Num. of valid rows in X = %d" % (np.sum(ind_OK))
+        print(strMessage)
+
+        # -- use GP to estimate mean and stdev only of safe U's
+        mu_v, stdev_v = self.gcp.predict(U_safe, return_std=True)
 
         # -- Transform back mu_u-->NormStd-->mu_uF
         mu_vF = st.norm.cdf(mu_v)
         stdev_vF = st.norm.cdf(stdev_v)
 
         # -- Transform back mu_uF-->F.ppf-->mu_y
+        # VERSION 1:
+        # It should be used in case of mu_y and stdev_y can have a size lower than X.
+        # Otherwise, swap to version 2.
         mu_y = y_kernel_model['ppf'](mu_vF)
         stdev_y = y_kernel_model['ppf'](stdev_vF)
+        '''
+        # VERSION 2:
+        # It should be used in case of mu_y and stdev_y must have the same length
+        # than X. Otherwise, Version 1 is faster.
+        # -- Transform back mu_uF-->F.ppf-->mu_y
+        #    mu_y has the same length than U, but is positive only for safe rows
+        mu_y = np.zeros([U.shape[0]])
+        stdev_y = np.zeros([U.shape[0]])
+        mu_y[ind_OK] = y_kernel_model['ppf'](mu_vF)
+        stdev_y[ind_OK] = y_kernel_model['ppf'](stdev_vF)
+        '''
 
         return np.array(list(zip(mu_y, stdev_y)))
 
