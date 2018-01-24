@@ -1,0 +1,4 @@
+*.pyc
+btb.egg-info/
+build/
+dist/

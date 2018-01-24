@@ -5,12 +5,14 @@ import numpy as np
 import scipy.stats as st
 from scipy.stats import norm
 
+from scipy.interpolate import interp1d
+from scipy.optimize import fsolve
+
 from btb.tuning import Tuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
-
+#########################Helper Functions########################
 def make_cdf(kernel_pdf):
-    from scipy.interpolate import interp1d
 
     def np_cdf(np_model, y):
         u = []
@@ -48,9 +50,6 @@ def make_cdf(kernel_pdf):
     return kernel_cdf
 
 def make_ppf(kernel_pdf):
-    from scipy.interpolate import interp1d
-    from scipy.optimize import fsolve
-
     lowerB = kernel_pdf.dataset.min()
     upperB = kernel_pdf.dataset.max()
     mid = (upperB-lowerB) / 2
@@ -83,8 +82,27 @@ def make_ppf(kernel_pdf):
         return y
 
     return kernel_ppf
+#########################End Helper Functions########################
 
 class GCP(Tuner):
+    """
+    Tuner based on Gaussian Coppula.
+
+    It does NOT assume that y_i, i=1:n , is jointly normally distributed.
+    Hence, there must be some joint distribution H that can be constructed
+    with copula functions.
+
+    If we assume that the underlying copula is the Gaussian, then H is
+    H = MVN (N'(F(y_1), N'(F(y_2), ..., N'(F(y_n); Cov)
+    where F is the distribution of y_i (assume that it is the same for all i),
+    N' is the inverse of the standard normal (quantile function)
+    and MVN is the multivariate normal with zero mean and some Covariance.
+
+    In this version F is estimated with gaussian_kde.
+    Therefore, by transforming y_i -->[ F ]--> uF_i -->[ N' ]--> u_i
+    it happens that u_i is jointly normally distributed.
+    """
+
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:
@@ -95,6 +113,9 @@ class GCP(Tuner):
         """
         super(GCP, self).__init__(tunables, gridding=gridding, **kwargs)
         self.r_min = kwargs.pop('r_min', 2)
+        self.X_kernel_model = None
+        self.y_kernel_model = None
+        self.gcp = GaussianProcessRegressor(normalize_y=True)
 
     def fit(self, X, y):
 
@@ -153,7 +174,6 @@ class GCP(Tuner):
         self.gcp.fit(U, v)
 
     def predict(self, X):
-
         def get_valid_row(U):
             ind_OK = np.full(U.shape[0],1,dtype=bool)
             for ki in range(U.shape[1]):
@@ -219,7 +239,7 @@ class GCP(Tuner):
         """
         if self.X.shape[0] < self.r_min:
             # we probably don't have enough
-            print('GP: not enough data, falling back to uniform sampler')
+            print('GCP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal generate-predict thing
@@ -258,7 +278,7 @@ class GCPEiVelocity(GCPEi):
         Uniform selection" (POU) value.
         """
         # first, train a gaussian process like normal
-        super(GPEiVelocity, self).fit(X, y)
+        super(GCPEiVelocity, self).fit(X, y)
 
         # probability of uniform
         self.POU = 0
@@ -282,4 +302,4 @@ class GCPEiVelocity(GCPEi):
             return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal GPEi thing
-            return super(GPEiVelocity, self).propose()
+            return super(GCPEiVelocity, self).propose()
