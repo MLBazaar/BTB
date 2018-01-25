@@ -245,7 +245,7 @@ class GCP(Tuner):
             # we probably don't have enough
             print('GCP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
-    elif self.gcp is None:
+        elif self.gcp is None:
             print('GCP: singular matrix of y values, falling back to GP sampler')
             tuner = GP(self.tunables)
             tuner.fit(self.X, self.y)
