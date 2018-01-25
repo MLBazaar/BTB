@@ -8,7 +8,7 @@ from scipy.stats import norm
 from scipy.interpolate import interp1d
 from scipy.optimize import fsolve
 
-from btb.tuning import Tuner, Uniform
+from btb.tuning import Tuner, Uniform, GP
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 #########################Helper Functions########################
@@ -140,7 +140,11 @@ class GCP(Tuner):
             return
 
         # -- Non-parametric model of 'y', estimated with kernel density
-        kernel_pdf = st.gaussian_kde(y)
+        try:
+            kernel_pdf = st.gaussian_kde(y)
+        except LinAlgError as e:
+            self.gcp = None
+            return
         kernel_cdf = make_cdf(kernel_pdf)
         kernel_ppf = make_ppf(kernel_pdf)
         y_kernel_model = {'pdf': kernel_pdf, 'cdf': kernel_cdf, 'ppf': kernel_ppf}
@@ -241,6 +245,11 @@ class GCP(Tuner):
             # we probably don't have enough
             print('GCP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
+    elif self.gcp is None:
+            print('GCP: singular matrix of y values, falling back to GP sampler')
+            tuner = GP(self.tunables)
+            tuner.fit(self.X, self.y)
+            return tuner.propose()
         else:
             # otherwise do the normal generate-predict thing
             print('GCP: using gaussian copula process to select parameters')
