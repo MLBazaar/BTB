@@ -2,6 +2,8 @@ from __future__ import division, print_function
 from builtins import zip, range
 
 import numpy as np
+from numpy.linalg import LinAlgError
+
 import scipy.stats as st
 from scipy.stats import norm
 
