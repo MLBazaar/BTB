@@ -88,13 +88,13 @@ class GCP(Tuner):
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:
-            r_min: the minimum number of past results this selector needs in
+            r_minimum: the minimum number of past results this selector needs in
                 order to use gaussian process for prediction. If not enough
                 results are present during a fit(), subsequent calls to
                 propose() will revert to uniform selection.
         """
         super(GCP, self).__init__(tunables, gridding=gridding, **kwargs)
-        self.r_min = kwargs.pop('r_min', 2)
+        self.r_minimum = kwargs.pop('r_minimum', 2)
 
     def fit(self, X, y):
 
@@ -108,14 +108,14 @@ class GCP(Tuner):
             return y
 
         # Print msg. when going into gcp.fit
-        strMessage = "rows in X = %d, r_min = %d" % (X.shape[0], self.r_min)
+        strMessage = "rows in X = %d, r_minimum = %d" % (X.shape[0], self.r_minimum)
         print(strMessage)
 
         # Use X and y to train a Gaussian Copula Process.
         super(GCP, self).fit(X, y)
 
         # skip training the process if there aren't enough samples
-        if X.shape[0] < self.r_min:
+        if X.shape[0] < self.r_minimum:
             return
 
         # -- Non-parametric model of 'y', estimated with kernel density
@@ -213,11 +213,11 @@ class GCP(Tuner):
 
     def propose(self):
         """
-        If we haven't seen at least self.r_min values, choose parameters
+        If we haven't seen at least self.r_minimum values, choose parameters
         using a Uniform tuner (randomly). Otherwise perform the usual
         create-predict-propose pipeline.
         """
-        if self.X.shape[0] < self.r_min:
+        if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
             print('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
@@ -262,7 +262,7 @@ class GCPEiVelocity(GCPEi):
 
         # probability of uniform
         self.POU = 0
-        if len(y) >= self.r_min:
+        if len(y) >= self.r_minimum:
             # get the best few scores so far, and compute the average distance
             # between them.
             top_y = sorted(y)[-self.N_BEST_Y:]
