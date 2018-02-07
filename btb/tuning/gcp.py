@@ -1,4 +1,5 @@
-from __future__ import division, print_function
+from __future__ import division
+import logging
 from builtins import zip, range
 
 import numpy as np
@@ -7,6 +8,8 @@ from scipy.stats import norm
 
 from btb.tuning import Tuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
+
+logger = logging.getLogger('btb')
 
 
 def make_cdf(kernel_pdf):
@@ -109,7 +112,7 @@ class GCP(Tuner):
 
         # Print msg. when going into gcp.fit
         strMessage = "rows in X = %d, r_minimum = %d" % (X.shape[0], self.r_minimum)
-        print(strMessage)
+        logger.debug(strMessage)
 
         # Use X and y to train a Gaussian Copula Process.
         super(GCP, self).fit(X, y)
@@ -174,7 +177,7 @@ class GCP(Tuner):
         #-- Get U_safe and print msg. to inform of how many rows are valid
         U_safe,ind_OK = get_valid_row(U)
         strMessage = "Num. of valid rows in X = %d" % (np.sum(ind_OK))
-        print(strMessage)
+        logger.debug(strMessage)
 
         # -- use GP to estimate mean and stdev only of safe U's
         mu_v, stdev_v = self.gcp.predict(U_safe, return_std=True)
@@ -219,11 +222,11 @@ class GCP(Tuner):
         """
         if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
-            print('GP: not enough data, falling back to uniform sampler')
+            logger.warn('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal generate-predict thing
-            print('GCP: using gaussian copula process to select parameters')
+            logger.info('GCP: using gaussian copula process to select parameters')
             return super(GCP, self).propose()
 
 

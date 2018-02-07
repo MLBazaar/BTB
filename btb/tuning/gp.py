@@ -1,4 +1,5 @@
 from __future__ import division
+import logging
 from builtins import zip, range
 
 import numpy as np
@@ -6,6 +7,8 @@ from scipy.stats import norm
 
 from btb.tuning import Tuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
+
+logger = logging.getLogger('btb')
 
 
 class GP(Tuner):
@@ -56,11 +59,11 @@ class GP(Tuner):
         """
         if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
-            logging.warn('GP: not enough data, falling back to uniform sampler')
+            logger.warn('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).propose()
         else:
             # otherwise do the normal generate-predict thing
-            logging.warn('GP: using gaussian process to select parameters')
+            logger.info('GP: using gaussian process to select parameters')
             return super(GP, self).propose()
 
 

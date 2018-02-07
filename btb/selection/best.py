@@ -1,4 +1,4 @@
-from __future__ import print_function
+import logging
 from builtins import range
 from btb.selection import Selector, UCB1
 import numpy as np
@@ -7,6 +7,8 @@ import numpy as np
 # optimizations. If not all choices meet this threshold, default UCB1 selection
 # will be used.
 K_MIN = 2
+
+logger = logging.getLogger('btb')
 
 
 class BestKReward(UCB1):
@@ -35,10 +37,10 @@ class BestKReward(UCB1):
         # reward function
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
-            print('BestK: using Best K bandit selection')
+            logger.info('BestK: using Best K bandit selection')
             reward_func = self.compute_rewards
         else:
-            print('BestK: Not enough choices to do K-selection; using plain UCB1')
+            logger.warn('BestK: Not enough choices to do K-selection; using plain UCB1')
             reward_func = super(BestKReward, self).compute_rewards
 
         # convert the raw scores list for each choice to a "rewards" list
