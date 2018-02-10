@@ -1,10 +1,12 @@
-from __future__ import print_function
+import logging
 from builtins import range, object
 import numpy as np
 import random
 import math
 
 from btb import ParamTypes, EXP_TYPES
+
+logger = logging.getLogger('btb')
 
 
 class Tuner(object):
@@ -170,7 +172,7 @@ class Tuner(object):
                     floats = math.log10(lo) + diff * np.random.rand(n)
                     column = 10.0 ** floats
                 else:
-                    print(param.type)
+                    logger.warn('Parameter passed with unknown type: %s' % param.type)
 
                 candidates[:, i] = column
                 i += 1
