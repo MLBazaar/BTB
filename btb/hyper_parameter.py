@@ -1,5 +1,7 @@
 from builtins import object, str as newstr
 from collections import namedtuple
+import numpy as np
+import math
 
 class ParamTypes(object):
 	INT = "int"
@@ -14,56 +16,60 @@ class ParamTypes(object):
 #HyperParameter object
 class HyperParameter(object):
 	def __new__(cls, typ, rang):
-		for sub_cls in HyperParameter.__subclasses__():
-			if sub_cls.is_type_for(typ):
-				return sub_cls(rang)
-		'''
+		sub_classes = HyperParameter.__subclasses__()[:]
 		if cls is HyperParameter:
-			for sub_cls in HyperParameter.__subclasses__():
-				if sub_cls.is_type_for(type):
+			i = 0
+			while i < len(sub_classes):
+				sub_cls = sub_classes[i]
+				if sub_cls.is_type_for(typ):
 					return super(HyperParameter, cls).__new__(sub_cls)
+				sub_classes.extend(sub_cls.__subclasses__())
+				i += 1
 		else:
-			return super(HyperParameter, cls).__new__(cls, rang)
-		'''
-	def __init__(self, cast, rang):
-        for i, val in enumerate(rang):
-            if val is None:
-                # the value None is allowed for every parameter type
-                continue
-            rang[i] = cast(val)
+			return super(HyperParameter, cls).__new__(cls)
+	def __init__(self, rang, cast):
+		print("called")
+		for i, val in enumerate(rang):
+			if val is None:
+				# the value None is allowed for every parameter type
+				continue
+			rang[i] = cast(val)
 		self.rang = rang
-
-    @property
-    def is_integer(self):
-        return False
+	#Open Q: is this necessary (ie is mapping to linear space with knowledge)
+	#of it being an integer necessary, or should we just round after?
+	@property
+	def is_integer(self):
+		return False
 
 	@classmethod
 	def is_type_for(cls, typ):
 		return False
 
-	def fit_transform(self, x,y):
+	def fit_transform(self, x, y):
 		return x
 
+	#TODO: is x one value or np array? Seems easy to assume one value
 	def inverse_transform(self, x):
 		return x
 
 class IntHyperParameter(HyperParameter):
-    def __init__(self, rang):
+	def __init__(self, typ, rang):
+		print("in int")
 		HyperParameter.__init__(self, rang, int)
 
 	@classmethod
 	def is_type_for(cls, typ):
 		return typ == ParamTypes.INT
 
-    @property
-    def is_integer(self):
-        return True
+	@property
+	def is_integer(self):
+		return True
 
 	def inverse_transform(self, x):
 		return int(x)
 
 class FloatHyperParameter(HyperParameter):
-    def __init__(self, rang):
+	def __init__(self, typ, rang):
 		HyperParameter.__init__(self, rang, float)
 
 	@classmethod
@@ -71,43 +77,39 @@ class FloatHyperParameter(HyperParameter):
 		return typ == ParamTypes.FLOAT
 
 class FloatExpHyperParameter(HyperParameter):
-    def __init__(self, rang):
-		def log_float(x):
-			return math.log10(float(val))
-		HyperParameter.__init__(self, rang, log_float)
+	def __init__(self, typ, rang):
+		HyperParameter.__init__(self, rang, lambda x: math.log10(float(x)))
 
 	@classmethod
 	def is_type_for(cls, typ):
 		return typ == ParamTypes.FLOAT_EXP
 
 	#transfrom to log base 10(x)
-	def fit_transform(x,y):
-		return math.log10(x)
+	def fit_transform(self, x,y):
+		return np.log10(x)
 
-	def inverse_transform(x):
+	def inverse_transform(self, x):
 		return 10.0**x
 
 class IntExpHyperParameter(FloatExpHyperParameter):
-    def __init__(self, rang):
-		def log_int(x):
-			return math.log10(int(val))
-		HyperParameter.__init__(self, rang, log_int)
+	def __init__(self, typ, rang):
+		HyperParameter.__init__(self, rang, lambda x: math.log10(int(x)))
 
 	@classmethod
 	def is_type_for(cls, typ):
 		return typ == ParamTypes.INT_EXP
 
-    @property
-    def is_integer(self):
-        return True
+	@property
+	def is_integer(self):
+		return True
 
 	def inverse_transform(self, x):
 		return int(FloatExpHyperParameter.inverse_transform(self, x))
 
 class CatHyperParameter(HyperParameter):
-	#Open Q: shoudl the search space always be 0-1? Or should it be
-	#min, max of values in cat_transform after fit transform?
-    def __init__(self, rang, cast):
+#Open Q: shoudl the search space always be 0-1? Or should it be
+#min, max of values in cat_transform after fit transform?
+	def __init__(self, rang, cast):
 		self.cat_transform = {cast(each): 0 for each in rang}
 		HyperParameter.__init__(self, [0.0, 1.0], float)
 
@@ -131,7 +133,7 @@ class CatHyperParameter(HyperParameter):
 		return np.vectorize(invert)(inv_map, x)
 
 class IntCatHyperParameter(CatHyperParameter):
-    def __init__(self, rang):
+	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, int)
 
 	@classmethod
@@ -139,7 +141,7 @@ class IntCatHyperParameter(CatHyperParameter):
 		return typ == ParamTypes.INT_CAT
 
 class FloatCatHyperParameter(CatHyperParameter):
-    def __init__(self, rang):
+	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, float)
 
 	@classmethod
@@ -147,17 +149,15 @@ class FloatCatHyperParameter(CatHyperParameter):
 		return typ == ParamTypes.FLOAT_CAT
 
 class StringCatHyperParameter(CatHyperParameter):
-    def __init__(self, rang):
-		def cast(x):
-			return str(newstr(x))
-		CatHyperParameter.__init__(self, rang, cast)
+	def __init__(self, typ, rang):
+		CatHyperParameter.__init__(self, rang, lambda x: str(newstr(x)))
 
 	@classmethod
 	def is_type_for(cls, typ):
 		return typ == ParamTypes.STRING
 
 class BoolCatHyperParameter(CatHyperParameter):
-    def __init__(self, rang):
+	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, bool)
 
 	@classmethod
