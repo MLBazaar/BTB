@@ -27,6 +27,7 @@ class HyperParameter(object):
 				i += 1
 		else:
 			return super(HyperParameter, cls).__new__(cls)
+
 	def __init__(self, rang, cast):
 		print("called")
 		for i, val in enumerate(rang):
@@ -35,8 +36,7 @@ class HyperParameter(object):
 				continue
 			rang[i] = cast(val)
 		self.rang = rang
-	#Open Q: is this necessary (ie is mapping to linear space with knowledge)
-	#of it being an integer necessary, or should we just round after?
+
 	@property
 	def is_integer(self):
 		return False
@@ -48,7 +48,6 @@ class HyperParameter(object):
 	def fit_transform(self, x, y):
 		return x
 
-	#TODO: is x one value or np array? Seems easy to assume one value
 	def inverse_transform(self, x):
 		return x
 
@@ -84,7 +83,6 @@ class FloatExpHyperParameter(HyperParameter):
 	def is_type_for(cls, typ):
 		return typ == ParamTypes.FLOAT_EXP
 
-	#transfrom to log base 10(x)
 	def fit_transform(self, x,y):
 		return np.log10(x)
 
@@ -120,15 +118,22 @@ class CatHyperParameter(HyperParameter):
 				self.cat_transform[x[i]][0] + y[i],
 				self.cat_transform[x[i]][1]+1
 			)
-		for key, value in self.cat_transform:
-			self.cat_transform[key] = value[0]/float(value[1])
+		for key, value in self.cat_transform.items():
+			if value[1] != 0:
+				self.cat_transform[key] = value[0]/float(value[1])
+			else:
+				self.cat_transform[key] = 0
 		return np.vectorize(self.cat_transform.get)(x)
 
 	def inverse_transform(self, x):
 		#TODO deal with repeated values
+		#TODO deal with ties in terms of closeness
+		#TODO currently return array even if only x
 		inv_map = {v: k for k, v in self.cat_transform.items()}
 		def invert(inv_map, x):
-			nearest = np.find_nearest(np.array(inv_map.keys()), x)
+			keys = np.fromiter(inv_map.keys(), dtype=float)
+			idx = (np.abs(keys-x)).argmin()
+			nearest = keys[idx]
 			return np.vectorize(inv_map.get)(nearest)
 		return np.vectorize(invert)(inv_map, x)
 
