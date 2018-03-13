@@ -1,7 +1,9 @@
 from builtins import object, str as newstr
-from collections import namedtuple
+from collections import namedtuple, defaultdict
+import random
 import numpy as np
 import math
+import operator
 
 #HyperParameter object
 class HyperParameter(object):
@@ -12,7 +14,6 @@ class HyperParameter(object):
 			return super(HyperParameter, cls).__new__(cls)
 
 	def __init__(self, rang, cast):
-		print("called")
 		for i, val in enumerate(rang):
 			if val is None:
 				# the value None is allowed for every parameter type
@@ -22,10 +23,6 @@ class HyperParameter(object):
 
 	@property
 	def is_integer(self):
-		return False
-
-	@classmethod
-	def is_type_for(cls, typ):
 		return False
 
 	def fit_transform(self, x, y):
@@ -39,32 +36,20 @@ class IntHyperParameter(HyperParameter):
 		print("in int")
 		HyperParameter.__init__(self, rang, int)
 
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.INT
-
 	@property
 	def is_integer(self):
 		return True
 
 	def inverse_transform(self, x):
-		return int(x)
+		return np.array(x).astype(int)
 
 class FloatHyperParameter(HyperParameter):
 	def __init__(self, typ, rang):
 		HyperParameter.__init__(self, rang, float)
 
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.FLOAT
-
 class FloatExpHyperParameter(HyperParameter):
 	def __init__(self, typ, rang):
 		HyperParameter.__init__(self, rang, lambda x: math.log10(float(x)))
-
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.FLOAT_EXP
 
 	def fit_transform(self, x,y):
 		return np.log10(x)
@@ -76,22 +61,17 @@ class IntExpHyperParameter(FloatExpHyperParameter):
 	def __init__(self, typ, rang):
 		HyperParameter.__init__(self, rang, lambda x: math.log10(int(x)))
 
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.INT_EXP
-
 	@property
 	def is_integer(self):
 		return True
 
 	def inverse_transform(self, x):
-		return int(FloatExpHyperParameter.inverse_transform(self, x))
+		return np.array(FloatExpHyperParameter.inverse_transform(self, x)).astype(int)
 
 class CatHyperParameter(HyperParameter):
-#Open Q: shoudl the search space always be 0-1? Or should it be
-#min, max of values in cat_transform after fit transform?
 	def __init__(self, rang, cast):
 		self.cat_transform = {cast(each): 0 for each in rang}
+		#this is a dummy range until the transformer is fit
 		HyperParameter.__init__(self, [0.0, 1.0], float)
 
 	def fit_transform(self, x, y):
@@ -106,51 +86,46 @@ class CatHyperParameter(HyperParameter):
 				self.cat_transform[key] = value[0]/float(value[1])
 			else:
 				self.cat_transform[key] = 0
+		rang_max = max(self.cat_transform.items(), key=operator.itemgetter(1))[0]
+		rang_min = min(self.cat_transform.items(), key=operator.itemgetter(1))[0]
+		self.rang = [rang_min, rang_max]
 		return np.vectorize(self.cat_transform.get)(x)
 
 	def inverse_transform(self, x):
-		#TODO deal with repeated values
-		#TODO deal with ties in terms of closeness
-		#TODO currently return array even if only x
-		inv_map = {v: k for k, v in self.cat_transform.items()}
+		inv_map = defaultdict(list)
+		for key, value in self.cat_transform.items():
+			inv_map[value].append(key)
+
 		def invert(inv_map, x):
 			keys = np.fromiter(inv_map.keys(), dtype=float)
-			idx = (np.abs(keys-x)).argmin()
-			nearest = keys[idx]
-			return np.vectorize(inv_map.get)(nearest)
+			diff = (np.abs(keys-x))
+			min_diff = diff[0]
+			max_key = keys[0]
+			for i in range(len(diff)):
+				if diff[i] < min_diff:
+					min_diff = diff[i]
+					max_key = keys[i]
+				elif diff[i] == min_diff and keys[i] > max_key:
+					min_diff = diff[i]
+					max_key = keys[i]
+			return random.choice(np.vectorize(inv_map.get)(max_key))
 		return np.vectorize(invert)(inv_map, x)
 
 class IntCatHyperParameter(CatHyperParameter):
 	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, int)
 
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.INT_CAT
-
 class FloatCatHyperParameter(CatHyperParameter):
 	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, float)
-
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.FLOAT_CAT
 
 class StringCatHyperParameter(CatHyperParameter):
 	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, lambda x: str(newstr(x)))
 
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.STRING
-
 class BoolCatHyperParameter(CatHyperParameter):
 	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, bool)
-
-	@classmethod
-	def is_type_for(cls, typ):
-		return typ == ParamTypes.BOOL
 
 class ParamTypes(object):
 	INT = IntHyperParameter
