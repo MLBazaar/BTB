@@ -33,7 +33,6 @@ class HyperParameter(object):
 
 class IntHyperParameter(HyperParameter):
 	def __init__(self, typ, rang):
-		print("in int")
 		HyperParameter.__init__(self, rang, int)
 
 	@property
@@ -55,7 +54,7 @@ class FloatExpHyperParameter(HyperParameter):
 		return np.log10(x)
 
 	def inverse_transform(self, x):
-		return 10.0**x
+		return np.power(10.0, x)
 
 class IntExpHyperParameter(FloatExpHyperParameter):
 	def __init__(self, typ, rang):
@@ -86,9 +85,9 @@ class CatHyperParameter(HyperParameter):
 				self.cat_transform[key] = value[0]/float(value[1])
 			else:
 				self.cat_transform[key] = 0
-		rang_max = max(self.cat_transform.items(), key=operator.itemgetter(1))[0]
-		rang_min = min(self.cat_transform.items(), key=operator.itemgetter(1))[0]
-		self.rang = [rang_min, rang_max]
+		rang_max = max(self.cat_transform.keys(), key=(lambda k: self.cat_transform[k]))
+		rang_min = min(self.cat_transform.keys(), key=(lambda k: self.cat_transform[k]))
+		self.rang = [self.cat_transform[rang_min], self.cat_transform[rang_max]]
 		return np.vectorize(self.cat_transform.get)(x)
 
 	def inverse_transform(self, x):
