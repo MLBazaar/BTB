@@ -4,7 +4,7 @@ import numpy as np
 import random
 import math
 
-from btb import ParamTypes, EXP_TYPES
+from btb import ParamTypes
 
 logger = logging.getLogger('btb')
 
@@ -37,25 +37,13 @@ class Tuner(object):
         """
         self._grid_axes = []
         for _, param in self.tunables:
-            if param.type == ParamTypes.INT:
+            if param.is_integer:
                 vals = np.round(np.linspace(param.range[0], param.range[1],
                                             self.grid_size))
 
-            elif param.type == ParamTypes.FLOAT:
+            else:
                 vals = np.round(np.linspace(param.range[0], param.range[1],
                                             self.grid_size), decimals=5)
-
-            # for exponential types, generate the grid in logarithm space so
-            # that grid points will be expnentially distributed.
-            elif param.type == ParamTypes.INT_EXP:
-                vals = np.round(10.0 ** np.linspace(math.log10(param.range[0]),
-                                                    math.log10(param.range[1]),
-                                                    self.grid_size))
-
-            elif param.type == ParamTypes.FLOAT_EXP:
-                vals = np.round(10.0 ** np.linspace(math.log10(param.range[0]),
-                                                    math.log10(param.range[1]),
-                                                    self.grid_size), decimals=5)
 
             self._grid_axes.append(vals)
 
@@ -70,14 +58,6 @@ class Tuner(object):
         grid_points = []
         for i, val in enumerate(params):
             axis = self._grid_axes[i]
-            if self.tunables[i][1].type in EXP_TYPES:
-                # if this is an exponential parameter, take the log of
-                # everything before finding the closest grid point.
-                # e.g. abs(4-1) < abs(4-10), but
-                # abs(log(4)-log(1)) > abs(log(4)-log(10)).
-                val = np.log(val)
-                axis = np.log(axis)
-
             # find the index of the grid point closest to the hyperparameter
             # vector
             idx = min(range(len(axis)), key=lambda i: abs(axis[i] - val))
@@ -100,6 +80,7 @@ class Tuner(object):
                 shape = (n_samples, len(tunables))
             y: np.array of scores, shape = (n_samples,)
         """
+        #TODO: transform x
         self.X = X
         self.y = y
 
@@ -156,23 +137,11 @@ class Tuner(object):
             candidates = np.zeros((n, len(self.tunables)))
             for i, (k, param) in enumerate(self.tunables):
                 lo, hi = param.range
-
-                # TODO: move this to a HyperParameter class
-                if param.type == ParamTypes.INT:
+                if param.is_integer:
                     column = np.random.randint(lo, hi + 1, size=n)
-                elif param.type == ParamTypes.FLOAT:
+                else:
                     diff = hi - lo
                     column = lo + diff * np.random.rand(n)
-                elif param.type == ParamTypes.INT_EXP:
-                    column = 10.0 ** np.random.randint(math.log10(lo),
-                                                       math.log10(hi) + 1,
-                                                       size=n)
-                elif param.type == ParamTypes.FLOAT_EXP:
-                    diff = math.log10(hi) - math.log10(lo)
-                    floats = math.log10(lo) + diff * np.random.rand(n)
-                    column = 10.0 ** floats
-                else:
-                    logger.warn('Parameter passed with unknown type: %s' % param.type)
 
                 candidates[:, i] = column
                 i += 1
@@ -206,7 +175,7 @@ class Tuner(object):
         """
         return np.argmax(predictions)
 
-    def propose(self):
+    def propose(self, X, y):
         """
         Use the trained model to propose a new set of parameters.
 
@@ -214,6 +183,16 @@ class Tuner(object):
             proposal: np.array of proposed hyperparameter values, in the same
                 order as self.tunables
         """
+        #TODO: transform x
+        x_t = np.array([])
+        if X.shape[1] > 0:
+            x_t = self.tunables[0].fit_transform(X[:,0], y)
+        for i in range(1, x.shape[1]):
+            transformed = self.tunables[i].fit_transform(X[:,i], y)
+            x_t = np.column_stack((x_t,transformed))
+
+        self.fit(x_t, y)
+
         # generate a list of random candidate vectors. If self.grid == True,
         # each candidate will be a vector that has not been used before.
         candidate_params = self.create_candidates()
@@ -228,4 +207,19 @@ class Tuner(object):
         # acquire() evaluates the list of predictions, selects one, and returns
         # its index.
         idx = self.acquire(predictions)
-        return candidate_params[idx, :]
+
+        #params = candidate_params[idx, :]
+        #TODO: inverse transform x
+        params = np.array([])
+        if candidate_params[idx,].shape[1] > 0:
+            params = self.tunables[0].inverse_transform(
+                candidate_params[idx,0]
+            )
+        for i in range(1, candidate_params[idx:,].shape[1]):
+            inverse_transformed = self.tunables[i].inverse_transform(
+                candidate_params[idx,i]
+            )
+            params = np.column_stack(
+                (params,inverse_transformed)
+            )
+        return params
