@@ -3,6 +3,7 @@ from collections import namedtuple
 import numpy as np
 import math
 
+'''
 class ParamTypes(object):
 	INT = "int"
 	INT_EXP = "int_exp"
@@ -12,10 +13,16 @@ class ParamTypes(object):
 	FLOAT_CAT = "float_cat"
 	STRING = "string"
 	BOOL = "bool"
+'''
 
 #HyperParameter object
 class HyperParameter(object):
 	def __new__(cls, typ, rang):
+		if cls is HyperParameter:
+			return super(HyperParameter, cls).__new__(typ)
+		else:
+			return super(HyperParameter, cls).__new__(cls)
+		'''
 		sub_classes = HyperParameter.__subclasses__()[:]
 		if cls is HyperParameter:
 			i = 0
@@ -27,6 +34,7 @@ class HyperParameter(object):
 				i += 1
 		else:
 			return super(HyperParameter, cls).__new__(cls)
+		'''
 
 	def __init__(self, rang, cast):
 		print("called")
@@ -168,3 +176,13 @@ class BoolCatHyperParameter(CatHyperParameter):
 	@classmethod
 	def is_type_for(cls, typ):
 		return typ == ParamTypes.BOOL
+
+class ParamTypes(object):
+	INT = IntHyperParameter
+	INT_EXP = IntExpHyperParameter
+	INT_CAT = IntCatHyperParameter
+	FLOAT = FloatHyperParameter
+	FLOAT_EXP = FloatExpHyperParameter
+	FLOAT_CAT = FloatCatHyperParameter
+	STRING = StringCatHyperParameter
+	BOOL = BoolCatHyperParameter
