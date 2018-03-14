@@ -184,11 +184,11 @@ class Tuner(object):
         """
         #transforms each hyperparameter based on hyperparameter type
         x_transformed = np.array([])
-        if X.shape[1] > 0:
+        if len(X.shape) >1 and X.shape[1] > 0:
             x_transformed = self.tunables[0][1].fit_transform(X[:,0], y)
-        for i in range(1, X.shape[1]):
-            transformed = self.tunables[i][1].fit_transform(X[:,i], y)
-            x_transformed = np.column_stack((x_transformed,transformed))
+            for i in range(1, X.shape[1]):
+                transformed = self.tunables[i][1].fit_transform(X[:,i], y)
+                x_transformed = np.column_stack((x_transformed,transformed))
         self.fit(x_transformed, y)
 
         # generate a list of random candidate vectors. If self.grid == True,
