@@ -38,8 +38,9 @@ def find_min_with_tuner(tuner):
 #initialize the tuneables, ie the function inputs x and y
 #we make a prior guess that the mimum function value will be found when
 #x and y are between -100 and 1000
-x = HyperParameter(ParamTypes.INT, [-100, 1000])
-y = HyperParameter(ParamTypes.INT, [-100, 1000])
+
+x = HyperParameter('int', [-100, 1000])
+y = HyperParameter('int', [-100, 1000])
 
 print("------------Minimum found with uniform tuner--------------")
 tuner = Uniform([("x",x), ("y", y)])

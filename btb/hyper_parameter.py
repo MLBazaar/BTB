@@ -5,11 +5,33 @@ import numpy as np
 import math
 import operator
 
+class ParamTypes(object):
+	INT = "int"
+	INT_EXP = "int_exp"
+	INT_CAT = "int_cat"
+	FLOAT = "float"
+	FLOAT_EXP = "float_exp"
+	FLOAT_CAT = "float_cat"
+	STRING = "string"
+	BOOL = "bool"
+
 #HyperParameter object
 class HyperParameter(object):
 	def __new__(cls, typ, rang):
+		class_generator = {
+			ParamTypes.INT: IntHyperParameter,
+			ParamTypes.INT_EXP: IntExpHyperParameter,
+			ParamTypes.INT_CAT: IntCatHyperParameter,
+			ParamTypes.FLOAT: FloatHyperParameter,
+			ParamTypes.FLOAT_EXP: FloatExpHyperParameter,
+			ParamTypes.FLOAT_CAT: FloatCatHyperParameter,
+			ParamTypes.STRING: StringCatHyperParameter,
+			ParamTypes.BOOL: BoolCatHyperParameter,
+		}
 		if cls is HyperParameter:
-			return super(HyperParameter, cls).__new__(typ)
+			return super(HyperParameter, cls).__new__(
+				class_generator[typ]
+			)
 		else:
 			return super(HyperParameter, cls).__new__(cls)
 
@@ -126,13 +148,3 @@ class StringCatHyperParameter(CatHyperParameter):
 class BoolCatHyperParameter(CatHyperParameter):
 	def __init__(self, typ, rang):
 		CatHyperParameter.__init__(self, rang, bool)
-
-class ParamTypes(object):
-	INT = IntHyperParameter
-	INT_EXP = IntExpHyperParameter
-	INT_CAT = IntCatHyperParameter
-	FLOAT = FloatHyperParameter
-	FLOAT_EXP = FloatExpHyperParameter
-	FLOAT_CAT = FloatCatHyperParameter
-	STRING = StringCatHyperParameter
-	BOOL = BoolCatHyperParameter
