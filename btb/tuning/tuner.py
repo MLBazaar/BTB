@@ -213,4 +213,4 @@ class Tuner(object):
                 candidate_params[idx,i]
             )
             params.append(inverse_transformed)
-        return np.array(params)
+        return np.array(params, dtype=object)

@@ -29,7 +29,7 @@ class HyperParameter(object):
 		return x
 
 	def inverse_transform(self, x):
-		return np.array(x)
+		return x
 
 class IntHyperParameter(HyperParameter):
 	def __init__(self, typ, rang):
@@ -39,11 +39,8 @@ class IntHyperParameter(HyperParameter):
 	def is_integer(self):
 		return True
 
-	def fit_transform(self, x, y):
-		return np.array(x).astype(int)
-
 	def inverse_transform(self, x):
-		return np.array(x).astype(int)
+		return int(x)
 
 class FloatHyperParameter(HyperParameter):
 	def __init__(self, typ, rang):
@@ -54,6 +51,7 @@ class FloatExpHyperParameter(HyperParameter):
 		HyperParameter.__init__(self, rang, lambda x: math.log10(float(x)))
 
 	def fit_transform(self, x,y):
+		x = x.astype(float)
 		return np.log10(x)
 
 	def inverse_transform(self, x):
@@ -68,7 +66,7 @@ class IntExpHyperParameter(FloatExpHyperParameter):
 		return True
 
 	def inverse_transform(self, x):
-		return np.array(FloatExpHyperParameter.inverse_transform(self, x)).astype(int)
+		return np.astype(FloatExpHyperParameter.inverse_transform(self, x), int)
 
 class CatHyperParameter(HyperParameter):
 	def __init__(self, rang, cast):
@@ -111,7 +109,7 @@ class CatHyperParameter(HyperParameter):
 					min_diff = diff[i]
 					max_key = keys[i]
 			return random.choice(np.vectorize(inv_map.get)(max_key))
-		return np.vectorize(invert)(inv_map, x)[0]
+		return np.vectorize(invert)(inv_map, x)
 
 class IntCatHyperParameter(CatHyperParameter):
 	def __init__(self, typ, rang):
