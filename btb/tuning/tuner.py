@@ -80,7 +80,6 @@ class Tuner(object):
                 shape = (n_samples, len(tunables))
             y: np.array of scores, shape = (n_samples,)
         """
-        #TODO: transform x
         self.X = X
         self.y = y
 
@@ -183,15 +182,14 @@ class Tuner(object):
             proposal: np.array of proposed hyperparameter values, in the same
                 order as self.tunables
         """
-        #TODO: transform x
-        x_t = np.array([])
+        #transforms each hyperparameter based on hyperparameter type
+        x_transformed = np.array([])
         if X.shape[1] > 0:
-            x_t = self.tunables[0].fit_transform(X[:,0], y)
-        for i in range(1, x.shape[1]):
-            transformed = self.tunables[i].fit_transform(X[:,i], y)
-            x_t = np.column_stack((x_t,transformed))
-
-        self.fit(x_t, y)
+            x_transformed = self.tunables[0][1].fit_transform(X[:,0], y)
+        for i in range(1, X.shape[1]):
+            transformed = self.tunables[i][1].fit_transform(X[:,i], y)
+            x_transformed = np.column_stack((x_transformed,transformed))
+        self.fit(x_transformed, y)
 
         # generate a list of random candidate vectors. If self.grid == True,
         # each candidate will be a vector that has not been used before.
@@ -208,18 +206,11 @@ class Tuner(object):
         # its index.
         idx = self.acquire(predictions)
 
-        #params = candidate_params[idx, :]
-        #TODO: inverse transform x
-        params = np.array([])
-        if candidate_params[idx,].shape[1] > 0:
-            params = self.tunables[0].inverse_transform(
-                candidate_params[idx,0]
-            )
-        for i in range(1, candidate_params[idx:,].shape[1]):
-            inverse_transformed = self.tunables[i].inverse_transform(
+        #inverse transform acquired hyperparameters based on hyparameter type
+        params = []
+        for i in range(candidate_params[idx,:].shape[0]):
+            inverse_transformed = self.tunables[i][1].inverse_transform(
                 candidate_params[idx,i]
             )
-            params = np.column_stack(
-                (params,inverse_transformed)
-            )
-        return params
+            params.append(inverse_transformed)
+        return np.array(params)

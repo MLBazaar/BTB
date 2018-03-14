@@ -19,7 +19,7 @@ class HyperParameter(object):
 				# the value None is allowed for every parameter type
 				continue
 			rang[i] = cast(val)
-		self.rang = rang
+		self.range = rang
 
 	@property
 	def is_integer(self):
@@ -29,7 +29,7 @@ class HyperParameter(object):
 		return x
 
 	def inverse_transform(self, x):
-		return x
+		return np.array(x)
 
 class IntHyperParameter(HyperParameter):
 	def __init__(self, typ, rang):
@@ -38,6 +38,9 @@ class IntHyperParameter(HyperParameter):
 	@property
 	def is_integer(self):
 		return True
+
+	def fit_transform(self, x, y):
+		return np.array(x).astype(int)
 
 	def inverse_transform(self, x):
 		return np.array(x).astype(int)
@@ -87,7 +90,7 @@ class CatHyperParameter(HyperParameter):
 				self.cat_transform[key] = 0
 		rang_max = max(self.cat_transform.keys(), key=(lambda k: self.cat_transform[k]))
 		rang_min = min(self.cat_transform.keys(), key=(lambda k: self.cat_transform[k]))
-		self.rang = [self.cat_transform[rang_min], self.cat_transform[rang_max]]
+		self.range = [self.cat_transform[rang_min], self.cat_transform[rang_max]]
 		return np.vectorize(self.cat_transform.get)(x)
 
 	def inverse_transform(self, x):
@@ -108,7 +111,7 @@ class CatHyperParameter(HyperParameter):
 					min_diff = diff[i]
 					max_key = keys[i]
 			return random.choice(np.vectorize(inv_map.get)(max_key))
-		return np.vectorize(invert)(inv_map, x)
+		return np.vectorize(invert)(inv_map, x)[0]
 
 class IntCatHyperParameter(CatHyperParameter):
 	def __init__(self, typ, rang):
