@@ -16,22 +16,16 @@ def rosenbrok(x,y):
     return (a-x)**2 + b*(y-x**2)**2
 
 def find_min_with_tuner(tuner):
-    x_y = []
-    rosenbrok_scores = []
     minimum_score = float("inf")
     xy_min = None
     for i in range(100):
         #use tuner to get next set of (x,y) to try
-        xy_to_try = tuner.propose(np.array(x_y), np.array(rosenbrok_scores))
-        x = xy_to_try[0]
-        y = xy_to_try[1]
-        score = rosenbrok(x,y)
+        xy_to_try = tuner.propose()
+        score = rosenbrok(xy_to_try['x'], xy_to_try['y'])
         if score < minimum_score:
             minimum_score = score
-            xy_min = (x,y)
-        rosenbrok_scores.append(-1*score) #tuner needs a maximization problem
-        x_y.append([x, y])
-
+            xy_min = (xy_to_try['x'], xy_to_try['y'])
+        tuner.add(xy_to_try, -1*score)
     print("minimum score:", minimum_score)
     print("minium score x:", xy_min[0], "minimum score y:", xy_min[1])
 

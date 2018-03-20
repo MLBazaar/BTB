@@ -30,6 +30,12 @@ class Tuner(object):
             self.grid_size = gridding
             self._define_grid()
 
+        self.X_raw = None
+        self.y_raw = []
+        
+        self.X = np.array([])
+        self.y = np.array([])
+
     def _define_grid(self):
         """
         Define the range of possible values for each of the tunable
@@ -174,7 +180,7 @@ class Tuner(object):
         """
         return np.argmax(predictions)
 
-    def propose(self, X, y):
+    def propose(self, n=1):
         """
         Use the trained model to propose a new set of parameters.
 
@@ -182,35 +188,58 @@ class Tuner(object):
             proposal: np.array of proposed hyperparameter values, in the same
                 order as self.tunables
         """
-        #transforms each hyperparameter based on hyperparameter type
+        proposed_params = []
+
+        for i in range(n):
+            # generate a list of random candidate vectors. If self.grid == True,
+            # each candidate will be a vector that has not been used before.
+            candidate_params = self.create_candidates()
+
+            # create_candidates() returns None when every grid point has been tried
+            if candidate_params is None:
+                return None
+
+            # predict() returns a tuple of predicted values for each candidate
+            predictions = self.predict(candidate_params)
+
+            # acquire() evaluates the list of predictions, selects one, and returns
+            # its index.
+            idx = self.acquire(predictions)
+
+            #inverse transform acquired hyperparameters based on hyparameter type
+            params = {}
+            for i in range(candidate_params[idx,:].shape[0]):
+                inverse_transformed = self.tunables[i][1].inverse_transform(
+                    candidate_params[idx,i]
+                )
+                params[self.tunables[i][0]] = inverse_transformed
+            proposed_params.append(params)
+        return params if n==1 else proposed_params
+
+    def add(self, X, y):
+        if type(X) is dict:
+            X = [X]
+            y = [y]
+
+        #transform the list of dictionaries into a np array X_raw
+        for each in X:
+            vectorized = []
+            for tunable in self.tunables:
+                vectorized.append(each[tunable[0]])
+            self.X_raw = np.append(self.X_raw, [vectorized], axis=0) if self.X_raw is not None else np.array([vectorized])
+        self.y_raw = np.append(self.y_raw, y)
         x_transformed = np.array([])
-        if len(X.shape) >1 and X.shape[1] > 0:
-            x_transformed = self.tunables[0][1].fit_transform(X[:,0], y)
-            for i in range(1, X.shape[1]):
-                transformed = self.tunables[i][1].fit_transform(X[:,i], y)
-                x_transformed = np.column_stack((x_transformed,transformed))
-        self.fit(x_transformed, y)
 
-        # generate a list of random candidate vectors. If self.grid == True,
-        # each candidate will be a vector that has not been used before.
-        candidate_params = self.create_candidates()
-
-        # create_candidates() returns None when every grid point has been tried
-        if candidate_params is None:
-            return None
-
-        # predict() returns a tuple of predicted values for each candidate
-        predictions = self.predict(candidate_params)
-
-        # acquire() evaluates the list of predictions, selects one, and returns
-        # its index.
-        idx = self.acquire(predictions)
-
-        #inverse transform acquired hyperparameters based on hyparameter type
-        params = []
-        for i in range(candidate_params[idx,:].shape[0]):
-            inverse_transformed = self.tunables[i][1].inverse_transform(
-                candidate_params[idx,i]
+        #transforms each hyperparameter based on hyperparameter typee
+        if len(self.X_raw.shape) >1 and self.X_raw.shape[1] > 0:
+            x_transformed = self.tunables[0][1].fit_transform(
+                self.X_raw[:,0],
+                self.y_raw,
             )
-            params.append(inverse_transformed)
-        return np.array(params, dtype=object)
+            for i in range(1, self.X_raw.shape[1]):
+                transformed = self.tunables[i][1].fit_transform(
+                    self.X_raw[:,i],
+                    self.y_raw,
+                )
+                x_transformed = np.column_stack((x_transformed,transformed))
+        self.fit(x_transformed, self.y_raw)

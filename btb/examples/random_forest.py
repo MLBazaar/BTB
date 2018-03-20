@@ -16,17 +16,12 @@ We tune the n_estimators and max_depth parameters.
 
 
 def tune_random_forest(tuner, X, y, X_test, y_test):
-    tested_parameters = np.zeros((10, 2), dtype=object) # 2 parameters 10 iterations
-    scores = [] # record all score data
     best_so_far = 0 # record best score
     for i in range(10):
-        n_estimators, max_depth = tuner.propose(
-            tested_parameters[:i, :],
-            scores,
-        )
+        params = tuner.propose()
         # create Random Forrest using proposed hyperparams from tuner
-        model = RandomForestClassifier(n_estimators=n_estimators,
-            max_depth=max_depth,
+        model = RandomForestClassifier(n_estimators=params['n_estimators'],
+            max_depth=params['max_depth'],
             n_jobs=-1,
             verbose=False,
         )
@@ -38,8 +33,7 @@ def tune_random_forest(tuner, X, y, X_test, y_test):
             print("Improved pipeline")
             print(score)
         # record hyper-param combination and score for tuning
-        tested_parameters[i, :] = [n_estimators, max_depth]
-        scores.append(score)
+        tuner.add(params, score)
     print("Final score:", best_so_far)
 
 
