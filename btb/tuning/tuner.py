@@ -32,7 +32,7 @@ class Tuner(object):
 
         self.X_raw = None
         self.y_raw = []
-        
+
         self.X = np.array([])
         self.y = np.array([])
 
@@ -183,10 +183,12 @@ class Tuner(object):
     def propose(self, n=1):
         """
         Use the trained model to propose a new set of parameters.
+        Args:
+            n (optional): number of candidates to propose
 
         Returns:
-            proposal: np.array of proposed hyperparameter values, in the same
-                order as self.tunables
+            proposal: dictionary of tunable name to proposed value.
+            If called with n>1 then proposal is a list of dictionaries.
         """
         proposed_params = []
 
@@ -217,6 +219,18 @@ class Tuner(object):
         return params if n==1 else proposed_params
 
     def add(self, X, y):
+        """
+        Add data about known tunable hyperparameter configurations and scores.
+        Refits model with all data.
+        Args:
+            X: dict or list of dicts of hyperparameter combinations.
+                Keys may only be the name of a tunable, and the dictionary
+                must contain values for all tunables.
+            y: float or list of floats of scores of the hyperparameter
+                combinations. Order of scores must match the order
+                of the hyperparameter dictionaries that the scores correspond to
+
+        """
         if type(X) is dict:
             X = [X]
             y = [y]
