@@ -62,7 +62,7 @@ class IntHyperParameter(HyperParameter):
 		return True
 
 	def inverse_transform(self, x):
-		return int(x)
+		return x.astype(int)
 
 class FloatHyperParameter(HyperParameter):
 	def __init__(self, typ, rang):
@@ -88,7 +88,7 @@ class IntExpHyperParameter(FloatExpHyperParameter):
 		return True
 
 	def inverse_transform(self, x):
-		return np.astype(FloatExpHyperParameter.inverse_transform(self, x), int)
+		return FloatExpHyperParameter.inverse_transform(self, x).astype(int)
 
 class CatHyperParameter(HyperParameter):
 	def __init__(self, rang, cast):

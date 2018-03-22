@@ -6,10 +6,10 @@ import numpy as np
 class TestHyperparameter(unittest.TestCase):
     def test_int(self):
         hyp = HyperParameter(ParamTypes.INT, [1,3])
-        self.assertEqual(hyp.rang, [1,3])
+        self.assertEqual(hyp.range, [1,3])
         transformed = hyp.fit_transform(np.array([1,2,3]), np.array([0.5,0.6,0.1]))
         numpy.testing.assert_array_equal(transformed, np.array([1,2,3]))
-        inverse_transform = hyp.inverse_transform([0.5])
+        inverse_transform = hyp.inverse_transform(np.array([0.5]))
         numpy.testing.assert_array_equal(inverse_transform, np.array([0]))
         hyp = HyperParameter(ParamTypes.INT, [1.0,3.0])
         self.assertEqual(hyp.range, [1,3])

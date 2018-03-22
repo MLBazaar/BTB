@@ -89,7 +89,7 @@ class Tuner(object):
         self.X = X
         self.y = y
 
-    def create_candidates(self, n=1000):
+    def _create_candidates(self, n=1000):
         """
         Generate a number of random hyperparameter vectors based on the
         specifications in self.tunables
@@ -165,7 +165,7 @@ class Tuner(object):
         raise NotImplementedError(
             'predict() needs to be implemented by a subclass of Tuner.')
 
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Acquisition function. Accepts a list of predicted values for candidate
         parameter sets, and returns the index of the best candidate.
@@ -195,7 +195,7 @@ class Tuner(object):
         for i in range(n):
             # generate a list of random candidate vectors. If self.grid == True,
             # each candidate will be a vector that has not been used before.
-            candidate_params = self.create_candidates()
+            candidate_params = self._create_candidates()
 
             # create_candidates() returns None when every grid point has been tried
             if candidate_params is None:
@@ -206,7 +206,7 @@ class Tuner(object):
 
             # acquire() evaluates the list of predictions, selects one, and returns
             # its index.
-            idx = self.acquire(predictions)
+            idx = self._acquire(predictions)
 
             #inverse transform acquired hyperparameters based on hyparameter type
             params = {}

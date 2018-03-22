@@ -47,7 +47,7 @@ class GP(Tuner):
         y, stdev = self.gp.predict(X, return_std=True)
         return np.array(list(zip(y, stdev)))
 
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Predictions from the GP will be in the form (prediction, error).
         The default acquisition function returns the index with the highest
@@ -56,7 +56,7 @@ class GP(Tuner):
         return np.argmax(predictions[:, 0])
 
 class GPEi(GP):
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf

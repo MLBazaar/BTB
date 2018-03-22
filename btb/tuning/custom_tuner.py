@@ -9,4 +9,4 @@ class CustomTuner(Tuner):
         """
         Generate and return a random set of parameters.
         """
-        return self.create_candidates(1)[0, :]
+        return self._create_candidates(1)[0, :]

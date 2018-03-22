@@ -210,7 +210,7 @@ class GCP(Tuner):
 
         return np.array(list(zip(mu_y, stdev_y)))
 
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Predictions from the GCP will be in the form (prediction, error).
         The default acquisition function returns the index with the highest
@@ -220,7 +220,7 @@ class GCP(Tuner):
 
 class GCPEi(GCP):
     #-- question: I have changed GPEi(GP) for GPEi(GCP), is that ok?
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
