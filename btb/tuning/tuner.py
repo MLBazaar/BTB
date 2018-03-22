@@ -14,7 +14,7 @@ class Tuner(object):
         """
         Args:
             tunables: Ordered list of hyperparameter names and metadata
-                objects. These describe the hyperparameters that this Tuner will
+            objects. These describe the hyperparameters that this Tuner will
                 be tuning. e.g.:
                 [('degree', HyperParameter(type='INT', range=(2, 4))),
                  ('coef0', HyperParameter('INT', (0, 1))),
@@ -193,30 +193,32 @@ class Tuner(object):
         proposed_params = []
 
         for i in range(n):
-            # generate a list of random candidate vectors. If self.grid == True,
+            # generate a list of random candidate vectors. If self.grid == True
             # each candidate will be a vector that has not been used before.
             candidate_params = self._create_candidates()
 
-            # create_candidates() returns None when every grid point has been tried
+            # create_candidates() returns None when every grid point
+            # has been tried
             if candidate_params is None:
                 return None
 
             # predict() returns a tuple of predicted values for each candidate
             predictions = self.predict(candidate_params)
 
-            # acquire() evaluates the list of predictions, selects one, and returns
-            # its index.
+            # acquire() evaluates the list of predictions, selects one,
+            # and returns its index.
             idx = self._acquire(predictions)
 
-            #inverse transform acquired hyperparameters based on hyparameter type
+            # inverse transform acquired hyperparameters
+            # based on hyparameter type
             params = {}
-            for i in range(candidate_params[idx,:].shape[0]):
+            for i in range(candidate_params[idx, :].shape[0]):
                 inverse_transformed = self.tunables[i][1].inverse_transform(
-                    candidate_params[idx,i]
+                    candidate_params[idx, i]
                 )
                 params[self.tunables[i][0]] = inverse_transformed
             proposed_params.append(params)
-        return params if n==1 else proposed_params
+        return params if n == 1 else proposed_params
 
     def add(self, X, y):
         """
@@ -228,32 +230,35 @@ class Tuner(object):
                 must contain values for all tunables.
             y: float or list of floats of scores of the hyperparameter
                 combinations. Order of scores must match the order
-                of the hyperparameter dictionaries that the scores correspond to
+                of the hyperparameter dictionaries that the scores corresponds
 
         """
         if type(X) is dict:
             X = [X]
             y = [y]
 
-        #transform the list of dictionaries into a np array X_raw
+        # transform the list of dictionaries into a np array X_raw
         for each in X:
             vectorized = []
             for tunable in self.tunables:
                 vectorized.append(each[tunable[0]])
-            self.X_raw = np.append(self.X_raw, [vectorized], axis=0) if self.X_raw is not None else np.array([vectorized])
+            if self.X_raw is not None:
+                self.X_raw = np.append(self.X_raw, [vectorized], axis=0)
+            else:
+                self.X_raw = np.array([vectorized])
         self.y_raw = np.append(self.y_raw, y)
         x_transformed = np.array([])
 
-        #transforms each hyperparameter based on hyperparameter typee
-        if len(self.X_raw.shape) >1 and self.X_raw.shape[1] > 0:
+        # transforms each hyperparameter based on hyperparameter typee
+        if len(self.X_raw.shape) > 1 and self.X_raw.shape[1] > 0:
             x_transformed = self.tunables[0][1].fit_transform(
-                self.X_raw[:,0],
+                self.X_raw[:, 0],
                 self.y_raw,
             )
             for i in range(1, self.X_raw.shape[1]):
                 transformed = self.tunables[i][1].fit_transform(
-                    self.X_raw[:,i],
+                    self.X_raw[:, i],
                     self.y_raw,
                 )
-                x_transformed = np.column_stack((x_transformed,transformed))
+                x_transformed = np.column_stack((x_transformed, transformed))
         self.fit(x_transformed, self.y_raw)
