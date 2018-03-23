@@ -40,8 +40,8 @@ class HyperParameter(object):
             if val is None:
                 # the value None is allowed for every parameter type
                 continue
-                rang[i] = cast(val)
-                self.range = rang
+            rang[i] = cast(val)
+        self.range = rang
 
     @property
     def is_integer(self):

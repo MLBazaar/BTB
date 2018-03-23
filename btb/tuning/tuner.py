@@ -43,15 +43,7 @@ class Tuner(object):
         """
         self._grid_axes = []
         for _, param in self.tunables:
-            if param.is_integer:
-                vals = np.round(np.linspace(param.range[0], param.range[1],
-                                            self.grid_size))
-
-            else:
-                vals = np.round(np.linspace(param.range[0], param.range[1],
-                                            self.grid_size), decimals=5)
-
-            self._grid_axes.append(vals)
+            self._grid_axes.append(param.get_grid_axis(self.grid_size))
 
     def _params_to_grid(self, params):
         """
