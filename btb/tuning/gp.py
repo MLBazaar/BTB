@@ -20,12 +20,12 @@ class GP(Tuner):
                 results are present during a fit(), subsequent calls to
                 propose() will revert to uniform selection.
         """
-        super(GP, self).__init__(tunables, gridding=gridding, **kwargs)
+        super().__init__(tunables, gridding=gridding, **kwargs)
         self.r_minimum = kwargs.pop('r_minimum', 2)
 
     def fit(self, X, y):
         """ Use X and y to train a Gaussian process. """
-        super(GP, self).fit(X, y)
+        super().fit(X, y)
 
         # skip training the process if there aren't enough samples
         if X.shape[0] < self.r_minimum:
@@ -85,7 +85,7 @@ class GPEiVelocity(GPEi):
         Uniform selection" (POU) value.
         """
         # first, train a gaussian process like normal
-        super(GPEiVelocity, self).fit(X, y)
+        super().fit(X, y)
 
         # probability of uniform
         self.POU = 0
@@ -108,4 +108,4 @@ class GPEiVelocity(GPEi):
             # choose params at random to avoid local minima
             return Uniform(self.tunables).predict(X)
 
-        return super(GPEiVelocity, self).predict(X)
+        return super().predict(X)
