@@ -1,13 +1,14 @@
+from btb import HyperParameter, ParamTypes
+from btb.selection import Selector
+from btb.tuning import GP
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import fetch_mldata
 from sklearn.svm import SVC
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 import numpy as np
 
-from btb import HyperParameter, ParamTypes
-from btb.tuning import GP
-from btb.selection import Selector
 
 """
 Selection example of chosing whether to give tuning budget to a Random Foreset
@@ -18,6 +19,7 @@ We use a GP-based tuner for both pipelines.
 We tune the n_estimators and max_depth parameters of the Random Forrest.
 We tune tge c and gamma parameters of the SVM.
 """
+
 
 def tune_pipeline(
     X,
@@ -39,22 +41,18 @@ def tune_pipeline(
         generate_model: function that returns an slkearn model to fit
         tuner: BTB tuner object for tuning hyperparameters
     """
-    best_so_far = max(tuner.y) if len(tuner.y) >0 else 0 # keep track of best score
-    print("Tuning with GP tuner for %s iterations"%TUNING_BUDGET_PER_ITER)
+    print("Tuning with GP tuner for %s iterations" % TUNING_BUDGET_PER_ITER)
     for i in range(TUNING_BUDGET_PER_ITER):
-        params =  tuner.propose()
+        params = tuner.propose()
         # create model using proposed hyperparams from tuner
         model = generate_model(params)
         model.fit(X, y)
         predicted = model.predict(X_val)
         score = accuracy_score(predicted, y_val)
-        if score > best_so_far:
-            best_so_far = score
-            print("Improved pipeline to:", score)
         # record hyper-param combination and score for tuning
         tuner.add(params, score)
-    print("Final score:", best_so_far)
-    return best_so_far
+    print("Final score:", tuner._best_score)
+    
 
 if __name__ == '__main__':
 
@@ -64,24 +62,27 @@ if __name__ == '__main__':
     X, X_test, y, y_test = train_test_split(
         mnist.data,
         mnist.target,
-        train_size = 1000,
-        test_size = 300,
+        train_size=1000,
+        test_size=300,
     )
 
     # Establish global variables
-    SELCTOR_NUM_ITER = 5 #we will use the selector 5 times
-    TUNING_BUDGET_PER_ITER = 3 #we will tune for 3 iterations per round of selection
+    SELCTOR_NUM_ITER = 5  # we will use the selector 5 times
+    TUNING_BUDGET_PER_ITER = 3  # we will tune for 3 iterations per round
+    # of selection
 
     # initialize the tuners
     # parameters of RandomForestClassifier we wish to tune and their ranges
     tunables_rf = [
         ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
-        ('max_depth', HyperParameter(ParamTypes.INT, [3,20]))
+        ('max_depth', HyperParameter(ParamTypes.INT, [3, 20]))
     ]
     # parameters of SVM we wish to tune and their ranges
     tunables_svm = [
         ('c', HyperParameter(ParamTypes.FLOAT_EXP, [0.01, 10.0])),
-        ('gamma', HyperParameter(ParamTypes.FLOAT, [0.000000001,0.0000001]))
+        ('gamma', HyperParameter(
+                    ParamTypes.FLOAT, [0.000000001, 0.0000001]
+        ))
     ]
     # Create a GP-based tuner for these tunables
     rf_tuner = GP(tunables_rf)
@@ -102,8 +103,8 @@ if __name__ == '__main__':
             verbose=False,
         )
 
-    # Start by tuning each choice a few times, to generate scores and kick start
-    # the selection
+    # Start by tuning each choice a few times, to generate scores and kick
+    # start the selection
     print("---------Inital tuning of RF pipeline ---------")
     tune_pipeline(
         X,
@@ -134,9 +135,12 @@ if __name__ == '__main__':
         # Using available score data, use Selector to choose next pipeline
         # to give tuning budge to
         next_pipeline = selector.select(choice_scores)
-        print("\n---------SELECTED %s pipeline for tuning budget---------"%next_pipeline)
+        print(
+            "\n---------SELECTED %s pipeline for tuning budget---------"
+            % next_pipeline
+        )
         if next_pipeline == 'RF':
-            #give tuning budget Random Forrest pipeline
+            # give tuning budget Random Forrest pipeline
             tune_pipeline(
                 X,
                 y,
@@ -146,8 +150,8 @@ if __name__ == '__main__':
                 rf_tuner,
             )
             choice_scores['RF'] = rf_tuner.y
-        elif next_pipeline=='SVM':
-            #give tuning budget to SVM pipeline
+        elif next_pipeline == 'SVM':
+            # give tuning budget to SVM pipeline
             tune_pipeline(
                 X,
                 y,

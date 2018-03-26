@@ -3,6 +3,7 @@ from btb.tuning import Uniform, GP, GPEi, GPEiVelocity, GCP, GCPEi, GCPEiVelocit
 import numpy as np
 import unittest
 
+
 class TestHyperparameter(unittest.TestCase):
     def test_uniform(self):
         X = [

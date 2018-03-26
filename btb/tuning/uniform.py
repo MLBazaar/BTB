@@ -1,7 +1,8 @@
-from btb.tuning import Tuner
+from btb.tuning import BaseTuner
 import numpy as np
 
-class Uniform(Tuner):
+
+class Uniform(BaseTuner):
     """
     Very bare_bones tuner that returns a random set of parameters each time.
     """

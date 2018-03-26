@@ -5,13 +5,13 @@ from builtins import zip, range
 import numpy as np
 from scipy.stats import norm
 
-from btb.tuning import Tuner, Uniform
+from btb.tuning import BaseTuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 logger = logging.getLogger('btb')
 
 
-class GP(Tuner):
+class GP(BaseTuner):
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:

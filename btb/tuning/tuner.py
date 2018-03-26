@@ -9,7 +9,7 @@ from btb import ParamTypes
 logger = logging.getLogger('btb')
 
 
-class Tuner(object):
+class BaseTuner(object):
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Args:
@@ -25,6 +25,8 @@ class Tuner(object):
         """
         self.tunables = tunables
         self.grid = gridding > 0
+        self._best_score = -1 * float('inf')
+        self._best_hyperparams = None
 
         if self.grid:
             self.grid_size = gridding
@@ -230,7 +232,12 @@ class Tuner(object):
             y = [y]
 
         # transform the list of dictionaries into a np array X_raw
-        for each in X:
+        for i in range(len(X)):
+            each = X[i]
+            # update best score and hyperparameters
+            if y[i] > self._best_score:
+                self._best_score = y[i]
+                self._best_hyperparams = X[i]
             vectorized = []
             for tunable in self.tunables:
                 vectorized.append(each[tunable[0]])
@@ -239,9 +246,9 @@ class Tuner(object):
             else:
                 self.X_raw = np.array([vectorized])
         self.y_raw = np.append(self.y_raw, y)
-        x_transformed = np.array([])
 
-        # transforms each hyperparameter based on hyperparameter typee
+        # transforms each hyperparameter based on hyperparameter type
+        x_transformed = np.array([])
         if len(self.X_raw.shape) > 1 and self.X_raw.shape[1] > 0:
             x_transformed = self.tunables[0][1].fit_transform(
                 self.X_raw[:, 0],

@@ -16,11 +16,11 @@ We tune the n_estimators and max_depth parameters.
 
 
 def tune_random_forest(tuner, X, y, X_test, y_test):
-    best_so_far = 0 # record best score
     for i in range(10):
         params = tuner.propose()
         # create Random Forrest using proposed hyperparams from tuner
-        model = RandomForestClassifier(n_estimators=params['n_estimators'],
+        model = RandomForestClassifier(
+            n_estimators=params['n_estimators'],
             max_depth=params['max_depth'],
             n_jobs=-1,
             verbose=False,
@@ -28,13 +28,9 @@ def tune_random_forest(tuner, X, y, X_test, y_test):
         model.fit(X, y)
         predicted = model.predict(X_test)
         score = accuracy_score(predicted, y_test)
-        if score > best_so_far:
-            best_so_far = score
-            print("Improved pipeline")
-            print(score)
         # record hyper-param combination and score for tuning
         tuner.add(params, score)
-    print("Final score:", best_so_far)
+    print("Final score:", tuner._best_score)
 
 
 print("Loading MNIST Data")
@@ -42,14 +38,14 @@ mnist = fetch_mldata('MNIST original')
 X, X_test, y, y_test = train_test_split(
     mnist.data,
     mnist.target,
-    train_size = 1000,
-    test_size = 300,
+    train_size=1000,
+    test_size=300,
 )
 
-#parameters of RandomForestClassifier we wish to tune and their ranges
+# parameters of RandomForestClassifier we wish to tune and their ranges
 tunables = [
     ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
-    ('max_depth', HyperParameter(ParamTypes.INT, [3,20]))
+    ('max_depth', HyperParameter(ParamTypes.INT, [3, 20]))
 ]
 
 print("-------Tuning with a Uniform Tuner-------")

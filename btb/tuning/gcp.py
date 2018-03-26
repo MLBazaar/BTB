@@ -6,7 +6,7 @@ import numpy as np
 import scipy.stats as st
 from scipy.stats import norm
 
-from btb.tuning import Tuner, Uniform
+from btb.tuning import BaseTuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 logger = logging.getLogger('btb')
@@ -87,7 +87,7 @@ def make_ppf(kernel_pdf):
 
     return kernel_ppf
 
-class GCP(Tuner):
+class GCP(BaseTuner):
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:
