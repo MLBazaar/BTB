@@ -1,6 +1,7 @@
 from builtins import object, str as newstr
 from collections import namedtuple
 
+
 class ParamTypes(object):
 	INT = "int"
 	INT_EXP = "int_exp"
@@ -11,8 +12,10 @@ class ParamTypes(object):
 	STRING = "string"
 	BOOL = "bool"
 
+
 # List of exponential hyperparameter types
 EXP_TYPES = [ParamTypes.INT_EXP, ParamTypes.FLOAT_EXP]
+
 
 # List of categorical hyperparameter types
 CAT_TYPES = [ParamTypes.INT_CAT, ParamTypes.FLOAT_CAT, ParamTypes.STRING,
