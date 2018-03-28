@@ -1,7 +1,10 @@
-from btb import ParamTypes, HyperParameter
-from btb.tuning import Uniform, GP, GPEi, GPEiVelocity, GCP, GCPEi, GCPEiVelocity
-import numpy as np
 import unittest
+
+import numpy as np
+
+from btb import HyperParameter, ParamTypes
+from btb.tuning import Uniform, GP, GPEi, GPEiVelocity, GCP, GCPEi, \
+ GCPEiVelocity
 
 
 class TestHyperparameter(unittest.TestCase):
@@ -118,7 +121,3 @@ class TestHyperparameter(unittest.TestCase):
         self.assertTrue(proposed['a'] >= 1 and proposed['a'] <= 5)
         self.assertTrue(proposed['b'] >= 0.0001 and proposed['b'] <= 0.1)
         self.assertTrue(proposed['c'] >= 2 and proposed['c'] <= 8)
-
-
-if __name__ == '__main__':
-    unittest.main()

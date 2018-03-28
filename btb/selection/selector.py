@@ -11,7 +11,7 @@ class Selector(object):
         """
         self.choices = choices
 
-    def compute_rewards(saelf, scores):
+    def compute_rewards(self, scores):
         """
         Convert a list of scores associated with one choice into a list of
         rewards. Normally, the length of the list will be preserved, even if

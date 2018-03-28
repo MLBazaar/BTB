@@ -1,8 +1,9 @@
-import logging
 from builtins import range, object
-import numpy as np
-import random
+import logging
 import math
+import random
+
+import numpy as np
 
 from btb import ParamTypes
 

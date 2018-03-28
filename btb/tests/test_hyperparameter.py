@@ -110,7 +110,3 @@ class TestHyperparameter(unittest.TestCase):
         )
         inverse_transform = hyp.inverse_transform([3])
         numpy.testing.assert_array_equal(inverse_transform, np.array(['c']))
-
-
-if __name__ == '__main__':
-    unittest.main()

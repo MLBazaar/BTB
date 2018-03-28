@@ -1,6 +1,7 @@
+import numpy as np
+
 from btb import HyperParameter, ParamTypes
 from btb.tuning import Uniform, GP
-import numpy as np
 
 """
 In this example, we use a Tuner to estimate the minimum of a Rosenbrok

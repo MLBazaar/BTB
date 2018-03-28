@@ -1,9 +1,10 @@
 from builtins import object, str as newstr
 from collections import namedtuple, defaultdict
-import random
-import numpy as np
 import math
 import operator
+import random
+
+import numpy as np
 
 
 class ParamTypes(object):
@@ -20,18 +21,8 @@ class ParamTypes(object):
 # HyperParameter object
 class HyperParameter(object):
     def __new__(cls, typ, rang):
-        class_generator = {
-            ParamTypes.INT: IntHyperParameter,
-            ParamTypes.INT_EXP: IntExpHyperParameter,
-            ParamTypes.INT_CAT: IntCatHyperParameter,
-            ParamTypes.FLOAT: FloatHyperParameter,
-            ParamTypes.FLOAT_EXP: FloatExpHyperParameter,
-            ParamTypes.FLOAT_CAT: FloatCatHyperParameter,
-            ParamTypes.STRING: StringCatHyperParameter,
-            ParamTypes.BOOL: BoolCatHyperParameter,
-            }
         if cls is HyperParameter:
-            return super(HyperParameter, cls).__new__(class_generator[typ])
+            return super(HyperParameter, cls).__new__(CLASS_GENERATOR[typ])
         else:
             return super(HyperParameter, cls).__new__(cls)
 
@@ -176,3 +167,15 @@ class StringCatHyperParameter(CatHyperParameter):
 class BoolCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
         CatHyperParameter.__init__(self, rang, bool)
+
+
+CLASS_GENERATOR = {
+    ParamTypes.INT: IntHyperParameter,
+    ParamTypes.INT_EXP: IntExpHyperParameter,
+    ParamTypes.INT_CAT: IntCatHyperParameter,
+    ParamTypes.FLOAT: FloatHyperParameter,
+    ParamTypes.FLOAT_EXP: FloatExpHyperParameter,
+    ParamTypes.FLOAT_CAT: FloatCatHyperParameter,
+    ParamTypes.STRING: StringCatHyperParameter,
+    ParamTypes.BOOL: BoolCatHyperParameter,
+}

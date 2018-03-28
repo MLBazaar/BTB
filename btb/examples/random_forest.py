@@ -1,10 +1,11 @@
+import numpy as np
 from sklearn.datasets import fetch_mldata
-from sklearn.model_selection import train_test_split
-from btb import HyperParameter, ParamTypes
-from btb.tuning import GP, Uniform
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-import numpy as np
+from sklearn.model_selection import train_test_split
+
+from btb import HyperParameter, ParamTypes
+from btb.tuning import GP, Uniform
 
 """
 Tuning example on a Random Forreset pipeline.

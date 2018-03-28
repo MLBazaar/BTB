@@ -4,9 +4,9 @@ from builtins import zip, range
 
 import numpy as np
 from scipy.stats import norm
+from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 from btb.tuning import BaseTuner, Uniform
-from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
 
 logger = logging.getLogger('btb')
 
@@ -20,12 +20,12 @@ class GP(BaseTuner):
                 results are present during a fit(), subsequent calls to
                 propose() will revert to uniform selection.
         """
-        super().__init__(tunables, gridding=gridding, **kwargs)
+        super(GP, self).__init__(tunables, gridding=gridding, **kwargs)
         self.r_minimum = kwargs.pop('r_minimum', 2)
 
     def fit(self, X, y):
         """ Use X and y to train a Gaussian process. """
-        super().fit(X, y)
+        super(GP, self).fit(X, y)
 
         # skip training the process if there aren't enough samples
         if X.shape[0] < self.r_minimum:
@@ -60,7 +60,7 @@ class GPEi(GP):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
-        Args:e
+        Args:
             predictions: np.array of (estimated y, estimated error) tuples that
                 the gaussian process generated for a series of
                 proposed hyperparameters.
@@ -85,7 +85,7 @@ class GPEiVelocity(GPEi):
         Uniform selection" (POU) value.
         """
         # first, train a gaussian process like normal
-        super().fit(X, y)
+        super(GPEiVelocity, self).fit(X, y)
 
         # probability of uniform
         self.POU = 0
@@ -108,4 +108,4 @@ class GPEiVelocity(GPEi):
             # choose params at random to avoid local minima
             return Uniform(self.tunables).predict(X)
 
-        return super().predict(X)
+        return super(GPEiVelocity, self).predict(X)

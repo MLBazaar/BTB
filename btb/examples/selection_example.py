@@ -1,13 +1,13 @@
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import fetch_mldat
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+
 from btb import HyperParameter, ParamTypes
 from btb.selection import Selector
 from btb.tuning import GP
-import numpy as np
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import fetch_mldata
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-import numpy as np
 
 
 """
@@ -21,14 +21,7 @@ We tune tge c and gamma parameters of the SVM.
 """
 
 
-def tune_pipeline(
-    X,
-    y,
-    X_val,
-    y_val,
-    generate_model,
-    tuner,
-):
+def tune_pipeline(X, y, X_val, y_val, generate_model, tuner):
     """
     Tunes a specified pipeline with the
     specified tuner for TUNING_BUDGET_PER_ITER (3) iterations.
@@ -52,7 +45,7 @@ def tune_pipeline(
         # record hyper-param combination and score for tuning
         tuner.add(params, score)
     print("Final score:", tuner._best_score)
-    
+
 
 if __name__ == '__main__':
 

@@ -1,6 +1,5 @@
-from __future__ import absolute_import
-from .constants import Tuners
-from .tuner import BaseTuner
-from .uniform import Uniform
-from .gp import GP, GPEi, GPEiVelocity
-from .gcp import GCP, GCPEi, GCPEiVelocity
+from btb.tuning.constants import Tuners
+from btb.tuning.tuner import BaseTuner
+from btb.tuning.uniform import Uniform
+from btb.tuning.gp import GP, GPEi, GPEiVelocity
+from btb.tuning.gcp import GCP, GCPEi, GCPEiVelocity

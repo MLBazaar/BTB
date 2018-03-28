@@ -1,8 +1,7 @@
-from __future__ import absolute_import
-from .selector import Selector
-from .ucb1 import UCB1
-from .uniform import Uniform
-from .best import BestKReward, BestKVelocity
-from .hierarchical import HierarchicalByAlgorithm
-from .pure import PureBestKVelocity
-from .recent import RecentKReward, RecentKVelocity
+from btb.selection.selector import Selector
+from btb.selection.ucb1 import UCB1
+from btb.selection.uniform import Uniform
+from btb.selection.best import BestKReward, BestKVelocity
+from btb.selection.hierarchical import HierarchicalByAlgorithm
+from btb.selection.pure import PureBestKVelocity
+from btb.selection.recent import RecentKReward, RecentKVelocity
