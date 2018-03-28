@@ -1,7 +1,7 @@
-from btb.tuning import Tuner
+from btb.tuning import BaseTuner
 
 
-class CustomTuner(Tuner):
+class CustomTuner(BaseTuner):
     """
     Very bare_bones tuner that returns a random set of parameters each time.
     """
@@ -9,4 +9,4 @@ class CustomTuner(Tuner):
         """
         Generate and return a random set of parameters.
         """
-        return self.create_candidates(1)[0, :]
+        return self._create_candidates(1)[0, :]

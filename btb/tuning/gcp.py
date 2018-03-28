@@ -5,9 +5,9 @@ from builtins import zip, range
 import numpy as np
 import scipy.stats as st
 from scipy.stats import norm
-
-from btb.tuning import Tuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
+
+from btb.tuning import BaseTuner, Uniform
 
 logger = logging.getLogger('btb')
 
@@ -87,7 +87,7 @@ def make_ppf(kernel_pdf):
 
     return kernel_ppf
 
-class GCP(Tuner):
+class GCP(BaseTuner):
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:
@@ -136,7 +136,7 @@ class GCP(Tuner):
         X_kernel_model=[]
         for ki in range(X.shape[1]):
             columnX = X[:,ki]
-            if self.tunables[ki][1].type != 'float':
+            if self.tunables[ki][1].is_integer:
                 columnX = jitter(columnX,self.tunables[ki][1].range)
             kernel_pdf = st.gaussian_kde(columnX)
             kernel_cdf = make_cdf(kernel_pdf)
@@ -156,6 +156,10 @@ class GCP(Tuner):
         self.gcp.fit(U, v)
 
     def predict(self, X):
+        if self.X.shape[0] < self.r_minimum:
+            # we probably don't have enough
+            logger.warn('GP: not enough data, falling back to uniform sampler')
+            return Uniform(self.tunables).predict(X)
 
         def get_valid_row(U):
             ind_OK = np.full(U.shape[0],1,dtype=bool)
@@ -206,7 +210,7 @@ class GCP(Tuner):
 
         return np.array(list(zip(mu_y, stdev_y)))
 
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Predictions from the GCP will be in the form (prediction, error).
         The default acquisition function returns the index with the highest
@@ -214,25 +218,9 @@ class GCP(Tuner):
         """
         return np.argmax(predictions[:, 0])
 
-    def propose(self):
-        """
-        If we haven't seen at least self.r_minimum values, choose parameters
-        using a Uniform tuner (randomly). Otherwise perform the usual
-        create-predict-propose pipeline.
-        """
-        if self.X.shape[0] < self.r_minimum:
-            # we probably don't have enough
-            logger.warn('GP: not enough data, falling back to uniform sampler')
-            return Uniform(self.tunables).propose()
-        else:
-            # otherwise do the normal generate-predict thing
-            logger.info('GCP: using gaussian copula process to select parameters')
-            return super(GCP, self).propose()
-
-
 class GCPEi(GCP):
     #-- question: I have changed GPEi(GP) for GPEi(GCP), is that ok?
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
@@ -261,7 +249,7 @@ class GCPEiVelocity(GCPEi):
         Uniform selection" (POU) value.
         """
         # first, train a gaussian process like normal
-        super(GPEiVelocity, self).fit(X, y)
+        super(GCPEiVelocity, self).fit(X, y)
 
         # probability of uniform
         self.POU = 0
@@ -275,14 +263,14 @@ class GCPEiVelocity(GCPEi):
             # the "velocity" of top scores.
             self.POU = np.exp(self.MULTIPLIER * np.mean(velocities))
 
-    def propose(self):
+    def predict(self, X):
         """
         Use the POU value we computed in fit to choose randomly between GPEi and
         uniform random selection.
         """
         if np.random.random() < self.POU:
             # choose params at random to avoid local minima
-            return Uniform(self.tunables).propose()
+            return Uniform(self.tunables).predict(X)
         else:
             # otherwise do the normal GPEi thing
-            return super(GPEiVelocity, self).propose()
+            return super(GCPEiVelocity, self).predict(X)
