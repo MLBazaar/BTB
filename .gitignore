@@ -1,0 +1,12 @@
+__pycache__
+*.pyc
+
+.tox
+.pytest_cache
+
+*.swp
+.coverage
+
+btb.egg-info
+build/
+dist/
