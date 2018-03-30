@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from btb.tuning.gp import GP, GPEi, GPEiVelocity
+# from btb.tuning.gp import GP, GPEi, GPEiVelocity
 
 
 class TestGP(TestCase):

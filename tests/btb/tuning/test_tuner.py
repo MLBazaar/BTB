@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 import numpy as np
+
 from btb.hyper_parameter import HyperParameter, ParamTypes
 from btb.tuning.tuner import BaseTuner
 
@@ -19,13 +20,13 @@ class TestBaseTuner(TestCase):
     def test___init__(self):
 
         assert self.base_tuner.tunables == self.tunables
-        assert self.base_tuner.grid == True
+        assert self.base_tuner.grid is True
         assert self.base_tuner._best_score == -np.inf
-        assert self.base_tuner._best_hyperparams == None
+        assert self.base_tuner._best_hyperparams is None
         assert self.base_tuner.grid_size == 5
         assert len(self.base_tuner._grid_axes) == 1
         assert self.base_tuner._grid_axes[0].tolist() == [1.,  3.,  6.,  8., 10.]
-        assert self.base_tuner.X_raw == None
+        assert self.base_tuner.X_raw is None
         assert self.base_tuner.y_raw == []
         assert self.base_tuner.X.tolist() == []
         assert self.base_tuner.y.tolist() == []
@@ -41,7 +42,6 @@ class TestBaseTuner(TestCase):
     # METHOD: _params_to_grid(self, params)
     # VALIDATE:
     #     * Returned grid
-
 
     # METHOD: _grid_to_params(self, grid_points)
     # VALIDATE:

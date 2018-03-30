@@ -1,4 +1,3 @@
-import random
 from builtins import object
 
 import numpy as np

@@ -4,9 +4,10 @@ import logging
 from builtins import range, zip
 
 import numpy as np
-from btb.tuning import BaseTuner, Uniform
 from scipy.stats import norm
-from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
+from sklearn.gaussian_process import GaussianProcessRegressor
+
+from btb.tuning import BaseTuner, Uniform
 
 logger = logging.getLogger('btb')
 
@@ -32,8 +33,9 @@ class GP(BaseTuner):
             return
 
         # old gaussian process code
-        #self.gp = GaussianProcess(theta0=1e-2, thetaL=1e-4, thetaU=1e-1,
-        #                          nugget=np.finfo(np.double).eps * 1000)
+        # TODO: Can this be removed?
+        # self.gp = GaussianProcess(theta0=1e-2, thetaL=1e-4, thetaU=1e-1,
+        #                           nugget=np.finfo(np.double).eps * 1000)
         self.gp = GaussianProcessRegressor(normalize_y=True)
         self.gp.fit(X, y)
 
@@ -43,7 +45,8 @@ class GP(BaseTuner):
             logger.warn('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).predict(X)
         # old gaussian process code
-        #return self.gp.predict(X, eval_MSE=True)
+        # TODO: Can this be removed?
+        # return self.gp.predict(X, eval_MSE=True)
         y, stdev = self.gp.predict(X, return_std=True)
         return np.array(list(zip(y, stdev)))
 
@@ -54,6 +57,7 @@ class GP(BaseTuner):
         predicted value, not factoring in error.
         """
         return np.argmax(predictions[:, 0])
+
 
 class GPEi(GP):
     def _acquire(self, predictions):
