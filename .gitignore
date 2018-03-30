@@ -1,12 +1,15 @@
+# Python cache
 __pycache__
 *.pyc
 
+# Backup files
+*.swp
+*.bak
+
+# Test Folders
+.coverage
 .tox
 .pytest_cache
-
-*.swp
-.coverage
-
 btb.egg-info
 build/
 dist/
