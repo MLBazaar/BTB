@@ -1,10 +1,9 @@
-from builtins import range, object
 import logging
 import math
 import random
+from builtins import object, range
 
 import numpy as np
-
 from btb import ParamTypes
 
 logger = logging.getLogger('btb')

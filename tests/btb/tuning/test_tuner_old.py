@@ -1,10 +1,9 @@
 import unittest
 
 import numpy as np
-
 from btb import HyperParameter, ParamTypes
-from btb.tuning import Uniform, GP, GPEi, GPEiVelocity, GCP, GCPEi, \
- GCPEiVelocity
+from btb.tuning import (GCP, GP, GCPEi, GCPEiVelocity, GPEi, GPEiVelocity,
+                        Uniform)
 
 
 class TestHyperparameter(unittest.TestCase):

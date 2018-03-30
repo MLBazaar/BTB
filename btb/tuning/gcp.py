@@ -1,13 +1,13 @@
 from __future__ import division
+
 import logging
-from builtins import zip, range
+from builtins import range, zip
 
 import numpy as np
 import scipy.stats as st
+from btb.tuning import BaseTuner, Uniform
 from scipy.stats import norm
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
-
-from btb.tuning import BaseTuner, Uniform
 
 logger = logging.getLogger('btb')
 

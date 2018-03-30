@@ -1,7 +1,8 @@
-from btb import HyperParameter, ParamTypes
+import unittest
+
 import numpy as np
 import numpy.testing
-import unittest
+from btb import HyperParameter, ParamTypes
 
 
 class TestHyperparameter(unittest.TestCase):

@@ -1,8 +1,9 @@
-from builtins import object, str as newstr
-from collections import namedtuple, defaultdict
 import math
 import operator
 import random
+from builtins import object
+from builtins import str as newstr
+from collections import defaultdict, namedtuple
 
 import numpy as np
 
