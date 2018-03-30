@@ -7,7 +7,7 @@ __pycache__
 *.bak
 
 # Test Folders
-.coverage
+.coverage*
 .tox
 .pytest_cache
 btb.egg-info
