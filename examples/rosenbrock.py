@@ -1,7 +1,7 @@
-import numpy as np
-
+import examples_setup  # noqa: F401
 from btb import HyperParameter, ParamTypes
-from btb.tuning import Uniform, GP
+from btb.tuning import GP, Uniform
+
 
 """
 In this example, we use a Tuner to estimate the minimum of a Rosenbrok
@@ -19,8 +19,8 @@ def rosenbrok(x, y):
 
 
 def find_min_with_tuner(tuner):
-    minimum_score = float("inf")
-    xy_min = None
+    # minimum_score = float("inf")
+    # xy_min = None
     for i in range(100):
         # use tuner to get next set of (x,y) to try
         xy_to_try = tuner.propose()
@@ -38,8 +38,8 @@ def find_min_with_tuner(tuner):
 # we make a prior guess that the mimum function value will be found when
 # x and y are between -100 and 1000
 
-x = HyperParameter('int', [-100, 1000])
-y = HyperParameter('int', [-100, 1000])
+x = HyperParameter(ParamTypes.INT, [-100, 1000])
+y = HyperParameter(ParamTypes.INT, [-100, 1000])
 
 print("------------Minimum found with uniform tuner--------------")
 tuner = Uniform([("x", x), ("y", y)])

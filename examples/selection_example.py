@@ -1,10 +1,10 @@
-import numpy as np
+from sklearn.datasets import fetch_mldata
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import fetch_mldat
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
+import examples_setup  # noqa: F401
 from btb import HyperParameter, ParamTypes
 from btb.selection import Selector
 from btb.tuning import GP
@@ -82,14 +82,16 @@ if __name__ == '__main__':
     svm_tuner = GP(tunables_svm)
 
     # Function to generate proper model given hyperparameters
-    gen_rf = lambda params: RandomForestClassifier(
+    def gen_rf(params):
+        return RandomForestClassifier(
             n_estimators=params['n_estimators'],
             max_depth=params['max_depth'],
             n_jobs=-1,
             verbose=False,
         )
 
-    gen_svm = lambda params: SVC(
+    def gen_svm(params):
+        return SVC(
             C=params['c'],
             gamma=params['gamma'],
             max_iter=-1,
