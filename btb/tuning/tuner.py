@@ -92,6 +92,7 @@ class BaseTuner(object):
             np.array of candidate hyperparameter vectors,
                 shape = (n_samples, len(tunables))
         """
+
         # If using a grid, generate a list of previously unused grid points
         if self.grid:
             # convert numpy array to set of tuples of grid indices for easier
@@ -107,7 +108,8 @@ class BaseTuner(object):
             # grid points not in past_vecs
             if num_points - len(past_vecs) <= n:
                 # generate all possible points in the grid
-                indices = np.indices(self._grid_axes)
+                # FIXED BUG: indices = np.indices(self._grid_axes)
+                indices = np.indices(len(a) for a in self._grid_axes)
                 all_vecs = set(tuple(v) for v in
                                indices.T.reshape(-1, indices.shape[0]))
                 vec_list = list(all_vecs - past_vecs)

@@ -53,7 +53,7 @@ class HyperParameter(object):
             # NOTE: flake8 reported "undefined name 'param'"
             # so "param" was repaced by "self".
             # Remove this after review.
-            np.linspace(self.range[0], self.range[1], self.grid_size),
+            np.linspace(self.range[0], self.range[1], grid_size),
             decimals=5,
         )
 
