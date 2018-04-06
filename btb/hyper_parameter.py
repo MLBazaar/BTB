@@ -1,3 +1,5 @@
+import copy
+
 from builtins import object, str as newstr
 from collections import namedtuple, defaultdict
 import math
@@ -33,6 +35,20 @@ class HyperParameter(object):
                 continue
             rang[i] = cast(val)
         self.range = rang
+
+    def __copy__(self):
+        cls = self.__class__
+        result = cls.__new__(cls, INVERSE_CLASS_GENERATOR[cls], self.range)
+        result.__dict__.update(self.__dict__)
+        return result
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls, INVERSE_CLASS_GENERATOR[cls], self.range)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, copy.deepcopy(v, memo))
+        return result
 
     @property
     def is_integer(self):
@@ -180,3 +196,5 @@ CLASS_GENERATOR = {
     ParamTypes.STRING: StringCatHyperParameter,
     ParamTypes.BOOL: BoolCatHyperParameter,
 }
+
+INVERSE_CLASS_GENERATOR = {CLASS_GENERATOR[k]: k for k in CLASS_GENERATOR}
