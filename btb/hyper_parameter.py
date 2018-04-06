@@ -57,7 +57,7 @@ class HyperParameter(object):
 
 class IntHyperParameter(HyperParameter):
     def __init__(self, typ, rang):
-        super().__init__(rang, int)
+        super(IntHyperParameter, self).__init__(rang, int)
 
     @property
     def is_integer(self):
@@ -69,12 +69,12 @@ class IntHyperParameter(HyperParameter):
 
 class FloatHyperParameter(HyperParameter):
     def __init__(self, typ, rang):
-        super().__init__(rang, float)
+        super(FloatHyperParameter, self).__init__(rang, float)
 
 
 class FloatExpHyperParameter(HyperParameter):
     def __init__(self, typ, rang):
-        super().__init__(rang, lambda x: math.log10(float(x)))
+        super(FloatExpHyperParameter, self).__init__(rang, lambda x: math.log10(float(x)))
 
     def fit_transform(self, x, y):
         x = x.astype(float)
@@ -94,14 +94,14 @@ class IntExpHyperParameter(FloatExpHyperParameter):
         return True
 
     def inverse_transform(self, x):
-        return super().inverse_transform(x).astype(int)
+        return super(IntExpHyperParameter, self).inverse_transform(x).astype(int)
 
 
 class CatHyperParameter(HyperParameter):
     def __init__(self, rang, cast):
         self.cat_transform = {cast(each): 0 for each in rang}
         # this is a dummy range until the transformer is fit
-        super().__init__([0.0, 1.0], float)
+        super(CatHyperParameter, self).__init__([0.0, 1.0], float)
 
     def fit_transform(self, x, y):
         self.cat_transform = {each: (0, 0) for each in self.cat_transform}
@@ -152,22 +152,22 @@ class CatHyperParameter(HyperParameter):
 
 class IntCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        super().__init__(rang, int)
+        super(IntCatHyperParameter, self).__init__(rang, int)
 
 
 class FloatCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        super().__init__(rang, float)
+        super(FloatCatHyperParameter, self).__init__(rang, float)
 
 
 class StringCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        super().__init__(rang, lambda x: str(newstr(x)))
+        super(StringCatHyperParameter, self).__init__(rang, lambda x: str(newstr(x)))
 
 
 class BoolCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        super().__init__(rang, bool)
+        super(BoolCatHyperParameter, self).__init__(rang, bool)
 
 
 CLASS_GENERATOR = {
