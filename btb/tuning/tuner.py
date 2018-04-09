@@ -211,6 +211,7 @@ class BaseTuner(object):
                 )
                 params[self.tunables[i][0]] = inverse_transformed
             proposed_params.append(params)
+
         return params if n == 1 else proposed_params
 
     def add(self, X, y):
@@ -237,13 +238,17 @@ class BaseTuner(object):
             if y[i] > self._best_score:
                 self._best_score = y[i]
                 self._best_hyperparams = X[i]
+
             vectorized = []
             for tunable in self.tunables:
                 vectorized.append(each[tunable[0]])
+
             if self.X_raw is not None:
                 self.X_raw = np.append(self.X_raw, [vectorized], axis=0)
+
             else:
                 self.X_raw = np.array([vectorized])
+
         self.y_raw = np.append(self.y_raw, y)
 
         # transforms each hyperparameter based on hyperparameter type
@@ -253,10 +258,12 @@ class BaseTuner(object):
                 self.X_raw[:, 0],
                 self.y_raw,
             )
+
             for i in range(1, self.X_raw.shape[1]):
                 transformed = self.tunables[i][1].fit_transform(
                     self.X_raw[:, i],
                     self.y_raw,
                 )
                 x_transformed = np.column_stack((x_transformed, transformed))
+
         self.fit(x_transformed, self.y_raw)

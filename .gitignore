@@ -10,6 +10,7 @@ __pycache__
 .coverage*
 .tox
 .pytest_cache
+htmlcov/
 btb.egg-info
 build/
 dist/

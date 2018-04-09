@@ -44,6 +44,7 @@ class GP(BaseTuner):
             # we probably don't have enough
             logger.warn('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).predict(X)
+
         # old gaussian process code
         # TODO: Can this be removed?
         # return self.gp.predict(X, eval_MSE=True)

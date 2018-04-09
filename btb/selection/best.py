@@ -39,6 +39,7 @@ class BestKReward(UCB1):
         if min_num_scores >= K_MIN:
             logger.info('BestK: using Best K bandit selection')
             reward_func = self.compute_rewards
+
         else:
             logger.warn('BestK: Not enough choices to do K-selection; using plain UCB1')
             reward_func = super(BestKReward, self).compute_rewards

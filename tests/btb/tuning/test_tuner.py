@@ -25,24 +25,24 @@ class TestBaseTuner(TestCase):
         )
 
         # Run
-        base_tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=5)
 
         # assert
-        assert base_tuner.tunables == tunables
-        assert base_tuner.grid is True
-        assert base_tuner._best_score == -np.inf
-        assert base_tuner._best_hyperparams is None
-        assert base_tuner.grid_size == 5
-        assert base_tuner.X_raw is None
-        assert base_tuner.y_raw == []
-        assert base_tuner.X.tolist() == []
-        assert base_tuner.y.tolist() == []
+        assert tuner.tunables == tunables
+        assert tuner.grid is True
+        assert tuner._best_score == -np.inf
+        assert tuner._best_hyperparams is None
+        assert tuner.grid_size == 5
+        assert tuner.X_raw is None
+        assert tuner.y_raw == []
+        assert tuner.X.tolist() == []
+        assert tuner.y.tolist() == []
 
         expected_grid_axes = [
-            np.array([1. , 1.25, 1.5 , 1.75, 2.]),
+            np.array([1., 1.25, 1.5, 1.75, 2.]),
             np.array([1., 2., 3., 4., 5.])
         ]
-        np.testing.assert_array_equal(base_tuner._grid_axes, expected_grid_axes)
+        np.testing.assert_array_equal(tuner._grid_axes, expected_grid_axes)
 
     # METHOD: _define_grid(self)
     # VALIDATE:
@@ -63,14 +63,13 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=5)
 
         # Run
-        grid = base_tuner._params_to_grid([1.25, 3])
+        grid = tuner._params_to_grid([1.25, 3])
 
         # Assert
         np.testing.assert_array_equal(grid, [1, 2])
-
 
     # METHOD: _grid_to_params(self, grid_points)
     # VALIDATE:
@@ -83,14 +82,13 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=5)
 
         # Run
-        grid = base_tuner._grid_to_params([1, 2])
+        grid = tuner._grid_to_params([1, 2])
 
         # Assert
         np.testing.assert_array_equal(grid, [1.25, 3])
-
 
     # METHOD: fit(self, X, y)
     # VALIDATE:
@@ -103,7 +101,7 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables)
+        tuner = BaseTuner(tunables)
 
         # Run
         X = [
@@ -114,12 +112,11 @@ class TestBaseTuner(TestCase):
             [2., 5],
         ]
         y = [0.5, 0.6, 0.7, 0.8, 0.9]
-        base_tuner.fit(X, y)
+        tuner.fit(X, y)
 
         # Assert
-        assert base_tuner.X == X
-        assert base_tuner.y == y
-
+        assert tuner.X == X
+        assert tuner.y == y
 
     # METHOD: _create_candidates(self, n=1000)
     # VALIDATE:
@@ -142,10 +139,10 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables)
+        tuner = BaseTuner(tunables)
 
         # Run
-        candidates = base_tuner._create_candidates(5)
+        candidates = tuner._create_candidates(5)
 
         # Assert
         expected_candidates = np.array([
@@ -168,13 +165,13 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=5)
 
         # Insert 25 part_vecs into X
-        base_tuner.X = np.array(list(product(*base_tuner._grid_axes)))
+        tuner.X = np.array(list(product(*tuner._grid_axes)))
 
         # Run
-        candidates = base_tuner._create_candidates(5)
+        candidates = tuner._create_candidates(5)
 
         # Assert
         assert candidates is None
@@ -186,15 +183,15 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=5)
 
         # Insert 20 part_vecs into X (5 remaining)
-        all_vecs = np.array(list(product(*base_tuner._grid_axes)))
-        base_tuner.X = all_vecs[:20]
+        all_vecs = np.array(list(product(*tuner._grid_axes)))
+        tuner.X = all_vecs[:20]
 
         # Run
         # n = 1000
-        candidates = base_tuner._create_candidates()
+        candidates = tuner._create_candidates()
 
         # Assert
         expected_candidates = all_vecs[20:]
@@ -216,16 +213,16 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=5)
 
         # Insert 2 vectors that we assume as used
-        base_tuner.X = np.array([
+        tuner.X = np.array([
             [1.0, 1],
             [1.5, 3]
         ])
 
         # Run
-        candidates = base_tuner._create_candidates(3)
+        candidates = tuner._create_candidates(3)
 
         # Assert
         expected_candidates = np.array([
@@ -240,10 +237,10 @@ class TestBaseTuner(TestCase):
     #     * Exception is raised
     def test__predict(self):
         """Exception is raised"""
-        base_tuner = BaseTuner(tuple())
+        tuner = BaseTuner(tuple())
 
         with pytest.raises(NotImplementedError):
-            base_tuner.predict([])
+            tuner.predict([])
 
     # METHOD: _acquire(self, predictions)
     # VALIDATE:
@@ -254,11 +251,11 @@ class TestBaseTuner(TestCase):
     def test___acquire(self):
         """np.argmax is properly called"""
         # Set-up
-        base_tuner = BaseTuner(tuple())
+        tuner = BaseTuner(tuple())
 
         # Run
         predictions = np.array([0.9, 0.95, 0.8])
-        idx = base_tuner._acquire(predictions)
+        idx = tuner._acquire(predictions)
 
         # Assert
         assert idx == 1
@@ -284,12 +281,12 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables)
+        tuner = BaseTuner(tunables)
 
         create_candidates_mock.return_value = None
 
         # Run
-        params = base_tuner.propose(1)
+        params = tuner.propose(1)
 
         # Assert
         expected_params = None
@@ -304,7 +301,7 @@ class TestBaseTuner(TestCase):
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables)
+        tuner = BaseTuner(tunables)
 
         create_candidates_mock.return_value = np.array([
             [1.0, 1],
@@ -317,7 +314,7 @@ class TestBaseTuner(TestCase):
         predict_mock.return_value = np.array([0.5, 0.6, 0.7, 0.8, 0.9])
 
         # Run
-        params = base_tuner.propose(1)
+        params = tuner.propose(1)
 
         # Assert
         expected_params = {'a_float_param': 1.8, 'an_int_param': 5}
@@ -326,13 +323,13 @@ class TestBaseTuner(TestCase):
     @patch('btb.tuning.tuner.BaseTuner._create_candidates')
     @patch('btb.tuning.tuner.BaseTuner.predict')
     def test_propse_n_gt_1(self, predict_mock, create_candidates_mock):
-        """n == 1"""
+        """n > 1"""
         # Set-up
         tunables = (
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        base_tuner = BaseTuner(tunables)
+        tuner = BaseTuner(tunables)
 
         create_candidates_mock.side_effect = [
             np.array([[1.0, 1], [1.4, 3]]),
@@ -347,7 +344,7 @@ class TestBaseTuner(TestCase):
         ]
 
         # Run
-        params = base_tuner.propose(3)
+        params = tuner.propose(3)
 
         # Assert
         expected_params = [
@@ -359,6 +356,49 @@ class TestBaseTuner(TestCase):
 
     # METHOD: add(self, X, y)
     # VALIDATE:
-    #     * Test attribute values after
+    #     * Test attribute values after the call
     # TODO:
     #     * Split this method in smaller ones
+    #     * Why is there an if in the x_transformed part?
+    #     * Use "for Xi, yi in zip(X, y)" instead of "for i in range(len(X))"
+
+    def test_add(self):
+
+        # Set-up
+        tunables = (
+            ('a_float_param', HyperParameter(ParamTypes.FLOAT_EXP, [1., 2.])),
+            ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
+        )
+        tuner = BaseTuner(tunables)
+
+        # Run
+        # first run
+        X = {'a_float_param': 1., 'an_int_param': 1}
+        y = 0.5
+        tuner.add(X, y)
+
+        # second run (test append)
+        X = [
+            {'a_float_param': 1.2, 'an_int_param': 2},
+            {'a_float_param': 1.4, 'an_int_param': 3}
+        ]
+        y = [0.6, 0.7]
+        tuner.add(X, y)
+
+        # Assert
+        expected_X = np.array([
+            [0., 1],
+            [0.07918124604762482, 2],
+            [0.146128035678238, 3],
+        ])
+        expected_X_raw = np.array([
+            [1.0, 1],
+            [1.2, 2],
+            [1.4, 3],
+        ])
+        expected_y = np.array([0.5, 0.6, 0.7])
+
+        np.testing.assert_array_equal(tuner.X, expected_X)
+        np.testing.assert_array_equal(tuner.X_raw, expected_X_raw)
+        np.testing.assert_array_equal(tuner.y, expected_y)
+        np.testing.assert_array_equal(tuner.y_raw, expected_y)
