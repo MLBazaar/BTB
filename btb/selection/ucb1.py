@@ -1,6 +1,8 @@
-from btb.selection import Selector
 import random
+
 import numpy as np
+
+from btb.selection import Selector
 
 
 class UCB1(Selector):

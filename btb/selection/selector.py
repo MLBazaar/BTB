@@ -1,6 +1,6 @@
 from builtins import object
 import random
-
+import numpy as np
 
 class Selector(object):
     def __init__(self, choices, **kwargs):

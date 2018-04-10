@@ -1,20 +1,21 @@
-import logging
 from builtins import range, object
-import numpy as np
-import random
+import logging
 import math
+import random
 
-from btb import ParamTypes, EXP_TYPES
+import numpy as np
+
+from btb import ParamTypes
 
 logger = logging.getLogger('btb')
 
 
-class Tuner(object):
+class BaseTuner(object):
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Args:
             tunables: Ordered list of hyperparameter names and metadata
-                objects. These describe the hyperparameters that this Tuner will
+            objects. These describe the hyperparameters that this Tuner will
                 be tuning. e.g.:
                 [('degree', HyperParameter(type='INT', range=(2, 4))),
                  ('coef0', HyperParameter('INT', (0, 1))),
@@ -25,10 +26,18 @@ class Tuner(object):
         """
         self.tunables = tunables
         self.grid = gridding > 0
+        self._best_score = -1 * float('inf')
+        self._best_hyperparams = None
 
         if self.grid:
             self.grid_size = gridding
             self._define_grid()
+
+        self.X_raw = None
+        self.y_raw = []
+
+        self.X = np.array([])
+        self.y = np.array([])
 
     def _define_grid(self):
         """
@@ -37,27 +46,7 @@ class Tuner(object):
         """
         self._grid_axes = []
         for _, param in self.tunables:
-            if param.type == ParamTypes.INT:
-                vals = np.round(np.linspace(param.range[0], param.range[1],
-                                            self.grid_size))
-
-            elif param.type == ParamTypes.FLOAT:
-                vals = np.round(np.linspace(param.range[0], param.range[1],
-                                            self.grid_size), decimals=5)
-
-            # for exponential types, generate the grid in logarithm space so
-            # that grid points will be expnentially distributed.
-            elif param.type == ParamTypes.INT_EXP:
-                vals = np.round(10.0 ** np.linspace(math.log10(param.range[0]),
-                                                    math.log10(param.range[1]),
-                                                    self.grid_size))
-
-            elif param.type == ParamTypes.FLOAT_EXP:
-                vals = np.round(10.0 ** np.linspace(math.log10(param.range[0]),
-                                                    math.log10(param.range[1]),
-                                                    self.grid_size), decimals=5)
-
-            self._grid_axes.append(vals)
+            self._grid_axes.append(param.get_grid_axis(self.grid_size))
 
     def _params_to_grid(self, params):
         """
@@ -70,14 +59,6 @@ class Tuner(object):
         grid_points = []
         for i, val in enumerate(params):
             axis = self._grid_axes[i]
-            if self.tunables[i][1].type in EXP_TYPES:
-                # if this is an exponential parameter, take the log of
-                # everything before finding the closest grid point.
-                # e.g. abs(4-1) < abs(4-10), but
-                # abs(log(4)-log(1)) > abs(log(4)-log(10)).
-                val = np.log(val)
-                axis = np.log(axis)
-
             # find the index of the grid point closest to the hyperparameter
             # vector
             idx = min(range(len(axis)), key=lambda i: abs(axis[i] - val))
@@ -103,7 +84,7 @@ class Tuner(object):
         self.X = X
         self.y = y
 
-    def create_candidates(self, n=1000):
+    def _create_candidates(self, n=1000):
         """
         Generate a number of random hyperparameter vectors based on the
         specifications in self.tunables
@@ -156,23 +137,11 @@ class Tuner(object):
             candidates = np.zeros((n, len(self.tunables)))
             for i, (k, param) in enumerate(self.tunables):
                 lo, hi = param.range
-
-                # TODO: move this to a HyperParameter class
-                if param.type == ParamTypes.INT:
+                if param.is_integer:
                     column = np.random.randint(lo, hi + 1, size=n)
-                elif param.type == ParamTypes.FLOAT:
+                else:
                     diff = hi - lo
                     column = lo + diff * np.random.rand(n)
-                elif param.type == ParamTypes.INT_EXP:
-                    column = 10.0 ** np.random.randint(math.log10(lo),
-                                                       math.log10(hi) + 1,
-                                                       size=n)
-                elif param.type == ParamTypes.FLOAT_EXP:
-                    diff = math.log10(hi) - math.log10(lo)
-                    floats = math.log10(lo) + diff * np.random.rand(n)
-                    column = 10.0 ** floats
-                else:
-                    logger.warn('Parameter passed with unknown type: %s' % param.type)
 
                 candidates[:, i] = column
                 i += 1
@@ -191,7 +160,7 @@ class Tuner(object):
         raise NotImplementedError(
             'predict() needs to be implemented by a subclass of Tuner.')
 
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Acquisition function. Accepts a list of predicted values for candidate
         parameter sets, and returns the index of the best candidate.
@@ -206,26 +175,90 @@ class Tuner(object):
         """
         return np.argmax(predictions)
 
-    def propose(self):
+    def propose(self, n=1):
         """
         Use the trained model to propose a new set of parameters.
+        Args:
+            n (optional): number of candidates to propose
 
         Returns:
-            proposal: np.array of proposed hyperparameter values, in the same
-                order as self.tunables
+            proposal: dictionary of tunable name to proposed value.
+            If called with n>1 then proposal is a list of dictionaries.
         """
-        # generate a list of random candidate vectors. If self.grid == True,
-        # each candidate will be a vector that has not been used before.
-        candidate_params = self.create_candidates()
+        proposed_params = []
 
-        # create_candidates() returns None when every grid point has been tried
-        if candidate_params is None:
-            return None
+        for i in range(n):
+            # generate a list of random candidate vectors. If self.grid == True
+            # each candidate will be a vector that has not been used before.
+            candidate_params = self._create_candidates()
 
-        # predict() returns a tuple of predicted values for each candidate
-        predictions = self.predict(candidate_params)
+            # create_candidates() returns None when every grid point
+            # has been tried
+            if candidate_params is None:
+                return None
 
-        # acquire() evaluates the list of predictions, selects one, and returns
-        # its index.
-        idx = self.acquire(predictions)
-        return candidate_params[idx, :]
+            # predict() returns a tuple of predicted values for each candidate
+            predictions = self.predict(candidate_params)
+
+            # acquire() evaluates the list of predictions, selects one,
+            # and returns its index.
+            idx = self._acquire(predictions)
+
+            # inverse transform acquired hyperparameters
+            # based on hyparameter type
+            params = {}
+            for i in range(candidate_params[idx, :].shape[0]):
+                inverse_transformed = self.tunables[i][1].inverse_transform(
+                    candidate_params[idx, i]
+                )
+                params[self.tunables[i][0]] = inverse_transformed
+            proposed_params.append(params)
+        return params if n == 1 else proposed_params
+
+    def add(self, X, y):
+        """
+        Add data about known tunable hyperparameter configurations and scores.
+        Refits model with all data.
+        Args:
+            X: dict or list of dicts of hyperparameter combinations.
+                Keys may only be the name of a tunable, and the dictionary
+                must contain values for all tunables.
+            y: float or list of floats of scores of the hyperparameter
+                combinations. Order of scores must match the order
+                of the hyperparameter dictionaries that the scores corresponds
+
+        """
+        if type(X) is dict:
+            X = [X]
+            y = [y]
+
+        # transform the list of dictionaries into a np array X_raw
+        for i in range(len(X)):
+            each = X[i]
+            # update best score and hyperparameters
+            if y[i] > self._best_score:
+                self._best_score = y[i]
+                self._best_hyperparams = X[i]
+            vectorized = []
+            for tunable in self.tunables:
+                vectorized.append(each[tunable[0]])
+            if self.X_raw is not None:
+                self.X_raw = np.append(self.X_raw, [vectorized], axis=0)
+            else:
+                self.X_raw = np.array([vectorized])
+        self.y_raw = np.append(self.y_raw, y)
+
+        # transforms each hyperparameter based on hyperparameter type
+        x_transformed = np.array([])
+        if len(self.X_raw.shape) > 1 and self.X_raw.shape[1] > 0:
+            x_transformed = self.tunables[0][1].fit_transform(
+                self.X_raw[:, 0],
+                self.y_raw,
+            )
+            for i in range(1, self.X_raw.shape[1]):
+                transformed = self.tunables[i][1].fit_transform(
+                    self.X_raw[:, i],
+                    self.y_raw,
+                )
+                x_transformed = np.column_stack((x_transformed, transformed))
+        self.fit(x_transformed, self.y_raw)

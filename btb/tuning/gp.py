@@ -4,14 +4,14 @@ from builtins import zip, range
 
 import numpy as np
 from scipy.stats import norm
-
-from btb.tuning import Tuner, Uniform
 from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
+
+from btb.tuning import BaseTuner, Uniform
 
 logger = logging.getLogger('btb')
 
 
-class GP(Tuner):
+class GP(BaseTuner):
     def __init__(self, tunables, gridding=0, **kwargs):
         """
         Extra args:
@@ -38,12 +38,16 @@ class GP(Tuner):
         self.gp.fit(X, y)
 
     def predict(self, X):
+        if self.X.shape[0] < self.r_minimum:
+            # we probably don't have enough
+            logger.warn('GP: not enough data, falling back to uniform sampler')
+            return Uniform(self.tunables).predict(X)
         # old gaussian process code
         #return self.gp.predict(X, eval_MSE=True)
         y, stdev = self.gp.predict(X, return_std=True)
         return np.array(list(zip(y, stdev)))
 
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Predictions from the GP will be in the form (prediction, error).
         The default acquisition function returns the index with the highest
@@ -51,24 +55,8 @@ class GP(Tuner):
         """
         return np.argmax(predictions[:, 0])
 
-    def propose(self):
-        """
-        If we haven't seen at least self.r_minimum values, choose parameters
-        using a Uniform tuner (randomly). Otherwise perform the usual
-        create-predict-propose pipeline.
-        """
-        if self.X.shape[0] < self.r_minimum:
-            # we probably don't have enough
-            logger.warn('GP: not enough data, falling back to uniform sampler')
-            return Uniform(self.tunables).propose()
-        else:
-            # otherwise do the normal generate-predict thing
-            logger.info('GP: using gaussian process to select parameters')
-            return super(GP, self).propose()
-
-
 class GPEi(GP):
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
@@ -111,14 +99,13 @@ class GPEiVelocity(GPEi):
             # the "velocity" of top scores.
             self.POU = np.exp(self.MULTIPLIER * np.mean(velocities))
 
-    def propose(self):
+    def predict(self, X):
         """
         Use the POU value we computed in fit to choose randomly between GPEi and
         uniform random selection.
         """
         if np.random.random() < self.POU:
             # choose params at random to avoid local minima
-            return Uniform(self.tunables).propose()
-        else:
-            # otherwise do the normal GPEi thing
-            return super(GPEiVelocity, self).propose()
+            return Uniform(self.tunables).predict(X)
+
+        return super(GPEiVelocity, self).predict(X)
