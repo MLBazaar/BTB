@@ -1,3 +1,5 @@
+import copy
+
 from builtins import object, str as newstr
 from collections import namedtuple, defaultdict
 import math
@@ -34,6 +36,20 @@ class HyperParameter(object):
             rang[i] = cast(val)
         self.range = rang
 
+    def __copy__(self):
+        cls = self.__class__
+        result = cls.__new__(cls, INVERSE_CLASS_GENERATOR[cls], self.range)
+        result.__dict__.update(self.__dict__)
+        return result
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls, INVERSE_CLASS_GENERATOR[cls], self.range)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, copy.deepcopy(v, memo))
+        return result
+
     @property
     def is_integer(self):
         return False
@@ -57,7 +73,7 @@ class HyperParameter(object):
 
 class IntHyperParameter(HyperParameter):
     def __init__(self, typ, rang):
-        HyperParameter.__init__(self, rang, int)
+        super(IntHyperParameter, self).__init__(rang, int)
 
     @property
     def is_integer(self):
@@ -69,12 +85,12 @@ class IntHyperParameter(HyperParameter):
 
 class FloatHyperParameter(HyperParameter):
     def __init__(self, typ, rang):
-        HyperParameter.__init__(self, rang, float)
+        super(FloatHyperParameter, self).__init__(rang, float)
 
 
 class FloatExpHyperParameter(HyperParameter):
     def __init__(self, typ, rang):
-        HyperParameter.__init__(self, rang, lambda x: math.log10(float(x)))
+        super(FloatExpHyperParameter, self).__init__(rang, lambda x: math.log10(float(x)))
 
     def fit_transform(self, x, y):
         x = x.astype(float)
@@ -86,6 +102,7 @@ class FloatExpHyperParameter(HyperParameter):
 
 class IntExpHyperParameter(FloatExpHyperParameter):
     def __init__(self, typ, rang):
+        # can't use super() because we need to provide a cast explicitly
         HyperParameter.__init__(self, rang, lambda x: math.log10(int(x)))
 
     @property
@@ -93,14 +110,14 @@ class IntExpHyperParameter(FloatExpHyperParameter):
         return True
 
     def inverse_transform(self, x):
-        return FloatExpHyperParameter.inverse_transform(self, x).astype(int)
+        return super(IntExpHyperParameter, self).inverse_transform(x).astype(int)
 
 
 class CatHyperParameter(HyperParameter):
     def __init__(self, rang, cast):
         self.cat_transform = {cast(each): 0 for each in rang}
         # this is a dummy range until the transformer is fit
-        HyperParameter.__init__(self, [0.0, 1.0], float)
+        super(CatHyperParameter, self).__init__([0.0, 1.0], float)
 
     def fit_transform(self, x, y):
         self.cat_transform = {each: (0, 0) for each in self.cat_transform}
@@ -152,22 +169,22 @@ class CatHyperParameter(HyperParameter):
 
 class IntCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        CatHyperParameter.__init__(self, rang, int)
+        super(IntCatHyperParameter, self).__init__(rang, int)
 
 
 class FloatCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        CatHyperParameter.__init__(self, rang, float)
+        super(FloatCatHyperParameter, self).__init__(rang, float)
 
 
 class StringCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        CatHyperParameter.__init__(self, rang, lambda x: str(newstr(x)))
+        super(StringCatHyperParameter, self).__init__(rang, lambda x: str(newstr(x)))
 
 
 class BoolCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        CatHyperParameter.__init__(self, rang, bool)
+        super(BoolCatHyperParameter, self).__init__(rang, bool)
 
 
 CLASS_GENERATOR = {
@@ -180,3 +197,5 @@ CLASS_GENERATOR = {
     ParamTypes.STRING: StringCatHyperParameter,
     ParamTypes.BOOL: BoolCatHyperParameter,
 }
+
+INVERSE_CLASS_GENERATOR = {CLASS_GENERATOR[k]: k for k in CLASS_GENERATOR}
