@@ -145,8 +145,7 @@ class CatHyperParameter(HyperParameter):
                     min_diff = diff[i]
                     max_key = keys[i]
             return random.choice(np.vectorize(inv_map.get)(max_key))
-        inv_trans = np.vectorize(invert)(inv_map, x)
-        return inv_trans.item() if np.ndim(inv_trans) == 0 else inv_trans
+        return np.vectorize(invert)(inv_map, x)
 
 
 class IntCatHyperParameter(CatHyperParameter):
