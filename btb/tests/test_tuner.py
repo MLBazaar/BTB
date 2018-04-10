@@ -20,9 +20,12 @@ class TestTuner(unittest.TestCase):
         ]
 
         self.X = [
-            {'t1': 2, 't2': 1000, 't3': 3.0, 't4': 0.1, 't5': 0.5, 't6': True, 't7': 'a'},
-            {'t1': 1, 't2': 100, 't3': 1.9, 't4': 0.1, 't5': 0.6, 't6': True, 't7': 'b'},
-            {'t1': 3, 't2': 10, 't3': 2.6, 't4': 0.01, 't5': 0.1, 't6': False, 't7': 'c'},
+            {'t1': 2, 't2': 1000, 't3': 3.0, 't4': 0.1, 't5': 0.5,
+                't6': True, 't7': 'a'},
+            {'t1': 1, 't2': 100, 't3': 1.9, 't4': 0.1, 't5': 0.6,
+                't6': True, 't7': 'b'},
+            {'t1': 3, 't2': 10, 't3': 2.6, 't4': 0.01, 't5': 0.1,
+                't6': False, 't7': 'c'},
         ]
 
         self.Y = [0.5, 0.6, 0.1]
@@ -150,3 +153,4 @@ class TestTuner(unittest.TestCase):
             [3, 1.0, 2.6, -2.0, 0.1, 0.1, 0.1],
         ], dtype=object)
         np.testing.assert_array_equal(t.X, X)
+        self.assertEqual(t.X.dtype, np.float64)
