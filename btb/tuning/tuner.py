@@ -243,9 +243,13 @@ class BaseTuner(object):
             for tunable in self.tunables:
                 vectorized.append(each[tunable[0]])
             if self.X_raw is not None:
-                self.X_raw = np.append(self.X_raw, [vectorized], axis=0)
+                self.X_raw = np.append(
+                    self.X_raw,
+                    np.array([vectorized], dtype=object),
+                    axis=0,
+                )
             else:
-                self.X_raw = np.array([vectorized])
+                self.X_raw = np.array([vectorized], dtype=object)
         self.y_raw = np.append(self.y_raw, y)
 
         # transforms each hyperparameter based on hyperparameter type
