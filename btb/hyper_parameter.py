@@ -3,6 +3,7 @@ from collections import namedtuple, defaultdict
 import math
 import operator
 import random
+
 import numpy as np
 
 
