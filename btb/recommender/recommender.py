@@ -81,7 +81,10 @@ class Recommender(object):
         Returns:
             y: np.array of predicted scores, shape = (n_samples)
         """
-        return np.array([self.matching_dataset[each] for each in indicies])
+        matching_scores = np.array(
+            [self.matching_dataset[each] for each in indicies]
+        )
+        return stats.rankdata(matching_scores, method='dense')
 
     def _acquire(self, predictions):
         """
