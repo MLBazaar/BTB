@@ -1,10 +1,35 @@
 import unittest
 
+import numpy as np
+
 from btb import HyperParameter, ParamTypes
-from btb.tuning import GCP, GP, GCPEi, GCPEiVelocity, GPEi, GPEiVelocity, Uniform
+from btb.tuning import BaseTuner, Uniform, GP, GPEi, GPEiVelocity, GCP, GCPEi, \
+ GCPEiVelocity
 
 
-class TestHyperparameter(unittest.TestCase):
+class TestTuner(unittest.TestCase):
+    def setUp(self):
+        self.tunables = [
+            ('t1', HyperParameter(ParamTypes.INT, [1, 3])),
+            ('t2', HyperParameter(ParamTypes.INT_EXP, [10, 10000])),
+            ('t3', HyperParameter(ParamTypes.FLOAT, [1.5, 3.2])),
+            ('t4', HyperParameter(ParamTypes.FLOAT_EXP, [0.001, 100])),
+            ('t5', HyperParameter(ParamTypes.FLOAT_CAT, [0.1, 0.6, 0.5])),
+            ('t6', HyperParameter(ParamTypes.BOOL, [True, False])),
+            ('t7', HyperParameter(ParamTypes.STRING, ['a', 'b', 'c'])),
+        ]
+
+        self.X = [
+            {'t1': 2, 't2': 1000, 't3': 3.0, 't4': 0.1, 't5': 0.5,
+                't6': True, 't7': 'a'},
+            {'t1': 1, 't2': 100, 't3': 1.9, 't4': 0.1, 't5': 0.6,
+                't6': True, 't7': 'b'},
+            {'t1': 3, 't2': 10, 't3': 2.6, 't4': 0.01, 't5': 0.1,
+                't6': False, 't7': 'c'},
+        ]
+
+        self.Y = [0.5, 0.6, 0.1]
+
     def test_uniform(self):
         X = [
             {'t1': 1.1, 't2': 0.01, 't3': 3.5, 't4': 'a'},
@@ -118,3 +143,14 @@ class TestHyperparameter(unittest.TestCase):
         self.assertTrue(proposed['a'] >= 1 and proposed['a'] <= 5)
         self.assertTrue(proposed['b'] >= 0.0001 and proposed['b'] <= 0.1)
         self.assertTrue(proposed['c'] >= 2 and proposed['c'] <= 8)
+
+    def test_add_multitype(self):
+        t = BaseTuner(self.tunables)
+        t.add(self.X, self.Y)
+        X = np.array([
+            [2, 3.0, 3.0, -1.0, 0.5, 0.55, 0.5],
+            [1, 2.0, 1.9, -1.0, 0.6, 0.55, 0.6],
+            [3, 1.0, 2.6, -2.0, 0.1, 0.1, 0.1],
+        ], dtype=object)
+        np.testing.assert_array_equal(t.X, X)
+        self.assertEqual(t.X.dtype, np.float64)

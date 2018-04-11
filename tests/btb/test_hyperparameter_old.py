@@ -1,3 +1,4 @@
+import copy
 import unittest
 
 import numpy as np
@@ -6,6 +7,17 @@ from btb import HyperParameter, ParamTypes
 
 
 class TestHyperparameter(unittest.TestCase):
+    def setUp(self):
+        self.parameter_constructions = [
+            (ParamTypes.INT, [1, 3]),
+            (ParamTypes.INT_EXP, [10, 10000]),
+            (ParamTypes.FLOAT, [1.5, 3.2]),
+            (ParamTypes.FLOAT_EXP, [0.001, 100]),
+            (ParamTypes.FLOAT_CAT, [0.1, 0.6, 0.5]),
+            (ParamTypes.BOOL, [True, False]),
+            (ParamTypes.STRING, ['a', 'b', 'c']),
+        ]
+
     def test_int(self):
         hyp = HyperParameter(ParamTypes.INT, [1, 3])
         self.assertEqual(hyp.range, [1, 3])
@@ -111,3 +123,25 @@ class TestHyperparameter(unittest.TestCase):
         )
         inverse_transform = hyp.inverse_transform([3])
         np.testing.assert_array_equal(inverse_transform, np.array(['c']))
+
+    def test_copy(self):
+        for typ, rang in self.parameter_constructions:
+            hyp = HyperParameter(typ, rang)
+            hyp_copy = copy.copy(hyp)
+            self.assertIsNot(hyp, hyp_copy)
+            self.assertIs(type(hyp), type(hyp_copy))
+            self.assertEqual(hyp.range, hyp_copy.range)
+
+            # shallow copy should just have copied references
+            self.assertIs(hyp.range, hyp_copy.range)
+
+    def test_deepcopy(self):
+        for typ, rang in self.parameter_constructions:
+            hyp = HyperParameter(typ, rang)
+            hyp_copy = copy.deepcopy(hyp)
+            self.assertIsNot(hyp, hyp_copy)
+            self.assertIs(type(hyp), type(hyp_copy))
+            self.assertEqual(hyp.range, hyp_copy.range)
+
+            # deep copy should have new attributes
+            self.assertIsNot(hyp.range, hyp_copy.range)
