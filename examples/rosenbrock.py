@@ -19,8 +19,7 @@ def rosenbrok(x, y):
 
 
 def find_min_with_tuner(tuner):
-    # minimum_score = float("inf")
-    # xy_min = None
+
     for i in range(100):
         # use tuner to get next set of (x,y) to try
         xy_to_try = tuner.propose()
