@@ -1,6 +1,9 @@
 from unittest import TestCase
 
-from btb.selection.best import BestKReward
+import numpy as np
+from mock import patch
+
+from btb.selection.best import BestKReward, BestKVelocity
 
 
 class TestBestKReward(TestCase):
@@ -56,23 +59,66 @@ class TestBestKReward(TestCase):
     #     * arguments passed to bandit
     # TODO:
     #     * This code can be simplified to be more easy to understand
+    # NOTES:
+    #     * Should this be >= self.k instead of >= K_MIN?
 
-    # Work in progress
-    #def test_select(self):
+    @patch('btb.selection.best.BestKReward.bandit')
+    def test_select_more_scores_than_k_min(self, bandit_mock):
+        """If min length is gt k_min, self.compute_rewards is used.
 
-    #    # Set-up
-    #    selector = Selector(['RF', 'SVM'])
+        In this case, we expect the lower scores to be zeroed.
+        """
 
-    #    # Run
-    #    choice_scores = {
-    #        'DT': [0.7, 0.73, 0.75],
-    #        'RF': [0.8, 0.83, 0.85],
-    #        'SVM': [0.9, 0.93, 0.95]
-    #    }
-    #    best = selector.select(choice_scores)
+        # Set-up
+        selector = BestKReward(['RF', 'SVM'])
 
-    #    # Assert
-    #    assert best == 'SVM'
+        bandit_mock.return_value = 'SVM'
+
+        # Run
+        choice_scores = {
+            'DT': [0.7, 0.75, 0.73],
+            'RF': [0.8, 0.85, 0.83],
+            'SVM': [0.9, 0.95, 0.93],
+        }
+        best = selector.select(choice_scores)
+
+        # Assert
+        assert best == 'SVM'
+
+        choice_rewards = {
+            'RF': [0., 0.85, 0.83],
+            'SVM': [0., 0.95, 0.93],
+        }
+        bandit_mock.assert_called_once_with(choice_rewards)
+
+    @patch('btb.selection.best.BestKReward.bandit')
+    def test_select_less_scores_than_k_min(self, bandit_mock):
+        """If min length is lt k_min, super().compute_rewards is used.
+
+        In this case, we expect the socres to be returned as they are.
+        """
+
+        # Set-up
+        selector = BestKReward(['RF', 'SVM'])
+
+        bandit_mock.return_value = 'SVM'
+
+        # Run
+        choice_scores = {
+            'DT': [0.7, 0.75, 0.73],
+            'RF': [0.8],
+            'SVM': [0.9, 0.95, 0.93],
+        }
+        best = selector.select(choice_scores)
+
+        # Assert
+        assert best == 'SVM'
+
+        choice_rewards = {
+            'RF': [0.8],
+            'SVM': [0.9, 0.95, 0.93],
+        }
+        bandit_mock.assert_called_once_with(choice_rewards)
 
 
 class TestBestKVelocity(TestCase):
@@ -80,4 +126,29 @@ class TestBestKVelocity(TestCase):
     # METHOD: compute_rewards(self, scores)
     # VALIDATE:
     #     * returned values
-    pass
+
+    def test_compute_rewards_kt_k(self):
+        """Less scores than self.k: No padding"""
+
+        # Set-up
+        selector = BestKVelocity(['RF', 'SVM'], k=5)
+
+        # Run
+        scores = [0.5, 0.6, 0.75, 0.8]
+        rewards = selector.compute_rewards(scores)
+
+        # Assert
+        np.testing.assert_allclose(rewards, [0.05, 0.15, 0.1])
+
+    def test_compute_rewards_gt_k(self):
+        """More scores than self.k: padding"""
+
+        # Set-up
+        selector = BestKVelocity(['RF', 'SVM'], k=3)
+
+        # Run
+        scores = [0.1, 0.5, 0.6, 0.75, 0.8]
+        rewards = selector.compute_rewards(scores)
+
+        # Assert
+        np.testing.assert_allclose(rewards, [0.05, 0.15, 0.1, 0., 0.])
