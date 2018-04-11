@@ -11,10 +11,35 @@ logger = logging.getLogger('btb')
 
 
 class Recommender(object):
+    """
+    Basic Recommender for recomending pipelines to try on a new dataset D based
+    on performances of datasets on the different pipeline options. Recommends
+    pipelines that would maximize the score value.
+
+    Attributes:
+        dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num
+            datasets by num pipelines matrix where each row i corresponds to a
+            dataset and each collumn j corresponds to a pipeline. The
+            dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
+            pipeline j has not beentried on dataset i.
+        n_components: (int) The number of components (columsn) to keep after
+            Matrix Factorxation.
+        mf_model: Matrix Factorization model that reduces dimensionailty from
+            num pipelines space to n_components space.
+        dpp_ranked: (2D np.array) Matrix of rankings for each row of dpp_matrix
+            after matrix facorization has been applied.
+        dpp_vector: (1D np.array) Vector representing pipeline performances on
+            a new dataset D.
+        matching_dataset: (1D np.array) Row from dpp_matrix representing
+            pipeline performances for the dataset that most closely matches the
+            new dataset D. Identified in fit.
+    """
+
     def __init__(self, dpp_matrix, n_components=100, **kwargs):
         """
         Args:
-            dpp_matrix: np.array Sparse dpp_matrix pertaining to pipeline
+            dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse
+                dataset performance matrix pertaining to pipeline
                 scores on different dataset. Each row i coresponds to a dataset
                 and each column j corresponds to a pipeline. dpp_matrix[i,j]
                 corresponds to the score of the pipeline j on the dataset and
@@ -36,31 +61,33 @@ class Recommender(object):
                 method='dense'
             )
             self.dpp_ranked[i, :] = rankings
-        self.dp_vector = np.zeros(self.dpp_matrix.shape[1])
+        self.dpp_vector = np.zeros(self.dpp_matrix.shape[1])
         self.matching_dataset = None
 
-    def fit(self, dp_vector):
+    def fit(self, dpp_vector):
         """
-        Fits the model for a new dataset & pipeline score entry X
         Finds row of self.dpp_matrix most closely corresponds to X by means
         of Kendall tau distance.
         https://en.wikipedia.org/wiki/Kendall_tau_distance
 
         Args:
-            X: np.array shape = (self.n_components,)
+            dpp_vector: np.array shape = (self.n_components,)
         """
 
         # decompose X and generate the rankings of the elements in the
         # decomposed matrix
-        dp_vector_decomposed = self.mf_model.transform(dp_vector)
-        dp_vector_ranked = stats.rankdata(dp_vector_decomposed, method='dense')
+        dpp_vector_decomposed = self.mf_model.transform(dpp_vector)
+        dpp_vector_ranked = stats.rankdata(
+            dpp_vector_decomposed,
+            method='dense',
+        )
 
         max_agrement_index = None
         max_agreement = -1  # min value of Kendall Tau agremment
         for i in range(self.dpp_ranked.shape[0]):
             # calculate agreement between current row and X
             agreement, p_value = stats.kendalltau(
-                dp_vector_ranked,
+                dpp_vector_ranked,
                 self.dpp_ranked[i, :],
             )
             if agreement > max_agreement:
@@ -72,7 +99,7 @@ class Recommender(object):
 
     def predict(self, indicies):
         """
-        Predicts the relative rankings of the pipeline scores on dp_vector for
+        Predicts the relative rankings of the pipelines on dpp_vector for
         a series of pipelines represented by their indicies.
 
         Args:
@@ -88,7 +115,8 @@ class Recommender(object):
 
     def _acquire(self, predictions):
         """
-        Acquisition function. Accepts a li.reshape(1, -1)f the best candidate.
+        Acquisition function. Finds the best candidate given a series of
+        predictions.
 
         Args:
             predictions: np.array of predictions, corresponding to a set of
@@ -101,8 +129,8 @@ class Recommender(object):
 
     def _get_candidates(self):
         """
-        Finds the pipelines that are not yet tried for the dataset represented
-        by dp_vector.
+        Finds the pipelines that are not yet tried for the new dataset D
+        represented by dpp_vector.
 
         Returns:
             indicies: np.array. Indicies corresponding to collumns in
@@ -138,6 +166,7 @@ class Recommender(object):
 
     def add(self, X):
         """
+        Updates self.dpp_vector.
         Adds data about known pipelines and scores.
         Refits model with all data.
         Args:
@@ -147,5 +176,5 @@ class Recommender(object):
                 Values are the corresponding score for pipeline on the dataset
         """
         for each in X:
-            self.dp_vector[each] = X[each]
-        self.fit(self.dp_vector.reshape(1, -1))
+            self.dpp_vector[each] = X[each]
+        self.fit(self.dpp_vector.reshape(1, -1))
