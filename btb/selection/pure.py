@@ -1,10 +1,7 @@
 import logging
 from builtins import range
 
-import numpy as np
-
 from btb.selection import Selector
-
 
 # the minimum number of scores that each choice must have in order to use best-K
 # optimizations. If not all choices meet this threshold, default UCB1 selection
@@ -34,7 +31,7 @@ class PureBestKVelocity(Selector):
                       for i in range(len(best_scores) - 1)]
 
         # pad the list out with zeros to maintain the lenghth of the list
-        zeros = (len(s) - self.k) * [0]
+        zeros = (len(scores) - self.k) * [0]
         return velocities + zeros
 
     def select(self, choice_scores):
@@ -51,7 +48,12 @@ class PureBestKVelocity(Selector):
             logger.warn('PureBestKVelocity: Not enough choices to do K-selection; '
                         'returning choice with fewest scores')
             # reward choices with the fewest scores
-            reward_func = lambda s: [1] if len(s) == min_num_scores else [0]
+            # NOTE: "reward_func = lambda " changed to "def reward_func"
+            # as per flake8 suggestions
+            # reward_func = lambda s: [1] if len(s) == min_num_scores else [0]
+
+            def reward_func(scores):
+                return [1] if len(scores) == min_num_scores else [0]
 
         choice_rewards = {}
         for choice, scores in choice_scores.items():

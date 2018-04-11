@@ -1,5 +1,6 @@
 from builtins import object
 
+
 # Enum class for mapping symbols to string names
 class Tuners(object):
     UNIFORM = "uniform"

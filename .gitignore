@@ -1,4 +1,16 @@
+# Python cache
+__pycache__
 *.pyc
-build/*
-dist/*
-btb.egg-info/*
+
+# Backup files
+*.swp
+*.bak
+
+# Test Folders
+.coverage*
+.tox
+.pytest_cache
+htmlcov/
+btb.egg-info
+build/
+dist/

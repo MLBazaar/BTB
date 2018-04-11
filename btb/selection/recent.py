@@ -1,10 +1,7 @@
 import logging
 from builtins import range
 
-import numpy as np
-
-from btb.selection import Selector, UCB1
-
+from btb.selection import UCB1
 
 # the minimum number of scores that each choice must have in order to use
 # best-K optimizations. If not all choices meet this threshold, default UCB1
@@ -42,7 +39,7 @@ class RecentKReward(UCB1):
             reward_func = self.compute_rewards
         else:
             logger.warn('RecentK: Not enough choices to do K-selection; using plain UCB1')
-            reward_func = super(BestKReward, self).compute_rewards
+            reward_func = super(RecentKReward, self).compute_rewards
 
         choice_rewards = {}
         for choice, scores in choice_scores.items():
@@ -66,5 +63,5 @@ class RecentKVelocity(RecentKReward):
                       range(len(recent_scores) - 1)]
         # pad the list out with zeros, so the length of the list is
         # maintained
-        zeros = (len(s) - self.k) * [0]
+        zeros = (len(scores) - self.k) * [0]
         return velocities + zeros

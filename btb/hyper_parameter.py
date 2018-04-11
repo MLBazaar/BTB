@@ -1,10 +1,9 @@
 import copy
-
-from builtins import object, str as newstr
-from collections import namedtuple, defaultdict
 import math
-import operator
 import random
+from builtins import object
+from builtins import str as newstr
+from collections import defaultdict
 
 import numpy as np
 
@@ -66,7 +65,10 @@ class HyperParameter(object):
                 np.linspace(self.range[0], self.range[1], grid_size)
             )
         return np.round(
-            np.linspace(param.range[0], param.range[1], self.grid_size),
+            # NOTE: flake8 reported "undefined name 'param'"
+            # so "param" was repaced by "self".
+            # Remove this after review.
+            np.linspace(self.range[0], self.range[1], grid_size),
             decimals=5,
         )
 

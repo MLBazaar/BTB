@@ -1,0 +1,6 @@
+coverage==4.5.1
+flake8-isort==2.5
+flake8==3.5.0
+mock==2.0.0
+pytest==3.5.0
+tox==2.9.1

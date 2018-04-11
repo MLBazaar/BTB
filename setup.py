@@ -3,13 +3,13 @@ Stripped down from the example at:
 https://github.com/pypa/sampleproject
 """
 
-# Always prefer setuptools over distutils
-from setuptools import setup, find_packages
-# To use a consistent encoding
-from codecs import open
-from os import path
+import os
 
-here = path.abspath(path.dirname(__file__))
+# Always prefer setuptools over distutils
+from setuptools import find_packages, setup
+
+here = os.path.abspath(os.path.dirname(__file__))
+
 
 setup(
     name='btb',
@@ -60,6 +60,10 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    # TODO
-    install_requires=['future'],
+    install_requires=[
+        'future==0.16.0',
+        'numpy==1.14.2',
+        'scikit-learn==0.19.1',
+        'scipy==1.0.1'
+    ]
 )

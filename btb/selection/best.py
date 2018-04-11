@@ -1,10 +1,7 @@
 import logging
 from builtins import range
 
-import numpy as np
-
-from btb.selection import Selector, UCB1
-
+from btb.selection import UCB1
 
 # the minimum number of scores that each choice must have in order to use best-K
 # optimizations. If not all choices meet this threshold, default UCB1 selection
@@ -42,6 +39,7 @@ class BestKReward(UCB1):
         if min_num_scores >= K_MIN:
             logger.info('BestK: using Best K bandit selection')
             reward_func = self.compute_rewards
+
         else:
             logger.warn('BestK: Not enough choices to do K-selection; using plain UCB1')
             reward_func = super(BestKReward, self).compute_rewards
