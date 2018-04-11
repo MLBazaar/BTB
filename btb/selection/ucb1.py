@@ -27,7 +27,7 @@ class UCB1(Selector):
         # don't let the value go below 1, so that log() and division still work.
         total_pulls = max(sum(len(r) for r in choice_rewards.values()), 1)
 
-        scores = {}
+        scores = dict()
 
         for choice, rewards in choice_rewards.items():
             # count the number of pulls for this choice, with a floor of 1

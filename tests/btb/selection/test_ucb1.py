@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from unittest import TestCase
 
 from mock import patch
@@ -15,6 +16,7 @@ class TestUCB1(TestCase):
 
     @patch('btb.selection.ucb1.random')
     def test_bandit(self, random_mock):
+        """Only the choices with the highest scores are returned."""
 
         # Set-up
         selector = UCB1(['DT', 'RF', 'SVM'])
@@ -22,12 +24,17 @@ class TestUCB1(TestCase):
         random_mock.choice.return_value = 'SVM'
 
         # Run
-        choice_rewards = {
-            'DT': [0.7, 0.8, 0.9],
-            'RF': [0.9, 0.93, 0.95],
-            'SVM': [0.9, 0.93, 0.95]
-        }
-        best = selector.bandit(choice_rewards)
+        choice_rewards = OrderedDict((
+            ('DT', [0.7, 0.8, 0.9]),
+            ('RF', [0.9, 0.93, 0.95]),
+            ('SVM', [0.9, 0.93, 0.95])
+        ))
+
+        # We patch dict as OrderedDict to preserve the order
+        # in .items() and make the later assert simpler.
+        # Otherwise, we could not rely on the list order.
+        with patch('btb.selection.ucb1.dict', new=OrderedDict):
+            best = selector.bandit(choice_rewards)
 
         # Assert
         assert best == 'SVM'
