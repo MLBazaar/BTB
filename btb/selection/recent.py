@@ -58,8 +58,8 @@ class RecentKVelocity(RecentKReward):
         that the count remains the same.
         """
         # take the k + 1 most recent scores so we can get k velocities
-        recent_scores = scores[:-self.k-2:-1]
-        velocities = [recent_scores[i] - recent_scores[i+1] for i in
+        recent_scores = scores[:-self.k - 2:-1]
+        velocities = [recent_scores[i] - recent_scores[i + 1] for i in
                       range(len(recent_scores) - 1)]
         # pad the list out with zeros, so the length of the list is
         # maintained

@@ -126,11 +126,11 @@ class CatHyperParameter(HyperParameter):
         for i in range(len(x)):
             self.cat_transform[x[i]] = (
                 self.cat_transform[x[i]][0] + y[i],
-                self.cat_transform[x[i]][1]+1
+                self.cat_transform[x[i]][1] + 1
             )
         for key, value in self.cat_transform.items():
             if value[1] != 0:
-                self.cat_transform[key] = value[0]/float(value[1])
+                self.cat_transform[key] = value[0] / float(value[1])
             else:
                 self.cat_transform[key] = 0
         rang_max = max(
@@ -154,7 +154,7 @@ class CatHyperParameter(HyperParameter):
 
         def invert(inv_map, x):
             keys = np.fromiter(inv_map.keys(), dtype=float)
-            diff = (np.abs(keys-x))
+            diff = (np.abs(keys - x))
             min_diff = diff[0]
             max_key = keys[0]
             for i in range(len(diff)):
