@@ -91,11 +91,10 @@ class Recommender(object):
                 self.dpp_ranked[i, :],
             )
             if agreement > max_agreement:
-                max_agrement_index = i
+                max_agreement_index = i
                 max_agreement = agreement
-
         # store the row with the highest agreement for prediction
-        self.matching_dataset = self.dpp_matrix[i, :]
+        self.matching_dataset = self.dpp_matrix[max_agreement_index, :]
 
     def predict(self, indicies):
         """
