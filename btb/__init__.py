@@ -13,11 +13,11 @@ from btb.hyper_parameter import (
     IntExpHyperParameter, IntHyperParameter, ParamTypes, StringCatHyperParameter)
 
 __all__ = (
-    CLASS_GENERATOR, BoolCatHyperParameter, CatHyperParameter,
-    FloatCatHyperParameter, FloatExpHyperParameter,
-    FloatHyperParameter, HyperParameter, IntCatHyperParameter,
-    IntExpHyperParameter, IntHyperParameter, ParamTypes,
-    StringCatHyperParameter
+    'CLASS_GENERATOR', 'BoolCatHyperParameter', 'CatHyperParameter',
+    'FloatCatHyperParameter', 'FloatExpHyperParameter',
+    'FloatHyperParameter', 'HyperParameter', 'IntCatHyperParameter',
+    'IntExpHyperParameter', 'IntHyperParameter', 'ParamTypes',
+    'StringCatHyperParameter'
 )
 
 logging.getLogger('btb').addHandler(logging.NullHandler())
