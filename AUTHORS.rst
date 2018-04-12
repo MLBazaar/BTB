@@ -5,9 +5,13 @@ Credits
 Development Lead
 ----------------
 
-* MIT Data To AI Lab <dai-lab-btb@mit.edu>
+* Laura Gustafson <lgustaf@mit.edu>
 
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Bennett Cyphers <bennettcyphers@gmail.com>
+* Carles Sala (`@csala`_)
+* Micah Smith <micahs@mit.edu>
+
+.. _`@csala`: https://github.com/csala
