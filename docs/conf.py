@@ -17,16 +17,11 @@
 # directory, add these directories to sys.path here. If the directory is
 # relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
-#
-import os
-import sys
 
-import sphinx_rtd_theme # For read the docs theme
+import sphinx_rtd_theme  # For read the docs theme
 from recommonmark.parser import CommonMarkParser
-from recommonmark.transform import AutoStructify
 
-sys.path.insert(0, os.path.abspath('..'))
-
+import _path_setup  # noqa: F401
 import btb
 
 # -- General configuration ---------------------------------------------
@@ -55,8 +50,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'BTB'
-copyright = u"2018, The Human Data Interaction Project"
-author = u"The Human Data Interaction Project"
+copyright = u"2018, MIT Data To AI Lab"
+author = u"MIT Data To AI Lab"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -149,7 +144,7 @@ latex_elements = {
 latex_documents = [
     (master_doc, 'btb.tex',
      u'BTB Documentation',
-     u'The Human Data Interaction Project', 'manual'),
+     u'MIT Data To AI Lab', 'manual'),
 ]
 
 
@@ -177,6 +172,3 @@ texinfo_documents = [
      'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-

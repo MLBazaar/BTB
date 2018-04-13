@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
-import examples_setup  # noqa: F401
+import _path_setup  # noqa: F401
 from btb import HyperParameter, ParamTypes
 from btb.selection import Selector
 from btb.tuning import GP
@@ -73,9 +73,7 @@ if __name__ == '__main__':
     # parameters of SVM we wish to tune and their ranges
     tunables_svm = [
         ('c', HyperParameter(ParamTypes.FLOAT_EXP, [0.01, 10.0])),
-        ('gamma', HyperParameter(
-                    ParamTypes.FLOAT, [0.000000001, 0.0000001]
-        ))
+        ('gamma', HyperParameter(ParamTypes.FLOAT, [0.000000001, 0.0000001]))
     ]
     # Create a GP-based tuner for these tunables
     rf_tuner = GP(tunables_rf)

@@ -91,7 +91,7 @@ class GPEiVelocity(GPEi):
             # get the best few scores so far, and compute the average distance
             # between them.
             top_y = sorted(y)[-self.N_BEST_Y:]
-            velocities = [top_y[i+1] - top_y[i] for i in range(len(top_y) - 1)]
+            velocities = [top_y[i + 1] - top_y[i] for i in range(len(top_y) - 1)]
 
             # the probability of returning random parameters scales inversely with
             # the "velocity" of top scores.

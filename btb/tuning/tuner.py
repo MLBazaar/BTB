@@ -227,7 +227,7 @@ class BaseTuner(object):
                 of the hyperparameter dictionaries that the scores corresponds
 
         """
-        if type(X) is dict:
+        if isinstance(X, dict):
             X = [X]
             y = [y]
 

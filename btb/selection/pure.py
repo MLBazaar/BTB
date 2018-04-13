@@ -26,8 +26,8 @@ class PureBestKVelocity(Selector):
         that the count remains the same.
         """
         # get the k + 1 best scores in descending order
-        best_scores = sorted(scores, reverse=True)[:self.k+1]
-        velocities = [best_scores[i] - best_scores[i+1]
+        best_scores = sorted(scores, reverse=True)[:self.k + 1]
+        velocities = [best_scores[i] - best_scores[i + 1]
                       for i in range(len(best_scores) - 1)]
 
         # pad the list out with zeros to maintain the lenghth of the list

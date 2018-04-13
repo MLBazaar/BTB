@@ -10,6 +10,7 @@ class UCB1(Selector):
     The most common Selector implementation.
     Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.
     """
+
     def bandit(self, choice_rewards):
         """
         Multi-armed bandit method which chooses the arm for which the upper

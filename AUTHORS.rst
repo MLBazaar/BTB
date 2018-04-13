@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Kalyan Veeramachaneni <kalyan@csail.mit.edu>
+* MIT Data To AI Lab <dailabmit@gmail.com>
 
 Contributors
 ------------
