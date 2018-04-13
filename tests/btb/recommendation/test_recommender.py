@@ -1,8 +1,6 @@
-from itertools import product
 from unittest import TestCase
 
 import numpy as np
-import pytest
 from mock import patch
 
 from btb.recommendation.recommender import Recommender

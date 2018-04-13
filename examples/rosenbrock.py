@@ -1,4 +1,4 @@
-import examples_setup  # noqa: F401
+import _path_setup  # noqa: F401
 from btb import HyperParameter, ParamTypes
 from btb.tuning import GP, Uniform
 
@@ -15,7 +15,7 @@ We compare the results given by a Uniform tuner and a GP-based tuner run for
 def rosenbrok(x, y):
     a = 1
     b = 100
-    return (a-x)**2 + b*(y-x**2)**2
+    return (a - x)**2 + b * (y - x**2)**2
 
 
 def find_min_with_tuner(tuner):
@@ -24,7 +24,7 @@ def find_min_with_tuner(tuner):
         # use tuner to get next set of (x,y) to try
         xy_to_try = tuner.propose()
         score = rosenbrok(xy_to_try['x'], xy_to_try['y'])
-        tuner.add(xy_to_try, -1*score)
+        tuner.add(xy_to_try, -1 * score)
     print("minimum score:", tuner._best_score)
     print("minimum score:", tuner._best_hyperparams)
     print(

@@ -3,8 +3,7 @@ import unittest
 import numpy as np
 
 from btb import HyperParameter, ParamTypes
-from btb.tuning import BaseTuner, Uniform, GP, GPEi, GPEiVelocity, GCP, GCPEi, \
- GCPEiVelocity
+from btb.tuning import GCP, GP, BaseTuner, GCPEi, GCPEiVelocity, GPEi, GPEiVelocity, Uniform
 
 
 class TestTuner(unittest.TestCase):

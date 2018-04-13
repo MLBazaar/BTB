@@ -25,7 +25,7 @@ class TestHyperparameter(unittest.TestCase):
             np.array([1, 2, 3]),
             np.array([0.5, 0.6, 0.1])
         )
-        np.testing.assert_array_equal(transformed, np.array([1, 2,  3]))
+        np.testing.assert_array_equal(transformed, np.array([1, 2, 3]))
         inverse_transform = hyp.inverse_transform(np.array([0.5]))
         np.testing.assert_array_equal(inverse_transform, np.array([0]))
         hyp = HyperParameter(ParamTypes.INT, [1.0, 3.0])

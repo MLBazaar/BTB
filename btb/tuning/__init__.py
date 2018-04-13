@@ -7,6 +7,6 @@ from btb.tuning.gcp import GCP, GCPEi, GCPEiVelocity
 from btb.tuning.gp import GP, GPEi, GPEiVelocity
 
 __all__ = (
-    Tuners, GCP, GCPEi, GCPEiVelocity, GP, GPEi,
-    GPEiVelocity, BaseTuner, Uniform
+    'Tuners', 'GCP', 'GCPEi', 'GCPEiVelocity', 'GP', 'GPEi',
+    'GPEiVelocity', 'BaseTuner', 'Uniform'
 )
