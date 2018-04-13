@@ -26,7 +26,7 @@ def make_cdf(kernel_pdf):
 
     lowerB = kernel_pdf.dataset.min()
     upperB = kernel_pdf.dataset.max()
-    mid = (upperB-lowerB) / 2
+    mid = (upperB - lowerB) / 2
     Nmid = -0.2
     lowerB = lowerB - mid * Nmid
     upperB = upperB + mid * Nmid
@@ -58,7 +58,7 @@ def make_ppf(kernel_pdf):
 
     lowerB = kernel_pdf.dataset.min()
     upperB = kernel_pdf.dataset.max()
-    mid = (upperB-lowerB) / 2
+    mid = (upperB - lowerB) / 2
     Nmid = -0.2
     lowerB = lowerB - mid * Nmid
     upperB = upperB + mid * Nmid
@@ -261,7 +261,7 @@ class GCPEiVelocity(GCPEi):
             # get the best few scores so far, and compute the average distance
             # between them.
             top_y = sorted(y)[-self.N_BEST_Y:]
-            velocities = [top_y[i+1] - top_y[i] for i in range(len(top_y) - 1)]
+            velocities = [top_y[i + 1] - top_y[i] for i in range(len(top_y) - 1)]
 
             # the probability of returning random parameters scales inversely with
             # the "velocity" of top scores.

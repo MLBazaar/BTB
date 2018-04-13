@@ -7,7 +7,7 @@ from btb.selection.recent import RecentKReward, RecentKVelocity
 from btb.selection.uniform import Uniform
 
 __all__ = (
-    Selector, UCB1, Uniform, BestKReward, BestKVelocity,
-    HierarchicalByAlgorithm, PureBestKVelocity,
-    RecentKReward, RecentKVelocity
+    'Selector', 'UCB1', 'Uniform', 'BestKReward', 'BestKVelocity',
+    'HierarchicalByAlgorithm', 'PureBestKVelocity',
+    'RecentKReward', 'RecentKVelocity'
 )
