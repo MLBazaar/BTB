@@ -7,8 +7,8 @@ Smart selection of hyperparameters
 - Free software: MIT license
 - Documentation: https://HDI-Project.github.io/btb
 
-[travis-img]: https://travis-ci.org/HDI-Project/btb.svg?branch=master
-[travis-url]: https://travis-ci.org/HDI-Project/btb
+[travis-img]: https://travis-ci.org/HDI-Project/BTB.svg?branch=master
+[travis-url]: https://travis-ci.org/HDI-Project/BTB
 [pypi-img]: https://img.shields.io/pypi/v/btb.svg
 [pypi-url]: https://pypi.python.org/pypi/btb
 
