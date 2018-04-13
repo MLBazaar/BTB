@@ -12,10 +12,10 @@ with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 requirements = [
-    'future==0.16.0',
-    'numpy==1.14.2',
-    'scikit-learn==0.19.1',
-    'scipy==1.0.1'
+    'future>=0.16.0',
+    'numpy>=1.14.2',
+    'scikit-learn>=0.19.1',
+    'scipy>=1.0.1'
 ]
 
 setup_requirements = ['pytest-runner', ]
