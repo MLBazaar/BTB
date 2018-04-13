@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.tuning package &mdash; BTB 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="btb.selection package" href="btb.selection.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BTB
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">btb</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="btb.html">btb package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="btb.recommendation.html">btb.recommendation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html">btb.selection package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">btb.tuning package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="btb.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.html#module-btb.hyper_parameter">btb.hyper_parameter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">btb</a> &raquo;</li>
+        
+          <li><a href="btb.html">btb package</a> &raquo;</li>
+        
+      <li>btb.tuning package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/btb//master/docs/btb.tuning.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="btb-tuning-package">
+<h1>btb.tuning package<a class="headerlink" href="#btb-tuning-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-btb.tuning.constants">
+<span id="btb-tuning-constants-module"></span><h2>btb.tuning.constants module<a class="headerlink" href="#module-btb.tuning.constants" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.tuning.constants.Tuners">
+<em class="property">class </em><code class="descclassname">btb.tuning.constants.</code><code class="descname">Tuners</code><a class="reference internal" href="_modules/btb/tuning/constants.html#Tuners"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.constants.Tuners" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="btb.tuning.constants.Tuners.GP">
+<code class="descname">GP</code><em class="property"> = 'gp'</em><a class="headerlink" href="#btb.tuning.constants.Tuners.GP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.constants.Tuners.GP_EI">
+<code class="descname">GP_EI</code><em class="property"> = 'gp_ei'</em><a class="headerlink" href="#btb.tuning.constants.Tuners.GP_EI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.constants.Tuners.GP_EI_VEL">
+<code class="descname">GP_EI_VEL</code><em class="property"> = 'gp_eivel'</em><a class="headerlink" href="#btb.tuning.constants.Tuners.GP_EI_VEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.constants.Tuners.UNIFORM">
+<code class="descname">UNIFORM</code><em class="property"> = 'uniform'</em><a class="headerlink" href="#btb.tuning.constants.Tuners.UNIFORM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb.tuning.custom_tuner">
+<span id="btb-tuning-custom-tuner-module"></span><h2>btb.tuning.custom_tuner module<a class="headerlink" href="#module-btb.tuning.custom_tuner" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.tuning.custom_tuner.CustomTuner">
+<em class="property">class </em><code class="descclassname">btb.tuning.custom_tuner.</code><code class="descname">CustomTuner</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/custom_tuner.html#CustomTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.custom_tuner.CustomTuner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
+<p>Very bare_bones tuner that returns a random set of parameters each time.</p>
+<dl class="method">
+<dt id="btb.tuning.custom_tuner.CustomTuner.propose">
+<code class="descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/custom_tuner.html#CustomTuner.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.custom_tuner.CustomTuner.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate and return a random set of parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb.tuning.gcp">
+<span id="btb-tuning-gcp-module"></span><h2>btb.tuning.gcp module<a class="headerlink" href="#module-btb.tuning.gcp" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.tuning.gcp.GCP">
+<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
+<dl class="method">
+<dt id="btb.tuning.gcp.GCP.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCP.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args:
+X: np.array of hyperparameters,</p>
+<blockquote>
+<div>shape = (n_samples, len(tunables))</div></blockquote>
+<p>y: np.array of scores, shape = (n_samples,)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.gcp.GCP.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCP.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.gcp.GCPEi">
+<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCP" title="btb.tuning.gcp.GCP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCP</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.gcp.GCPEiVelocity">
+<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCPEi" title="btb.tuning.gcp.GCPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCPEi</span></code></a></p>
+<dl class="attribute">
+<dt id="btb.tuning.gcp.GCPEiVelocity.MULTIPLIER">
+<code class="descname">MULTIPLIER</code><em class="property"> = -100</em><a class="headerlink" href="#btb.tuning.gcp.GCPEiVelocity.MULTIPLIER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.gcp.GCPEiVelocity.N_BEST_Y">
+<code class="descname">N_BEST_Y</code><em class="property"> = 5</em><a class="headerlink" href="#btb.tuning.gcp.GCPEiVelocity.N_BEST_Y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.gcp.GCPEiVelocity.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEiVelocity.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a gaussian process like normal, then compute a “Probability Of
+Uniform selection” (POU) value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.gcp.GCPEiVelocity.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEiVelocity.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the POU value we computed in fit to choose randomly between GPEi and
+uniform random selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="btb.tuning.gcp.make_cdf">
+<code class="descclassname">btb.tuning.gcp.</code><code class="descname">make_cdf</code><span class="sig-paren">(</span><em>kernel_pdf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#make_cdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.make_cdf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="btb.tuning.gcp.make_ppf">
+<code class="descclassname">btb.tuning.gcp.</code><code class="descname">make_ppf</code><span class="sig-paren">(</span><em>kernel_pdf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#make_ppf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.make_ppf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-btb.tuning.gp">
+<span id="btb-tuning-gp-module"></span><h2>btb.tuning.gp module<a class="headerlink" href="#module-btb.tuning.gp" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.tuning.gp.GP">
+<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
+<dl class="method">
+<dt id="btb.tuning.gp.GP.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GP.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use X and y to train a Gaussian process.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.gp.GP.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GP.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.gp.GPEi">
+<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GP" title="btb.tuning.gp.GP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GP</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.gp.GPEiVelocity">
+<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GPEi" title="btb.tuning.gp.GPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GPEi</span></code></a></p>
+<dl class="attribute">
+<dt id="btb.tuning.gp.GPEiVelocity.MULTIPLIER">
+<code class="descname">MULTIPLIER</code><em class="property"> = -100</em><a class="headerlink" href="#btb.tuning.gp.GPEiVelocity.MULTIPLIER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.gp.GPEiVelocity.N_BEST_Y">
+<code class="descname">N_BEST_Y</code><em class="property"> = 5</em><a class="headerlink" href="#btb.tuning.gp.GPEiVelocity.N_BEST_Y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.gp.GPEiVelocity.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEiVelocity.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a gaussian process like normal, then compute a “Probability Of
+Uniform selection” (POU) value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.gp.GPEiVelocity.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEiVelocity.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the POU value we computed in fit to choose randomly between GPEi and
+uniform random selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb.tuning.tuner">
+<span id="btb-tuning-tuner-module"></span><h2>btb.tuning.tuner module<a class="headerlink" href="#module-btb.tuning.tuner" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.tuning.tuner.BaseTuner">
+<em class="property">class </em><code class="descclassname">btb.tuning.tuner.</code><code class="descname">BaseTuner</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuner.BaseTuner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="btb.tuning.tuner.BaseTuner.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuner.BaseTuner.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data about known tunable hyperparameter configurations and scores.
+Refits model with all data.
+Args:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>X: dict or list of dicts of hyperparameter combinations.</dt>
+<dd>Keys may only be the name of a tunable, and the dictionary
+must contain values for all tunables.</dd>
+<dt>y: float or list of floats of scores of the hyperparameter</dt>
+<dd>combinations. Order of scores must match the order
+of the hyperparameter dictionaries that the scores corresponds</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.tuner.BaseTuner.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuner.BaseTuner.fit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+<p class="last">y: np.array of scores, shape = (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.tuner.BaseTuner.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuner.BaseTuner.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.tuner.BaseTuner.propose">
+<code class="descname">propose</code><span class="sig-paren">(</span><em>n=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuner.BaseTuner.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the trained model to propose a new set of parameters.
+Args:</p>
+<blockquote>
+<div>n (optional): number of candidates to propose</div></blockquote>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>proposal: dictionary of tunable name to proposed value.
+If called with n&gt;1 then proposal is a list of dictionaries.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb.tuning.uniform">
+<span id="btb-tuning-uniform-module"></span><h2>btb.tuning.uniform module<a class="headerlink" href="#module-btb.tuning.uniform" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.tuning.uniform.Uniform">
+<em class="property">class </em><code class="descclassname">btb.tuning.uniform.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.uniform.Uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
+<p>Very bare_bones tuner that returns a random set of parameters each time.</p>
+<dl class="method">
+<dt id="btb.tuning.uniform.Uniform.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.uniform.Uniform.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb.tuning">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-btb.tuning" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.tuning.Tuners">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">Tuners</code><a class="reference internal" href="_modules/btb/tuning/constants.html#Tuners"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.Tuners" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="btb.tuning.Tuners.GP">
+<code class="descname">GP</code><em class="property"> = 'gp'</em><a class="headerlink" href="#btb.tuning.Tuners.GP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.Tuners.GP_EI">
+<code class="descname">GP_EI</code><em class="property"> = 'gp_ei'</em><a class="headerlink" href="#btb.tuning.Tuners.GP_EI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.Tuners.GP_EI_VEL">
+<code class="descname">GP_EI_VEL</code><em class="property"> = 'gp_eivel'</em><a class="headerlink" href="#btb.tuning.Tuners.GP_EI_VEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.Tuners.UNIFORM">
+<code class="descname">UNIFORM</code><em class="property"> = 'uniform'</em><a class="headerlink" href="#btb.tuning.Tuners.UNIFORM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.GCP">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
+<dl class="method">
+<dt id="btb.tuning.GCP.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCP.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args:
+X: np.array of hyperparameters,</p>
+<blockquote>
+<div>shape = (n_samples, len(tunables))</div></blockquote>
+<p>y: np.array of scores, shape = (n_samples,)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.GCP.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCP.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.GCPEi">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCP" title="btb.tuning.gcp.GCP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCP</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.GCPEiVelocity">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCPEi" title="btb.tuning.gcp.GCPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCPEi</span></code></a></p>
+<dl class="attribute">
+<dt id="btb.tuning.GCPEiVelocity.MULTIPLIER">
+<code class="descname">MULTIPLIER</code><em class="property"> = -100</em><a class="headerlink" href="#btb.tuning.GCPEiVelocity.MULTIPLIER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.GCPEiVelocity.N_BEST_Y">
+<code class="descname">N_BEST_Y</code><em class="property"> = 5</em><a class="headerlink" href="#btb.tuning.GCPEiVelocity.N_BEST_Y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.GCPEiVelocity.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEiVelocity.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a gaussian process like normal, then compute a “Probability Of
+Uniform selection” (POU) value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.GCPEiVelocity.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEiVelocity.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the POU value we computed in fit to choose randomly between GPEi and
+uniform random selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.GP">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
+<dl class="method">
+<dt id="btb.tuning.GP.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GP.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use X and y to train a Gaussian process.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.GP.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GP.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.GPEi">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GP" title="btb.tuning.gp.GP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GP</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.GPEiVelocity">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GPEi" title="btb.tuning.gp.GPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GPEi</span></code></a></p>
+<dl class="attribute">
+<dt id="btb.tuning.GPEiVelocity.MULTIPLIER">
+<code class="descname">MULTIPLIER</code><em class="property"> = -100</em><a class="headerlink" href="#btb.tuning.GPEiVelocity.MULTIPLIER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.GPEiVelocity.N_BEST_Y">
+<code class="descname">N_BEST_Y</code><em class="property"> = 5</em><a class="headerlink" href="#btb.tuning.GPEiVelocity.N_BEST_Y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.GPEiVelocity.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEiVelocity.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a gaussian process like normal, then compute a “Probability Of
+Uniform selection” (POU) value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.GPEiVelocity.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEiVelocity.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the POU value we computed in fit to choose randomly between GPEi and
+uniform random selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.BaseTuner">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">BaseTuner</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.BaseTuner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="btb.tuning.BaseTuner.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.BaseTuner.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data about known tunable hyperparameter configurations and scores.
+Refits model with all data.
+Args:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>X: dict or list of dicts of hyperparameter combinations.</dt>
+<dd>Keys may only be the name of a tunable, and the dictionary
+must contain values for all tunables.</dd>
+<dt>y: float or list of floats of scores of the hyperparameter</dt>
+<dd>combinations. Order of scores must match the order
+of the hyperparameter dictionaries that the scores corresponds</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.BaseTuner.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.BaseTuner.fit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+<p class="last">y: np.array of scores, shape = (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.BaseTuner.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.BaseTuner.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.BaseTuner.propose">
+<code class="descname">propose</code><span class="sig-paren">(</span><em>n=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.BaseTuner.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the trained model to propose a new set of parameters.
+Args:</p>
+<blockquote>
+<div>n (optional): number of candidates to propose</div></blockquote>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>proposal: dictionary of tunable name to proposed value.
+If called with n&gt;1 then proposal is a list of dictionaries.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.tuning.Uniform">
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.Uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
+<p>Very bare_bones tuner that returns a random set of parameters each time.</p>
+<dl class="method">
+<dt id="btb.tuning.Uniform.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.Uniform.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X: np.array of hyperparameters,</dt>
+<dd>shape = (n_samples, len(tunables))</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="btb.selection.html" class="btn btn-neutral" title="btb.selection package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

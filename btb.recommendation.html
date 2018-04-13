@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.recommendation package &mdash; BTB 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="btb.selection package" href="btb.selection.html" />
+    <link rel="prev" title="btb package" href="btb.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BTB
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">btb</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="btb.html">btb package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">btb.recommendation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html">btb.selection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="btb.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.html#module-btb.hyper_parameter">btb.hyper_parameter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">btb</a> &raquo;</li>
+        
+          <li><a href="btb.html">btb package</a> &raquo;</li>
+        
+      <li>btb.recommendation package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/btb//master/docs/btb.recommendation.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="btb-recommendation-package">
+<h1>btb.recommendation package<a class="headerlink" href="#btb-recommendation-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-btb.recommendation.recommender">
+<span id="btb-recommendation-recommender-module"></span><h2>btb.recommendation.recommender module<a class="headerlink" href="#module-btb.recommendation.recommender" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.recommendation.recommender.Recommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.recommender.</code><code class="descname">Recommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Basic Recommender for recomending pipelines to try on a new dataset D based
+on performances of datasets on the different pipeline options. Recommends
+pipelines that would maximize the score value.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</dt>
+<dd>datasets by num pipelines matrix where each row i corresponds to a
+dataset and each collumn j corresponds to a pipeline. The
+dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
+pipeline j has not beentried on dataset i.</dd>
+<dt>n_components: (int) The number of components (columsn) to keep after</dt>
+<dd>Matrix Factorxation.</dd>
+<dt>mf_model: Matrix Factorization model that reduces dimensionailty from</dt>
+<dd>num pipelines space to n_components space.</dd>
+<dt>dpp_ranked: (2D np.array) Matrix of rankings for each row of dpp_matrix</dt>
+<dd>after matrix facorization has been applied.</dd>
+<dt>dpp_vector: (1D np.array) Vector representing pipeline performances on</dt>
+<dd>a new dataset D.</dd>
+<dt>matching_dataset: (1D np.array) Row from dpp_matrix representing</dt>
+<dd>pipeline performances for the dataset that most closely matches the
+new dataset D. Identified in fit.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="btb.recommendation.recommender.Recommender.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates self.dpp_vector.
+Adds data about known pipelines and scores.
+Refits model with all data.
+Args:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>X: dict mapping pipeline indicies to scores.</dt>
+<dd>Keys must correspond to the index of a collumn in
+self.dpp_matrix
+Values are the corresponding score for pipeline on the dataset</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.recommender.Recommender.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds row of self.dpp_matrix most closely corresponds to X by means
+of Kendall tau distance.
+<a class="reference external" href="https://en.wikipedia.org/wiki/Kendall_tau_distance">https://en.wikipedia.org/wiki/Kendall_tau_distance</a></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>dpp_vector: np.array shape = (self.n_components,)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.recommender.Recommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
+a series of pipelines represented by their indicies.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>indicies: np.array of pipeline indicies, shape = (n_samples)</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.recommender.Recommender.propose">
+<code class="descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the trained model to propose a new pipeline.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>proposal: int. index corresponding to pipeline to try. the</dt>
+<dd>pipeline corresponds to the proposal’th column of
+self.dpp_matrix</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb.recommendation">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-btb.recommendation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.recommendation.Recommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.</code><code class="descname">Recommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Basic Recommender for recomending pipelines to try on a new dataset D based
+on performances of datasets on the different pipeline options. Recommends
+pipelines that would maximize the score value.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</dt>
+<dd>datasets by num pipelines matrix where each row i corresponds to a
+dataset and each collumn j corresponds to a pipeline. The
+dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
+pipeline j has not beentried on dataset i.</dd>
+<dt>n_components: (int) The number of components (columsn) to keep after</dt>
+<dd>Matrix Factorxation.</dd>
+<dt>mf_model: Matrix Factorization model that reduces dimensionailty from</dt>
+<dd>num pipelines space to n_components space.</dd>
+<dt>dpp_ranked: (2D np.array) Matrix of rankings for each row of dpp_matrix</dt>
+<dd>after matrix facorization has been applied.</dd>
+<dt>dpp_vector: (1D np.array) Vector representing pipeline performances on</dt>
+<dd>a new dataset D.</dd>
+<dt>matching_dataset: (1D np.array) Row from dpp_matrix representing</dt>
+<dd>pipeline performances for the dataset that most closely matches the
+new dataset D. Identified in fit.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="btb.recommendation.Recommender.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates self.dpp_vector.
+Adds data about known pipelines and scores.
+Refits model with all data.
+Args:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>X: dict mapping pipeline indicies to scores.</dt>
+<dd>Keys must correspond to the index of a collumn in
+self.dpp_matrix
+Values are the corresponding score for pipeline on the dataset</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.Recommender.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds row of self.dpp_matrix most closely corresponds to X by means
+of Kendall tau distance.
+<a class="reference external" href="https://en.wikipedia.org/wiki/Kendall_tau_distance">https://en.wikipedia.org/wiki/Kendall_tau_distance</a></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>dpp_vector: np.array shape = (self.n_components,)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.Recommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
+a series of pipelines represented by their indicies.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>indicies: np.array of pipeline indicies, shape = (n_samples)</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.Recommender.propose">
+<code class="descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the trained model to propose a new pipeline.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>proposal: int. index corresponding to pipeline to try. the</dt>
+<dd>pipeline corresponds to the proposal’th column of
+self.dpp_matrix</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="btb.selection.html" class="btn btn-neutral float-right" title="btb.selection package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="btb.html" class="btn btn-neutral" title="btb package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

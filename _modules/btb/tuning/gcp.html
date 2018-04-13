@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.tuning.gcp &mdash; BTB 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> BTB
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">btb</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../btb.html">btb package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.recommendation.html">btb.recommendation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.selection.html">btb.selection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.tuning.html">btb.tuning package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#module-btb.hyper_parameter">btb.hyper_parameter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>btb.tuning.gcp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for btb.tuning.gcp</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">zip</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="k">import</span> <span class="n">GaussianProcessRegressor</span>
+
+<span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="k">import</span> <span class="n">BaseTuner</span><span class="p">,</span> <span class="n">Uniform</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;btb&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="make_cdf"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.make_cdf">[docs]</a><span class="k">def</span> <span class="nf">make_cdf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">interp1d</span>
+
+    <span class="k">def</span> <span class="nf">np_cdf</span><span class="p">(</span><span class="n">np_model</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
+            <span class="n">ui</span> <span class="o">=</span> <span class="n">np_model</span><span class="o">.</span><span class="n">integrate_box_1d</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+            <span class="n">u</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ui</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">u</span>
+
+    <span class="n">lowerB</span> <span class="o">=</span> <span class="n">kernel_pdf</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">upperB</span> <span class="o">=</span> <span class="n">kernel_pdf</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">upperB</span> <span class="o">-</span> <span class="n">lowerB</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">Nmid</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.2</span>
+    <span class="n">lowerB</span> <span class="o">=</span> <span class="n">lowerB</span> <span class="o">-</span> <span class="n">mid</span> <span class="o">*</span> <span class="n">Nmid</span>
+    <span class="n">upperB</span> <span class="o">=</span> <span class="n">upperB</span> <span class="o">+</span> <span class="n">mid</span> <span class="o">*</span> <span class="n">Nmid</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">upperB</span> <span class="o">-</span> <span class="n">lowerB</span><span class="p">))</span> <span class="o">//</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">y_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lowerB</span><span class="p">,</span> <span class="n">upperB</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">u_range</span> <span class="o">=</span> <span class="n">np_cdf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">,</span> <span class="n">y_range</span><span class="p">)</span>
+    <span class="n">funI</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">y_range</span><span class="p">,</span> <span class="n">u_range</span><span class="p">)</span>  <span class="c1"># &lt;-- use linear interpolation</span>
+
+    <span class="k">def</span> <span class="nf">kernel_cdf</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">yi</span> <span class="o">&lt;</span> <span class="n">lowerB</span><span class="p">:</span>
+                <span class="n">ui</span> <span class="o">=</span> <span class="n">kernel_pdf</span><span class="o">.</span><span class="n">integrate_box_1d</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">yi</span> <span class="o">&gt;</span> <span class="n">upperB</span><span class="p">:</span>
+                <span class="n">ui</span> <span class="o">=</span> <span class="n">kernel_pdf</span><span class="o">.</span><span class="n">integrate_box_1d</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ui</span> <span class="o">=</span> <span class="n">funI</span><span class="p">(</span><span class="n">yi</span><span class="p">)</span>
+            <span class="n">u</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ui</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">u</span>
+
+    <span class="k">return</span> <span class="n">kernel_cdf</span></div>
+
+
+<div class="viewcode-block" id="make_ppf"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.make_ppf">[docs]</a><span class="k">def</span> <span class="nf">make_ppf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">interp1d</span>
+    <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">fsolve</span>
+
+    <span class="n">lowerB</span> <span class="o">=</span> <span class="n">kernel_pdf</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">upperB</span> <span class="o">=</span> <span class="n">kernel_pdf</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">upperB</span> <span class="o">-</span> <span class="n">lowerB</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">Nmid</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.2</span>
+    <span class="n">lowerB</span> <span class="o">=</span> <span class="n">lowerB</span> <span class="o">-</span> <span class="n">mid</span> <span class="o">*</span> <span class="n">Nmid</span>
+    <span class="n">upperB</span> <span class="o">=</span> <span class="n">upperB</span> <span class="o">+</span> <span class="n">mid</span> <span class="o">*</span> <span class="n">Nmid</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">upperB</span> <span class="o">-</span> <span class="n">lowerB</span><span class="p">))</span> <span class="o">//</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">y_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lowerB</span><span class="p">,</span> <span class="n">upperB</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">kernel_cdf</span> <span class="o">=</span> <span class="n">make_cdf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">)</span>
+    <span class="n">u_range</span> <span class="o">=</span> <span class="n">kernel_cdf</span><span class="p">(</span><span class="n">y_range</span><span class="p">)</span>
+    <span class="n">funI</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">u_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">)</span>  <span class="c1"># &lt;-- use linear interpolation</span>
+    <span class="n">lowerU</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">u_range</span><span class="p">)</span>
+    <span class="n">upperU</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">u_range</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">invCDF_eq</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">u</span> <span class="o">-</span> <span class="n">kernel_pdf</span><span class="o">.</span><span class="n">integrate_box_1d</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># &lt;-- use fsolve</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">kernel_ppf</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">ui</span> <span class="ow">in</span> <span class="n">u</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ui</span> <span class="o">&lt;=</span> <span class="n">lowerU</span><span class="p">:</span>
+                <span class="n">yi</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">invCDF_eq</span><span class="p">,</span> <span class="n">lowerB</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">ui</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">ui</span> <span class="o">&gt;=</span> <span class="n">upperU</span><span class="p">:</span>
+                <span class="n">yi</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">invCDF_eq</span><span class="p">,</span> <span class="n">upperB</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">ui</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">yi</span> <span class="o">=</span> <span class="n">funI</span><span class="p">(</span><span class="n">ui</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">y</span><span class="p">,</span> <span class="n">yi</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">y</span>
+
+    <span class="k">return</span> <span class="n">kernel_ppf</span></div>
+
+
+<div class="viewcode-block" id="GCP"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.GCP">[docs]</a><span class="k">class</span> <span class="nc">GCP</span><span class="p">(</span><span class="n">BaseTuner</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunables</span><span class="p">,</span> <span class="n">gridding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extra args:</span>
+<span class="sd">            r_minimum: the minimum number of past results this selector needs in</span>
+<span class="sd">                order to use gaussian process for prediction. If not enough</span>
+<span class="sd">                results are present during a fit(), subsequent calls to</span>
+<span class="sd">                propose() will revert to uniform selection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GCP</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">tunables</span><span class="p">,</span> <span class="n">gridding</span><span class="o">=</span><span class="n">gridding</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;r_minimum&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GCP.fit"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.GCP.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">jitter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">range</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">scale_exp_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">range</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="n">scale_exp_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">range</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+            <span class="n">scale_exp</span> <span class="o">=</span> <span class="p">(</span><span class="n">scale_exp_max</span> <span class="o">+</span> <span class="n">scale_exp_min</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="n">scale_exp</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">r</span>
+            <span class="k">return</span> <span class="n">y</span>
+
+        <span class="c1"># Print msg. when going into gcp.fit</span>
+        <span class="n">strMessage</span> <span class="o">=</span> <span class="s2">&quot;rows in X = </span><span class="si">%d</span><span class="s2">, r_minimum = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">strMessage</span><span class="p">)</span>
+
+        <span class="c1"># Use X and y to train a Gaussian Copula Process.</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GCP</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># skip training the process if there aren&#39;t enough samples</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># -- Non-parametric model of &#39;y&#39;, estimated with kernel density</span>
+        <span class="n">kernel_pdf</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">kernel_cdf</span> <span class="o">=</span> <span class="n">make_cdf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">)</span>
+        <span class="n">kernel_ppf</span> <span class="o">=</span> <span class="n">make_ppf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">)</span>
+        <span class="n">y_kernel_model</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pdf&#39;</span><span class="p">:</span> <span class="n">kernel_pdf</span><span class="p">,</span> <span class="s1">&#39;cdf&#39;</span><span class="p">:</span> <span class="n">kernel_cdf</span><span class="p">,</span> <span class="s1">&#39;ppf&#39;</span><span class="p">:</span> <span class="n">kernel_ppf</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_kernel_model</span> <span class="o">=</span> <span class="n">y_kernel_model</span>
+
+        <span class="c1"># - Transform y--&gt;F--&gt;vF--&gt;norm.ppf--&gt;v</span>
+        <span class="n">vF</span> <span class="o">=</span> <span class="n">y_kernel_model</span><span class="p">[</span><span class="s1">&#39;cdf&#39;</span><span class="p">](</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">vF</span><span class="p">)</span>
+
+        <span class="c1"># -- Non-parametric model of each feature in &#39;X&#39;, estimated with kernel density</span>
+        <span class="n">X_kernel_model</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">columnX</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">ki</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">[</span><span class="n">ki</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_integer</span><span class="p">:</span>
+                <span class="n">columnX</span> <span class="o">=</span> <span class="n">jitter</span><span class="p">(</span><span class="n">columnX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">[</span><span class="n">ki</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+            <span class="n">kernel_pdf</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">columnX</span><span class="p">)</span>
+            <span class="n">kernel_cdf</span> <span class="o">=</span> <span class="n">make_cdf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">)</span>
+            <span class="n">kernel_ppf</span> <span class="o">=</span> <span class="n">make_ppf</span><span class="p">(</span><span class="n">kernel_pdf</span><span class="p">)</span>
+            <span class="n">kernel_model</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pdf&#39;</span><span class="p">:</span> <span class="n">kernel_pdf</span><span class="p">,</span> <span class="s1">&#39;cdf&#39;</span><span class="p">:</span> <span class="n">kernel_cdf</span><span class="p">,</span> <span class="s1">&#39;ppf&#39;</span><span class="p">:</span> <span class="n">kernel_ppf</span><span class="p">}</span>
+            <span class="n">X_kernel_model</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kernel_model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_kernel_model</span> <span class="o">=</span> <span class="n">X_kernel_model</span>
+
+        <span class="c1"># -- Transform X--&gt;F--&gt;uF--&gt;norm.ppf--&gt;U</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">uF</span> <span class="o">=</span> <span class="n">X_kernel_model</span><span class="p">[</span><span class="n">ki</span><span class="p">][</span><span class="s1">&#39;cdf&#39;</span><span class="p">](</span><span class="n">X</span><span class="p">[:,</span> <span class="n">ki</span><span class="p">])</span>
+            <span class="n">U</span><span class="p">[:,</span> <span class="n">ki</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">uF</span><span class="p">)</span>
+
+        <span class="c1"># - Instantiate a GP and fit it with (U, v)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gcp</span> <span class="o">=</span> <span class="n">GaussianProcessRegressor</span><span class="p">(</span><span class="n">normalize_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gcp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GCP.predict"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.GCP.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span><span class="p">:</span>
+            <span class="c1"># we probably don&#39;t have enough</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;GP: not enough data, falling back to uniform sampler&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">get_valid_row</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
+            <span class="n">ind_OK</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">ind_OK</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">ind_OK</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="n">ki</span><span class="p">])))</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">ind_OK</span><span class="p">,</span> <span class="p">:])</span>
+            <span class="k">return</span> <span class="n">V</span><span class="p">,</span> <span class="n">ind_OK</span>
+
+        <span class="c1"># -- Load non-parametric model</span>
+        <span class="n">x_kernel_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_kernel_model</span>
+        <span class="n">y_kernel_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_kernel_model</span>
+
+        <span class="c1"># -- Transform X into U before using the GP learned</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ki</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">uF</span> <span class="o">=</span> <span class="n">x_kernel_model</span><span class="p">[</span><span class="n">ki</span><span class="p">][</span><span class="s1">&#39;cdf&#39;</span><span class="p">](</span><span class="n">X</span><span class="p">[:,</span> <span class="n">ki</span><span class="p">])</span>
+            <span class="n">U</span><span class="p">[:,</span> <span class="n">ki</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">uF</span><span class="p">)</span>
+
+        <span class="c1"># -- Get U_safe and print msg. to inform of how many rows are valid</span>
+        <span class="n">U_safe</span><span class="p">,</span> <span class="n">ind_OK</span> <span class="o">=</span> <span class="n">get_valid_row</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+        <span class="n">strMessage</span> <span class="o">=</span> <span class="s2">&quot;Num. of valid rows in X = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ind_OK</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">strMessage</span><span class="p">)</span>
+
+        <span class="c1"># -- use GP to estimate mean and stdev only of safe U&#39;s</span>
+        <span class="n">mu_v</span><span class="p">,</span> <span class="n">stdev_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gcp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">U_safe</span><span class="p">,</span> <span class="n">return_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># -- Transform back mu_u--&gt;NormStd--&gt;mu_uF</span>
+        <span class="n">mu_vF</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">mu_v</span><span class="p">)</span>
+        <span class="n">stdev_vF</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">stdev_v</span><span class="p">)</span>
+
+        <span class="c1"># -- Transform back mu_uF--&gt;F.ppf--&gt;mu_y</span>
+        <span class="c1"># VERSION 1:</span>
+        <span class="c1"># It should be used in case of mu_y and stdev_y can have a size lower than X.</span>
+        <span class="c1"># Otherwise, swap to version 2.</span>
+        <span class="n">mu_y</span> <span class="o">=</span> <span class="n">y_kernel_model</span><span class="p">[</span><span class="s1">&#39;ppf&#39;</span><span class="p">](</span><span class="n">mu_vF</span><span class="p">)</span>
+        <span class="n">stdev_y</span> <span class="o">=</span> <span class="n">y_kernel_model</span><span class="p">[</span><span class="s1">&#39;ppf&#39;</span><span class="p">](</span><span class="n">stdev_vF</span><span class="p">)</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        # VERSION 2:</span>
+<span class="sd">        # It should be used in case of mu_y and stdev_y must have the same length</span>
+<span class="sd">        # than X. Otherwise, Version 1 is faster.</span>
+<span class="sd">        # -- Transform back mu_uF--&gt;F.ppf--&gt;mu_y</span>
+<span class="sd">        #    mu_y has the same length than U, but is positive only for safe rows</span>
+<span class="sd">        mu_y = np.zeros([U.shape[0]])</span>
+<span class="sd">        stdev_y = np.zeros([U.shape[0]])</span>
+<span class="sd">        mu_y[ind_OK] = y_kernel_model[&#39;ppf&#39;](mu_vF)</span>
+<span class="sd">        stdev_y[ind_OK] = y_kernel_model[&#39;ppf&#39;](stdev_vF)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">mu_y</span><span class="p">,</span> <span class="n">stdev_y</span><span class="p">)))</span></div>
+
+    <span class="k">def</span> <span class="nf">_acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predictions from the GCP will be in the form (prediction, error).</span>
+<span class="sd">        The default acquisition function returns the index with the highest</span>
+<span class="sd">        predicted value, not factoring in error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="GCPEi"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.GCPEi">[docs]</a><span class="k">class</span> <span class="nc">GCPEi</span><span class="p">(</span><span class="n">GCP</span><span class="p">):</span>
+    <span class="c1"># -- question: I have changed GPEi(GP) for GPEi(GCP), is that ok?</span>
+    <span class="k">def</span> <span class="nf">_acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Expected improvement criterion:</span>
+<span class="sd">        http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf</span>
+<span class="sd">        Args:</span>
+<span class="sd">            predictions: np.array of (estimated y, estimated error) tuples that</span>
+<span class="sd">                the gaussian process generated for a series of</span>
+<span class="sd">                proposed hyperparameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y_est</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">best_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># even though best_y is scalar and the others are vectors, this works</span>
+        <span class="n">z_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">best_y</span> <span class="o">-</span> <span class="n">y_est</span><span class="p">)</span> <span class="o">/</span> <span class="n">stderr</span>
+        <span class="n">ei</span> <span class="o">=</span> <span class="n">stderr</span> <span class="o">*</span> <span class="p">(</span><span class="n">z_score</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">z_score</span><span class="p">)</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">z_score</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ei</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GCPEiVelocity"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.GCPEiVelocity">[docs]</a><span class="k">class</span> <span class="nc">GCPEiVelocity</span><span class="p">(</span><span class="n">GCPEi</span><span class="p">):</span>
+    <span class="n">MULTIPLIER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100</span>   <span class="c1"># magic number; modify with care</span>
+    <span class="n">N_BEST_Y</span> <span class="o">=</span> <span class="mi">5</span>        <span class="c1"># number of top values w/w to compute velocity</span>
+
+<div class="viewcode-block" id="GCPEiVelocity.fit"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.GCPEiVelocity.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Train a gaussian process like normal, then compute a &quot;Probability Of</span>
+<span class="sd">        Uniform selection&quot; (POU) value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># first, train a gaussian process like normal</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GCPEiVelocity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># probability of uniform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">POU</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span><span class="p">:</span>
+            <span class="c1"># get the best few scores so far, and compute the average distance</span>
+            <span class="c1"># between them.</span>
+            <span class="n">top_y</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">N_BEST_Y</span><span class="p">:]</span>
+            <span class="n">velocities</span> <span class="o">=</span> <span class="p">[</span><span class="n">top_y</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">top_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">top_y</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+
+            <span class="c1"># the probability of returning random parameters scales inversely with</span>
+            <span class="c1"># the &quot;velocity&quot; of top scores.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">POU</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MULTIPLIER</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">velocities</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="GCPEiVelocity.predict"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gcp.GCPEiVelocity.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use the POU value we computed in fit to choose randomly between GPEi and</span>
+<span class="sd">        uniform random selection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">POU</span><span class="p">:</span>
+            <span class="c1"># choose params at random to avoid local minima</span>
+            <span class="k">return</span> <span class="n">Uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># otherwise do the normal GPEi thing</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GCPEiVelocity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

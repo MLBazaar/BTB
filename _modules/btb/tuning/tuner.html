@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.tuning.tuner &mdash; BTB 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> BTB
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">btb</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../btb.html">btb package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.recommendation.html">btb.recommendation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.selection.html">btb.selection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.tuning.html">btb.tuning package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#module-btb.hyper_parameter">btb.hyper_parameter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>btb.tuning.tuner</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for btb.tuning.tuner</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">range</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;btb&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BaseTuner"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.tuner.BaseTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseTuner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunables</span><span class="p">,</span> <span class="n">gridding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            tunables: Ordered list of hyperparameter names and metadata</span>
+<span class="sd">            objects. These describe the hyperparameters that this Tuner will</span>
+<span class="sd">                be tuning. e.g.:</span>
+<span class="sd">                [(&#39;degree&#39;, HyperParameter(type=&#39;INT&#39;, range=(2, 4))),</span>
+<span class="sd">                 (&#39;coef0&#39;, HyperParameter(&#39;INT&#39;, (0, 1))),</span>
+<span class="sd">                 (&#39;C&#39;, HyperParameter(&#39;FLOAT_EXP&#39;, (1e-05, 100000))),</span>
+<span class="sd">                 (&#39;gamma&#39;, HyperParameter(&#39;FLOAT_EXP&#39;, (1e-05, 100000)))]</span>
+<span class="sd">            gridding: int. If a positive integer, controls the number of points</span>
+<span class="sd">                on each axis of the grid. If 0, gridding does not occur.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span> <span class="o">=</span> <span class="n">tunables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">gridding</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_hyperparams</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span> <span class="o">=</span> <span class="n">gridding</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_define_grid</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_raw</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="k">def</span> <span class="nf">_define_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Define the range of possible values for each of the tunable</span>
+<span class="sd">        hyperparameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">get_grid_axis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_params_to_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit a vector of continuous parameters to the grid. Each parameter is</span>
+<span class="sd">        fitted to the grid point it is closest to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This list will be filled with hyperparameter vectors that have been</span>
+        <span class="c1"># mapped from vectors of continuous values to vectors of indices</span>
+        <span class="c1"># representing points on the grid.</span>
+        <span class="n">grid_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+            <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="c1"># find the index of the grid point closest to the hyperparameter</span>
+            <span class="c1"># vector</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">val</span><span class="p">))</span>
+            <span class="n">grid_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grid_points</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_grid_to_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Map a single point on the grid, represented by indices into each axis,</span>
+<span class="sd">        to a continuous-valued parameter vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid_points</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseTuner.fit"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.tuner.BaseTuner.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            X: np.array of hyperparameters,</span>
+<span class="sd">                shape = (n_samples, len(tunables))</span>
+<span class="sd">            y: np.array of scores, shape = (n_samples,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span></div>
+
+    <span class="k">def</span> <span class="nf">_create_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a number of random hyperparameter vectors based on the</span>
+<span class="sd">        specifications in self.tunables</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n (optional): number of candidates to generate</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.array of candidate hyperparameter vectors,</span>
+<span class="sd">                shape = (n_samples, len(tunables))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># If using a grid, generate a list of previously unused grid points</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">:</span>
+            <span class="c1"># convert numpy array to set of tuples of grid indices for easier</span>
+            <span class="c1"># comparison</span>
+            <span class="n">past_vecs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_params_to_grid</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+
+            <span class="c1"># if every point has been used before, gridding is done.</span>
+            <span class="n">num_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span> <span class="o">**</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">past_vecs</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_points</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="c1"># if fewer than n total points have yet to be seen, just return all</span>
+            <span class="c1"># grid points not in past_vecs</span>
+            <span class="k">if</span> <span class="n">num_points</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">past_vecs</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+                <span class="c1"># generate all possible points in the grid</span>
+                <span class="c1"># FIXED BUG: indices = np.indices(self._grid_axes)</span>
+                <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="p">)</span>
+                <span class="n">all_vecs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span>
+                               <span class="n">indices</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="n">vec_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_vecs</span> <span class="o">-</span> <span class="n">past_vecs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># generate n random vectors of grid-point indices</span>
+                <span class="n">vec_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                    <span class="c1"># TODO: only choose from set of unused values</span>
+                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span><span class="p">,</span>
+                                                <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">past_vecs</span><span class="p">:</span>
+                            <span class="k">break</span>
+                    <span class="n">vec_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+
+            <span class="c1"># map the points back to continuous values and return</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_grid_to_params</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vec_list</span><span class="p">])</span>
+
+        <span class="c1"># If not using a grid, generate a list of vectors where each parameter</span>
+        <span class="c1"># is chosen uniformly at random</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># generate a matrix of random parameters, column by column.</span>
+            <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">):</span>
+                <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">range</span>
+                <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">is_integer</span><span class="p">:</span>
+                    <span class="n">column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">diff</span> <span class="o">=</span> <span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span>
+                    <span class="n">column</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="n">diff</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+                <span class="n">candidates</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">column</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">return</span> <span class="n">candidates</span>
+
+<div class="viewcode-block" id="BaseTuner.predict"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.tuner.BaseTuner.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            X: np.array of hyperparameters,</span>
+<span class="sd">                shape = (n_samples, len(tunables))</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            y: np.array of predicted scores, shape = (n_samples)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;predict() needs to be implemented by a subclass of Tuner.&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Acquisition function. Accepts a list of predicted values for candidate</span>
+<span class="sd">        parameter sets, and returns the index of the best candidate.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            predictions: np.array of predictions, corresponding to a set of</span>
+<span class="sd">                proposed hyperparameter vectors. Each prediction may be a</span>
+<span class="sd">                sequence with more than one value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            idx: index of the selected hyperparameter vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseTuner.propose"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.tuner.BaseTuner.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use the trained model to propose a new set of parameters.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            n (optional): number of candidates to propose</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            proposal: dictionary of tunable name to proposed value.</span>
+<span class="sd">            If called with n&gt;1 then proposal is a list of dictionaries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">proposed_params</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="c1"># generate a list of random candidate vectors. If self.grid == True</span>
+            <span class="c1"># each candidate will be a vector that has not been used before.</span>
+            <span class="n">candidate_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_candidates</span><span class="p">()</span>
+
+            <span class="c1"># create_candidates() returns None when every grid point</span>
+            <span class="c1"># has been tried</span>
+            <span class="k">if</span> <span class="n">candidate_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="c1"># predict() returns a tuple of predicted values for each candidate</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">candidate_params</span><span class="p">)</span>
+
+            <span class="c1"># acquire() evaluates the list of predictions, selects one,</span>
+            <span class="c1"># and returns its index.</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_acquire</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+            <span class="c1"># inverse transform acquired hyperparameters</span>
+            <span class="c1"># based on hyparameter type</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">candidate_params</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">inverse_transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
+                    <span class="n">candidate_params</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">inverse_transformed</span>
+            <span class="n">proposed_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">params</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">proposed_params</span></div>
+
+<div class="viewcode-block" id="BaseTuner.add"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.tuner.BaseTuner.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add data about known tunable hyperparameter configurations and scores.</span>
+<span class="sd">        Refits model with all data.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            X: dict or list of dicts of hyperparameter combinations.</span>
+<span class="sd">                Keys may only be the name of a tunable, and the dictionary</span>
+<span class="sd">                must contain values for all tunables.</span>
+<span class="sd">            y: float or list of floats of scores of the hyperparameter</span>
+<span class="sd">                combinations. Order of scores must match the order</span>
+<span class="sd">                of the hyperparameter dictionaries that the scores corresponds</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">X</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span>
+
+        <span class="c1"># transform the list of dictionaries into a np array X_raw</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+            <span class="n">each</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="c1"># update best score and hyperparameters</span>
+            <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_best_hyperparams</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="n">vectorized</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">tunable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">:</span>
+                <span class="n">vectorized</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">each</span><span class="p">[</span><span class="n">tunable</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span><span class="p">,</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vectorized</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">),</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vectorized</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_raw</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="c1"># transforms each hyperparameter based on hyperparameter type</span>
+        <span class="n">x_transformed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">x_transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_raw</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">y_raw</span><span class="p">,</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+                <span class="n">x_transformed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x_transformed</span><span class="p">,</span> <span class="n">transformed</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_transformed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_raw</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

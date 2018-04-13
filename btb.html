@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb package &mdash; BTB 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="btb.recommendation package" href="btb.recommendation.html" />
+    <link rel="prev" title="btb" href="modules.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BTB
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">btb</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">btb package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.recommendation.html">btb.recommendation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html">btb.selection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-btb.hyper_parameter">btb.hyper_parameter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-btb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">btb</a> &raquo;</li>
+        
+      <li>btb package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/btb//master/docs/btb.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="btb-package">
+<h1>btb package<a class="headerlink" href="#btb-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="btb.recommendation.html">btb.recommendation package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="btb.recommendation.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.recommendation.html#module-btb.recommendation.recommender">btb.recommendation.recommender module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.recommendation.html#module-btb.recommendation">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.best">btb.selection.best module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.constants">btb.selection.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.custom_selector">btb.selection.custom_selector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.hierarchical">btb.selection.hierarchical module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.pure">btb.selection.pure module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.recent">btb.selection.recent module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.selector">btb.selection.selector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.ucb1">btb.selection.ucb1 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection.uniform">btb.selection.uniform module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#module-btb.selection">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#module-btb.tuning.constants">btb.tuning.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#module-btb.tuning.custom_tuner">btb.tuning.custom_tuner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#module-btb.tuning.gcp">btb.tuning.gcp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#module-btb.tuning.gp">btb.tuning.gp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#module-btb.tuning.tuner">btb.tuning.tuner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#module-btb.tuning.uniform">btb.tuning.uniform module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#module-btb.tuning">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-btb.hyper_parameter">
+<span id="btb-hyper-parameter-module"></span><h2>btb.hyper_parameter module<a class="headerlink" href="#module-btb.hyper_parameter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.hyper_parameter.BoolCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">BoolCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#BoolCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.BoolCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.CatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">CatHyperParameter</code><span class="sig-paren">(</span><em>rang</em>, <em>cast</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#CatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.CatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.hyper_parameter.CatHyperParameter.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#CatHyperParameter.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.CatHyperParameter.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.hyper_parameter.CatHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#CatHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.CatHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.FloatCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">FloatCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.FloatCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.FloatExpHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">FloatExpHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatExpHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.FloatExpHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.hyper_parameter.FloatExpHyperParameter.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatExpHyperParameter.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.FloatExpHyperParameter.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.hyper_parameter.FloatExpHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatExpHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.FloatExpHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.FloatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">FloatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.FloatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.HyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">HyperParameter</code><span class="sig-paren">(</span><em>rang</em>, <em>cast</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.HyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="btb.hyper_parameter.HyperParameter.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.HyperParameter.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.hyper_parameter.HyperParameter.get_grid_axis">
+<code class="descname">get_grid_axis</code><span class="sig-paren">(</span><em>grid_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter.get_grid_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.HyperParameter.get_grid_axis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.hyper_parameter.HyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.HyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.HyperParameter.is_integer">
+<code class="descname">is_integer</code><a class="headerlink" href="#btb.hyper_parameter.HyperParameter.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.IntCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">IntCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.IntCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.IntExpHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">IntExpHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntExpHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.IntExpHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.FloatExpHyperParameter" title="btb.hyper_parameter.FloatExpHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.FloatExpHyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.hyper_parameter.IntExpHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntExpHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.IntExpHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.IntExpHyperParameter.is_integer">
+<code class="descname">is_integer</code><a class="headerlink" href="#btb.hyper_parameter.IntExpHyperParameter.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.IntHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">IntHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.IntHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.hyper_parameter.IntHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.IntHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.IntHyperParameter.is_integer">
+<code class="descname">is_integer</code><a class="headerlink" href="#btb.hyper_parameter.IntHyperParameter.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.ParamTypes">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">ParamTypes</code><a class="reference internal" href="_modules/btb/hyper_parameter.html#ParamTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.ParamTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.BOOL">
+<code class="descname">BOOL</code><em class="property"> = 'bool'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.BOOL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.FLOAT">
+<code class="descname">FLOAT</code><em class="property"> = 'float'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.FLOAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.FLOAT_CAT">
+<code class="descname">FLOAT_CAT</code><em class="property"> = 'float_cat'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.FLOAT_CAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.FLOAT_EXP">
+<code class="descname">FLOAT_EXP</code><em class="property"> = 'float_exp'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.FLOAT_EXP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.INT">
+<code class="descname">INT</code><em class="property"> = 'int'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.INT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.INT_CAT">
+<code class="descname">INT_CAT</code><em class="property"> = 'int_cat'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.INT_CAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.INT_EXP">
+<code class="descname">INT_EXP</code><em class="property"> = 'int_exp'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.INT_EXP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.hyper_parameter.ParamTypes.STRING">
+<code class="descname">STRING</code><em class="property"> = 'string'</em><a class="headerlink" href="#btb.hyper_parameter.ParamTypes.STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.hyper_parameter.StringCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.hyper_parameter.</code><code class="descname">StringCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#StringCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.hyper_parameter.StringCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-btb" title="Permalink to this headline">¶</a></h2>
+<p>Top-level package for BTB.</p>
+<dl class="class">
+<dt id="btb.BoolCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">BoolCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#BoolCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.BoolCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.CatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">CatHyperParameter</code><span class="sig-paren">(</span><em>rang</em>, <em>cast</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#CatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.CatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.CatHyperParameter.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#CatHyperParameter.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.CatHyperParameter.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.CatHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#CatHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.CatHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.FloatCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">FloatCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.FloatCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.FloatExpHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">FloatExpHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatExpHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.FloatExpHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.FloatExpHyperParameter.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatExpHyperParameter.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.FloatExpHyperParameter.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.FloatExpHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatExpHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.FloatExpHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.FloatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">FloatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#FloatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.FloatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.HyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">HyperParameter</code><span class="sig-paren">(</span><em>rang</em>, <em>cast</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="btb.HyperParameter.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.HyperParameter.get_grid_axis">
+<code class="descname">get_grid_axis</code><span class="sig-paren">(</span><em>grid_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter.get_grid_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.get_grid_axis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.HyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#HyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.HyperParameter.is_integer">
+<code class="descname">is_integer</code><a class="headerlink" href="#btb.HyperParameter.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.IntCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">IntCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.IntCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.IntExpHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">IntExpHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntExpHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.IntExpHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.FloatExpHyperParameter" title="btb.hyper_parameter.FloatExpHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.FloatExpHyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.IntExpHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntExpHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.IntExpHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.IntExpHyperParameter.is_integer">
+<code class="descname">is_integer</code><a class="headerlink" href="#btb.IntExpHyperParameter.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.IntHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">IntHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.IntHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.HyperParameter" title="btb.hyper_parameter.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.HyperParameter</span></code></a></p>
+<dl class="method">
+<dt id="btb.IntHyperParameter.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#IntHyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.IntHyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.IntHyperParameter.is_integer">
+<code class="descname">is_integer</code><a class="headerlink" href="#btb.IntHyperParameter.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.ParamTypes">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">ParamTypes</code><a class="reference internal" href="_modules/btb/hyper_parameter.html#ParamTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.ParamTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="btb.ParamTypes.BOOL">
+<code class="descname">BOOL</code><em class="property"> = 'bool'</em><a class="headerlink" href="#btb.ParamTypes.BOOL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.ParamTypes.FLOAT">
+<code class="descname">FLOAT</code><em class="property"> = 'float'</em><a class="headerlink" href="#btb.ParamTypes.FLOAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.ParamTypes.FLOAT_CAT">
+<code class="descname">FLOAT_CAT</code><em class="property"> = 'float_cat'</em><a class="headerlink" href="#btb.ParamTypes.FLOAT_CAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.ParamTypes.FLOAT_EXP">
+<code class="descname">FLOAT_EXP</code><em class="property"> = 'float_exp'</em><a class="headerlink" href="#btb.ParamTypes.FLOAT_EXP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.ParamTypes.INT">
+<code class="descname">INT</code><em class="property"> = 'int'</em><a class="headerlink" href="#btb.ParamTypes.INT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.ParamTypes.INT_CAT">
+<code class="descname">INT_CAT</code><em class="property"> = 'int_cat'</em><a class="headerlink" href="#btb.ParamTypes.INT_CAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.ParamTypes.INT_EXP">
+<code class="descname">INT_EXP</code><em class="property"> = 'int_exp'</em><a class="headerlink" href="#btb.ParamTypes.INT_EXP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.ParamTypes.STRING">
+<code class="descname">STRING</code><em class="property"> = 'string'</em><a class="headerlink" href="#btb.ParamTypes.STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.StringCatHyperParameter">
+<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">StringCatHyperParameter</code><span class="sig-paren">(</span><em>typ</em>, <em>rang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/hyper_parameter.html#StringCatHyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.StringCatHyperParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.hyper_parameter.CatHyperParameter" title="btb.hyper_parameter.CatHyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.hyper_parameter.CatHyperParameter</span></code></a></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="btb.recommendation.html" class="btn btn-neutral float-right" title="btb.recommendation package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral" title="btb" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
