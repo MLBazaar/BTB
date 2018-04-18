@@ -1,5 +1,4 @@
 import logging
-from builtins import range
 
 from btb.selection import UCB1
 

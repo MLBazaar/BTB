@@ -1,6 +1,3 @@
-from builtins import object
-
-
 class Selectors(object):
     UNIFORM = "uniform"
     UCB1 = "ucb1"

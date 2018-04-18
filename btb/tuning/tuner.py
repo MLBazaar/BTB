@@ -1,5 +1,4 @@
 import logging
-from builtins import object, range
 
 import numpy as np
 
