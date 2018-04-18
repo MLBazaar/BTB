@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+    btb.recommendation
     btb.selection
     btb.tuning
 
