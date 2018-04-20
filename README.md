@@ -1,11 +1,12 @@
-[![][pypi-img]][pypi-url] [![][travis-img]][travis-url]
+[![][pypi-img]][pypi-url]
+[![][travis-img]][travis-url]
 
 # BTB: Bayesian Tuning and Bandits
 
 Smart selection of hyperparameters
 
 - Free software: MIT license
-- Documentation: https://HDI-Project.github.io/btb
+- Documentation: https://HDI-Project.github.io/BTB
 
 [travis-img]: https://travis-ci.org/HDI-Project/BTB.svg?branch=master
 [travis-url]: https://travis-ci.org/HDI-Project/BTB
