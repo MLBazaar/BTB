@@ -23,6 +23,7 @@ class ParamTypes(object):
 class HyperParameter(object):
 
     param_type = None
+    is_integer = False
 
     _subclasses = []
 
@@ -79,10 +80,6 @@ class HyperParameter(object):
 
         return result
 
-    @property
-    def is_integer(self):
-        return False
-
     def fit_transform(self, x, y):
         return x
 
@@ -105,13 +102,10 @@ class HyperParameter(object):
 
 class IntHyperParameter(HyperParameter):
     param_type = ParamTypes.INT
+    is_integer = True
 
     def cast(self, value):
         return int(value)
-
-    @property
-    def is_integer(self):
-        return True
 
     def inverse_transform(self, x):
         return x.astype(int)
@@ -140,10 +134,7 @@ class FloatExpHyperParameter(HyperParameter):
 
 class IntExpHyperParameter(FloatExpHyperParameter):
     param_type = ParamTypes.INT_EXP
-
-    @property
-    def is_integer(self):
-        return True
+    is_integer = True
 
     def inverse_transform(self, x):
         return super(IntExpHyperParameter, self).inverse_transform(x).astype(int)
