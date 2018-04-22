@@ -1,8 +1,5 @@
-from builtins import object
-
-
-# Enum class for mapping symbols to string names
 class Tuners(object):
+    """Enum class for mapping symbols to string names."""
     UNIFORM = "uniform"
     GP = "gp"
     GP_EI = "gp_ei"

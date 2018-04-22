@@ -1,7 +1,6 @@
-from __future__ import division
+from __future__ import division  # Is this really necessary?
 
 import logging
-from builtins import range, zip
 
 import numpy as np
 import scipy.stats as st
