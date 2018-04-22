@@ -182,8 +182,6 @@
 <span></span><span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span> <span class="k">as</span> <span class="n">newstr</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -362,7 +360,7 @@
 
 <div class="viewcode-block" id="StringCatHyperParameter"><a class="viewcode-back" href="../../btb.html#btb.hyper_parameter.StringCatHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">StringCatHyperParameter</span><span class="p">(</span><span class="n">CatHyperParameter</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">rang</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">StringCatHyperParameter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rang</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">newstr</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StringCatHyperParameter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rang</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="BoolCatHyperParameter"><a class="viewcode-back" href="../../btb.html#btb.hyper_parameter.BoolCatHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">BoolCatHyperParameter</span><span class="p">(</span><span class="n">CatHyperParameter</span><span class="p">):</span>
