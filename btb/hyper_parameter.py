@@ -43,7 +43,7 @@ class HyperParameter(object):
 
         return cls._subclasses
 
-    def __new__(cls, param_type=None, rang=None):
+    def __new__(cls, param_type=None, param_range=None):
         if param_type:
             for subclass in cls.subclasses():
                 if subclass.param_type == param_type:
@@ -54,13 +54,13 @@ class HyperParameter(object):
     def cast(self, value):
         raise NotImplementedError()
 
-    def __init__(self, param_type=None, rang=None):
-        for i, value in enumerate(rang):
+    def __init__(self, param_type=None, param_range=None):
+        for i, value in enumerate(param_range):
             # the value None is allowed for every parameter type
             if value is not None:
-                rang[i] = self.cast(value)
+                param_range[i] = self.cast(value)
 
-        self.range = rang
+        self.range = param_range
 
     def __copy__(self):
         cls = self.__class__
@@ -91,6 +91,7 @@ class HyperParameter(object):
             return np.round(
                 np.linspace(self.range[0], self.range[1], grid_size)
             )
+
         return np.round(
             # NOTE: flake8 reported "undefined name 'param'"
             # so "param" was repaced by "self".
@@ -142,37 +143,41 @@ class IntExpHyperParameter(FloatExpHyperParameter):
 
 class CatHyperParameter(HyperParameter):
 
-    def __init__(self, param_type=None, rang=None):
-        self.cat_transform = {self.cast(each): 0 for each in rang}
+    def __init__(self, param_type=None, param_range=None):
+        self.cat_transform = {self.cast(each): 0 for each in param_range}
 
         # this is a dummy range until the transformer is fit
         super(CatHyperParameter, self).__init__(param_type, [0.0, 1.0])
 
     def fit_transform(self, x, y):
-        self.cat_transform_r = {each: (0, 0) for each in self.range}
         self.cat_transform = {each: (0, 0) for each in self.cat_transform}
         for i in range(len(x)):
             self.cat_transform[x[i]] = (
                 self.cat_transform[x[i]][0] + y[i],
                 self.cat_transform[x[i]][1] + 1
             )
+
         for key, value in self.cat_transform.items():
             if value[1] != 0:
                 self.cat_transform[key] = value[0] / float(value[1])
             else:
                 self.cat_transform[key] = 0
-        rang_max = max(
+
+        range_max = max(
             self.cat_transform.keys(),
             key=(lambda k: self.cat_transform[k])
         )
-        rang_min = min(
+
+        range_min = min(
             self.cat_transform.keys(),
             key=(lambda k: self.cat_transform[k])
         )
+
         self.range = [
-            self.cat_transform[rang_min],
-            self.cat_transform[rang_max]
+            self.cat_transform[range_min],
+            self.cat_transform[range_max]
         ]
+
         return np.vectorize(self.cat_transform.get)(x)
 
     def inverse_transform(self, x):
@@ -192,6 +197,7 @@ class CatHyperParameter(HyperParameter):
                 elif diff[i] == min_diff and keys[i] > max_key:
                     min_diff = diff[i]
                     max_key = keys[i]
+
             return random.choice(np.vectorize(inv_map.get)(max_key))
 
         inv_trans = np.vectorize(invert)(inv_map, x)
