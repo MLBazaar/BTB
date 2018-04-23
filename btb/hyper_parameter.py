@@ -1,8 +1,6 @@
 import copy
 import math
 import random
-from builtins import object
-from builtins import str as newstr
 from collections import defaultdict
 
 import numpy as np
@@ -222,7 +220,7 @@ class StringCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.STRING
 
     def cast(self, value):
-        return str(newstr(value))
+        return str(value)
 
 
 class BoolCatHyperParameter(CatHyperParameter):
