@@ -1,8 +1,6 @@
 import copy
 import math
 import random
-from builtins import object
-from builtins import str as newstr
 from collections import defaultdict
 
 import numpy as np
@@ -181,7 +179,7 @@ class FloatCatHyperParameter(CatHyperParameter):
 
 class StringCatHyperParameter(CatHyperParameter):
     def __init__(self, typ, rang):
-        super(StringCatHyperParameter, self).__init__(rang, lambda x: str(newstr(x)))
+        super(StringCatHyperParameter, self).__init__(rang, lambda x: str(x))
 
 
 class BoolCatHyperParameter(CatHyperParameter):

@@ -1,7 +1,6 @@
 from __future__ import division
 
 import logging
-from builtins import range, zip
 
 import numpy as np
 from scipy.stats import norm
