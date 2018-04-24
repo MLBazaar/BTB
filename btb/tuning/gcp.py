@@ -90,7 +90,7 @@ def make_ppf(kernel_pdf):
 
 
 class GCP(BaseTuner):
-    def __init__(self, tunables, gridding=0, **kwargs):
+    def __init__(self, tunables, gridding=0, r_minimum=2):
         """
         Extra args:
             r_minimum: the minimum number of past results this selector needs in
@@ -98,8 +98,8 @@ class GCP(BaseTuner):
                 results are present during a fit(), subsequent calls to
                 propose() will revert to uniform selection.
         """
-        super(GCP, self).__init__(tunables, gridding=gridding, **kwargs)
-        self.r_minimum = kwargs.pop('r_minimum', 2)
+        super(GCP, self).__init__(tunables, gridding=gridding)
+        self.r_minimum = r_minimum
 
     def fit(self, X, y):
 

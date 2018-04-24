@@ -6,7 +6,7 @@ logger = logging.getLogger('btb')
 
 
 class BaseTuner(object):
-    def __init__(self, tunables, gridding=0, **kwargs):
+    def __init__(self, tunables, gridding=0):
         """
         Args:
             tunables: Ordered list of hyperparameter names and metadata

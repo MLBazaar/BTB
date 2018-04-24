@@ -11,12 +11,12 @@ logger = logging.getLogger('btb')
 
 
 class PureBestKVelocity(Selector):
-    def __init__(self, choices, **kwargs):
+    def __init__(self, choices, k=K_MIN):
         """
         Simply returns the choice with the best best-K velocity.
         """
-        super(PureBestKVelocity, self).__init__(choices, **kwargs)
-        self.k = kwargs.pop('k', K_MIN)
+        super(PureBestKVelocity, self).__init__(choices)
+        self.k = k
 
     def compute_rewards(self, scores):
         """

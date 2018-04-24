@@ -11,13 +11,13 @@ logger = logging.getLogger('btb')
 
 
 class BestKReward(UCB1):
-    def __init__(self, choices, **kwargs):
+    def __init__(self, choices, k=K_MIN):
         """
         Extra args:
             k: number of best scores to consider
         """
-        super(BestKReward, self).__init__(choices, **kwargs)
-        self.k = kwargs.pop('k', K_MIN)
+        super(BestKReward, self).__init__(choices)
+        self.k = k
 
     def compute_rewards(self, scores):
         """ Retain the K best scores, and replace the rest with zeros """
