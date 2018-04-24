@@ -471,95 +471,6 @@ An explanation is here:
 <div class="section" id="module-btb.selection">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-btb.selection" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="btb.selection.Selector">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="btb.selection.Selector.bandit">
-<code class="descname">bandit</code><span class="sig-paren">(</span><em>choice_rewards</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.bandit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.bandit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-armed bandit method. Accepts a mapping of choices to rewards which
-indicate their historical performance, and returns the choice that we
-should make next in order to maximize expected reward in the long term.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd><dl class="first last docutils">
-<dt>choice_rewards: maps choice IDs to lists of rewards.</dt>
-<dd>{choice -&gt; [float]}</dd>
-</dl>
-</dd>
-<dt>Returns:</dt>
-<dd>choice: string indicating the name of the choice to take next.</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.selection.Selector.compute_rewards">
-<code class="descname">compute_rewards</code><span class="sig-paren">(</span><em>scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.compute_rewards" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a list of scores associated with one choice into a list of
-rewards. Normally, the length of the list will be preserved, even if
-some of the scores are dropped.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.selection.Selector.select">
-<code class="descname">select</code><span class="sig-paren">(</span><em>choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select the next best choice to make</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd><dl class="first last docutils">
-<dt>choice_scores: map of {choice -&gt; [scores]} for each possible choice. The</dt>
-<dd><p class="first">caller is responsible for making sure each choice that is possible at
-this juncture is represented in the dict, even those with no scores.
-Score lists should be in ascending chronological order.
-e.g.
-{1: [0.56, 0.61, 0.33, 0.67],</p>
-<blockquote class="last">
-<div>2: [0.25, 0.58],
-3: [0.60, 0.65, 0.68]}</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="btb.selection.UCB1">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">UCB1</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.UCB1" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
-<p>The most common Selector implementation.
-Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.</p>
-<dl class="method">
-<dt id="btb.selection.UCB1.bandit">
-<code class="descname">bandit</code><span class="sig-paren">(</span><em>choice_rewards</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1.bandit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.UCB1.bandit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-armed bandit method which chooses the arm for which the upper
-confidence bound (UCB) of expected reward is greatest.
-An explanation is here:
-<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
-<dl class="docutils">
-<dt>choice_rewards: a dict, {choice -&gt; [rewards]}, mapping each potential</dt>
-<dd>choice to a series of “rewards” granted for its past behavior.</dd>
-<dt>Returns: the single choice (one of choice_rewards.keys()) which we</dt>
-<dd>expect will perform best.</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="btb.selection.Uniform">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Uniform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
-<dl class="method">
-<dt id="btb.selection.Uniform.select">
-<code class="descname">select</code><span class="sig-paren">(</span><em>choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Uniform.select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select a choice uniformly at random.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="btb.selection.BestKReward">
 <em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">BestKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.BestKReward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
@@ -656,6 +567,95 @@ scores for usage in rewards for the bandit calculation</p>
 <dd><p>Compute the “velocity” of (average distance between) the k+1 most recent
 scores. Return a list with those k velocities padded out with zeros so
 that the count remains the same.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.selection.Selector">
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="btb.selection.Selector.bandit">
+<code class="descname">bandit</code><span class="sig-paren">(</span><em>choice_rewards</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.bandit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-armed bandit method. Accepts a mapping of choices to rewards which
+indicate their historical performance, and returns the choice that we
+should make next in order to maximize expected reward in the long term.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>choice_rewards: maps choice IDs to lists of rewards.</dt>
+<dd>{choice -&gt; [float]}</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>choice: string indicating the name of the choice to take next.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.Selector.compute_rewards">
+<code class="descname">compute_rewards</code><span class="sig-paren">(</span><em>scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.compute_rewards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a list of scores associated with one choice into a list of
+rewards. Normally, the length of the list will be preserved, even if
+some of the scores are dropped.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.Selector.select">
+<code class="descname">select</code><span class="sig-paren">(</span><em>choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the next best choice to make</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>choice_scores: map of {choice -&gt; [scores]} for each possible choice. The</dt>
+<dd><p class="first">caller is responsible for making sure each choice that is possible at
+this juncture is represented in the dict, even those with no scores.
+Score lists should be in ascending chronological order.
+e.g.
+{1: [0.56, 0.61, 0.33, 0.67],</p>
+<blockquote class="last">
+<div>2: [0.25, 0.58],
+3: [0.60, 0.65, 0.68]}</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.selection.UCB1">
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">UCB1</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.UCB1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
+<p>The most common Selector implementation.
+Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.</p>
+<dl class="method">
+<dt id="btb.selection.UCB1.bandit">
+<code class="descname">bandit</code><span class="sig-paren">(</span><em>choice_rewards</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1.bandit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.UCB1.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-armed bandit method which chooses the arm for which the upper
+confidence bound (UCB) of expected reward is greatest.
+An explanation is here:
+<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
+<dl class="docutils">
+<dt>choice_rewards: a dict, {choice -&gt; [rewards]}, mapping each potential</dt>
+<dd>choice to a series of “rewards” granted for its past behavior.</dd>
+<dt>Returns: the single choice (one of choice_rewards.keys()) which we</dt>
+<dd>expect will perform best.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.selection.Uniform">
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
+<dl class="method">
+<dt id="btb.selection.Uniform.select">
+<code class="descname">select</code><span class="sig-paren">(</span><em>choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Uniform.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a choice uniformly at random.</p>
 </dd></dl>
 
 </dd></dl>
