@@ -1,10 +1,11 @@
-[//]: # [![][pypi-img]][pypi-url]
+[//]: # ([![][pypi-img]][pypi-url])
+
 [![][travis-img]][travis-url]
 
 [travis-img]: https://travis-ci.org/HDI-Project/BTB.svg?branch=master
 [travis-url]: https://travis-ci.org/HDI-Project/BTB
-[//]: # [pypi-img]: https://img.shields.io/pypi/v/btb.svg
-[//]: # [pypi-url]: https://pypi.python.org/pypi/btb
+[//]: # ([pypi-img]: https://img.shields.io/pypi/v/btb.svg)
+[//]: # ([pypi-url]: https://pypi.python.org/pypi/btb)
 
 # BTB: Bayesian Tuning and Bandits
 
