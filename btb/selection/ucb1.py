@@ -2,7 +2,7 @@ import random
 
 import numpy as np
 
-from btb.selection import Selector
+from btb.selection.selector import Selector
 
 
 class UCB1(Selector):

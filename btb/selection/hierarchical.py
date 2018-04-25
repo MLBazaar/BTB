@@ -1,4 +1,4 @@
-from btb.selection import UCB1
+from btb.selection.ucb1 import UCB1
 
 
 class HierarchicalByAlgorithm(UCB1):
