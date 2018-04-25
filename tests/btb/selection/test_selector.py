@@ -8,8 +8,7 @@ class TestSelector(TestCase):
     # METHOD: __init__(self, choices, **kwargs)
     # VALIDATE:
     #     * attribute value
-    # TODO:
-    #     * kwargs can be safely removed from the method signature
+
     def test___init__(self):
 
         # Run
