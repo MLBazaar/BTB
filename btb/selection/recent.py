@@ -11,13 +11,13 @@ logger = logging.getLogger('btb')
 
 
 class RecentKReward(UCB1):
-    def __init__(self, choices, **kwargs):
+    def __init__(self, choices, k=K_MIN):
         """
         Needs:
             k: number of best scores to consider
         """
-        super(RecentKReward, self).__init__(choices, **kwargs)
-        self.k = kwargs.pop('k', K_MIN)
+        super(RecentKReward, self).__init__(choices)
+        self.k = k
 
     def compute_rewards(self, scores):
         """ Retain the K most recent scores, and replace the rest with zeros """

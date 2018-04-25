@@ -14,8 +14,6 @@ class TestBaseTuner(TestCase):
     # METHOD: __init__(self, tunables, gridding=0, **kwargs)
     # VALIDATE:
     #     * attribute values after creation
-    # TODO:
-    #     * Remove unnecessary **kwargs
 
     def test___init__(self):
         # Set-up
