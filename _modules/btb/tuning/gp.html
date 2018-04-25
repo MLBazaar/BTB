@@ -194,7 +194,7 @@
 
 
 <div class="viewcode-block" id="GP"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gp.GP">[docs]</a><span class="k">class</span> <span class="nc">GP</span><span class="p">(</span><span class="n">BaseTuner</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunables</span><span class="p">,</span> <span class="n">gridding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunables</span><span class="p">,</span> <span class="n">gridding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">r_minimum</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extra args:</span>
 <span class="sd">            r_minimum: the minimum number of past results this selector needs in</span>
@@ -202,8 +202,8 @@
 <span class="sd">                results are present during a fit(), subsequent calls to</span>
 <span class="sd">                propose() will revert to uniform selection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GP</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">tunables</span><span class="p">,</span> <span class="n">gridding</span><span class="o">=</span><span class="n">gridding</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;r_minimum&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GP</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">tunables</span><span class="p">,</span> <span class="n">gridding</span><span class="o">=</span><span class="n">gridding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span> <span class="o">=</span> <span class="n">r_minimum</span>
 
 <div class="viewcode-block" id="GP.fit"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.gp.GP.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Use X and y to train a Gaussian process. &quot;&quot;&quot;</span>

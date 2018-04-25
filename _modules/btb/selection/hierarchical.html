@@ -183,14 +183,14 @@
 
 
 <div class="viewcode-block" id="HierarchicalByAlgorithm"><a class="viewcode-back" href="../../../btb.selection.html#btb.selection.hierarchical.HierarchicalByAlgorithm">[docs]</a><span class="k">class</span> <span class="nc">HierarchicalByAlgorithm</span><span class="p">(</span><span class="n">UCB1</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">by_algorithm</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Needs:</span>
 <span class="sd">            by_algorithm: {str -&gt; list[choice]} grouping of frozen set choices</span>
 <span class="sd">                by ML algorithm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">HierarchicalByAlgorithm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">choices</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">by_algorithm</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;by_algorithm&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HierarchicalByAlgorithm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">by_algorithm</span> <span class="o">=</span> <span class="n">by_algorithm</span>
 
 <div class="viewcode-block" id="HierarchicalByAlgorithm.select"><a class="viewcode-back" href="../../../btb.selection.html#btb.selection.hierarchical.HierarchicalByAlgorithm.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choice_scores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

@@ -197,7 +197,7 @@
 <span id="btb-selection-best-module"></span><h2>btb.selection.best module<a class="headerlink" href="#module-btb.selection.best" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.best.BestKReward">
-<em class="property">class </em><code class="descclassname">btb.selection.best.</code><code class="descname">BestKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKReward" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.best.</code><code class="descname">BestKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKReward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.best.BestKReward.compute_rewards">
@@ -216,7 +216,7 @@ learners’ scores.</p>
 
 <dl class="class">
 <dt id="btb.selection.best.BestKVelocity">
-<em class="property">class </em><code class="descclassname">btb.selection.best.</code><code class="descname">BestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.best.</code><code class="descname">BestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.best.BestKReward" title="btb.selection.best.BestKReward"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.best.BestKReward</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.best.BestKVelocity.compute_rewards">
@@ -282,7 +282,7 @@ that the count remains the same.</p>
 <span id="btb-selection-custom-selector-module"></span><h2>btb.selection.custom_selector module<a class="headerlink" href="#module-btb.selection.custom_selector" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.custom_selector.CustomSelector">
-<em class="property">class </em><code class="descclassname">btb.selection.custom_selector.</code><code class="descname">CustomSelector</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/custom_selector.html#CustomSelector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.custom_selector.CustomSelector" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.custom_selector.</code><code class="descname">CustomSelector</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/custom_selector.html#CustomSelector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.custom_selector.CustomSelector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.custom_selector.CustomSelector.select">
@@ -297,7 +297,7 @@ that the count remains the same.</p>
 <span id="btb-selection-hierarchical-module"></span><h2>btb.selection.hierarchical module<a class="headerlink" href="#module-btb.selection.hierarchical" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.hierarchical.HierarchicalByAlgorithm">
-<em class="property">class </em><code class="descclassname">btb.selection.hierarchical.</code><code class="descname">HierarchicalByAlgorithm</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/hierarchical.html#HierarchicalByAlgorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.hierarchical.HierarchicalByAlgorithm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.hierarchical.</code><code class="descname">HierarchicalByAlgorithm</code><span class="sig-paren">(</span><em>choices</em>, <em>by_algorithm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/hierarchical.html#HierarchicalByAlgorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.hierarchical.HierarchicalByAlgorithm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.hierarchical.HierarchicalByAlgorithm.select">
@@ -314,7 +314,7 @@ on the traditional UCB1 criteria.</p>
 <span id="btb-selection-pure-module"></span><h2>btb.selection.pure module<a class="headerlink" href="#module-btb.selection.pure" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.pure.PureBestKVelocity">
-<em class="property">class </em><code class="descclassname">btb.selection.pure.</code><code class="descname">PureBestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/pure.html#PureBestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.pure.PureBestKVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.pure.</code><code class="descname">PureBestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>k=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/pure.html#PureBestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.pure.PureBestKVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.pure.PureBestKVelocity.compute_rewards">
@@ -338,7 +338,7 @@ don’t have MIN_K scores yet, return the one with the fewest.</p>
 <span id="btb-selection-recent-module"></span><h2>btb.selection.recent module<a class="headerlink" href="#module-btb.selection.recent" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.recent.RecentKReward">
-<em class="property">class </em><code class="descclassname">btb.selection.recent.</code><code class="descname">RecentKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.recent.RecentKReward" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.recent.</code><code class="descname">RecentKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.recent.RecentKReward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.recent.RecentKReward.compute_rewards">
@@ -357,7 +357,7 @@ scores for usage in rewards for the bandit calculation</p>
 
 <dl class="class">
 <dt id="btb.selection.recent.RecentKVelocity">
-<em class="property">class </em><code class="descclassname">btb.selection.recent.</code><code class="descname">RecentKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.recent.RecentKVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.recent.</code><code class="descname">RecentKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.recent.RecentKVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.recent.RecentKReward" title="btb.selection.recent.RecentKReward"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.recent.RecentKReward</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.recent.RecentKVelocity.compute_rewards">
@@ -374,7 +374,7 @@ that the count remains the same.</p>
 <span id="btb-selection-selector-module"></span><h2>btb.selection.selector module<a class="headerlink" href="#module-btb.selection.selector" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.selector.Selector">
-<em class="property">class </em><code class="descclassname">btb.selection.selector.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.selector.Selector" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.selector.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.selector.Selector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="btb.selection.selector.Selector.bandit">
@@ -431,7 +431,7 @@ e.g.
 <span id="btb-selection-ucb1-module"></span><h2>btb.selection.ucb1 module<a class="headerlink" href="#module-btb.selection.ucb1" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.ucb1.UCB1">
-<em class="property">class </em><code class="descclassname">btb.selection.ucb1.</code><code class="descname">UCB1</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.ucb1.UCB1" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.ucb1.</code><code class="descname">UCB1</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.ucb1.UCB1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
 <p>The most common Selector implementation.
 Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.</p>
@@ -457,7 +457,7 @@ An explanation is here:
 <span id="btb-selection-uniform-module"></span><h2>btb.selection.uniform module<a class="headerlink" href="#module-btb.selection.uniform" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.uniform.Uniform">
-<em class="property">class </em><code class="descclassname">btb.selection.uniform.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.uniform.Uniform" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.uniform.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.uniform.Uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.uniform.Uniform.select">
@@ -472,7 +472,7 @@ An explanation is here:
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-btb.selection" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.selection.BestKReward">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">BestKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.BestKReward" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">BestKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.BestKReward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.BestKReward.compute_rewards">
@@ -491,7 +491,7 @@ learners’ scores.</p>
 
 <dl class="class">
 <dt id="btb.selection.BestKVelocity">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">BestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.BestKVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">BestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/best.html#BestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.BestKVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.best.BestKReward" title="btb.selection.best.BestKReward"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.best.BestKReward</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.BestKVelocity.compute_rewards">
@@ -505,7 +505,7 @@ that the count remains the same.</p>
 
 <dl class="class">
 <dt id="btb.selection.HierarchicalByAlgorithm">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">HierarchicalByAlgorithm</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/hierarchical.html#HierarchicalByAlgorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.HierarchicalByAlgorithm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">HierarchicalByAlgorithm</code><span class="sig-paren">(</span><em>choices</em>, <em>by_algorithm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/hierarchical.html#HierarchicalByAlgorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.HierarchicalByAlgorithm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.HierarchicalByAlgorithm.select">
@@ -519,7 +519,7 @@ on the traditional UCB1 criteria.</p>
 
 <dl class="class">
 <dt id="btb.selection.PureBestKVelocity">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">PureBestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/pure.html#PureBestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.PureBestKVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">PureBestKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>k=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/pure.html#PureBestKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.PureBestKVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.PureBestKVelocity.compute_rewards">
@@ -540,7 +540,7 @@ don’t have MIN_K scores yet, return the one with the fewest.</p>
 
 <dl class="class">
 <dt id="btb.selection.RecentKReward">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">RecentKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.RecentKReward" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">RecentKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.RecentKReward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.RecentKReward.compute_rewards">
@@ -559,7 +559,7 @@ scores for usage in rewards for the bandit calculation</p>
 
 <dl class="class">
 <dt id="btb.selection.RecentKVelocity">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">RecentKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.RecentKVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">RecentKVelocity</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/recent.html#RecentKVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.RecentKVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.recent.RecentKReward" title="btb.selection.recent.RecentKReward"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.recent.RecentKReward</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.RecentKVelocity.compute_rewards">
@@ -573,7 +573,7 @@ that the count remains the same.</p>
 
 <dl class="class">
 <dt id="btb.selection.Selector">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="btb.selection.Selector.bandit">
@@ -627,7 +627,7 @@ e.g.
 
 <dl class="class">
 <dt id="btb.selection.UCB1">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">UCB1</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.UCB1" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">UCB1</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.UCB1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
 <p>The most common Selector implementation.
 Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.</p>
@@ -650,7 +650,7 @@ An explanation is here:
 
 <dl class="class">
 <dt id="btb.selection.Uniform">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>choices</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Uniform" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
 <dl class="method">
 <dt id="btb.selection.Uniform.select">

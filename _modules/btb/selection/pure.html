@@ -192,12 +192,12 @@
 
 
 <div class="viewcode-block" id="PureBestKVelocity"><a class="viewcode-back" href="../../../btb.selection.html#btb.selection.pure.PureBestKVelocity">[docs]</a><span class="k">class</span> <span class="nc">PureBestKVelocity</span><span class="p">(</span><span class="n">Selector</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">K_MIN</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simply returns the choice with the best best-K velocity.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">PureBestKVelocity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">choices</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">K_MIN</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PureBestKVelocity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
 
 <div class="viewcode-block" id="PureBestKVelocity.compute_rewards"><a class="viewcode-back" href="../../../btb.selection.html#btb.selection.pure.PureBestKVelocity.compute_rewards">[docs]</a>    <span class="k">def</span> <span class="nf">compute_rewards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

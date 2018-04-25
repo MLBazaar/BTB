@@ -227,7 +227,7 @@
 <span id="btb-tuning-custom-tuner-module"></span><h2>btb.tuning.custom_tuner module<a class="headerlink" href="#module-btb.tuning.custom_tuner" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.tuning.custom_tuner.CustomTuner">
-<em class="property">class </em><code class="descclassname">btb.tuning.custom_tuner.</code><code class="descname">CustomTuner</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/custom_tuner.html#CustomTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.custom_tuner.CustomTuner" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.custom_tuner.</code><code class="descname">CustomTuner</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/custom_tuner.html#CustomTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.custom_tuner.CustomTuner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
 <p>Very bare_bones tuner that returns a random set of parameters each time.</p>
 <dl class="method">
@@ -243,7 +243,7 @@
 <span id="btb-tuning-gcp-module"></span><h2>btb.tuning.gcp module<a class="headerlink" href="#module-btb.tuning.gcp" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.tuning.gcp.GCP">
-<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
 <dl class="method">
 <dt id="btb.tuning.gcp.GCP.fit">
@@ -274,13 +274,13 @@ X: np.array of hyperparameters,</p>
 
 <dl class="class">
 <dt id="btb.tuning.gcp.GCPEi">
-<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEi" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCP" title="btb.tuning.gcp.GCP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCP</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="btb.tuning.gcp.GCPEiVelocity">
-<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.gcp.</code><code class="descname">GCPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gcp.GCPEiVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCPEi" title="btb.tuning.gcp.GCPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCPEi</span></code></a></p>
 <dl class="attribute">
 <dt id="btb.tuning.gcp.GCPEiVelocity.MULTIPLIER">
@@ -323,7 +323,7 @@ uniform random selection.</p>
 <span id="btb-tuning-gp-module"></span><h2>btb.tuning.gp module<a class="headerlink" href="#module-btb.tuning.gp" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.tuning.gp.GP">
-<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
 <dl class="method">
 <dt id="btb.tuning.gp.GP.fit">
@@ -350,13 +350,13 @@ uniform random selection.</p>
 
 <dl class="class">
 <dt id="btb.tuning.gp.GPEi">
-<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEi" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GP" title="btb.tuning.gp.GP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GP</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="btb.tuning.gp.GPEiVelocity">
-<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.gp.</code><code class="descname">GPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.gp.GPEiVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GPEi" title="btb.tuning.gp.GPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GPEi</span></code></a></p>
 <dl class="attribute">
 <dt id="btb.tuning.gp.GPEiVelocity.MULTIPLIER">
@@ -389,7 +389,7 @@ uniform random selection.</p>
 <span id="btb-tuning-tuner-module"></span><h2>btb.tuning.tuner module<a class="headerlink" href="#module-btb.tuning.tuner" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.tuning.tuner.BaseTuner">
-<em class="property">class </em><code class="descclassname">btb.tuning.tuner.</code><code class="descname">BaseTuner</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuner.BaseTuner" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.tuner.</code><code class="descname">BaseTuner</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/tuner.html#BaseTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuner.BaseTuner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="btb.tuning.tuner.BaseTuner.add">
@@ -459,7 +459,7 @@ If called with n&gt;1 then proposal is a list of dictionaries.</dd>
 <span id="btb-tuning-uniform-module"></span><h2>btb.tuning.uniform module<a class="headerlink" href="#module-btb.tuning.uniform" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.tuning.uniform.Uniform">
-<em class="property">class </em><code class="descclassname">btb.tuning.uniform.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.uniform.Uniform" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.uniform.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.uniform.Uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
 <p>Very bare_bones tuner that returns a random set of parameters each time.</p>
 <dl class="method">
@@ -511,7 +511,7 @@ If called with n&gt;1 then proposal is a list of dictionaries.</dd>
 
 <dl class="class">
 <dt id="btb.tuning.GCP">
-<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
 <dl class="method">
 <dt id="btb.tuning.GCP.fit">
@@ -542,13 +542,13 @@ X: np.array of hyperparameters,</p>
 
 <dl class="class">
 <dt id="btb.tuning.GCPEi">
-<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEi" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCP" title="btb.tuning.gcp.GCP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCP</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="btb.tuning.GCPEiVelocity">
-<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GCPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gcp.html#GCPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GCPEiVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gcp.GCPEi" title="btb.tuning.gcp.GCPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gcp.GCPEi</span></code></a></p>
 <dl class="attribute">
 <dt id="btb.tuning.GCPEiVelocity.MULTIPLIER">
@@ -578,7 +578,7 @@ uniform random selection.</p>
 
 <dl class="class">
 <dt id="btb.tuning.GP">
-<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GP</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
 <dl class="method">
 <dt id="btb.tuning.GP.fit">
@@ -605,13 +605,13 @@ uniform random selection.</p>
 
 <dl class="class">
 <dt id="btb.tuning.GPEi">
-<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEi" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GPEi</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GP" title="btb.tuning.gp.GP"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GP</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="btb.tuning.GPEiVelocity">
-<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEiVelocity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">GPEiVelocity</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>r_minimum=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/gp.html#GPEiVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.GPEiVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.gp.GPEi" title="btb.tuning.gp.GPEi"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.gp.GPEi</span></code></a></p>
 <dl class="attribute">
 <dt id="btb.tuning.GPEiVelocity.MULTIPLIER">
@@ -641,7 +641,7 @@ uniform random selection.</p>
 
 <dl class="class">
 <dt id="btb.tuning.Uniform">
-<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.Uniform" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.tuning.</code><code class="descname">Uniform</code><span class="sig-paren">(</span><em>tunables</em>, <em>gridding=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/tuning/uniform.html#Uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.Uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuner.BaseTuner" title="btb.tuning.tuner.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuner.BaseTuner</span></code></a></p>
 <p>Very bare_bones tuner that returns a random set of parameters each time.</p>
 <dl class="method">
