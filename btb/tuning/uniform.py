@@ -1,6 +1,6 @@
 import numpy as np
 
-from btb.tuning import BaseTuner
+from btb.tuning.tuner import BaseTuner
 
 
 class Uniform(BaseTuner):
