@@ -11,9 +11,6 @@ class TestRecentKReward(TestCase):
     # METHOD: __init__(self, choices, **kwargs)
     # VALIDATE:
     #     * attribute values
-    # TODO:
-    #     * kwargs can be safely removed from the method signature
-    #     * 'k' should be made an explicit parameter
 
     def test___init__(self):
 

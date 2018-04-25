@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Selector(object):
-    def __init__(self, choices, **kwargs):
+    def __init__(self, choices):
         """
         Args:
             choices: a list of discrete choices from which the selector must

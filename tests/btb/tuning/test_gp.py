@@ -12,8 +12,6 @@ class TestGP(TestCase):
     # METHOD __init__(self, tunables, gridding=0, **kwargs)
     # VALIDATE:
     #     * attribute values
-    # TODO:
-    #     * Use an explicit parameter name instead of popping it from kwargs
 
     def test___init__(self):
         # Run

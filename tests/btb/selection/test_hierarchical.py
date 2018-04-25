@@ -10,8 +10,6 @@ class TestHierarchicalByAlgorithm(TestCase):
     # VALIDATE:
     #     * attribute values
     # TODO:
-    #     * kwargs can be safely removed from the method signature
-    #     * by_algorithm should be made an explicit parameter
     #     * Why not re-use choices instead of creating an extra argument?
 
     def test___init__(self):
