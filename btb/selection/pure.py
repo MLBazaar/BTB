@@ -1,6 +1,6 @@
 import logging
 
-from btb.selection import Selector
+from btb.selection.selector import Selector
 
 # the minimum number of scores that each choice must have in order to use best-K
 # optimizations. If not all choices meet this threshold, default UCB1 selection

@@ -1,4 +1,4 @@
-from btb.tuning import BaseTuner
+from btb.tuning.tuner import BaseTuner
 
 
 class CustomTuner(BaseTuner):

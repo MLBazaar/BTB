@@ -3,7 +3,7 @@ import unittest
 
 import numpy as np
 
-from btb import HyperParameter, ParamTypes
+from btb.hyper_parameter import HyperParameter, ParamTypes
 
 
 class TestHyperparameter(unittest.TestCase):
