@@ -2,22 +2,22 @@ import copy
 import math
 import random
 from collections import defaultdict
+from enum import Enum
 
 import numpy as np
 
 
-class ParamTypes(object):
-    INT = "int"
-    INT_EXP = "int_exp"
-    INT_CAT = "int_cat"
-    FLOAT = "float"
-    FLOAT_EXP = "float_exp"
-    FLOAT_CAT = "float_cat"
-    STRING = "string"
-    BOOL = "bool"
+class ParamTypes(Enum):
+    INT = 1
+    INT_EXP = 2
+    INT_CAT = 3
+    FLOAT = 4
+    FLOAT_EXP = 5
+    FLOAT_CAT = 6
+    STRING = 7
+    BOOL = 8
 
 
-# HyperParameter object
 class HyperParameter(object):
 
     param_type = None
@@ -42,12 +42,12 @@ class HyperParameter(object):
         return cls._subclasses
 
     def __new__(cls, param_type=None, param_range=None):
-        if param_type:
+        if isinstance(param_type, ParamTypes):
             for subclass in cls.subclasses():
-                if subclass.param_type == param_type:
+                if subclass.param_type is param_type:
                     return super(HyperParameter, cls).__new__(subclass)
 
-        return super(HyperParameter, cls).__new__(cls)
+        raise ValueError('Invalid ParamType {}'.format(param_type))
 
     def cast(self, value):
         raise NotImplementedError()

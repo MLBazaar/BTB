@@ -2,6 +2,8 @@ import copy
 import unittest
 
 import numpy as np
+import pytest
+from mock import patch
 
 from btb.hyper_parameter import HyperParameter, ParamTypes
 
@@ -17,6 +19,25 @@ class TestHyperparameter(unittest.TestCase):
             (ParamTypes.BOOL, [True, False]),
             (ParamTypes.STRING, ['a', 'b', 'c']),
         ]
+
+    def test___init__value_error(self):
+        with pytest.raises(ValueError):
+            HyperParameter('not a ParamType', [1, 10])
+
+    @patch('btb.hyper_parameter.HyperParameter.subclasses')
+    def test_cast_not_implemented(self, subclasses_mock):
+
+        # create a fake HyperParameter subclass
+        class FakeHyperParameter(HyperParameter):
+            param_type = ParamTypes.INT
+
+        # Make FakeHyperParameter the only subclass for this test
+        subclasses_mock.return_value = [FakeHyperParameter]
+
+        fake = HyperParameter(ParamTypes.INT, [None])
+
+        with pytest.raises(NotImplementedError):
+            fake.cast(1)
 
     def test_int(self):
         hyp = HyperParameter(ParamTypes.INT, [1, 3])
