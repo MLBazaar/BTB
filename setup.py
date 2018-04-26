@@ -12,6 +12,7 @@ with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 requirements = [
+    'enum34>=1.1.6; python_version=="2.7"',
     'numpy>=1.14.2',
     'scikit-learn>=0.19.1',
     'scipy>=1.0.1'
@@ -43,12 +44,12 @@ setup(
     long_description_content_type='text/markdown',
     include_package_data=True,
     keywords='machine learning hyperparameters tuning classification',
-    name='btb',
+    name='baytune',
     packages=find_packages(include=['btb']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/HDI-Project/btb',
+    url='https://github.com/HDI-Project/BTB',
     version='0.1.0',
     zip_safe=False,
 )
