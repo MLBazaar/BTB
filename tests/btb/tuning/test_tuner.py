@@ -4,6 +4,7 @@ from unittest import TestCase
 import numpy as np
 import pytest
 from mock import patch
+from numpy.random import shuffle as np_shuffle
 
 from btb.hyper_parameter import HyperParameter, ParamTypes
 from btb.tuning.tuner import BaseTuner
@@ -30,7 +31,7 @@ class TestBaseTuner(TestCase):
         assert tuner.grid is True
         assert tuner._best_score == -np.inf
         assert tuner._best_hyperparams is None
-        assert tuner.grid_size == 5
+        assert tuner.grid_width == 5
         assert tuner.X_raw is None
         assert tuner.y_raw == []
         assert tuner.X.tolist() == []
@@ -42,51 +43,11 @@ class TestBaseTuner(TestCase):
         ]
         np.testing.assert_array_equal(tuner._grid_axes, expected_grid_axes)
 
-    # METHOD: _define_grid(self)
+    # METHOD: _generate_grid(self)
     # VALIDATE:
     #     * grid_axes values
-    # TODO:
-    #     * return the axes instead of setting an attribute.
     # NOTES:
     #     * Implicitely covered in __init__ method
-
-    # METHOD: _params_to_grid(self, params)
-    # VALIDATE:
-    #     * Returned grid
-
-    def test__params_to_grid(self):
-
-        # Set-up
-        tunables = (
-            ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
-            ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
-        )
-        tuner = BaseTuner(tunables, gridding=5)
-
-        # Run
-        grid = tuner._params_to_grid([1.25, 3])
-
-        # Assert
-        np.testing.assert_array_equal(grid, [1, 2])
-
-    # METHOD: _grid_to_params(self, grid_points)
-    # VALIDATE:
-    #     * Returned params
-
-    def test__grid_to_params(self):
-
-        # Set-up
-        tunables = (
-            ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
-            ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
-        )
-        tuner = BaseTuner(tunables, gridding=5)
-
-        # Run
-        grid = tuner._grid_to_params([1, 2])
-
-        # Assert
-        np.testing.assert_array_equal(grid, [1.25, 3])
 
     # METHOD: fit(self, X, y)
     # VALIDATE:
@@ -174,60 +135,77 @@ class TestBaseTuner(TestCase):
         # Assert
         assert candidates is None
 
-    def test__create_candidates_lt_n_remaining(self):
+    @patch('btb.tuning.tuner.np.random')
+    def test__create_candidates_lt_n_remaining(self, np_random_mock):
         """less than n points remaining"""
         # Set-up
+        mock_context = dict()
+
+        def shuffle(array):
+            np_shuffle(array)
+
+            # Store a copy of the array for the assert
+            mock_context['shuffled_array'] = array.copy()
+
+        np_random_mock.shuffle.side_effect = shuffle
+
         tunables = (
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=3)
 
-        # Insert 20 part_vecs into X (5 remaining)
-        all_vecs = np.array(list(product(*tuner._grid_axes)))
-        tuner.X = all_vecs[:20]
+        # Insert 5 used vectors into X (4 remaining)
+        tuner.X = np.array([
+            [1., 1.],
+            [1., 3.],
+            [1., 5.],
+            [1.5, 1.],
+            [1.5, 5.],
+        ])
 
         # Run
         # n = 1000
         candidates = tuner._create_candidates()
 
         # Assert
-        expected_candidates = all_vecs[20:]
-        np.testing.assert_array_equal(np.sort(candidates, axis=0), expected_candidates)
+        expected_candidates = mock_context['shuffled_array']
+        np.testing.assert_array_equal(candidates, expected_candidates)
 
     @patch('btb.tuning.tuner.np.random')
     def test__create_candidates_gt_n_remaining(self, np_random_mock):
         """more than n points remaining"""
         # Set-up
-        np_random_mock.randint.side_effect = [
-            np.array([0, 0]),   # [1.0, 1] => Used
-            np.array([1, 1]),
-            np.array([2, 2]),   # [1.4, 3] => Used
-            np.array([3, 3]),
-            np.array([4, 4]),
-        ]
+        mock_context = dict()
+
+        def shuffle(array):
+            np_shuffle(array)
+
+            # Store a copy of the array for the assert
+            mock_context['shuffled_array'] = array.copy()
+
+        np_random_mock.shuffle.side_effect = shuffle
 
         tunables = (
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
         )
-        tuner = BaseTuner(tunables, gridding=5)
+        tuner = BaseTuner(tunables, gridding=3)
 
-        # Insert 2 vectors that we assume as used
+        # Insert 5 used vectors into X (4 remaining)
         tuner.X = np.array([
-            [1.0, 1],
-            [1.5, 3]
+            [1., 1.],
+            [1., 3.],
+            [1., 5.],
+            [1.5, 1.],
+            [1.5, 5.],
         ])
 
         # Run
-        candidates = tuner._create_candidates(3)
+        candidates = tuner._create_candidates(2)
 
         # Assert
-        expected_candidates = np.array([
-            [1.25, 2],
-            [1.75, 4],
-            [2., 5]
-        ])
+        expected_candidates = mock_context['shuffled_array'][0:2]
         np.testing.assert_array_equal(candidates, expected_candidates)
 
     # METHOD: predict(self, X)
