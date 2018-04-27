@@ -179,7 +179,8 @@
            <div itemprop="articleBody">
             
   <h1>Source code for btb.tuning.tuner</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -206,8 +207,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_best_hyperparams</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span> <span class="o">=</span> <span class="n">gridding</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_define_grid</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid_width</span> <span class="o">=</span> <span class="n">gridding</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_grid</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">X_raw</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_raw</span> <span class="o">=</span> <span class="p">[]</span>
@@ -215,40 +216,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 
-    <span class="k">def</span> <span class="nf">_define_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Define the range of possible values for each of the tunable</span>
-<span class="sd">        hyperparameters.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">_generate_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the all possible values for each of the tunables.&quot;&quot;&quot;</span>
+        <span class="n">grid_axes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">get_grid_axis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span><span class="p">))</span>
+            <span class="n">grid_axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">get_grid_axis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_width</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_params_to_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Fit a vector of continuous parameters to the grid. Each parameter is</span>
-<span class="sd">        fitted to the grid point it is closest to.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># This list will be filled with hyperparameter vectors that have been</span>
-        <span class="c1"># mapped from vectors of continuous values to vectors of indices</span>
-        <span class="c1"># representing points on the grid.</span>
-        <span class="n">grid_points</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-            <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="c1"># find the index of the grid point closest to the hyperparameter</span>
-            <span class="c1"># vector</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">val</span><span class="p">))</span>
-            <span class="n">grid_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grid_points</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_grid_to_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Map a single point on the grid, represented by indices into each axis,</span>
-<span class="sd">        to a continuous-valued parameter vector.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid_points</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grid_axes</span>
 
 <div class="viewcode-block" id="BaseTuner.fit"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.tuner.BaseTuner.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -259,6 +233,40 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span></div>
+
+    <span class="k">def</span> <span class="nf">_candidates_from_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get unused candidates from the grid or parameters.&quot;&quot;&quot;</span>
+        <span class="n">used_vectors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># if every point has been used before, gridding is done.</span>
+        <span class="n">grid_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_width</span> <span class="o">**</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">used_vectors</span><span class="p">)</span> <span class="o">==</span> <span class="n">grid_size</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">all_vectors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="p">))</span>
+        <span class="n">remaining_vectors</span> <span class="o">=</span> <span class="n">all_vectors</span> <span class="o">-</span> <span class="n">used_vectors</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">remaining_vectors</span><span class="p">)))</span>
+
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_random_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate a matrix of random parameters, column by column.&quot;&quot;&quot;</span>
+
+        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tunable</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">):</span>
+            <span class="n">param</span> <span class="o">=</span> <span class="n">tunable</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">range</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">is_integer</span><span class="p">:</span>
+                <span class="n">column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">diff</span> <span class="o">=</span> <span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span>
+                <span class="n">column</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="n">diff</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+            <span class="n">candidates</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">column</span>
+
+        <span class="k">return</span> <span class="n">candidates</span>
 
     <span class="k">def</span> <span class="nf">_create_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -275,56 +283,12 @@
 
         <span class="c1"># If using a grid, generate a list of previously unused grid points</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">:</span>
-            <span class="c1"># convert numpy array to set of tuples of grid indices for easier</span>
-            <span class="c1"># comparison</span>
-            <span class="n">past_vecs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_params_to_grid</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
-
-            <span class="c1"># if every point has been used before, gridding is done.</span>
-            <span class="n">num_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span> <span class="o">**</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">past_vecs</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_points</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
-
-            <span class="c1"># if fewer than n total points have yet to be seen, just return all</span>
-            <span class="c1"># grid points not in past_vecs</span>
-            <span class="k">if</span> <span class="n">num_points</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">past_vecs</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
-                <span class="c1"># generate all possible points in the grid</span>
-                <span class="c1"># FIXED BUG: indices = np.indices(self._grid_axes)</span>
-                <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_axes</span><span class="p">)</span>
-                <span class="n">all_vecs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span>
-                               <span class="n">indices</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-                <span class="n">vec_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_vecs</span> <span class="o">-</span> <span class="n">past_vecs</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># generate n random vectors of grid-point indices</span>
-                <span class="n">vec_list</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-                    <span class="c1"># TODO: only choose from set of unused values</span>
-                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-                        <span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span><span class="p">,</span>
-                                                <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">))</span>
-                        <span class="k">if</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">past_vecs</span><span class="p">:</span>
-                            <span class="k">break</span>
-                    <span class="n">vec_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
-
-            <span class="c1"># map the points back to continuous values and return</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_grid_to_params</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vec_list</span><span class="p">])</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidates_from_grid</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
         <span class="c1"># If not using a grid, generate a list of vectors where each parameter</span>
         <span class="c1"># is chosen uniformly at random</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># generate a matrix of random parameters, column by column.</span>
-            <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">)))</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunables</span><span class="p">):</span>
-                <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">range</span>
-                <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">is_integer</span><span class="p">:</span>
-                    <span class="n">column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">diff</span> <span class="o">=</span> <span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span>
-                    <span class="n">column</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="n">diff</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-
-                <span class="n">candidates</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">column</span>
-                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-            <span class="k">return</span> <span class="n">candidates</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_random_candidates</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BaseTuner.predict"><a class="viewcode-back" href="../../../btb.tuning.html#btb.tuning.tuner.BaseTuner.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
