@@ -12,7 +12,7 @@ To install BTB, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install btb
+    $ pip install baytune
 
 This is the preferred method to install BTB, as it will always install the most recent stable release.
 
@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/HDI-Project/btb
+    $ git clone git://github.com/HDI-Project/BTB
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/HDI-Project/btb/tarball/master
+    $ curl  -OL https://github.com/HDI-Project/BTB/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/HDI-Project/btb
+.. _Github repo: https://github.com/HDI-Project/BTB
 .. _tarball: https://github.com/HDI-Project/btb/tarball/master
