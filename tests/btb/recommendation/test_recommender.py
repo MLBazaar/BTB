@@ -37,7 +37,11 @@ class TestBaseRecommender(TestCase):
         np.testing.assert_array_equal(recommender.dpp_matrix, self.dpp_matrix)
         np.testing.assert_array_equal(recommender.dpp_ranked, self.dpp_ranked)
         assert recommender.n_components == self.n_components
-        assert recommender.matching_dataset is None
+        # matching dataset starts out with a random choice
+        assert recommender.matching_dataset is not None
+        assert(
+            any((self.dpp_matrix[:] == recommender.matching_dataset).all(1))
+        )
         # assert dpp_vector has same number of entries as pipelines
         assert recommender.dpp_vector.shape[0] == self.dpp_matrix.shape[1]
 
@@ -59,7 +63,7 @@ class TestBaseRecommender(TestCase):
     def test__get_candidates_all(self):
         recommender = Recommender(self.dpp_matrix, self.n_components)
         X = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        recommender.X = X
+        recommender.dpp_vector = X
         candidates = recommender._get_candidates()
         expected = np.array(
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -72,7 +76,7 @@ class TestBaseRecommender(TestCase):
     def test__get_candidates_some(self):
         recommender = Recommender(self.dpp_matrix, self.n_components)
         X = np.array([0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0])
-        recommender.X = X
+        recommender.dpp_vector = X
         expected = np.array([0, 1, 2, 4, 6, 8, 10, 11, 12, 14, 15])
         candidates = recommender._get_candidates()
         np.testing.assert_array_equal(
@@ -83,7 +87,7 @@ class TestBaseRecommender(TestCase):
     def test__get_candidates_none(self):
         recommender = Recommender(self.dpp_matrix, self.n_components)
         X = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-        recommender.X = X
+        recommender.dpp_vector = X
         candidates = recommender._get_candidates()
         expected = None
         self.assertEqual(expected, candidates)
@@ -222,3 +226,18 @@ class TestBaseRecommender(TestCase):
         # Assert
         expected_pipeline_index = 3
         assert pipeline_index == expected_pipeline_index
+
+    def test_propose_without_add(self):
+        recommender = Recommender(self.dpp_matrix, self.n_components)
+        assert(
+            any((self.dpp_matrix[:] == recommender.matching_dataset).all(1))
+        )
+        pipeline_index = recommender.propose()
+        assert(pipeline_index in range(self.dpp_matrix.shape[1]))
+
+    def test_propose_empty_add(self):
+        recommender = Recommender(self.dpp_matrix, self.n_components)
+        recommender.add({})
+        assert(any((self.dpp_matrix[:] == recommender.matching_dataset).all(1)))
+        pipeline_index = recommender.propose()
+        assert(pipeline_index in range(self.dpp_matrix.shape[1]))
