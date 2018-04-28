@@ -22,7 +22,6 @@ class TestBaseRecommender(TestCase):
             [1, 3, 2],
         ])
         # Set-up
-
         self.dpp_matrix = np.array([
             [1, 0, 0, 0, 0, 0, 0, 3, 0, 4, 6, 2, 5, 0, 8, 0],
             [0, 4, 0, 6, 0, 4, 0, 2, 1, 0, 0, 2, 3, 1, 0, 0],
