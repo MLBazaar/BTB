@@ -1,8 +1,11 @@
 import logging
-
+from builtins import range, object
 import numpy as np
-import scipy.stats as stats
+import random
+import math
 from sklearn.decomposition import NMF
+import scipy.stats as stats
+
 
 logger = logging.getLogger('btb')
 
@@ -79,7 +82,7 @@ class Recommender(object):
             method='dense',
         )
 
-        max_agreement_index = None
+        max_agrement_index = None
         max_agreement = -1  # min value of Kendall Tau agremment
         for i in range(self.dpp_ranked.shape[0]):
             # calculate agreement between current row and X
@@ -90,7 +93,6 @@ class Recommender(object):
             if agreement > max_agreement:
                 max_agreement_index = i
                 max_agreement = agreement
-
         # store the row with the highest agreement for prediction
         self.matching_dataset = self.dpp_matrix[max_agreement_index, :]
 
@@ -134,7 +136,7 @@ class Recommender(object):
                 self.dpp_matrix that haven't been tried on X.
                 None if all pipelines have been tried on X.
         """
-        candidates = np.where(self.X == 0)
+        candidates = np.where(self.dpp_vector == 0)
         return None if len(candidates[0]) == 0 else candidates[0]
 
     def propose(self):
