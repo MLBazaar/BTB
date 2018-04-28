@@ -2,6 +2,7 @@ from unittest import TestCase
 
 import numpy as np
 from mock import patch
+
 from btb.recommendation.recommender import Recommender
 
 
