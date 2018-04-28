@@ -1,3 +1,4 @@
+import itertools
 import logging
 
 import numpy as np
@@ -25,8 +26,8 @@ class BaseTuner(object):
         self._best_hyperparams = None
 
         if self.grid:
-            self.grid_size = gridding
-            self._define_grid()
+            self.grid_width = gridding
+            self._grid_axes = self._generate_grid()
 
         self.X_raw = None
         self.y_raw = []
@@ -34,40 +35,13 @@ class BaseTuner(object):
         self.X = np.array([])
         self.y = np.array([])
 
-    def _define_grid(self):
-        """
-        Define the range of possible values for each of the tunable
-        hyperparameters.
-        """
-        self._grid_axes = []
+    def _generate_grid(self):
+        """Get the all possible values for each of the tunables."""
+        grid_axes = []
         for _, param in self.tunables:
-            self._grid_axes.append(param.get_grid_axis(self.grid_size))
+            grid_axes.append(param.get_grid_axis(self.grid_width))
 
-    def _params_to_grid(self, params):
-        """
-        Fit a vector of continuous parameters to the grid. Each parameter is
-        fitted to the grid point it is closest to.
-        """
-        # This list will be filled with hyperparameter vectors that have been
-        # mapped from vectors of continuous values to vectors of indices
-        # representing points on the grid.
-        grid_points = []
-        for i, val in enumerate(params):
-            axis = self._grid_axes[i]
-            # find the index of the grid point closest to the hyperparameter
-            # vector
-            idx = min(range(len(axis)), key=lambda i: abs(axis[i] - val))
-            grid_points.append(idx)
-
-        return np.array(grid_points)
-
-    def _grid_to_params(self, grid_points):
-        """
-        Map a single point on the grid, represented by indices into each axis,
-        to a continuous-valued parameter vector.
-        """
-        params = [self._grid_axes[i][p] for i, p in enumerate(grid_points)]
-        return np.array(params)
+        return grid_axes
 
     def fit(self, X, y):
         """
@@ -78,6 +52,40 @@ class BaseTuner(object):
         """
         self.X = X
         self.y = y
+
+    def _candidates_from_grid(self, n=1000):
+        """Get unused candidates from the grid or parameters."""
+        used_vectors = set(tuple(v) for v in self.X)
+
+        # if every point has been used before, gridding is done.
+        grid_size = self.grid_width ** len(self.tunables)
+        if len(used_vectors) == grid_size:
+            return None
+
+        all_vectors = set(itertools.product(*self._grid_axes))
+        remaining_vectors = all_vectors - used_vectors
+        candidates = np.array(list(map(np.array, remaining_vectors)))
+
+        np.random.shuffle(candidates)
+        return candidates[0:n]
+
+    def _random_candidates(self, n=1000):
+        """Generate a matrix of random parameters, column by column."""
+
+        candidates = np.zeros((n, len(self.tunables)))
+        for i, tunable in enumerate(self.tunables):
+            param = tunable[1]
+            lo, hi = param.range
+            if param.is_integer:
+                column = np.random.randint(lo, hi + 1, size=n)
+
+            else:
+                diff = hi - lo
+                column = lo + diff * np.random.rand(n)
+
+            candidates[:, i] = column
+
+        return candidates
 
     def _create_candidates(self, n=1000):
         """
@@ -94,56 +102,12 @@ class BaseTuner(object):
 
         # If using a grid, generate a list of previously unused grid points
         if self.grid:
-            # convert numpy array to set of tuples of grid indices for easier
-            # comparison
-            past_vecs = set(tuple(self._params_to_grid(v)) for v in self.X)
-
-            # if every point has been used before, gridding is done.
-            num_points = self.grid_size ** len(self.tunables)
-            if len(past_vecs) == num_points:
-                return None
-
-            # if fewer than n total points have yet to be seen, just return all
-            # grid points not in past_vecs
-            if num_points - len(past_vecs) <= n:
-                # generate all possible points in the grid
-                # FIXED BUG: indices = np.indices(self._grid_axes)
-                indices = np.indices(len(a) for a in self._grid_axes)
-                all_vecs = set(tuple(v) for v in
-                               indices.T.reshape(-1, indices.shape[0]))
-                vec_list = list(all_vecs - past_vecs)
-            else:
-                # generate n random vectors of grid-point indices
-                vec_list = []
-                for i in range(n):
-                    # TODO: only choose from set of unused values
-                    while True:
-                        vec = np.random.randint(self.grid_size,
-                                                size=len(self.tunables))
-                        if tuple(vec) not in past_vecs:
-                            break
-                    vec_list.append(vec)
-
-            # map the points back to continuous values and return
-            return np.array([self._grid_to_params(v) for v in vec_list])
+            return self._candidates_from_grid(n)
 
         # If not using a grid, generate a list of vectors where each parameter
         # is chosen uniformly at random
         else:
-            # generate a matrix of random parameters, column by column.
-            candidates = np.zeros((n, len(self.tunables)))
-            for i, (k, param) in enumerate(self.tunables):
-                lo, hi = param.range
-                if param.is_integer:
-                    column = np.random.randint(lo, hi + 1, size=n)
-                else:
-                    diff = hi - lo
-                    column = lo + diff * np.random.rand(n)
-
-                candidates[:, i] = column
-                i += 1
-
-            return candidates
+            return self._random_candidates(n)
 
     def predict(self, X):
         """
