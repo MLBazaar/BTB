@@ -59,7 +59,7 @@ class TestBaseRecommender(TestCase):
     def test__get_candidates_all(self):
         recommender = Recommender(self.dpp_matrix, self.n_components)
         X = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        recommender.X = X
+        recommender.dpp_vector = X
         candidates = recommender._get_candidates()
         expected = np.array(
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -72,7 +72,7 @@ class TestBaseRecommender(TestCase):
     def test__get_candidates_some(self):
         recommender = Recommender(self.dpp_matrix, self.n_components)
         X = np.array([0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0])
-        recommender.X = X
+        recommender.dpp_vector = X
         expected = np.array([0, 1, 2, 4, 6, 8, 10, 11, 12, 14, 15])
         candidates = recommender._get_candidates()
         np.testing.assert_array_equal(
@@ -83,7 +83,7 @@ class TestBaseRecommender(TestCase):
     def test__get_candidates_none(self):
         recommender = Recommender(self.dpp_matrix, self.n_components)
         X = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-        recommender.X = X
+        recommender.dpp_vector = X
         candidates = recommender._get_candidates()
         expected = None
         self.assertEqual(expected, candidates)

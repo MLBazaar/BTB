@@ -134,7 +134,7 @@ class Recommender(object):
                 self.dpp_matrix that haven't been tried on X.
                 None if all pipelines have been tried on X.
         """
-        candidates = np.where(self.X == 0)
+        candidates = np.where(self.dpp_vector == 0)
         return None if len(candidates[0]) == 0 else candidates[0]
 
     def propose(self):
