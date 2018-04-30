@@ -34,7 +34,7 @@ class TestBaseRecommender(TestCase):
         index = 1
         nmf_mock().fit_transform.return_value = self.dpp_ranked
         # Run
-        with patch('numpy.random.randint', return_value=index) as mock_random:
+        with patch('numpy.random.randint', return_value=index):
             recommender = Recommender(self.dpp_matrix, self.n_components)
         np.testing.assert_array_equal(recommender.dpp_matrix, self.dpp_matrix)
         np.testing.assert_array_equal(recommender.dpp_ranked, self.dpp_ranked)
@@ -231,7 +231,7 @@ class TestBaseRecommender(TestCase):
     def test_propose_without_add(self):
         index = 0
         proposed = np.argmax(self.dpp_matrix[0])  # 14
-        with patch('numpy.random.randint', return_value=index) as mock_random:
+        with patch('numpy.random.randint', return_value=index):
             recommender = Recommender(self.dpp_matrix, self.n_components)
         np.testing.assert_array_equal(
             recommender.matching_dataset,
@@ -244,7 +244,7 @@ class TestBaseRecommender(TestCase):
         index = 0
         proposed = np.argmax(self.dpp_matrix[0])  # 14
         recommender = Recommender(self.dpp_matrix, self.n_components)
-        with patch('numpy.random.randint', return_value=index) as mock_random:
+        with patch('numpy.random.randint', return_value=index):
             recommender.add({})
         np.testing.assert_array_equal(
             recommender.matching_dataset,
