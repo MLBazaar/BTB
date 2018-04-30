@@ -31,18 +31,19 @@ class TestBaseRecommender(TestCase):
 
     @patch('btb.recommendation.recommender.NMF')
     def test___init__(self, nmf_mock):
+        index = 1
         nmf_mock().fit_transform.return_value = self.dpp_ranked
         # Run
-        recommender = Recommender(self.dpp_matrix, self.n_components)
+        with patch('numpy.random.randint', return_value=index) as mock_random:
+            recommender = Recommender(self.dpp_matrix, self.n_components)
         np.testing.assert_array_equal(recommender.dpp_matrix, self.dpp_matrix)
         np.testing.assert_array_equal(recommender.dpp_ranked, self.dpp_ranked)
         assert recommender.n_components == self.n_components
         # matching dataset starts out with a random choice
-        assert recommender.matching_dataset is not None
-        assert(
-            any((self.dpp_matrix[:] == recommender.matching_dataset).all(1))
+        np.testing.assert_array_equal(
+            recommender.matching_dataset,
+            self.dpp_matrix[index, :],
         )
-        # assert dpp_vector has same number of entries as pipelines
         assert recommender.dpp_vector.shape[0] == self.dpp_matrix.shape[1]
 
     @patch('btb.recommendation.recommender.NMF')
@@ -228,16 +229,26 @@ class TestBaseRecommender(TestCase):
         assert pipeline_index == expected_pipeline_index
 
     def test_propose_without_add(self):
-        recommender = Recommender(self.dpp_matrix, self.n_components)
-        assert(
-            any((self.dpp_matrix[:] == recommender.matching_dataset).all(1))
+        index = 0
+        proposed = np.argmax(self.dpp_matrix[0])  # 14
+        with patch('numpy.random.randint', return_value=index) as mock_random:
+            recommender = Recommender(self.dpp_matrix, self.n_components)
+        np.testing.assert_array_equal(
+            recommender.matching_dataset,
+            self.dpp_matrix[index, :],
         )
         pipeline_index = recommender.propose()
-        assert(pipeline_index in range(self.dpp_matrix.shape[1]))
+        assert(pipeline_index == proposed)
 
     def test_propose_empty_add(self):
+        index = 0
+        proposed = np.argmax(self.dpp_matrix[0])  # 14
         recommender = Recommender(self.dpp_matrix, self.n_components)
-        recommender.add({})
-        assert(any((self.dpp_matrix[:] == recommender.matching_dataset).all(1)))
+        with patch('numpy.random.randint', return_value=index) as mock_random:
+            recommender.add({})
+        np.testing.assert_array_equal(
+            recommender.matching_dataset,
+            self.dpp_matrix[index, :],
+        )
         pipeline_index = recommender.propose()
-        assert(pipeline_index in range(self.dpp_matrix.shape[1]))
+        assert(pipeline_index == proposed)
