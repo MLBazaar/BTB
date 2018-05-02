@@ -29,22 +29,25 @@ class TestBaseRecommender(TestCase):
             [0, 2, 3, 0, 0, 0, 0, 0, 4, 1, 3, 2, 0, 0, 1, 4]
         ])
 
+    @patch('btb.recommendation.recommender.np.random.randint')
     @patch('btb.recommendation.recommender.NMF')
-    def test___init__(self, nmf_mock):
+    def test___init__(self, nmf_mock, randint_mock):
+        # set-up
         index = 1
         nmf_mock().fit_transform.return_value = self.dpp_ranked
-        # Run
-        with patch('numpy.random.randint', return_value=index):
-            recommender = Recommender(self.dpp_matrix, self.n_components)
-        np.testing.assert_array_equal(recommender.dpp_matrix, self.dpp_matrix)
-        np.testing.assert_array_equal(recommender.dpp_ranked, self.dpp_ranked)
-        assert recommender.n_components == self.n_components
-        # matching dataset starts out with a random choice
+        randint_mock.return_value = index
+
+        # run
+        recommender = Recommender(self.dpp_matrix, self.n_components)
+
+        # asserts
+        randint_mock.assert_called_once_with(4)  # 4 is self.dpp_matrix length
         np.testing.assert_array_equal(
             recommender.matching_dataset,
             self.dpp_matrix[index, :],
         )
-        assert recommender.dpp_vector.shape[0] == self.dpp_matrix.shape[1]
+        np.testing.assert_array_equal(recommender.dpp_matrix, self.dpp_matrix)
+        np.testing.assert_array_equal(recommender.dpp_ranked, self.dpp_ranked)
 
     @patch('btb.recommendation.recommender.NMF')
     def test_fit(self, nmf_mock):
@@ -228,27 +231,31 @@ class TestBaseRecommender(TestCase):
         expected_pipeline_index = 3
         assert pipeline_index == expected_pipeline_index
 
-    def test_propose_without_add(self):
+    @patch('btb.recommendation.recommender.np.random.randint')
+    def test_propose_without_add(self, randint_mock):
         index = 0
-        proposed = np.argmax(self.dpp_matrix[0])  # 14
-        with patch('numpy.random.randint', return_value=index):
-            recommender = Recommender(self.dpp_matrix, self.n_components)
-        np.testing.assert_array_equal(
-            recommender.matching_dataset,
-            self.dpp_matrix[index, :],
-        )
-        pipeline_index = recommender.propose()
-        assert(pipeline_index == proposed)
-
-    def test_propose_empty_add(self):
-        index = 0
+        randint_mock.return_value = index
         proposed = np.argmax(self.dpp_matrix[0])  # 14
         recommender = Recommender(self.dpp_matrix, self.n_components)
-        with patch('numpy.random.randint', return_value=index):
-            recommender.add({})
         np.testing.assert_array_equal(
             recommender.matching_dataset,
             self.dpp_matrix[index, :],
         )
         pipeline_index = recommender.propose()
-        assert(pipeline_index == proposed)
+        randint_mock.assert_called_once_with(4)  # 4 is self.dpp_matrix length
+        assert pipeline_index == proposed
+
+    @patch('btb.recommendation.recommender.np.random.randint')
+    def test_propose_empty_add(self, randint_mock):
+        index = 0
+        randint_mock.return_value = index
+        proposed = np.argmax(self.dpp_matrix[0])  # 14
+        recommender = Recommender(self.dpp_matrix, self.n_components)
+        recommender.add({})
+        np.testing.assert_array_equal(
+            recommender.matching_dataset,
+            self.dpp_matrix[index, :],
+        )
+        pipeline_index = recommender.propose()
+        assert randint_mock.call_count == 2
+        assert pipeline_index == proposed
