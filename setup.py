@@ -17,7 +17,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.1.1',
+    version='0.1.2',
 
     description='A framework for Bayesian hyperparameter selection and tuning',
 
@@ -61,5 +61,10 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     # TODO
-    install_requires=['future'],
+    install_requires=[
+        'future>=0.16.0',
+        'numpy>=1.14.2',
+        'scikit-learn>=0.19.1',
+        'scipy>=1.0.1'
+    ]
 )

@@ -30,6 +30,9 @@ class Tuner(object):
             self.grid_size = gridding
             self._define_grid()
 
+        self.X = np.array([])
+        self.y = np.array([])
+
     def _define_grid(self):
         """
         Define the range of possible values for each of the tunable
