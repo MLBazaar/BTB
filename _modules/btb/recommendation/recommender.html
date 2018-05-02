@@ -240,7 +240,8 @@
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">rankings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dpp_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">random_matching_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="p">[</span><span class="n">random_matching_index</span><span class="p">,</span> <span class="p">:]</span>
 
 <div class="viewcode-block" id="Recommender.fit"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.Recommender.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_vector</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -272,6 +273,8 @@
                 <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="n">i</span>
                 <span class="n">max_agreement</span> <span class="o">=</span> <span class="n">agreement</span>
 
+        <span class="k">if</span> <span class="n">max_agreement_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="c1"># store the row with the highest agreement for prediction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="p">[</span><span class="n">max_agreement_index</span><span class="p">,</span> <span class="p">:]</span></div>
 
@@ -411,9 +414,7 @@
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 
