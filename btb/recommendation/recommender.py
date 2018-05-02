@@ -59,7 +59,8 @@ class Recommender(object):
             )
             self.dpp_ranked[i, :] = rankings
         self.dpp_vector = np.zeros(self.dpp_matrix.shape[1])
-        self.matching_dataset = None
+        random_matching_index = np.random.randint(self.dpp_matrix.shape[0])
+        self.matching_dataset = self.dpp_matrix[random_matching_index, :]
 
     def fit(self, dpp_vector):
         """
@@ -91,6 +92,8 @@ class Recommender(object):
                 max_agreement_index = i
                 max_agreement = agreement
 
+        if max_agreement_index is None:
+            max_agreement_index = np.random.randint(self.dpp_matrix.shape[0])
         # store the row with the highest agreement for prediction
         self.matching_dataset = self.dpp_matrix[max_agreement_index, :]
 
