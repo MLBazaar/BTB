@@ -59,7 +59,8 @@ class Recommender(object):
             )
             self.dpp_ranked[i, :] = rankings
         self.dpp_vector = np.zeros(self.dpp_matrix.shape[1])
-        self.matching_dataset = None
+        random_matching_index = np.random.randint(self.dpp_matrix.shape[0])
+        self.matching_dataset = self.dpp_matrix[random_matching_index, :]
 
     def fit(self, dpp_vector):
         """
@@ -91,6 +92,8 @@ class Recommender(object):
                 max_agreement_index = i
                 max_agreement = agreement
 
+        if max_agreement_index is None:
+            max_agreement_index = np.random.randint(self.dpp_matrix.shape[0])
         # store the row with the highest agreement for prediction
         self.matching_dataset = self.dpp_matrix[max_agreement_index, :]
 
@@ -134,7 +137,7 @@ class Recommender(object):
                 self.dpp_matrix that haven't been tried on X.
                 None if all pipelines have been tried on X.
         """
-        candidates = np.where(self.X == 0)
+        candidates = np.where(self.dpp_vector == 0)
         return None if len(candidates[0]) == 0 else candidates[0]
 
     def propose(self):
