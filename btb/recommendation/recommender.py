@@ -21,7 +21,7 @@ class BaseRecommender(object):
             a new dataset D.
     """
 
-    def __init__(self, dpp_matrix, **kwargs):
+    def __init__(self, dpp_matrix):
         """
         Args:
             dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse

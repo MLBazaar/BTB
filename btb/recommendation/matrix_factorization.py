@@ -35,7 +35,7 @@ class MFRecommender(BaseRecommender):
             new dataset D. Identified in fit.
     """
 
-    def __init__(self, dpp_matrix, n_components=100, **kwargs):
+    def __init__(self, dpp_matrix, n_components=100):
         """
         Args:
             dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse
@@ -49,10 +49,7 @@ class MFRecommender(BaseRecommender):
         """
         self.dpp_matrix = dpp_matrix
         self.n_components = n_components
-        self.mf_model = NMF(
-            n_components=n_components,
-            init='nndsvd',
-        )
+        self.mf_model = NMF(n_components=n_components, init='nndsvd')
         dpp_decomposed = self.mf_model.fit_transform(dpp_matrix)
         self.dpp_ranked = np.empty(dpp_decomposed.shape)
         for i in range(dpp_decomposed.shape[0]):

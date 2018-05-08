@@ -56,13 +56,13 @@ class TestBaseRecommender(TestCase):
         dpp_vector = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         # Run
         recommender = MFRecommender(self.dpp_matrix, n_components)
-        for i in range(self.dpp_ranked.shape[0]):
-            nmf_mock().transform.return_value = self.dpp_ranked[i, :]
-            recommender.fit(dpp_vector)
-            np.testing.assert_array_equal(
-                recommender.matching_dataset,
-                self.dpp_matrix[i],
-            )
+        i = 0
+        nmf_mock().transform.return_value = self.dpp_ranked[i, :]
+        recommender.fit(dpp_vector)
+        np.testing.assert_array_equal(
+            recommender.matching_dataset,
+            self.dpp_matrix[i],
+        )
 
     def test_predict_one(self):
         # Run
