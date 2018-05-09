@@ -111,13 +111,17 @@ Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
 
-1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put
+1. It resolves an open GitHub Issue and contains its reference in the title or
+   the comment. If there is no associated issue, feel free to create one.
+2. Whenever possible, it resolves only `one` issue. If your PR resolves more than
+   one issue, try to split it in more than one pull request.
+3. The pull request should include unit tests that cover all the changed code
+4. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python2.7, 3.4, 3.5 and 3.6. Check
+5. The pull request should work for Python2.7, 3.4, 3.5 and 3.6. Check
    https://travis-ci.org/HDI-Project/BTB/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+   and make sure that all the checks pass.
 
 Tips
 ----
