@@ -4,10 +4,26 @@ btb.recommendation package
 Submodules
 ----------
 
+btb.recommendation.matrix\_factorization module
+-----------------------------------------------
+
+.. automodule:: btb.recommendation.matrix_factorization
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 btb.recommendation.recommender module
 -------------------------------------
 
 .. automodule:: btb.recommendation.recommender
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+btb.recommendation.uniform module
+---------------------------------
+
+.. automodule:: btb.recommendation.uniform
     :members:
     :undoc-members:
     :show-inheritance:

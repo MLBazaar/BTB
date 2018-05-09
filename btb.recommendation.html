@@ -193,15 +193,16 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-btb.recommendation.recommender">
-<span id="btb-recommendation-recommender-module"></span><h2>btb.recommendation.recommender module<a class="headerlink" href="#module-btb.recommendation.recommender" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-btb.recommendation.matrix_factorization">
+<span id="btb-recommendation-matrix-factorization-module"></span><h2>btb.recommendation.matrix_factorization module<a class="headerlink" href="#module-btb.recommendation.matrix_factorization" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="btb.recommendation.recommender.Recommender">
-<em class="property">class </em><code class="descclassname">btb.recommendation.recommender.</code><code class="descname">Recommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Basic Recommender for recomending pipelines to try on a new dataset D based
+<dt id="btb.recommendation.matrix_factorization.MFRecommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.matrix_factorization.</code><code class="descname">MFRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.matrix_factorization.MFRecommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.recommendation.recommender.BaseRecommender" title="btb.recommendation.recommender.BaseRecommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.recommendation.recommender.BaseRecommender</span></code></a></p>
+<p>Recommender for recomending pipelines to try on a new dataset D based
 on performances of datasets on the different pipeline options. Recommends
-pipelines that would maximize the score value.</p>
+pipelines that would maximize the score value. Uses Matrix Factorization
+to determine which pipeline to recommend.</p>
 <dl class="docutils">
 <dt>Attributes:</dt>
 <dd><dl class="first last docutils">
@@ -225,8 +226,58 @@ new dataset D. Identified in fit.</dd>
 </dd>
 </dl>
 <dl class="method">
-<dt id="btb.recommendation.recommender.Recommender.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.add" title="Permalink to this definition">¶</a></dt>
+<dt id="btb.recommendation.matrix_factorization.MFRecommender.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.matrix_factorization.MFRecommender.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds row of self.dpp_matrix most closely corresponds to X by means
+of Kendall tau distance.
+<a class="reference external" href="https://en.wikipedia.org/wiki/Kendall_tau_distance">https://en.wikipedia.org/wiki/Kendall_tau_distance</a></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>dpp_vector: np.array shape = (self.n_components,)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.matrix_factorization.MFRecommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.matrix_factorization.MFRecommender.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
+a series of pipelines represented by their indicies.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>indicies: np.array of pipeline indicies, shape = (n_samples)</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-btb.recommendation.recommender">
+<span id="btb-recommendation-recommender-module"></span><h2>btb.recommendation.recommender module<a class="headerlink" href="#module-btb.recommendation.recommender" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.recommendation.recommender.BaseRecommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.recommender.</code><code class="descname">BaseRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.BaseRecommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base Recommender class for recomending pipelines to try on a new dataset
+D based on performances of datasets on the different pipeline options.
+Recommends pipelines that would maximize the score value.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</dt>
+<dd>datasets by num pipelines matrix where each row i corresponds to a
+dataset and each collumn j corresponds to a pipeline. The
+dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
+pipeline j has not beentried on dataset i.</dd>
+<dt>dpp_vector: (1D np.array) Vector representing pipeline performances on</dt>
+<dd>a new dataset D.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="btb.recommendation.recommender.BaseRecommender.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.BaseRecommender.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates self.dpp_vector.
 Adds data about known pipelines and scores.
 Refits model with all data.
@@ -242,20 +293,17 @@ Values are the corresponding score for pipeline on the dataset</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="btb.recommendation.recommender.Recommender.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds row of self.dpp_matrix most closely corresponds to X by means
-of Kendall tau distance.
-<a class="reference external" href="https://en.wikipedia.org/wiki/Kendall_tau_distance">https://en.wikipedia.org/wiki/Kendall_tau_distance</a></p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>dpp_vector: np.array shape = (self.n_components,)</dd>
-</dl>
+<dt id="btb.recommendation.recommender.BaseRecommender.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.BaseRecommender.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the Recommender model.
+Args:</p>
+<blockquote>
+<div>dpp_vector: np.array shape = (self.n_components,)</div></blockquote>
 </dd></dl>
 
 <dl class="method">
-<dt id="btb.recommendation.recommender.Recommender.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="btb.recommendation.recommender.BaseRecommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.BaseRecommender.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
 a series of pipelines represented by their indicies.</p>
 <dl class="docutils">
@@ -267,8 +315,8 @@ a series of pipelines represented by their indicies.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="btb.recommendation.recommender.Recommender.propose">
-<code class="descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.Recommender.propose" title="Permalink to this definition">¶</a></dt>
+<dt id="btb.recommendation.recommender.BaseRecommender.propose">
+<code class="descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.recommender.BaseRecommender.propose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the trained model to propose a new pipeline.</p>
 <dl class="docutils">
 <dt>Returns:</dt>
@@ -284,15 +332,131 @@ self.dpp_matrix</dd>
 </dd></dl>
 
 </div>
+<div class="section" id="module-btb.recommendation.uniform">
+<span id="btb-recommendation-uniform-module"></span><h2>btb.recommendation.uniform module<a class="headerlink" href="#module-btb.recommendation.uniform" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="btb.recommendation.uniform.UniformRecommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.uniform.</code><code class="descname">UniformRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/uniform.html#UniformRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.uniform.UniformRecommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.recommendation.recommender.BaseRecommender" title="btb.recommendation.recommender.BaseRecommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.recommendation.recommender.BaseRecommender</span></code></a></p>
+<p>Uniform Recommender for recomending pipelines to try on a new dataset D
+based on performances of datasets on the different pipeline options.
+Recommends pipelines that would maximize the score value. Raondomly
+ranks pipelines.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</dt>
+<dd>datasets by num pipelines matrix where each row i corresponds to a
+dataset and each collumn j corresponds to a pipeline. The
+dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
+pipeline j has not beentried on dataset i.</dd>
+<dt>dpp_vector: (1D np.array) Vector representing pipeline performances on</dt>
+<dd>a new dataset D.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="btb.recommendation.uniform.UniformRecommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/uniform.html#UniformRecommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.uniform.UniformRecommender.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
+a series of pipelines represented by their indicies.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>indicies: np.array of pipeline indicies, shape = (n_samples)</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-btb.recommendation">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-btb.recommendation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="btb.recommendation.Recommender">
-<em class="property">class </em><code class="descclassname">btb.recommendation.</code><code class="descname">Recommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender" title="Permalink to this definition">¶</a></dt>
+<dt id="btb.recommendation.BaseRecommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.</code><code class="descname">BaseRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.BaseRecommender" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Basic Recommender for recomending pipelines to try on a new dataset D based
+<p>Base Recommender class for recomending pipelines to try on a new dataset
+D based on performances of datasets on the different pipeline options.
+Recommends pipelines that would maximize the score value.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</dt>
+<dd>datasets by num pipelines matrix where each row i corresponds to a
+dataset and each collumn j corresponds to a pipeline. The
+dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
+pipeline j has not beentried on dataset i.</dd>
+<dt>dpp_vector: (1D np.array) Vector representing pipeline performances on</dt>
+<dd>a new dataset D.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="btb.recommendation.BaseRecommender.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.BaseRecommender.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates self.dpp_vector.
+Adds data about known pipelines and scores.
+Refits model with all data.
+Args:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>X: dict mapping pipeline indicies to scores.</dt>
+<dd>Keys must correspond to the index of a collumn in
+self.dpp_matrix
+Values are the corresponding score for pipeline on the dataset</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.BaseRecommender.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.BaseRecommender.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the Recommender model.
+Args:</p>
+<blockquote>
+<div>dpp_vector: np.array shape = (self.n_components,)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.BaseRecommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.BaseRecommender.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
+a series of pipelines represented by their indicies.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>indicies: np.array of pipeline indicies, shape = (n_samples)</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.recommendation.BaseRecommender.propose">
+<code class="descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#BaseRecommender.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.BaseRecommender.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the trained model to propose a new pipeline.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>proposal: int. index corresponding to pipeline to try. the</dt>
+<dd>pipeline corresponds to the proposal’th column of
+self.dpp_matrix</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.recommendation.MFRecommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.</code><code class="descname">MFRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.MFRecommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.recommendation.recommender.BaseRecommender" title="btb.recommendation.recommender.BaseRecommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.recommendation.recommender.BaseRecommender</span></code></a></p>
+<p>Recommender for recomending pipelines to try on a new dataset D based
 on performances of datasets on the different pipeline options. Recommends
-pipelines that would maximize the score value.</p>
+pipelines that would maximize the score value. Uses Matrix Factorization
+to determine which pipeline to recommend.</p>
 <dl class="docutils">
 <dt>Attributes:</dt>
 <dd><dl class="first last docutils">
@@ -316,25 +480,8 @@ new dataset D. Identified in fit.</dd>
 </dd>
 </dl>
 <dl class="method">
-<dt id="btb.recommendation.Recommender.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates self.dpp_vector.
-Adds data about known pipelines and scores.
-Refits model with all data.
-Args:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>X: dict mapping pipeline indicies to scores.</dt>
-<dd>Keys must correspond to the index of a collumn in
-self.dpp_matrix
-Values are the corresponding score for pipeline on the dataset</dd>
-</dl>
-</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.recommendation.Recommender.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="btb.recommendation.MFRecommender.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>dpp_vector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.MFRecommender.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds row of self.dpp_matrix most closely corresponds to X by means
 of Kendall tau distance.
 <a class="reference external" href="https://en.wikipedia.org/wiki/Kendall_tau_distance">https://en.wikipedia.org/wiki/Kendall_tau_distance</a></p>
@@ -345,8 +492,8 @@ of Kendall tau distance.
 </dd></dl>
 
 <dl class="method">
-<dt id="btb.recommendation.Recommender.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="btb.recommendation.MFRecommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.MFRecommender.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
 a series of pipelines represented by their indicies.</p>
 <dl class="docutils">
@@ -357,18 +504,39 @@ a series of pipelines represented by their indicies.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="btb.recommendation.Recommender.propose">
-<code class="descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/recommender.html#Recommender.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.Recommender.propose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use the trained model to propose a new pipeline.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.recommendation.UniformRecommender">
+<em class="property">class </em><code class="descclassname">btb.recommendation.</code><code class="descname">UniformRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/uniform.html#UniformRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.UniformRecommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.recommendation.recommender.BaseRecommender" title="btb.recommendation.recommender.BaseRecommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.recommendation.recommender.BaseRecommender</span></code></a></p>
+<p>Uniform Recommender for recomending pipelines to try on a new dataset D
+based on performances of datasets on the different pipeline options.
+Recommends pipelines that would maximize the score value. Raondomly
+ranks pipelines.</p>
 <dl class="docutils">
-<dt>Returns:</dt>
+<dt>Attributes:</dt>
 <dd><dl class="first last docutils">
-<dt>proposal: int. index corresponding to pipeline to try. the</dt>
-<dd>pipeline corresponds to the proposal’th column of
-self.dpp_matrix</dd>
+<dt>dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</dt>
+<dd>datasets by num pipelines matrix where each row i corresponds to a
+dataset and each collumn j corresponds to a pipeline. The
+dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
+pipeline j has not beentried on dataset i.</dd>
+<dt>dpp_vector: (1D np.array) Vector representing pipeline performances on</dt>
+<dd>a new dataset D.</dd>
 </dl>
 </dd>
+</dl>
+<dl class="method">
+<dt id="btb.recommendation.UniformRecommender.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>indicies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/uniform.html#UniformRecommender.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.UniformRecommender.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts the relative rankings of the pipelines on dpp_vector for
+a series of pipelines represented by their indicies.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>indicies: np.array of pipeline indicies, shape = (n_samples)</dd>
+<dt>Returns:</dt>
+<dd>y: np.array of predicted scores, shape = (n_samples)</dd>
 </dl>
 </dd></dl>
 

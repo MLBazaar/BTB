@@ -182,17 +182,15 @@
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
-<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">NMF</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;btb&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Recommender"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.Recommender">[docs]</a><span class="k">class</span> <span class="nc">Recommender</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseRecommender"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.BaseRecommender">[docs]</a><span class="k">class</span> <span class="nc">BaseRecommender</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Basic Recommender for recomending pipelines to try on a new dataset D based</span>
-<span class="sd">    on performances of datasets on the different pipeline options. Recommends</span>
-<span class="sd">    pipelines that would maximize the score value.</span>
+<span class="sd">    Base Recommender class for recomending pipelines to try on a new dataset</span>
+<span class="sd">    D based on performances of datasets on the different pipeline options.</span>
+<span class="sd">    Recommends pipelines that would maximize the score value.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</span>
@@ -200,20 +198,11 @@
 <span class="sd">            dataset and each collumn j corresponds to a pipeline. The</span>
 <span class="sd">            dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if</span>
 <span class="sd">            pipeline j has not beentried on dataset i.</span>
-<span class="sd">        n_components: (int) The number of components (columsn) to keep after</span>
-<span class="sd">            Matrix Factorxation.</span>
-<span class="sd">        mf_model: Matrix Factorization model that reduces dimensionailty from</span>
-<span class="sd">            num pipelines space to n_components space.</span>
-<span class="sd">        dpp_ranked: (2D np.array) Matrix of rankings for each row of dpp_matrix</span>
-<span class="sd">            after matrix facorization has been applied.</span>
 <span class="sd">        dpp_vector: (1D np.array) Vector representing pipeline performances on</span>
 <span class="sd">            a new dataset D.</span>
-<span class="sd">        matching_dataset: (1D np.array) Row from dpp_matrix representing</span>
-<span class="sd">            pipeline performances for the dataset that most closely matches the</span>
-<span class="sd">            new dataset D. Identified in fit.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_matrix</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_matrix</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse</span>
@@ -222,63 +211,19 @@
 <span class="sd">                and each column j corresponds to a pipeline. dpp_matrix[i,j]</span>
 <span class="sd">                corresponds to the score of the pipeline j on the dataset and</span>
 <span class="sd">                is 0 if the pipeline was not tried on the dataset</span>
-<span class="sd">            n_components: int. Corresponds to the number of features to keep</span>
-<span class="sd">                in matrix decomposition. Must be &gt;= number of rows in matrix</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span> <span class="o">=</span> <span class="n">dpp_matrix</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span> <span class="o">=</span> <span class="n">NMF</span><span class="p">(</span>
-            <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span>
-            <span class="n">init</span><span class="o">=</span><span class="s1">&#39;nndsvd&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">dpp_decomposed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dpp_matrix</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dpp_decomposed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dpp_decomposed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">rankings</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span>
-                <span class="n">dpp_decomposed</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span>
-                <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">rankings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dpp_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">random_matching_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="p">[</span><span class="n">random_matching_index</span><span class="p">,</span> <span class="p">:]</span>
 
-<div class="viewcode-block" id="Recommender.fit"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.Recommender.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_vector</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseRecommender.fit"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_vector</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Finds row of self.dpp_matrix most closely corresponds to X by means</span>
-<span class="sd">        of Kendall tau distance.</span>
-<span class="sd">        https://en.wikipedia.org/wiki/Kendall_tau_distance</span>
-
+<span class="sd">        Fits the Recommender model.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            dpp_vector: np.array shape = (self.n_components,)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpp_vector</span> <span class="o">=</span> <span class="n">dpp_vector</span></div>
 
-        <span class="c1"># decompose X and generate the rankings of the elements in the</span>
-        <span class="c1"># decomposed matrix</span>
-        <span class="n">dpp_vector_decomposed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dpp_vector</span><span class="p">)</span>
-        <span class="n">dpp_vector_ranked</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span>
-            <span class="n">dpp_vector_decomposed</span><span class="p">,</span>
-            <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">max_agreement</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># min value of Kendall Tau agremment</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="c1"># calculate agreement between current row and X</span>
-            <span class="n">agreement</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kendalltau</span><span class="p">(</span>
-                <span class="n">dpp_vector_ranked</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">agreement</span> <span class="o">&gt;</span> <span class="n">max_agreement</span><span class="p">:</span>
-                <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="n">i</span>
-                <span class="n">max_agreement</span> <span class="o">=</span> <span class="n">agreement</span>
-
-        <span class="k">if</span> <span class="n">max_agreement_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="c1"># store the row with the highest agreement for prediction</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="p">[</span><span class="n">max_agreement_index</span><span class="p">,</span> <span class="p">:]</span></div>
-
-<div class="viewcode-block" id="Recommender.predict"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.Recommender.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indicies</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseRecommender.predict"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indicies</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Predicts the relative rankings of the pipelines on dpp_vector for</span>
 <span class="sd">        a series of pipelines represented by their indicies.</span>
@@ -289,10 +234,10 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            y: np.array of predicted scores, shape = (n_samples)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">matching_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span><span class="p">[</span><span class="n">each</span><span class="p">]</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">indicies</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span><span class="n">matching_scores</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;predict() needs to be implemented by a&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;subclass of BaseRecommender&#39;</span>
+        <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -321,7 +266,7 @@
         <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_vector</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Recommender.propose"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.Recommender.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseRecommender.propose"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use the trained model to propose a new pipeline.</span>
 
@@ -345,7 +290,7 @@
         <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_acquire</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">candidates</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Recommender.add"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.Recommender.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseRecommender.add"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates self.dpp_vector.</span>
 <span class="sd">        Adds data about known pipelines and scores.</span>

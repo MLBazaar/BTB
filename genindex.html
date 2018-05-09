@@ -206,10 +206,10 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="btb.recommendation.html#btb.recommendation.Recommender.add">add() (btb.recommendation.Recommender method)</a>
+      <li><a href="btb.recommendation.html#btb.recommendation.BaseRecommender.add">add() (btb.recommendation.BaseRecommender method)</a>
 
       <ul>
-        <li><a href="btb.recommendation.html#btb.recommendation.recommender.Recommender.add">(btb.recommendation.recommender.Recommender method)</a>
+        <li><a href="btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.add">(btb.recommendation.recommender.BaseRecommender method)</a>
 </li>
         <li><a href="btb.tuning.html#btb.tuning.tuner.BaseTuner.add">(btb.tuning.tuner.BaseTuner method)</a>
 </li>
@@ -228,6 +228,12 @@
         <li><a href="btb.selection.html#btb.selection.selector.Selector.bandit">(btb.selection.selector.Selector method)</a>
 </li>
         <li><a href="btb.selection.html#btb.selection.ucb1.UCB1.bandit">(btb.selection.ucb1.UCB1 method)</a>
+</li>
+      </ul></li>
+      <li><a href="btb.recommendation.html#btb.recommendation.BaseRecommender">BaseRecommender (class in btb.recommendation)</a>
+
+      <ul>
+        <li><a href="btb.recommendation.html#btb.recommendation.recommender.BaseRecommender">(class in btb.recommendation.recommender)</a>
 </li>
       </ul></li>
       <li><a href="btb.tuning.html#btb.tuning.tuner.BaseTuner">BaseTuner (class in btb.tuning.tuner)</a>
@@ -268,7 +274,11 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="btb.recommendation.html#module-btb.recommendation.matrix_factorization">btb.recommendation.matrix_factorization (module)</a>
+</li>
       <li><a href="btb.recommendation.html#module-btb.recommendation.recommender">btb.recommendation.recommender (module)</a>
+</li>
+      <li><a href="btb.recommendation.html#module-btb.recommendation.uniform">btb.recommendation.uniform (module)</a>
 </li>
       <li><a href="btb.selection.html#module-btb.selection">btb.selection (module)</a>
 </li>
@@ -388,10 +398,14 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="btb.recommendation.html#btb.recommendation.Recommender.fit">fit() (btb.recommendation.Recommender method)</a>
+      <li><a href="btb.recommendation.html#btb.recommendation.BaseRecommender.fit">fit() (btb.recommendation.BaseRecommender method)</a>
 
       <ul>
-        <li><a href="btb.recommendation.html#btb.recommendation.recommender.Recommender.fit">(btb.recommendation.recommender.Recommender method)</a>
+        <li><a href="btb.recommendation.html#btb.recommendation.MFRecommender.fit">(btb.recommendation.MFRecommender method)</a>
+</li>
+        <li><a href="btb.recommendation.html#btb.recommendation.matrix_factorization.MFRecommender.fit">(btb.recommendation.matrix_factorization.MFRecommender method)</a>
+</li>
+        <li><a href="btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.fit">(btb.recommendation.recommender.BaseRecommender method)</a>
 </li>
         <li><a href="btb.tuning.html#btb.tuning.GCP.fit">(btb.tuning.GCP method)</a>
 </li>
@@ -642,6 +656,14 @@
 </li>
       <li><a href="btb.tuning.html#btb.tuning.gcp.make_ppf">make_ppf() (in module btb.tuning.gcp)</a>
 </li>
+      <li><a href="btb.recommendation.html#btb.recommendation.MFRecommender">MFRecommender (class in btb.recommendation)</a>
+
+      <ul>
+        <li><a href="btb.recommendation.html#btb.recommendation.matrix_factorization.MFRecommender">(class in btb.recommendation.matrix_factorization)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="btb.tuning.html#btb.tuning.gcp.GCPEiVelocity.MULTIPLIER">MULTIPLIER (btb.tuning.gcp.GCPEiVelocity attribute)</a>
 
       <ul>
@@ -718,12 +740,18 @@
         <li><a href="btb.html#btb.hyper_parameter.ParamTypes">(class in btb.hyper_parameter)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="btb.recommendation.html#btb.recommendation.Recommender.predict">predict() (btb.recommendation.Recommender method)</a>
+      <li><a href="btb.recommendation.html#btb.recommendation.BaseRecommender.predict">predict() (btb.recommendation.BaseRecommender method)</a>
 
       <ul>
-        <li><a href="btb.recommendation.html#btb.recommendation.recommender.Recommender.predict">(btb.recommendation.recommender.Recommender method)</a>
+        <li><a href="btb.recommendation.html#btb.recommendation.MFRecommender.predict">(btb.recommendation.MFRecommender method)</a>
+</li>
+        <li><a href="btb.recommendation.html#btb.recommendation.UniformRecommender.predict">(btb.recommendation.UniformRecommender method)</a>
+</li>
+        <li><a href="btb.recommendation.html#btb.recommendation.matrix_factorization.MFRecommender.predict">(btb.recommendation.matrix_factorization.MFRecommender method)</a>
+</li>
+        <li><a href="btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.predict">(btb.recommendation.recommender.BaseRecommender method)</a>
+</li>
+        <li><a href="btb.recommendation.html#btb.recommendation.uniform.UniformRecommender.predict">(btb.recommendation.uniform.UniformRecommender method)</a>
 </li>
         <li><a href="btb.tuning.html#btb.tuning.GCP.predict">(btb.tuning.GCP method)</a>
 </li>
@@ -748,10 +776,12 @@
         <li><a href="btb.tuning.html#btb.tuning.uniform.Uniform.predict">(btb.tuning.uniform.Uniform method)</a>
 </li>
       </ul></li>
-      <li><a href="btb.recommendation.html#btb.recommendation.Recommender.propose">propose() (btb.recommendation.Recommender method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="btb.recommendation.html#btb.recommendation.BaseRecommender.propose">propose() (btb.recommendation.BaseRecommender method)</a>
 
       <ul>
-        <li><a href="btb.recommendation.html#btb.recommendation.recommender.Recommender.propose">(btb.recommendation.recommender.Recommender method)</a>
+        <li><a href="btb.recommendation.html#btb.recommendation.recommender.BaseRecommender.propose">(btb.recommendation.recommender.BaseRecommender method)</a>
 </li>
         <li><a href="btb.tuning.html#btb.tuning.custom_tuner.CustomTuner.propose">(btb.tuning.custom_tuner.CustomTuner method)</a>
 </li>
@@ -788,12 +818,6 @@
 
       <ul>
         <li><a href="btb.selection.html#btb.selection.recent.RecentKVelocity">(class in btb.selection.recent)</a>
-</li>
-      </ul></li>
-      <li><a href="btb.recommendation.html#btb.recommendation.Recommender">Recommender (class in btb.recommendation)</a>
-
-      <ul>
-        <li><a href="btb.recommendation.html#btb.recommendation.recommender.Recommender">(class in btb.recommendation.recommender)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -902,6 +926,12 @@
         <li><a href="btb.tuning.html#btb.tuning.Uniform">(class in btb.tuning)</a>
 </li>
         <li><a href="btb.tuning.html#btb.tuning.uniform.Uniform">(class in btb.tuning.uniform)</a>
+</li>
+      </ul></li>
+      <li><a href="btb.recommendation.html#btb.recommendation.UniformRecommender">UniformRecommender (class in btb.recommendation)</a>
+
+      <ul>
+        <li><a href="btb.recommendation.html#btb.recommendation.uniform.UniformRecommender">(class in btb.recommendation.uniform)</a>
 </li>
       </ul></li>
   </ul></td>

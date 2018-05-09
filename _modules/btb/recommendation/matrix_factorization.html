@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.recommendation.matrix_factorization &mdash; BTB 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> BTB
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">btb</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../btb.html">btb package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.recommendation.html">btb.recommendation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.selection.html">btb.selection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../btb.tuning.html">btb.tuning package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#module-btb.hyper_parameter">btb.hyper_parameter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>btb.recommendation.matrix_factorization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for btb.recommendation.matrix_factorization</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">NMF</span>
+
+<span class="kn">from</span> <span class="nn">btb.recommendation.recommender</span> <span class="k">import</span> <span class="n">BaseRecommender</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;btb&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MFRecommender"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.matrix_factorization.MFRecommender">[docs]</a><span class="k">class</span> <span class="nc">MFRecommender</span><span class="p">(</span><span class="n">BaseRecommender</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recommender for recomending pipelines to try on a new dataset D based</span>
+<span class="sd">    on performances of datasets on the different pipeline options. Recommends</span>
+<span class="sd">    pipelines that would maximize the score value. Uses Matrix Factorization</span>
+<span class="sd">    to determine which pipeline to recommend.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num</span>
+<span class="sd">            datasets by num pipelines matrix where each row i corresponds to a</span>
+<span class="sd">            dataset and each collumn j corresponds to a pipeline. The</span>
+<span class="sd">            dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if</span>
+<span class="sd">            pipeline j has not beentried on dataset i.</span>
+<span class="sd">        n_components: (int) The number of components (columsn) to keep after</span>
+<span class="sd">            Matrix Factorxation.</span>
+<span class="sd">        mf_model: Matrix Factorization model that reduces dimensionailty from</span>
+<span class="sd">            num pipelines space to n_components space.</span>
+<span class="sd">        dpp_ranked: (2D np.array) Matrix of rankings for each row of dpp_matrix</span>
+<span class="sd">            after matrix facorization has been applied.</span>
+<span class="sd">        dpp_vector: (1D np.array) Vector representing pipeline performances on</span>
+<span class="sd">            a new dataset D.</span>
+<span class="sd">        matching_dataset: (1D np.array) Row from dpp_matrix representing</span>
+<span class="sd">            pipeline performances for the dataset that most closely matches the</span>
+<span class="sd">            new dataset D. Identified in fit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_matrix</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse</span>
+<span class="sd">                dataset performance matrix pertaining to pipeline</span>
+<span class="sd">                scores on different dataset. Each row i coresponds to a dataset</span>
+<span class="sd">                and each column j corresponds to a pipeline. dpp_matrix[i,j]</span>
+<span class="sd">                corresponds to the score of the pipeline j on the dataset and</span>
+<span class="sd">                is 0 if the pipeline was not tried on the dataset</span>
+<span class="sd">            n_components: int. Corresponds to the number of features to keep</span>
+<span class="sd">                in matrix decomposition. Must be &gt;= number of rows in matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span> <span class="o">=</span> <span class="n">dpp_matrix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span> <span class="o">=</span> <span class="n">NMF</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">&#39;nndsvd&#39;</span><span class="p">)</span>
+        <span class="n">dpp_decomposed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dpp_matrix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dpp_decomposed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dpp_decomposed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">rankings</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span>
+                <span class="n">dpp_decomposed</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span>
+                <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">rankings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpp_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">random_matching_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="p">[</span><span class="n">random_matching_index</span><span class="p">,</span> <span class="p">:]</span>
+
+<div class="viewcode-block" id="MFRecommender.fit"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.matrix_factorization.MFRecommender.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds row of self.dpp_matrix most closely corresponds to X by means</span>
+<span class="sd">        of Kendall tau distance.</span>
+<span class="sd">        https://en.wikipedia.org/wiki/Kendall_tau_distance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dpp_vector: np.array shape = (self.n_components,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># decompose X and generate the rankings of the elements in the</span>
+        <span class="c1"># decomposed matrix</span>
+        <span class="n">dpp_vector_decomposed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dpp_vector</span><span class="p">)</span>
+        <span class="n">dpp_vector_ranked</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span>
+            <span class="n">dpp_vector_decomposed</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">max_agreement</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># min value of Kendall Tau agremment</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="c1"># calculate agreement between current row and X</span>
+            <span class="n">agreement</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kendalltau</span><span class="p">(</span>
+                <span class="n">dpp_vector_ranked</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">agreement</span> <span class="o">&gt;</span> <span class="n">max_agreement</span><span class="p">:</span>
+                <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">max_agreement</span> <span class="o">=</span> <span class="n">agreement</span>
+
+        <span class="k">if</span> <span class="n">max_agreement_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">max_agreement_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># store the row with the highest agreement for prediction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="p">[</span><span class="n">max_agreement_index</span><span class="p">,</span> <span class="p">:]</span></div>
+
+<div class="viewcode-block" id="MFRecommender.predict"><a class="viewcode-back" href="../../../btb.recommendation.html#btb.recommendation.matrix_factorization.MFRecommender.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indicies</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicts the relative rankings of the pipelines on dpp_vector for</span>
+<span class="sd">        a series of pipelines represented by their indicies.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            indicies: np.array of pipeline indicies, shape = (n_samples)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            y: np.array of predicted scores, shape = (n_samples)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">matching_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span><span class="p">[</span><span class="n">each</span><span class="p">]</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">indicies</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span><span class="n">matching_scores</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
