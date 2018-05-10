@@ -38,7 +38,8 @@ class GP(BaseTuner):
     def predict(self, X):
         if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
-            logger.warn('GP: not enough data, falling back to uniform sampler')
+            logger.info('Using Uniform sampler as user specified r_minimum '
+                        'threshold is not met to start the GP based learning')
             return Uniform(self.tunables).predict(X)
 
         y, stdev = self.gp.predict(X, return_std=True)
