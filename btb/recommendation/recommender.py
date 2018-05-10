@@ -41,7 +41,7 @@ class BaseRecommender(object):
         Args:
             dpp_vector: np.array shape = (self.n_components,)
         """
-        self.dpp_vector = dpp_vector
+        pass
 
     def predict(self, indicies):
         """
