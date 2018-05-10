@@ -61,7 +61,7 @@ class MFRecommender(BaseRecommender):
         self.mf_model = NMF(n_components=n_components, init='nndsvd')
         dpp_decomposed = self.mf_model.fit_transform(dpp_matrix)
         self.dpp_ranked = np.empty(dpp_decomposed.shape)
-        for i in range(dpp_decomposed.shaipe[0]):
+        for i in range(dpp_decomposed.shape[0]):
             rankings = stats.rankdata(
                 dpp_decomposed[i, :],
                 method='dense'
