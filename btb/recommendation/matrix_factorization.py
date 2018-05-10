@@ -56,6 +56,7 @@ class MFRecommender(BaseRecommender):
                 a uniform recommender is used.
         """
         super(MFRecommender, self).__init__(dpp_matrix)
+        self.tried_pipelines = set()
         self.n_components = n_components
         self.r_minimum = r_minimum
         self.mf_model = NMF(n_components=n_components, init='nndsvd')
