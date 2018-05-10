@@ -23,6 +23,7 @@ class TestBaseRecommender(TestCase):
         np.testing.assert_array_equal(recommender.dpp_matrix, self.dpp_matrix)
         # assert dpp_vector has same number of entries as pipelines
         assert recommender.dpp_vector.shape[0] == self.dpp_matrix.shape[1]
+        assert len(recommender.tried_pipelines) == 0
 
     def test_fit(self):
         X = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -36,8 +37,9 @@ class TestBaseRecommender(TestCase):
 
     def test__get_candidates_all(self):
         recommender = BaseRecommender(self.dpp_matrix)
-        X = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        recommender.dpp_vector = X
+        #X = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        #recommender.dpp_vector = X
+        recommender.tried_pipelines = set([])
         candidates = recommender._get_candidates()
         expected = np.array(
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -49,8 +51,9 @@ class TestBaseRecommender(TestCase):
 
     def test__get_candidates_some(self):
         recommender = BaseRecommender(self.dpp_matrix)
-        X = np.array([0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0])
-        recommender.dpp_vector = X
+        #X = np.array([0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0])
+        #recommender.dpp_vector = X
+        recommender.tried_pipelines = set([3, 5, 7, 9, 13])
         expected = np.array([0, 1, 2, 4, 6, 8, 10, 11, 12, 14, 15])
         candidates = recommender._get_candidates()
         np.testing.assert_array_equal(
@@ -58,10 +61,24 @@ class TestBaseRecommender(TestCase):
             expected,
         )
 
+    def test__get_candidates_with_add_zeros(self):
+        recommender = BaseRecommender(self.dpp_matrix)
+        recommender.add({0: 0, 2: 0})
+        expected = np.array(
+            [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        )
+        candidates = recommender._get_candidates()
+        np.testing.assert_array_equal(
+            candidates,
+            expected,
+        )
+        assert set([0, 2]) == recommender.tried_pipelines
+
     def test__get_candidates_none(self):
         recommender = BaseRecommender(self.dpp_matrix)
-        X = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-        recommender.dpp_vector = X
+        recommender.tried_pipelines = set(range(16))
+        #X = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+        #recommender.dpp_vector = X
         candidates = recommender._get_candidates()
         expected = None
         self.assertEqual(expected, candidates)

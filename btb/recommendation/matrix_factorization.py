@@ -16,7 +16,6 @@ class MFRecommender(BaseRecommender):
     on performances of datasets on the different pipeline options. Recommends
     pipelines that would maximize the score value. Uses Matrix Factorization
     to determine which pipeline to recommend.
-
     Attributes:
         dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num
             datasets by num pipelines matrix where each row i corresponds to a
@@ -56,7 +55,7 @@ class MFRecommender(BaseRecommender):
                 not enough results are present during a predict(),
                 a uniform recommender is used.
         """
-        self.dpp_matrix = dpp_matrix
+        super(MFRecommender, self).__init__(dpp_matrix)
         self.n_components = n_components
         self.r_minimum = r_minimum
         self.mf_model = NMF(n_components=n_components, init='nndsvd')
@@ -68,7 +67,6 @@ class MFRecommender(BaseRecommender):
                 method='dense'
             )
             self.dpp_ranked[i, :] = rankings
-        self.dpp_vector = np.zeros(self.dpp_matrix.shape[1])
         random_matching_index = np.random.randint(self.dpp_matrix.shape[0])
         self.matching_dataset = self.dpp_matrix[random_matching_index, :]
 
@@ -77,7 +75,6 @@ class MFRecommender(BaseRecommender):
         Finds row of self.dpp_matrix most closely corresponds to X by means
         of Kendall tau distance.
         https://en.wikipedia.org/wiki/Kendall_tau_distance
-
         Args:
             dpp_vector: np.array shape = (self.n_components,)
         """
@@ -111,10 +108,8 @@ class MFRecommender(BaseRecommender):
         """
         Predicts the relative rankings of the pipelines on dpp_vector for
         a series of pipelines represented by their indicies.
-
         Args:
             indicies: np.array of pipeline indicies, shape = (n_samples)
-
         Returns:
             y: np.array of predicted scores, shape = (n_samples)
         """

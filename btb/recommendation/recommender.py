@@ -33,6 +33,7 @@ class BaseRecommender(object):
         """
         self.dpp_matrix = dpp_matrix
         self.dpp_vector = np.zeros(self.dpp_matrix.shape[1])
+        self.tried_pipelines = set()
 
     def fit(self, dpp_vector):
         """
@@ -82,8 +83,10 @@ class BaseRecommender(object):
                 self.dpp_matrix that haven't been tried on X.
                 None if all pipelines have been tried on X.
         """
-        candidates = np.where(self.dpp_vector == 0)
-        return None if len(candidates[0]) == 0 else candidates[0]
+        candidates = set(range(self.dpp_matrix.shape[1])).difference(
+            self.tried_pipelines,
+        )
+        return np.array(list(candidates)) if len(candidates) != 0 else None
 
     def propose(self):
         """
@@ -120,6 +123,7 @@ class BaseRecommender(object):
                 self.dpp_matrix
                 Values are the corresponding score for pipeline on the dataset
         """
+        self.tried_pipelines.update(set(X.keys()))
         for each in X:
             self.dpp_vector[each] = X[each]
         self.fit(self.dpp_vector.reshape(1, -1))
