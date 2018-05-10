@@ -1,11 +1,10 @@
-[//]: # ([![][pypi-img]][pypi-url])
-
+[![][pypi-img]][pypi-url]
 [![][travis-img]][travis-url]
 
 [travis-img]: https://travis-ci.org/HDI-Project/BTB.svg?branch=master
 [travis-url]: https://travis-ci.org/HDI-Project/BTB
-[//]: # ([pypi-img]: https://img.shields.io/pypi/v/btb.svg)
-[//]: # ([pypi-url]: https://pypi.python.org/pypi/btb)
+[pypi-img]: https://img.shields.io/pypi/v/baytune.svg
+[pypi-url]: https://pypi.python.org/pypi/baytune
 
 # BTB: Bayesian Tuning and Bandits
 
@@ -54,17 +53,21 @@ and which scores they have obtained, and letting it decide which model to test n
 
 ### Install with pip
 
-BTB is not pulished in PyPi yet, but you can already install the latest release using pip
+The easiest way to install BTB is using `pip`
 
-	pip install -e git+https://github.com/HDI-Project/BTB.git@v0.1.0#egg=btb
+```
+pip install baytune
+```
 
 ### Install from sources
 
 You can also clone the repository and install it from sources
 
-    git clone git@github.com:HDI-Project/BTB.git
-    cd BTB
-    make install
+```
+git clone git@github.com:HDI-Project/BTB.git
+cd BTB
+make install
+```
 
 ## Usage examples
 
