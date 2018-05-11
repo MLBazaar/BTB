@@ -186,6 +186,7 @@
 <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">NMF</span>
 
 <span class="kn">from</span> <span class="nn">btb.recommendation.recommender</span> <span class="k">import</span> <span class="n">BaseRecommender</span>
+<span class="kn">from</span> <span class="nn">btb.recommendation.uniform</span> <span class="k">import</span> <span class="n">UniformRecommender</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;btb&#39;</span><span class="p">)</span>
 
@@ -214,9 +215,13 @@
 <span class="sd">        matching_dataset: (1D np.array) Row from dpp_matrix representing</span>
 <span class="sd">            pipeline performances for the dataset that most closely matches the</span>
 <span class="sd">            new dataset D. Identified in fit.</span>
+<span class="sd">        r_minimum: the minimum number of past results this recommender</span>
+<span class="sd">            needs in order to use Matrix Factorization for prediction. If</span>
+<span class="sd">            not enough results are present during a predict(),</span>
+<span class="sd">            a uniform recommender is used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_matrix</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpp_matrix</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">r_minimum</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse</span>
@@ -227,9 +232,14 @@
 <span class="sd">                is 0 if the pipeline was not tried on the dataset</span>
 <span class="sd">            n_components: int. Corresponds to the number of features to keep</span>
 <span class="sd">                in matrix decomposition. Must be &gt;= number of rows in matrix</span>
+<span class="sd">            r_minimum: the minimum number of past results this recommender</span>
+<span class="sd">                needs in order to use Matrix Factorization for prediction. If</span>
+<span class="sd">                not enough results are present during a predict(),</span>
+<span class="sd">                a uniform recommender is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span> <span class="o">=</span> <span class="n">dpp_matrix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span> <span class="o">=</span> <span class="n">r_minimum</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span> <span class="o">=</span> <span class="n">NMF</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">&#39;nndsvd&#39;</span><span class="p">)</span>
         <span class="n">dpp_decomposed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mf_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dpp_matrix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dpp_ranked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dpp_decomposed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -289,6 +299,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            y: np.array of predicted scores, shape = (n_samples)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_tried_candidates</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_vector</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">num_tried_candidates</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_minimum</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">UniformRecommender</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpp_matrix</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">indicies</span><span class="p">)</span>
         <span class="n">matching_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_dataset</span><span class="p">[</span><span class="n">each</span><span class="p">]</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">indicies</span><span class="p">]</span>
         <span class="p">)</span>

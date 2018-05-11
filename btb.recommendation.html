@@ -197,7 +197,7 @@
 <span id="btb-recommendation-matrix-factorization-module"></span><h2>btb.recommendation.matrix_factorization module<a class="headerlink" href="#module-btb.recommendation.matrix_factorization" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="btb.recommendation.matrix_factorization.MFRecommender">
-<em class="property">class </em><code class="descclassname">btb.recommendation.matrix_factorization.</code><code class="descname">MFRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.matrix_factorization.MFRecommender" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.recommendation.matrix_factorization.</code><code class="descname">MFRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em>, <em>r_minimum=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.matrix_factorization.MFRecommender" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.recommendation.recommender.BaseRecommender" title="btb.recommendation.recommender.BaseRecommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.recommendation.recommender.BaseRecommender</span></code></a></p>
 <p>Recommender for recomending pipelines to try on a new dataset D based
 on performances of datasets on the different pipeline options. Recommends
@@ -222,6 +222,10 @@ pipeline j has not beentried on dataset i.</dd>
 <dt>matching_dataset: (1D np.array) Row from dpp_matrix representing</dt>
 <dd>pipeline performances for the dataset that most closely matches the
 new dataset D. Identified in fit.</dd>
+<dt>r_minimum: the minimum number of past results this recommender</dt>
+<dd>needs in order to use Matrix Factorization for prediction. If
+not enough results are present during a predict(),
+a uniform recommender is used.</dd>
 </dl>
 </dd>
 </dl>
@@ -451,7 +455,7 @@ self.dpp_matrix</dd>
 
 <dl class="class">
 <dt id="btb.recommendation.MFRecommender">
-<em class="property">class </em><code class="descclassname">btb.recommendation.</code><code class="descname">MFRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.MFRecommender" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">btb.recommendation.</code><code class="descname">MFRecommender</code><span class="sig-paren">(</span><em>dpp_matrix</em>, <em>n_components=100</em>, <em>r_minimum=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/recommendation/matrix_factorization.html#MFRecommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.recommendation.MFRecommender" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.recommendation.recommender.BaseRecommender" title="btb.recommendation.recommender.BaseRecommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.recommendation.recommender.BaseRecommender</span></code></a></p>
 <p>Recommender for recomending pipelines to try on a new dataset D based
 on performances of datasets on the different pipeline options. Recommends
@@ -476,6 +480,10 @@ pipeline j has not beentried on dataset i.</dd>
 <dt>matching_dataset: (1D np.array) Row from dpp_matrix representing</dt>
 <dd>pipeline performances for the dataset that most closely matches the
 new dataset D. Identified in fit.</dd>
+<dt>r_minimum: the minimum number of past results this recommender</dt>
+<dd>needs in order to use Matrix Factorization for prediction. If
+not enough results are present during a predict(),
+a uniform recommender is used.</dd>
 </dl>
 </dd>
 </dl>
