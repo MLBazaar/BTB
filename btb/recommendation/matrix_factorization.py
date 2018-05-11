@@ -5,6 +5,7 @@ import scipy.stats as stats
 from sklearn.decomposition import NMF
 
 from btb.recommendation.recommender import BaseRecommender
+from btb.recommendation.uniform import UniformRecommender
 
 LOGGER = logging.getLogger('btb')
 
@@ -33,9 +34,13 @@ class MFRecommender(BaseRecommender):
         matching_dataset: (1D np.array) Row from dpp_matrix representing
             pipeline performances for the dataset that most closely matches the
             new dataset D. Identified in fit.
+        r_minimum: the minimum number of past results this recommender
+            needs in order to use Matrix Factorization for prediction. If
+            not enough results are present during a predict(),
+            a uniform recommender is used.
     """
 
-    def __init__(self, dpp_matrix, n_components=100):
+    def __init__(self, dpp_matrix, n_components=100, r_minimum=5):
         """
         Args:
             dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse
@@ -46,9 +51,14 @@ class MFRecommender(BaseRecommender):
                 is 0 if the pipeline was not tried on the dataset
             n_components: int. Corresponds to the number of features to keep
                 in matrix decomposition. Must be >= number of rows in matrix
+            r_minimum: the minimum number of past results this recommender
+                needs in order to use Matrix Factorization for prediction. If
+                not enough results are present during a predict(),
+                a uniform recommender is used.
         """
         self.dpp_matrix = dpp_matrix
         self.n_components = n_components
+        self.r_minimum = r_minimum
         self.mf_model = NMF(n_components=n_components, init='nndsvd')
         dpp_decomposed = self.mf_model.fit_transform(dpp_matrix)
         self.dpp_ranked = np.empty(dpp_decomposed.shape)
@@ -108,6 +118,9 @@ class MFRecommender(BaseRecommender):
         Returns:
             y: np.array of predicted scores, shape = (n_samples)
         """
+        num_tried_candidates = len(np.where(self.dpp_vector != 0)[0])
+        if num_tried_candidates < self.r_minimum:
+            return UniformRecommender(self.dpp_matrix).predict(indicies)
         matching_scores = np.array(
             [self.matching_dataset[each] for each in indicies]
         )
