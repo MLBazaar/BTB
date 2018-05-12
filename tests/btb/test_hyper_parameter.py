@@ -168,7 +168,7 @@ class TestHyperparameter(unittest.TestCase):
             # deep copy should have new attributes
             self.assertIsNot(hyp.range, hyp_copy.range)
 
-    def test_str_param_type_arg(self):
+    def test_init_with_string_param_type(self):
         def random_case(s):
             return ''.join(
                 random.choice([str.upper, str.lower])(c)
