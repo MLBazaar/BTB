@@ -45,7 +45,7 @@ class HyperParameter(object):
         if not isinstance(param_type, ParamTypes):
             if (isinstance(param_type, str)
                     and param_type.upper() in ParamTypes.__members__):
-                param_type = ParamTypes(param_type.upper())
+                param_type = ParamTypes[param_type.upper()]
             else:
                 raise ValueError('Invalid param type {}'.format(param_type))
 
