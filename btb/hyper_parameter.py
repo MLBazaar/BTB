@@ -57,12 +57,12 @@ class HyperParameter(object):
         raise NotImplementedError()
 
     def __init__(self, param_type=None, param_range=None):
-        for i, value in enumerate(param_range):
-            # the value None is allowed for every parameter type
-            if value is not None:
-                param_range[i] = self.cast(value)
-
-        self.range = param_range
+        self.range = [
+            self.cast(value)
+            # "the value None is allowed for every parameter type"
+            if value is not None else None
+            for value in param_range
+        ]
 
     def __copy__(self):
         cls = self.__class__
