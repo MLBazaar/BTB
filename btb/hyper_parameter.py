@@ -102,6 +102,22 @@ class HyperParameter(object):
             decimals=5,
         )
 
+    def __eq__(self, other):
+        # See https://stackoverflow.com/a/25176504/2514228 for details
+        if isinstance(self, other.__class__):
+            return (self.param_type is other.param_type
+                    and self.is_integer == other.is_integer
+                    and self.range == other.range)
+        return NotImplemented
+
+    def __ne__(self, other):
+        # Not needed in Python 3
+        # See https://stackoverflow.com/a/25176504/2514228 for details
+        x = self.__eq__(other)
+        if x is not NotImplemented:
+            return not x
+        return NotImplemented
+
 
 class IntHyperParameter(HyperParameter):
     param_type = ParamTypes.INT
