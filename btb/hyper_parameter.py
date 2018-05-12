@@ -42,12 +42,16 @@ class HyperParameter(object):
         return cls._subclasses
 
     def __new__(cls, param_type=None, param_range=None):
-        if isinstance(param_type, ParamTypes):
-            for subclass in cls.subclasses():
-                if subclass.param_type is param_type:
-                    return super(HyperParameter, cls).__new__(subclass)
+        if not isinstance(param_type, ParamTypes):
+            if (isinstance(param_type, str)
+                    and param_type.upper() in ParamTypes.__members__):
+                param_type = ParamTypes(param_type.upper())
+            else:
+                raise ValueError('Invalid param type {}'.format(param_type))
 
-        raise ValueError('Invalid ParamType {}'.format(param_type))
+        for subclass in cls.subclasses():
+            if subclass.param_type is param_type:
+                return super(HyperParameter, cls).__new__(subclass)
 
     def cast(self, value):
         raise NotImplementedError()
