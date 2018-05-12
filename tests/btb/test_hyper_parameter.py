@@ -188,4 +188,4 @@ class TestHyperparameter(unittest.TestCase):
         invalid_param_types = ['a', 0, object(), 'integer', 'foo']
         for invalid_param_type in invalid_param_types:
             with self.assertRaises(ValueError):
-                HyperParameter(invalid_param_type, None)
+                HyperParameter(invalid_param_type, [None])
