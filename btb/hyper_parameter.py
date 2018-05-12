@@ -43,8 +43,8 @@ class HyperParameter(object):
 
     def __new__(cls, param_type=None, param_range=None):
         if not isinstance(param_type, ParamTypes):
-            if (isinstance(param_type, str)
-                    and param_type.upper() in ParamTypes.__members__):
+            if (isinstance(param_type, str) and
+                    param_type.upper() in ParamTypes.__members__):
                 param_type = ParamTypes[param_type.upper()]
             else:
                 raise ValueError('Invalid param type {}'.format(param_type))
@@ -105,9 +105,9 @@ class HyperParameter(object):
     def __eq__(self, other):
         # See https://stackoverflow.com/a/25176504/2514228 for details
         if isinstance(self, other.__class__):
-            return (self.param_type is other.param_type
-                    and self.is_integer == other.is_integer
-                    and self.range == other.range)
+            return (self.param_type is other.param_type and
+                    self.is_integer == other.is_integer and
+                    self.range == other.range)
         return NotImplemented
 
     def __ne__(self, other):
