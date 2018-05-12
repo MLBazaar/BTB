@@ -3,7 +3,6 @@ import random
 import unittest
 
 import numpy as np
-import pytest
 from mock import patch
 
 from btb.hyper_parameter import HyperParameter, ParamTypes
@@ -14,6 +13,7 @@ class TestHyperparameter(unittest.TestCase):
         self.parameter_constructions = [
             (ParamTypes.INT, [1, 3]),
             (ParamTypes.INT_EXP, [10, 10000]),
+            (ParamTypes.INT_CAT, [10, 10000]),
             (ParamTypes.FLOAT, [1.5, 3.2]),
             (ParamTypes.FLOAT_EXP, [0.001, 100]),
             (ParamTypes.FLOAT_CAT, [0.1, 0.6, 0.5]),
@@ -21,8 +21,8 @@ class TestHyperparameter(unittest.TestCase):
             (ParamTypes.STRING, ['a', 'b', 'c']),
         ]
 
-    def test___init__value_error(self):
-        with pytest.raises(ValueError):
+    def test_init_value_error(self):
+        with self.assertRaises(ValueError):
             HyperParameter('not a ParamType', [1, 10])
 
     @patch('btb.hyper_parameter.HyperParameter.subclasses')
@@ -37,7 +37,7 @@ class TestHyperparameter(unittest.TestCase):
 
         fake = HyperParameter(ParamTypes.INT, [None])
 
-        with pytest.raises(NotImplementedError):
+        with self.assertRaises(NotImplementedError):
             fake.cast(1)
 
     def test_int(self):
