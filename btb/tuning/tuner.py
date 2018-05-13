@@ -67,7 +67,7 @@ class BaseTuner(object):
         candidates = np.array(list(map(np.array, remaining_vectors)))
 
         np.random.shuffle(candidates)
-        return candidates[0:n]
+        return candidates[0:n] if len(candidates) > 0 else None
 
     def _random_candidates(self, n=1000):
         """Generate a matrix of random parameters, column by column."""

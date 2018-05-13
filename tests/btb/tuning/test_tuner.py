@@ -135,6 +135,24 @@ class TestBaseTuner(TestCase):
         # Assert
         assert candidates is None
 
+    def test__create_candidates_every_point_used_unequal(self):
+        """every point has been used"""
+        # Set-up
+        tunables = (
+            ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
+            ('an_int_param', HyperParameter(ParamTypes.INT, [1, 4])),
+        )
+        tuner = BaseTuner(tunables, gridding=5)
+
+        # Insert 25 part_vecs into X
+        tuner.X = np.array(list(product(*tuner._grid_axes)))
+
+        # Run
+        candidates = tuner._create_candidates(5)
+
+        # Assert
+        assert candidates is None
+
     @patch('btb.tuning.tuner.np.random')
     def test__create_candidates_lt_n_remaining(self, np_random_mock):
         """less than n points remaining"""
