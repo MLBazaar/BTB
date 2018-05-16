@@ -162,7 +162,10 @@ class GCP(BaseTuner):
         if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
             logger.warn('GP: not enough data, falling back to uniform sampler')
-            return Uniform(self.tunables).predict(X)
+            return np.column_stack((
+                Uniform(self.tunables).predict(X),
+                np.zeros((X.shape[0], 1)),
+            ))
 
         def get_valid_row(U):
             ind_OK = np.full(U.shape[0], 1, dtype=bool)
@@ -274,7 +277,10 @@ class GCPEiVelocity(GCPEi):
         """
         if np.random.random() < self.POU:
             # choose params at random to avoid local minima
-            return Uniform(self.tunables).predict(X)
+            return np.column_stack((
+                Uniform(self.tunables).predict(X),
+                np.zeros((X.shape[0], 1)),
+            ))
         else:
             # otherwise do the normal GPEi thing
             return super(GCPEiVelocity, self).predict(X)

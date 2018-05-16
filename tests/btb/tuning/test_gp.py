@@ -118,7 +118,7 @@ class TestGP(TestCase):
         predicted = tuner.predict(X)
 
         # assert
-        expected = np.array([0.8, 0.9])
+        expected = np.array([[0.8, 0], [0.9, 0]])
         np.testing.assert_array_equal(predicted, expected)
         uniform_mock.assert_called_once_with(tunables)
         predict_mock.assert_called_once_with(X)
@@ -313,6 +313,7 @@ class TestGPEiVelocity(TestCase):
 
         uniform_instance_mock = Mock()
         uniform_mock.return_value = uniform_instance_mock
+        uniform_instance_mock.predict.return_value = np.array([1, 2, 3, 4, 5])
 
         # Run
         X = np.array([

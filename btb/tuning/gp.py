@@ -39,7 +39,10 @@ class GP(BaseTuner):
         if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
             logger.warn('GP: not enough data, falling back to uniform sampler')
-            return Uniform(self.tunables).predict(X)
+            return np.column_stack((
+                Uniform(self.tunables).predict(X),
+                np.zeros((X.shape[0], 1)),
+            ))
 
         y, stdev = self.gp.predict(X, return_std=True)
         return np.array(list(zip(y, stdev)))
@@ -104,6 +107,9 @@ class GPEiVelocity(GPEi):
         """
         if np.random.random() < self.POU:
             # choose params at random to avoid local minima
-            return Uniform(self.tunables).predict(X)
+            return np.column_stack((
+                Uniform(self.tunables).predict(X),
+                np.zeros((X.shape[0], 1)),
+            ))
 
         return super(GPEiVelocity, self).predict(X)
