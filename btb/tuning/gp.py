@@ -67,7 +67,7 @@ class GPEi(GP):
                 proposed hyperparameters.
         """
         if self.X.shape[0] < self.r_minimum:
-            return np.argmax(predictions[:, 0])
+            return super(GPEi, self)._acquire(predictions)
         y_est, stderr = predictions.T
         best_y = max(self.y)
 
@@ -81,6 +81,14 @@ class GPEi(GP):
 class GPEiVelocity(GPEi):
     MULTIPLIER = -100   # magic number; modify with care
     N_BEST_Y = 5        # number of top values w/w to compute velocity
+
+    def __init__(self, tunables, gridding=0, r_minimum=2):
+        self.POU = 0
+        super(GPEiVelocity, self).__init__(
+            tunables,
+            gridding=gridding,
+            r_minimum=r_minimum,
+        )
 
     def fit(self, X, y):
         """
