@@ -186,6 +186,25 @@ class TestGPEi(TestCase):
     # METHOD: _acquire(self, predictions)
     # VALIDATE:
     #     * return values according to the formula
+    #@patch('btb.tuning.gp.GP')
+    def test__acquire_less_than_rmin(self): #, gp_mock):
+        """Best Expected Improvement corresponds to the best prediction
+        , as less than r_min proposals made."""
+        # Set-up
+        tuner = GPEi(tuple(), r_minimum=2)
+        tuner.X = np.array([[]])
+        tuner.y = np.array([])
+
+        # Run
+        predictions = np.array([
+            [0.8, 2],
+            [0.9, 1]
+        ])
+        best = tuner._acquire(predictions)
+
+        # assert
+        assert best == 1
+        #gp_mock._acquire.assert_called_once_with(predictions)
 
     def test__acquire_best_ei_eq_best_y(self):
         """Best Expected Improvement corresponds to the best prediction."""
@@ -193,6 +212,7 @@ class TestGPEi(TestCase):
         # Set-up
         tuner = GPEi(tuple(), r_minimum=2)
         tuner.y = np.array([0.5, 0.6, 0.7])
+        tuner.X = np.array([[1,1],[1,1]])
 
         # Run
         predictions = np.array([
@@ -209,6 +229,7 @@ class TestGPEi(TestCase):
 
         # Set-up
         tuner = GPEi(tuple(), r_minimum=2)
+        tuner.X = np.array([[1,1],[1,1]])
         tuner.y = np.array([0.5, 0.6, 0.7])
 
         # Run
@@ -231,6 +252,7 @@ class TestGPEi(TestCase):
         # Set-up
         tuner = GPEi(tuple(), r_minimum=2)
         tuner.y = np.array([0.5, 0.6, 0.7])
+        tuner.X = np.array([[1,1],[1,1]])
 
         # Run
         predictions = np.array([

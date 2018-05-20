@@ -236,6 +236,8 @@ class GCPEi(GCP):
                 the gaussian process generated for a series of
                 proposed hyperparameters.
         """
+        if self.X.shape[0] < self.r_minimum:
+            return super(GP, self)._acquire(predictions)
         y_est, stderr = predictions.T
         best_y = max(self.y)
 
