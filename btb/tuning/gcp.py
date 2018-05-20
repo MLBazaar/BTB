@@ -125,7 +125,12 @@ class GCP(BaseTuner):
             return
 
         # -- Non-parametric model of 'y', estimated with kernel density
-        kernel_pdf = st.gaussian_kde(y)
+        try:
+            kernel_pdf = st.gaussian_kde(y)
+        except LinAlgError as e:
+            # Can't fit to singular matrix
+            self.gcp = None
+            return
         kernel_cdf = make_cdf(kernel_pdf)
         kernel_ppf = make_ppf(kernel_pdf)
         y_kernel_model = {'pdf': kernel_pdf, 'cdf': kernel_cdf, 'ppf': kernel_ppf}
@@ -173,6 +178,15 @@ class GCP(BaseTuner):
                 ind_OK = np.logical_and(ind_OK, np.logical_not(np.isinf(U[:, ki])))
             V = np.copy(U[ind_OK, :])
             return V, ind_OK
+
+        # Check if GCP failed to fit due to singular matrix
+        if self.gcp is None:
+            print(
+                'GCP: singular matrix of y values, falling back to GP sampler'
+            )
+            tuner = GP(self.tunables)
+            tuner.fit(self.X, self.y)
+            return tuner.predict(X)
 
         # -- Load non-parametric model
         x_kernel_model = self.X_kernel_model
