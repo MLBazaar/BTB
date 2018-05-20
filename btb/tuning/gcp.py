@@ -237,7 +237,7 @@ class GCPEi(GCP):
                 proposed hyperparameters.
         """
         if self.X.shape[0] < self.r_minimum:
-            return super(GP, self)._acquire(predictions)
+            return np.argmax(predictions[:, 0])
         y_est, stderr = predictions.T
         best_y = max(self.y)
 
