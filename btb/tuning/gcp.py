@@ -3,6 +3,7 @@ from __future__ import division  # Is this really necessary?
 import logging
 
 import numpy as np
+from numpy.linalg import LinAlgError
 import scipy.stats as st
 from scipy.stats import norm
 from sklearn.gaussian_process import GaussianProcessRegressor
