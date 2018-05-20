@@ -8,7 +8,7 @@ import scipy.stats as st
 from scipy.stats import norm
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from btb.tuning.tuner import BaseTuner
+from btb.tuning.tuner import GP, BaseTuner
 from btb.tuning.uniform import Uniform
 
 logger = logging.getLogger('btb')
