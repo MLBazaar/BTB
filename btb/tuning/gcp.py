@@ -146,9 +146,14 @@ class GCP(BaseTuner):
             columnX = X[:, ki]
             if self.tunables[ki][1].is_integer:
                 columnX = jitter(columnX, self.tunables[ki][1].range)
-            kernel_pdf = st.gaussian_kde(columnX)
-            kernel_cdf = make_cdf(kernel_pdf)
-            kernel_ppf = make_ppf(kernel_pdf)
+            try:
+                kernel_pdf = st.gaussian_kde(columnX)
+                kernel_cdf = make_cdf(kernel_pdf)
+                kernel_ppf = make_ppf(kernel_pdf)
+            except LinAlgError as e:
+                # Can't fit to singular matrix
+                self.gcp = None
+                return
             kernel_model = {'pdf': kernel_pdf, 'cdf': kernel_cdf, 'ppf': kernel_ppf}
             X_kernel_model.append(kernel_model)
         self.X_kernel_model = X_kernel_model
