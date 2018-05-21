@@ -3,7 +3,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-import _path_setup  # noqa: F401
 from btb import HyperParameter, ParamTypes
 from btb.tuning import GP, Uniform
 

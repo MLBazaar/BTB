@@ -1,4 +1,3 @@
-import _path_setup  # noqa: F401
 from btb import HyperParameter, ParamTypes
 from btb.tuning import GP, Uniform
 

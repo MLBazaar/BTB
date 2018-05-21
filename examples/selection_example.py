@@ -4,7 +4,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
-import _path_setup  # noqa: F401
 from btb import HyperParameter, ParamTypes
 from btb.selection import Selector
 from btb.tuning import GP
