@@ -168,22 +168,26 @@ class TestHyperparameter(unittest.TestCase):
             # deep copy should have new attributes
             self.assertIsNot(hyp.range, hyp_copy.range)
 
-    def test_init_with_string_param_type(self):
+    def test_init_with_string_param_type_valid(self):
+        r = random.Random()
+        r.seed(1)
+
         def random_case(s):
             return ''.join(
-                random.choice([str.upper, str.lower])(c)
+                r.choice([str.upper, str.lower])(c)
                 for c in s
             )
 
         # allowed string param types
-        for typ, rang in self.parameter_constructions:
+        for type_, range_ in self.parameter_constructions:
             for recase in [str.upper, str.lower, random_case]:
-                str_typ = recase(typ.name)
+                str_type = recase(type_.name)
                 self.assertEqual(
-                    HyperParameter(str_typ, rang),
-                    HyperParameter(typ, rang)
+                    HyperParameter(str_type, range_),
+                    HyperParameter(type_, range_)
                 )
 
+    def test_init_with_string_param_type_invalid(self):
         # invalid string param types
         invalid_param_types = ['a', 0, object(), 'integer', 'foo']
         for invalid_param_type in invalid_param_types:
