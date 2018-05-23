@@ -21,7 +21,7 @@ class TestHyperparameter(unittest.TestCase):
             (ParamTypes.STRING, ['a', 'b', 'c']),
         ]
 
-    def test_init_value_error(self):
+    def test___init___value_error(self):
         with self.assertRaises(ValueError):
             HyperParameter('not a ParamType', [1, 10])
 
