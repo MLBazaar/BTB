@@ -42,23 +42,27 @@ class HyperParameter(object):
         return cls._subclasses
 
     def __new__(cls, param_type=None, param_range=None):
-        if isinstance(param_type, ParamTypes):
-            for subclass in cls.subclasses():
-                if subclass.param_type is param_type:
-                    return super(HyperParameter, cls).__new__(subclass)
+        if not isinstance(param_type, ParamTypes):
+            if (isinstance(param_type, str) and
+                    param_type.upper() in ParamTypes.__members__):
+                param_type = ParamTypes[param_type.upper()]
+            else:
+                raise ValueError('Invalid param type {}'.format(param_type))
 
-        raise ValueError('Invalid ParamType {}'.format(param_type))
+        for subclass in cls.subclasses():
+            if subclass.param_type is param_type:
+                return super(HyperParameter, cls).__new__(subclass)
 
     def cast(self, value):
         raise NotImplementedError()
 
     def __init__(self, param_type=None, param_range=None):
-        for i, value in enumerate(param_range):
-            # the value None is allowed for every parameter type
-            if value is not None:
-                param_range[i] = self.cast(value)
-
-        self.range = param_range
+        self.range = [
+            self.cast(value)
+            # "the value None is allowed for every parameter type"
+            if value is not None else None
+            for value in param_range
+        ]
 
     def __copy__(self):
         cls = self.__class__
@@ -97,6 +101,22 @@ class HyperParameter(object):
             np.linspace(self.range[0], self.range[1], grid_size),
             decimals=5,
         )
+
+    def __eq__(self, other):
+        # See https://stackoverflow.com/a/25176504/2514228 for details
+        if isinstance(self, other.__class__):
+            return (self.param_type is other.param_type and
+                    self.is_integer == other.is_integer and
+                    self.range == other.range)
+        return NotImplemented
+
+    def __ne__(self, other):
+        # Not needed in Python 3
+        # See https://stackoverflow.com/a/25176504/2514228 for details
+        x = self.__eq__(other)
+        if x is not NotImplemented:
+            return not x
+        return NotImplemented
 
 
 class IntHyperParameter(HyperParameter):
