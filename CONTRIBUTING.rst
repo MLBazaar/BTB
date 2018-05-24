@@ -82,7 +82,7 @@ Ready to contribute? Here's how to set up `BTB` for local development.
    unit tests, and that none of the old tests fail as a consequence of your changes.
    For this, make sure to run the tests suite and check the code coverage::
 
-    $ make pytest     # Run the tests
+    $ make test       # Run the tests
     $ make coverage   # Get the coverage report
 
 6. When you're done making changes, check that your changes pass flake8 and the
