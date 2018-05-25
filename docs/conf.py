@@ -21,7 +21,6 @@
 import sphinx_rtd_theme  # For read the docs theme
 from recommonmark.parser import CommonMarkParser
 
-import _path_setup  # noqa: F401
 import btb
 
 # -- General configuration ---------------------------------------------

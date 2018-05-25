@@ -80,6 +80,7 @@ coverage: clean-coverage ## check code coverage quickly with the default Python
 
 clean-docs: ## remove previously built docs
 	rm -f docs/btb.rst
+	rm -f docs/btb.*.rst
 	rm -f docs/modules.rst
 	$(MAKE) -C docs clean
 
