@@ -45,7 +45,7 @@ setup(
     include_package_data=True,
     keywords='machine learning hyperparameters tuning classification',
     name='baytune',
-    packages=find_packages(include=['btb']),
+    packages=find_packages(include=['btb', 'btb.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
