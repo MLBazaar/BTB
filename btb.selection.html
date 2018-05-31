@@ -572,60 +572,6 @@ that the count remains the same.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="btb.selection.Selector">
-<em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="btb.selection.Selector.bandit">
-<code class="descname">bandit</code><span class="sig-paren">(</span><em>choice_rewards</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.bandit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.bandit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-armed bandit method. Accepts a mapping of choices to rewards which
-indicate their historical performance, and returns the choice that we
-should make next in order to maximize expected reward in the long term.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd><dl class="first last docutils">
-<dt>choice_rewards: maps choice IDs to lists of rewards.</dt>
-<dd>{choice -&gt; [float]}</dd>
-</dl>
-</dd>
-<dt>Returns:</dt>
-<dd>choice: string indicating the name of the choice to take next.</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.selection.Selector.compute_rewards">
-<code class="descname">compute_rewards</code><span class="sig-paren">(</span><em>scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.compute_rewards" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a list of scores associated with one choice into a list of
-rewards. Normally, the length of the list will be preserved, even if
-some of the scores are dropped.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.selection.Selector.select">
-<code class="descname">select</code><span class="sig-paren">(</span><em>choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/selector.html#Selector.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Selector.select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select the next best choice to make</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd><dl class="first last docutils">
-<dt>choice_scores: map of {choice -&gt; [scores]} for each possible choice. The</dt>
-<dd><p class="first">caller is responsible for making sure each choice that is possible at
-this juncture is represented in the dict, even those with no scores.
-Score lists should be in ascending chronological order.
-e.g.
-{1: [0.56, 0.61, 0.33, 0.67],</p>
-<blockquote class="last">
-<div>2: [0.25, 0.58],
-3: [0.60, 0.65, 0.68]}</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="btb.selection.UCB1">
 <em class="property">class </em><code class="descclassname">btb.selection.</code><code class="descname">UCB1</code><span class="sig-paren">(</span><em>choices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.UCB1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
