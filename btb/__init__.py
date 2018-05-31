@@ -11,16 +11,8 @@ __version__ = '0.1.0'
 
 import logging
 
-from btb.hyper_parameter import (
-    BoolCatHyperParameter, CatHyperParameter, FloatCatHyperParameter, FloatExpHyperParameter,
-    FloatHyperParameter, HyperParameter, IntCatHyperParameter, IntExpHyperParameter,
-    IntHyperParameter, ParamTypes, StringCatHyperParameter)
+from btb.hyper_parameter import HyperParameter, ParamTypes
 
-__all__ = (
-    'BoolCatHyperParameter', 'CatHyperParameter', 'FloatCatHyperParameter',
-    'FloatExpHyperParameter', 'FloatHyperParameter', 'HyperParameter',
-    'IntCatHyperParameter', 'IntExpHyperParameter', 'IntHyperParameter',
-    'ParamTypes', 'StringCatHyperParameter'
-)
+__all__ = ('HyperParameter', 'ParamTypes')
 
 logging.getLogger('btb').addHandler(logging.NullHandler())
