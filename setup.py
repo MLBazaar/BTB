@@ -11,16 +11,21 @@ with open('README.md') as readme_file:
 with open('HISTORY.md') as history_file:
     history = history_file.read()
 
-requirements = [
+install_requires = [
     'enum34>=1.1.6; python_version=="2.7"',
     'numpy>=1.14.2',
     'scikit-learn>=0.19.1',
     'scipy>=1.0.1'
 ]
 
-setup_requirements = ['pytest-runner', ]
+tests_require = [
+    'mock>=2.0.0',
+    'pytest>=3.4.2',
+]
 
-test_requirements = ['pytest', ]
+setup_requires = [
+    'pytest-runner>=2.11.1',
+]
 
 setup(
     author='MIT Data To AI Lab',
@@ -38,7 +43,10 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     description='Bayesian Tuning and Bandits',
-    install_requires=requirements,
+    extras_require={
+        'test': tests_require
+    },
+    install_requires=install_requires,
     license='MIT license',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
@@ -46,10 +54,10 @@ setup(
     keywords='machine learning hyperparameters tuning classification',
     name='baytune',
     packages=find_packages(include=['btb', 'btb.*']),
-    setup_requires=setup_requirements,
+    setup_requires=setup_requires,
     test_suite='tests',
-    tests_require=test_requirements,
+    tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.1.1',
+    version='0.2.0-dev',
     zip_safe=False,
 )
