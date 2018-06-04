@@ -181,7 +181,7 @@ The process of releasing a new version involves several steps combining both ``g
 these changes are committed and available in ``master`` branch.
 Normally this is just a list of the Pull Requests that have been merged since the latest version.
 
-Once this is done, just run the following commands:
+Once this is done, just run the following commands::
 
     git checkout stable
     git merge --no-ff master    # This creates a merge commit
