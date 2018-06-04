@@ -1,13 +1,14 @@
-from __future__ import division
+from __future__ import division  # Is this really necessary?
+
 import logging
-from builtins import zip, range
 
 import numpy as np
 import scipy.stats as st
 from scipy.stats import norm
+from sklearn.gaussian_process import GaussianProcessRegressor
 
-from btb.tuning import Tuner, Uniform
-from sklearn.gaussian_process import GaussianProcess, GaussianProcessRegressor
+from btb.tuning.tuner import BaseTuner
+from btb.tuning.uniform import Uniform
 
 logger = logging.getLogger('btb')
 
@@ -25,12 +26,12 @@ def make_cdf(kernel_pdf):
 
     lowerB = kernel_pdf.dataset.min()
     upperB = kernel_pdf.dataset.max()
-    mid = (upperB-lowerB) / 2
+    mid = (upperB - lowerB) / 2
     Nmid = -0.2
     lowerB = lowerB - mid * Nmid
     upperB = upperB + mid * Nmid
-    num = int(10 ** (np.log10(upperB - lowerB)) // 1)
-    if num < 100: num = 100
+    num = max(100, int(10 ** (np.log10(upperB - lowerB)) // 1))
+
     y_range = np.linspace(lowerB, upperB, num=num)
     u_range = np_cdf(kernel_pdf, y_range)
     funI = interp1d(y_range, u_range)  # <-- use linear interpolation
@@ -50,18 +51,19 @@ def make_cdf(kernel_pdf):
 
     return kernel_cdf
 
+
 def make_ppf(kernel_pdf):
     from scipy.interpolate import interp1d
     from scipy.optimize import fsolve
 
     lowerB = kernel_pdf.dataset.min()
     upperB = kernel_pdf.dataset.max()
-    mid = (upperB-lowerB) / 2
+    mid = (upperB - lowerB) / 2
     Nmid = -0.2
     lowerB = lowerB - mid * Nmid
     upperB = upperB + mid * Nmid
-    num = int(10 ** (np.log10(upperB - lowerB)) // 1)
-    if num < 100: num = 100
+    num = max(100, int(10 ** (np.log10(upperB - lowerB)) // 1))
+
     y_range = np.linspace(lowerB, upperB, num=num)
     kernel_cdf = make_cdf(kernel_pdf)
     u_range = kernel_cdf(y_range)
@@ -87,8 +89,9 @@ def make_ppf(kernel_pdf):
 
     return kernel_ppf
 
-class GCP(Tuner):
-    def __init__(self, tunables, gridding=0, **kwargs):
+
+class GCP(BaseTuner):
+    def __init__(self, tunables, gridding=0, r_minimum=2):
         """
         Extra args:
             r_minimum: the minimum number of past results this selector needs in
@@ -96,8 +99,8 @@ class GCP(Tuner):
                 results are present during a fit(), subsequent calls to
                 propose() will revert to uniform selection.
         """
-        super(GCP, self).__init__(tunables, gridding=gridding, **kwargs)
-        self.r_minimum = kwargs.pop('r_minimum', 2)
+        super(GCP, self).__init__(tunables, gridding=gridding)
+        self.r_minimum = r_minimum
 
     def fit(self, X, y):
 
@@ -105,7 +108,7 @@ class GCP(Tuner):
             y = np.copy(x)
             scale_exp_min = np.abs(np.ceil(np.log10(range[0])))
             scale_exp_max = np.abs(np.ceil(np.log10(range[1])))
-            scale_exp = (scale_exp_max + scale_exp_min) /2.
+            scale_exp = (scale_exp_max + scale_exp_min) / 2.
             r = np.random.rand(y.size) / (10**scale_exp)
             y = y + r
             return y
@@ -133,11 +136,11 @@ class GCP(Tuner):
         v = st.norm.ppf(vF)
 
         # -- Non-parametric model of each feature in 'X', estimated with kernel density
-        X_kernel_model=[]
+        X_kernel_model = []
         for ki in range(X.shape[1]):
-            columnX = X[:,ki]
-            if self.tunables[ki][1].type != 'float':
-                columnX = jitter(columnX,self.tunables[ki][1].range)
+            columnX = X[:, ki]
+            if self.tunables[ki][1].is_integer:
+                columnX = jitter(columnX, self.tunables[ki][1].range)
             kernel_pdf = st.gaussian_kde(columnX)
             kernel_cdf = make_cdf(kernel_pdf)
             kernel_ppf = make_ppf(kernel_pdf)
@@ -148,20 +151,24 @@ class GCP(Tuner):
         # -- Transform X-->F-->uF-->norm.ppf-->U
         U = np.empty_like(X)
         for ki in range(X.shape[1]):
-            uF = X_kernel_model[ki]['cdf'](X[:,ki])
-            U[:,ki] = st.norm.ppf(uF)
+            uF = X_kernel_model[ki]['cdf'](X[:, ki])
+            U[:, ki] = st.norm.ppf(uF)
 
-        # - Instantiate a GP and fit it with (U,v)
+        # - Instantiate a GP and fit it with (U, v)
         self.gcp = GaussianProcessRegressor(normalize_y=True)
         self.gcp.fit(U, v)
 
     def predict(self, X):
+        if self.X.shape[0] < self.r_minimum:
+            # we probably don't have enough
+            logger.warn('GP: not enough data, falling back to uniform sampler')
+            return Uniform(self.tunables).predict(X)
 
         def get_valid_row(U):
-            ind_OK = np.full(U.shape[0],1,dtype=bool)
+            ind_OK = np.full(U.shape[0], 1, dtype=bool)
             for ki in range(U.shape[1]):
-                ind_OK = np.logical_and(ind_OK, np.logical_not(np.isinf(U[:,ki])) )
-            V = np.copy(U[ind_OK,:])
+                ind_OK = np.logical_and(ind_OK, np.logical_not(np.isinf(U[:, ki])))
+            V = np.copy(U[ind_OK, :])
             return V, ind_OK
 
         # -- Load non-parametric model
@@ -171,11 +178,11 @@ class GCP(Tuner):
         # -- Transform X into U before using the GP learned
         U = np.empty_like(X)
         for ki in range(X.shape[1]):
-            uF = x_kernel_model[ki]['cdf'](X[:,ki])
-            U[:,ki] = st.norm.ppf(uF)
+            uF = x_kernel_model[ki]['cdf'](X[:, ki])
+            U[:, ki] = st.norm.ppf(uF)
 
-        #-- Get U_safe and print msg. to inform of how many rows are valid
-        U_safe,ind_OK = get_valid_row(U)
+        # -- Get U_safe and print msg. to inform of how many rows are valid
+        U_safe, ind_OK = get_valid_row(U)
         strMessage = "Num. of valid rows in X = %d" % (np.sum(ind_OK))
         logger.debug(strMessage)
 
@@ -206,7 +213,7 @@ class GCP(Tuner):
 
         return np.array(list(zip(mu_y, stdev_y)))
 
-    def acquire(self, predictions):
+    def _acquire(self, predictions):
         """
         Predictions from the GCP will be in the form (prediction, error).
         The default acquisition function returns the index with the highest
@@ -214,25 +221,10 @@ class GCP(Tuner):
         """
         return np.argmax(predictions[:, 0])
 
-    def propose(self):
-        """
-        If we haven't seen at least self.r_minimum values, choose parameters
-        using a Uniform tuner (randomly). Otherwise perform the usual
-        create-predict-propose pipeline.
-        """
-        if self.X.shape[0] < self.r_minimum:
-            # we probably don't have enough
-            logger.warn('GP: not enough data, falling back to uniform sampler')
-            return Uniform(self.tunables).propose()
-        else:
-            # otherwise do the normal generate-predict thing
-            logger.info('GCP: using gaussian copula process to select parameters')
-            return super(GCP, self).propose()
-
 
 class GCPEi(GCP):
-    #-- question: I have changed GPEi(GP) for GPEi(GCP), is that ok?
-    def acquire(self, predictions):
+    # -- question: I have changed GPEi(GP) for GPEi(GCP), is that ok?
+    def _acquire(self, predictions):
         """
         Expected improvement criterion:
         http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
@@ -261,7 +253,7 @@ class GCPEiVelocity(GCPEi):
         Uniform selection" (POU) value.
         """
         # first, train a gaussian process like normal
-        super(GPEiVelocity, self).fit(X, y)
+        super(GCPEiVelocity, self).fit(X, y)
 
         # probability of uniform
         self.POU = 0
@@ -269,20 +261,20 @@ class GCPEiVelocity(GCPEi):
             # get the best few scores so far, and compute the average distance
             # between them.
             top_y = sorted(y)[-self.N_BEST_Y:]
-            velocities = [top_y[i+1] - top_y[i] for i in range(len(top_y) - 1)]
+            velocities = [top_y[i + 1] - top_y[i] for i in range(len(top_y) - 1)]
 
             # the probability of returning random parameters scales inversely with
             # the "velocity" of top scores.
             self.POU = np.exp(self.MULTIPLIER * np.mean(velocities))
 
-    def propose(self):
+    def predict(self, X):
         """
         Use the POU value we computed in fit to choose randomly between GPEi and
         uniform random selection.
         """
         if np.random.random() < self.POU:
             # choose params at random to avoid local minima
-            return Uniform(self.tunables).propose()
+            return Uniform(self.tunables).predict(X)
         else:
             # otherwise do the normal GPEi thing
-            return super(GPEiVelocity, self).propose()
+            return super(GCPEiVelocity, self).predict(X)

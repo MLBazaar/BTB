@@ -1,15 +1,15 @@
-from btb.selection import Selector, UCB1
+from btb.selection.ucb1 import UCB1
 
 
 class HierarchicalByAlgorithm(UCB1):
-    def __init__(self, choices, **kwargs):
+    def __init__(self, choices, by_algorithm):
         """
         Needs:
             by_algorithm: {str -> list[choice]} grouping of frozen set choices
                 by ML algorithm
         """
-        super(HierarchicalByAlgorithm, self).__init__(choices, **kwargs)
-        self.by_algorithm = kwargs.pop('by_algorithm')
+        super(HierarchicalByAlgorithm, self).__init__(choices)
+        self.by_algorithm = by_algorithm
 
     def select(self, choice_scores):
         """

@@ -1,6 +1,8 @@
-from btb.selection import Selector
 import random
+
 import numpy as np
+
+from btb.selection.selector import Selector
 
 
 class UCB1(Selector):
@@ -8,6 +10,7 @@ class UCB1(Selector):
     The most common Selector implementation.
     Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.
     """
+
     def bandit(self, choice_rewards):
         """
         Multi-armed bandit method which chooses the arm for which the upper
@@ -25,7 +28,7 @@ class UCB1(Selector):
         # don't let the value go below 1, so that log() and division still work.
         total_pulls = max(sum(len(r) for r in choice_rewards.values()), 1)
 
-        scores = {}
+        scores = dict()
 
         for choice, rewards in choice_rewards.items():
             # count the number of pulls for this choice, with a floor of 1

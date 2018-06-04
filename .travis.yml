@@ -1,0 +1,48 @@
+# Config file for automatic testing at travis-ci.org
+language: python
+python:
+  - 3.6
+  - 3.5
+  - 3.4
+  - 2.7
+
+# Command to install dependencies
+install: pip install -U tox-travis
+
+# Command to run tests
+script: tox
+
+deploy:
+
+  # Automatically deploy releases to PyPI for each tagged commit
+  # Assuming you have installed the travis-ci CLI tool, after you
+  # create the Github repo and add it to Travis, run the
+  # following command to finish PyPI deployment setup:
+  # $ travis encrypt MY_PYPI_PASSWORD
+  # and then copy the (really long) encrypted password as shown.
+  - provider: pypi
+    distributions: sdist bdist_wheel
+    user: dai_lab_mit
+    password:
+      secure: BMsYqhu2RxlxLSnJczsMVShDqjdx96nZHq553QrzkhZAedtUKaB+EsqKmdytEOv1uLA8Qz+IqnhJsZfH+AwAMm0uDOxa2p3Eanqr5n/nmf4Qc5hutpex83ftPNKpf5+5WqIgOpKe94s0T330NRNw363emop/WlCS2xipghAv2Z/IED1vT3V12Z6KaPjF9GV4SR/Eeuz8czr0tBUvQbOcCP4zKYQr5zppbfceVPLewbmPWeOD/+pVH6+aQ6IbaxXJLCxJfhZziYAV5Hs/x2b5KMS06yaYzstQ4iCzFS/slgKqP16KppfngFx3UVtLqJajgy2JWqigB9DsUT3JWQJaDFpehrq/z+ypGUQSQB/uIrUkmG6WCJd+1BdfHDz4CGAMwxVb05lIrssfsAq18C0O/sZziLcTB/z3QkF3Za3ZXSqQ+Yp8UdLJSHiYh5nF6VTxqRrgfLtY6PuUoIY7ZFzBRSC/krbhxZES1QkQS5x9qIsqSivj0V3mz05ONpu9QK28d2G3En0cADP1QGMQV80iTPvIKy6p/HN7lUGMeXpl+FYeN58ECOZIkn1aXh06vVrTRJHDea3dvYP84iw3qelR4LKRFsb3Lw6fWiC8/KKdb2j4pemQxOQO2wH6dbCpbz9g6j9ubr8KmTt4DQWz876NhbT8T2mlRq1pZu4JQsuMzU0=
+    on:
+      tags: true
+      branch: master
+      repo: HDI-Project/BTB
+      python: 3.6
+
+  # Automatically build and deploy documentation to GitHub Pages after every
+  # commit
+  # Follow the instructions at https://docs.travis-ci.com/user/deployment/pages/
+  # to setup a personal deployment token and then provide it as a secure
+  # environment variable at https://travis-ci.org/HDI-Project/btb/settings
+  - provider: pages
+    skip-cleanup: true
+    github-token: "$GITHUB_TOKEN"
+    keep-history: true
+    local-dir: docs/_build/html
+    target-branch: gh-pages
+    on:
+      branch: master
+      python: 3.6
+

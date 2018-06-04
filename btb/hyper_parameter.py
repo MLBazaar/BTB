@@ -1,48 +1,250 @@
-from builtins import object, str as newstr
-from collections import namedtuple
+import copy
+import math
+import random
+from collections import defaultdict
+from enum import Enum
 
-class ParamTypes(object):
-	INT = "int"
-	INT_EXP = "int_exp"
-	INT_CAT = "int_cat"
-	FLOAT = "float"
-	FLOAT_EXP = "float_exp"
-	FLOAT_CAT = "float_cat"
-	STRING = "string"
-	BOOL = "bool"
-
-# List of exponential hyperparameter types
-EXP_TYPES = [ParamTypes.INT_EXP, ParamTypes.FLOAT_EXP]
-
-# List of categorical hyperparameter types
-CAT_TYPES = [ParamTypes.INT_CAT, ParamTypes.FLOAT_CAT, ParamTypes.STRING,
-             ParamTypes.BOOL]
+import numpy as np
 
 
-# our HyperParameter object
+class ParamTypes(Enum):
+    INT = 1
+    INT_EXP = 2
+    INT_CAT = 3
+    FLOAT = 4
+    FLOAT_EXP = 5
+    FLOAT_CAT = 6
+    STRING = 7
+    BOOL = 8
+
+
 class HyperParameter(object):
-    def __init__(self, typ, rang):
-        for i, val in enumerate(rang):
-            if val is None:
-                # the value None is allowed for every parameter type
-                continue
-            if typ in [ParamTypes.INT, ParamTypes.INT_EXP,
-                       ParamTypes.INT_CAT]:
-                rang[i] = int(val)
-            elif typ in [ParamTypes.FLOAT, ParamTypes.FLOAT_EXP,
-                         ParamTypes.FLOAT_CAT]:
-                rang[i] = float(val)
-            elif typ == ParamTypes.STRING:
-                rang[i] = str(newstr(val))
-            elif typ == ParamTypes.BOOL:
-                rang[i] = bool(val)
-        self.type = typ
-        self.range = rang
 
-    @property
-    def is_exponential(self):
-        return self.type in EXP_TYPES
+    param_type = None
+    is_integer = False
 
-    @property
-    def is_categorical(self):
-        return self.type in CAT_TYPES
+    _subclasses = []
+
+    @classmethod
+    def _get_subclasses(cls):
+        subclasses = []
+        for subclass in cls.__subclasses__():
+            subclasses.append(subclass)
+            subclasses.extend(subclass._get_subclasses())
+
+        return subclasses
+
+    @classmethod
+    def subclasses(cls):
+        if not cls._subclasses:
+            cls._subclasses = cls._get_subclasses()
+
+        return cls._subclasses
+
+    def __new__(cls, param_type=None, param_range=None):
+        if not isinstance(param_type, ParamTypes):
+            if (isinstance(param_type, str) and
+                    param_type.upper() in ParamTypes.__members__):
+                param_type = ParamTypes[param_type.upper()]
+            else:
+                raise ValueError('Invalid param type {}'.format(param_type))
+
+        for subclass in cls.subclasses():
+            if subclass.param_type is param_type:
+                return super(HyperParameter, cls).__new__(subclass)
+
+    def cast(self, value):
+        raise NotImplementedError()
+
+    def __init__(self, param_type=None, param_range=None):
+        self.range = [
+            self.cast(value)
+            # "the value None is allowed for every parameter type"
+            if value is not None else None
+            for value in param_range
+        ]
+
+    def __copy__(self):
+        cls = self.__class__
+        result = cls.__new__(cls, self.param_type, self.range)
+        result.__dict__.update(self.__dict__)
+        return result
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls, self.param_type, self.range)
+        result.__dict__.update(self.__dict__)
+
+        memo[id(self)] = result
+
+        for k, v in self.__dict__.items():
+            setattr(result, k, copy.deepcopy(v, memo))
+
+        return result
+
+    def fit_transform(self, x, y):
+        return x
+
+    def inverse_transform(self, x):
+        return x
+
+    def get_grid_axis(self, grid_size):
+        if self.is_integer:
+            return np.round(
+                np.linspace(self.range[0], self.range[1], grid_size)
+            )
+
+        return np.round(
+            # NOTE: flake8 reported "undefined name 'param'"
+            # so "param" was repaced by "self".
+            # Remove this after review.
+            np.linspace(self.range[0], self.range[1], grid_size),
+            decimals=5,
+        )
+
+    def __eq__(self, other):
+        # See https://stackoverflow.com/a/25176504/2514228 for details
+        if isinstance(self, other.__class__):
+            return (self.param_type is other.param_type and
+                    self.is_integer == other.is_integer and
+                    self.range == other.range)
+        return NotImplemented
+
+    def __ne__(self, other):
+        # Not needed in Python 3
+        # See https://stackoverflow.com/a/25176504/2514228 for details
+        x = self.__eq__(other)
+        if x is not NotImplemented:
+            return not x
+        return NotImplemented
+
+
+class IntHyperParameter(HyperParameter):
+    param_type = ParamTypes.INT
+    is_integer = True
+
+    def cast(self, value):
+        return int(value)
+
+    def inverse_transform(self, x):
+        return x.astype(int)
+
+
+class FloatHyperParameter(HyperParameter):
+    param_type = ParamTypes.FLOAT
+
+    def cast(self, value):
+        return float(value)
+
+
+class FloatExpHyperParameter(HyperParameter):
+    param_type = ParamTypes.FLOAT_EXP
+
+    def cast(self, value):
+        return math.log10(float(value))
+
+    def fit_transform(self, x, y):
+        x = x.astype(float)
+        return np.log10(x)
+
+    def inverse_transform(self, x):
+        return np.power(10.0, x)
+
+
+class IntExpHyperParameter(FloatExpHyperParameter):
+    param_type = ParamTypes.INT_EXP
+    is_integer = True
+
+    def inverse_transform(self, x):
+        return super(IntExpHyperParameter, self).inverse_transform(x).astype(int)
+
+
+class CatHyperParameter(HyperParameter):
+
+    def __init__(self, param_type=None, param_range=None):
+        self.cat_transform = {self.cast(each): 0 for each in param_range}
+
+        # this is a dummy range until the transformer is fit
+        super(CatHyperParameter, self).__init__(param_type, [0.0, 1.0])
+
+    def fit_transform(self, x, y):
+        self.cat_transform = {each: (0, 0) for each in self.cat_transform}
+        for i in range(len(x)):
+            self.cat_transform[x[i]] = (
+                self.cat_transform[x[i]][0] + y[i],
+                self.cat_transform[x[i]][1] + 1
+            )
+
+        for key, value in self.cat_transform.items():
+            if value[1] != 0:
+                self.cat_transform[key] = value[0] / float(value[1])
+            else:
+                self.cat_transform[key] = 0
+
+        range_max = max(
+            self.cat_transform.keys(),
+            key=(lambda k: self.cat_transform[k])
+        )
+
+        range_min = min(
+            self.cat_transform.keys(),
+            key=(lambda k: self.cat_transform[k])
+        )
+
+        self.range = [
+            self.cat_transform[range_min],
+            self.cat_transform[range_max]
+        ]
+
+        return np.vectorize(self.cat_transform.get)(x)
+
+    def inverse_transform(self, x):
+        inv_map = defaultdict(list)
+        for key, value in self.cat_transform.items():
+            inv_map[value].append(key)
+
+        def invert(inv_map, x):
+            keys = np.fromiter(inv_map.keys(), dtype=float)
+            diff = (np.abs(keys - x))
+            min_diff = diff[0]
+            max_key = keys[0]
+            for i in range(len(diff)):
+                if diff[i] < min_diff:
+                    min_diff = diff[i]
+                    max_key = keys[i]
+                elif diff[i] == min_diff and keys[i] > max_key:
+                    min_diff = diff[i]
+                    max_key = keys[i]
+
+            return random.choice(np.vectorize(inv_map.get)(max_key))
+
+        inv_trans = np.vectorize(invert)(inv_map, x)
+        return inv_trans.item() if np.ndim(inv_trans) == 0 else inv_trans
+
+
+class IntCatHyperParameter(CatHyperParameter):
+    param_type = ParamTypes.INT_CAT
+
+    def cast(self, value):
+        return int(value)
+
+
+class FloatCatHyperParameter(CatHyperParameter):
+    param_type = ParamTypes.FLOAT_CAT
+
+    def cast(self, value):
+        return float(value)
+
+
+class StringCatHyperParameter(CatHyperParameter):
+    param_type = ParamTypes.STRING
+
+    def cast(self, value):
+        return str(value)
+
+
+class BoolCatHyperParameter(CatHyperParameter):
+    param_type = ParamTypes.BOOL
+
+    def cast(self, value):
+        return bool(value)

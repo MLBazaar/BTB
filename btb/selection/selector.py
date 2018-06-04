@@ -1,9 +1,8 @@
-from builtins import object
-import random
+import numpy as np
 
 
 class Selector(object):
-    def __init__(self, choices, **kwargs):
+    def __init__(self, choices):
         """
         Args:
             choices: a list of discrete choices from which the selector must
@@ -53,6 +52,7 @@ class Selector(object):
         for choice, scores in choice_scores.items():
             if choice not in self.choices:
                 continue
+
             choice_rewards[choice] = self.compute_rewards(scores)
 
         return self.bandit(choice_rewards)
