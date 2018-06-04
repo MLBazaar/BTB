@@ -358,16 +358,17 @@ development interation.</li>
 these changes are committed and available in <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.
 Normally this is just a list of the Pull Requests that have been merged since the latest version.</p>
 <p>Once this is done, just run the following commands:</p>
-<blockquote>
-<div>git checkout stable
-git merge –no-ff master    # This creates a merge commit
-bumpversion release   # This creates a new commit and a TAG
-git push –tags origin stable
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout stable
+git merge --no-ff master    <span class="c1"># This creates a merge commit</span>
+bumpversion release   <span class="c1"># This creates a new commit and a TAG</span>
+git push --tags origin stable
 make release
 git checkout master
 git merge stable
-bumpversion –no-tag minor
-git push</div></blockquote>
+bumpversion --no-tag minor
+git push
+</pre></div>
+</div>
 </div>
 </div>
 
