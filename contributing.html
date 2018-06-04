@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributing &mdash; BTB 0.1.0 documentation</title>
+  <title>Contributing &mdash; BTB 0.2.0-dev documentation</title>
   
 
   
@@ -112,6 +112,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#pull-request-guidelines">Pull Request Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unit-testing-guidelines">Unit Testing Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-workflow">Release Workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
@@ -340,6 +341,34 @@ mocked.</li>
 </pre></div>
 </div>
 </div>
+<div class="section" id="release-workflow">
+<h2>Release Workflow<a class="headerlink" href="#release-workflow" title="Permalink to this headline">¶</a></h2>
+<p>The process of releasing a new version involves several steps combining both <code class="docutils literal notranslate"><span class="pre">git</span></code> and
+<code class="docutils literal notranslate"><span class="pre">bumpversion</span></code> which, briefly:</p>
+<ol class="arabic simple">
+<li>Merge what is in <code class="docutils literal notranslate"><span class="pre">master</span></code> branch into <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch.</li>
+<li>Update the version in <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code>, <code class="docutils literal notranslate"><span class="pre">btb/__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">HISTORY.md</span></code> files.</li>
+<li>Create a new TAG pointing at the correspoding commit in <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch.</li>
+<li>Merge the new commit from <code class="docutils literal notranslate"><span class="pre">stable</span></code> into <code class="docutils literal notranslate"><span class="pre">master</span></code>.</li>
+<li>Update the version in <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> and <code class="docutils literal notranslate"><span class="pre">btb/__init__.py</span></code> to open the next
+development interation.</li>
+</ol>
+<p><strong>Note:</strong> Before starting the process, make sure that <code class="docutils literal notranslate"><span class="pre">HISTORY.md</span></code> has a section titled
+<strong>Unreleased</strong> with the list of changes that will be included in the new version, and that
+these changes are committed and available in <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.
+Normally this is just a list of the Pull Requests that have been merged since the latest version.</p>
+<p>Once this is done, just run the following commands:</p>
+<blockquote>
+<div>git checkout stable
+git merge –no-ff master    # This creates a merge commit
+bumpversion release   # This creates a new commit and a TAG
+git push –tags origin stable
+make release
+git checkout master
+git merge stable
+bumpversion –no-tag minor
+git push</div></blockquote>
+</div>
 </div>
 
 
@@ -384,7 +413,7 @@ mocked.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.0',
+            VERSION:'0.2.0-dev',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
