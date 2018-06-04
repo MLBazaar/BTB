@@ -1,6 +1,8 @@
 # History
 
-## 0.3.0-dev
+## Unreleased
+
+## 0.2.0
 
 ### New Features
 
