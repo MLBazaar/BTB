@@ -1,13 +1,13 @@
 # History
 
-## 0.2.0
+## Unreleased
 
 ### New Features
 
-* Recommendation module
+* New Recommendation module
 * New HyperParameter types
 * Improved documentation and examples
-* Tested Python 2, 3.4, 3.5 and 3.6 compatibility
+* Fully tested Python 2.7, 3.4, 3.5 and 3.6 compatibility
 * HyperParameter copy and deepcopy support
 * Replace print statements with logging
 
