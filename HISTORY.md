@@ -1,5 +1,11 @@
 # History
 
+## 0.2.1
+
+### Bug fixes
+
+* Issue #74: `ParamTypes.STRING` tunables do not work
+
 ## 0.2.0
 
 ### New Features
