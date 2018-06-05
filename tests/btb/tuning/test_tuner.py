@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import numpy as np
 import pytest
-from mock import patch
+from mock import patch, call
 from numpy.random import shuffle as np_shuffle
 
 from btb.hyper_parameter import HyperParameter, ParamTypes
@@ -84,6 +84,7 @@ class TestBaseTuner(TestCase):
     #     * returned value if less than n points remain
     #     * returned value if more than n points remain
     #     * BUG: no exception is raised if n > grid_size
+    #     * BUG: GH74: STRING ParamTypes do not work
     # TODO:
     #     * Split this method in 4 smaller methods
 
@@ -92,11 +93,15 @@ class TestBaseTuner(TestCase):
         """self.grid is False"""
         # Set-up
         np_random_mock.rand.return_value = np.array([.0, .2, .4, .6, .8])
-        np_random_mock.randint.return_value = np.array([1, 2, 3, 4, 5])
+        np_random_mock.randint.side_effect = [
+            np.array([1, 2, 3, 4, 5]),
+            np.array([0, 1, 2, 0, 1])
+        ]
 
         tunables = (
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
+            ('a_string_param', HyperParameter(ParamTypes.STRING, ['a', 'b', 'c'])),
         )
         tuner = BaseTuner(tunables)
 
@@ -105,17 +110,21 @@ class TestBaseTuner(TestCase):
 
         # Assert
         expected_candidates = np.array([
-            [1.0, 1],
-            [1.2, 2],
-            [1.4, 3],
-            [1.6, 4],
-            [1.8, 5]
+            [1.0, 1, 0],
+            [1.2, 2, 1],
+            [1.4, 3, 2],
+            [1.6, 4, 0],
+            [1.8, 5, 1]
         ])
 
         np.testing.assert_array_equal(candidates, expected_candidates)
 
         np_random_mock.rand.assert_called_once_with(5)
-        np_random_mock.randint.assert_called_once_with(1, 6, size=5)
+        expected_calls = [
+            call(1, 6, size=5),
+            call(0, 3, size=5),
+        ]
+        np_random_mock.randint.assert_has_calls(expected_calls)
 
     def test__create_candidates_every_point_used(self):
         """every point has been used"""

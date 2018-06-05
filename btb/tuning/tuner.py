@@ -76,7 +76,7 @@ class BaseTuner(object):
         for i, tunable in enumerate(self.tunables):
             param = tunable[1]
             lo, hi = param.range
-            if param.is_integer:
+            if param.is_discrete:
                 column = np.random.randint(lo, hi + 1, size=n)
 
             else:

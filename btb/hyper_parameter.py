@@ -1,7 +1,5 @@
 import copy
 import math
-import random
-from collections import defaultdict
 from enum import Enum
 
 import numpy as np
@@ -21,7 +19,7 @@ class ParamTypes(Enum):
 class HyperParameter(object):
 
     param_type = None
-    is_integer = False
+    is_discrete = False
 
     _subclasses = []
 
@@ -89,7 +87,7 @@ class HyperParameter(object):
         return x
 
     def get_grid_axis(self, grid_size):
-        if self.is_integer:
+        if self.is_discrete:
             return np.round(
                 np.linspace(self.range[0], self.range[1], grid_size)
             )
@@ -106,7 +104,7 @@ class HyperParameter(object):
         # See https://stackoverflow.com/a/25176504/2514228 for details
         if isinstance(self, other.__class__):
             return (self.param_type is other.param_type and
-                    self.is_integer == other.is_integer and
+                    self.is_discrete == other.is_discrete and
                     self.range == other.range)
         return NotImplemented
 
@@ -121,7 +119,7 @@ class HyperParameter(object):
 
 class IntHyperParameter(HyperParameter):
     param_type = ParamTypes.INT
-    is_integer = True
+    is_discrete = True
 
     def cast(self, value):
         return int(value)
@@ -153,98 +151,38 @@ class FloatExpHyperParameter(HyperParameter):
 
 class IntExpHyperParameter(FloatExpHyperParameter):
     param_type = ParamTypes.INT_EXP
-    is_integer = True
+    is_discrete = True
 
     def inverse_transform(self, x):
         return super(IntExpHyperParameter, self).inverse_transform(x).astype(int)
 
 
 class CatHyperParameter(HyperParameter):
+    is_discrete = True
 
     def __init__(self, param_type=None, param_range=None):
-        self.cat_transform = {self.cast(each): 0 for each in param_range}
-
-        # this is a dummy range until the transformer is fit
-        super(CatHyperParameter, self).__init__(param_type, [0.0, 1.0])
+        self.categories = np.array(param_range)
+        self.range = [0, len(param_range) - 1]
 
     def fit_transform(self, x, y):
-        self.cat_transform = {each: (0, 0) for each in self.cat_transform}
-        for i in range(len(x)):
-            self.cat_transform[x[i]] = (
-                self.cat_transform[x[i]][0] + y[i],
-                self.cat_transform[x[i]][1] + 1
-            )
-
-        for key, value in self.cat_transform.items():
-            if value[1] != 0:
-                self.cat_transform[key] = value[0] / float(value[1])
-            else:
-                self.cat_transform[key] = 0
-
-        range_max = max(
-            self.cat_transform.keys(),
-            key=(lambda k: self.cat_transform[k])
-        )
-
-        range_min = min(
-            self.cat_transform.keys(),
-            key=(lambda k: self.cat_transform[k])
-        )
-
-        self.range = [
-            self.cat_transform[range_min],
-            self.cat_transform[range_max]
-        ]
-
-        return np.vectorize(self.cat_transform.get)(x)
+        return np.vectorize(self.categories.tolist().index)(x)[()]
 
     def inverse_transform(self, x):
-        inv_map = defaultdict(list)
-        for key, value in self.cat_transform.items():
-            inv_map[value].append(key)
-
-        def invert(inv_map, x):
-            keys = np.fromiter(inv_map.keys(), dtype=float)
-            diff = (np.abs(keys - x))
-            min_diff = diff[0]
-            max_key = keys[0]
-            for i in range(len(diff)):
-                if diff[i] < min_diff:
-                    min_diff = diff[i]
-                    max_key = keys[i]
-                elif diff[i] == min_diff and keys[i] > max_key:
-                    min_diff = diff[i]
-                    max_key = keys[i]
-
-            return random.choice(np.vectorize(inv_map.get)(max_key))
-
-        inv_trans = np.vectorize(invert)(inv_map, x)
-        return inv_trans.item() if np.ndim(inv_trans) == 0 else inv_trans
+        x = x.astype(int)
+        return np.vectorize(self.categories.item)(x)[()]
 
 
 class IntCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.INT_CAT
 
-    def cast(self, value):
-        return int(value)
-
 
 class FloatCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.FLOAT_CAT
-
-    def cast(self, value):
-        return float(value)
 
 
 class StringCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.STRING
 
-    def cast(self, value):
-        return str(value)
-
 
 class BoolCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.BOOL
-
-    def cast(self, value):
-        return bool(value)
