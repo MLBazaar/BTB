@@ -345,24 +345,26 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">each</span><span class="p">):</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">param_range</span><span class="p">}</span>
-
-        <span class="c1"># this is a dummy range until the transformer is fit</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CatHyperParameter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">param_type</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
 
 <div class="viewcode-block" id="CatHyperParameter.fit_transform"><a class="viewcode-back" href="../../btb.html#btb.hyper_parameter.CatHyperParameter.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span> <span class="o">=</span> <span class="p">{</span><span class="n">each</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="p">}</span>
+        <span class="c1"># Accumulate the scores of each category</span>
+        <span class="c1"># and the number of times that we have used it</span>
+        <span class="n">tmp_cat_transform</span> <span class="o">=</span> <span class="p">{</span><span class="n">each</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">tmp_cat_transform</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">tmp_cat_transform</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>    <span class="c1"># sum score</span>
+                <span class="n">tmp_cat_transform</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>        <span class="c1"># count occurrences</span>
             <span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># If we have at least one score, compute the average</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">tmp_cat_transform</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
+        <span class="c1"># Compute the range using the min and max scores</span>
         <span class="n">range_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
             <span class="n">key</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
@@ -381,6 +383,7 @@
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="o">.</span><span class="n">get</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CatHyperParameter.inverse_transform"><a class="viewcode-back" href="../../btb.html#btb.hyper_parameter.CatHyperParameter.inverse_transform">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># Compute the inverse dictionary</span>
         <span class="n">inv_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">inv_map</span><span class="p">[</span><span class="n">value</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -390,6 +393,8 @@
             <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">keys</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span>
             <span class="n">min_diff</span> <span class="o">=</span> <span class="n">diff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">max_key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Find the score which is closer to the given value</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)):</span>
                 <span class="k">if</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">min_diff</span><span class="p">:</span>
                     <span class="n">min_diff</span> <span class="o">=</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -398,9 +403,12 @@
                     <span class="n">min_diff</span> <span class="o">=</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                     <span class="n">max_key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
+            <span class="c1"># Get a random category from the ones that had the given score</span>
             <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">inv_map</span><span class="o">.</span><span class="n">get</span><span class="p">)(</span><span class="n">max_key</span><span class="p">))</span>
 
         <span class="n">inv_trans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">invert</span><span class="p">)(</span><span class="n">inv_map</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+        <span class="c1"># Handle equally scalars and numpy arrays</span>
         <span class="k">return</span> <span class="n">inv_trans</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">inv_trans</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">inv_trans</span></div></div>
 
 
