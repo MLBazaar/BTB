@@ -163,24 +163,26 @@ class CatHyperParameter(HyperParameter):
 
     def __init__(self, param_type=None, param_range=None):
         self.cat_transform = {self.cast(each): 0 for each in param_range}
-
-        # this is a dummy range until the transformer is fit
-        super(CatHyperParameter, self).__init__(param_type, [0.0, 1.0])
+        self.range = [0.0, 1.0]
 
     def fit_transform(self, x, y):
-        self.cat_transform = {each: (0, 0) for each in self.cat_transform}
+        # Accumulate the scores of each category
+        # and the number of times that we have used it
+        tmp_cat_transform = {each: (0, 0) for each in self.cat_transform.keys()}
         for i in range(len(x)):
-            self.cat_transform[x[i]] = (
-                self.cat_transform[x[i]][0] + y[i],
-                self.cat_transform[x[i]][1] + 1
+            tmp_cat_transform[x[i]] = (
+                tmp_cat_transform[x[i]][0] + y[i],    # sum score
+                tmp_cat_transform[x[i]][1] + 1        # count occurrences
             )
 
-        for key, value in self.cat_transform.items():
+        # If we have at least one score, compute the average
+        for key, value in tmp_cat_transform.items():
             if value[1] != 0:
                 self.cat_transform[key] = value[0] / float(value[1])
             else:
                 self.cat_transform[key] = 0
 
+        # Compute the range using the min and max scores
         range_max = max(
             self.cat_transform.keys(),
             key=(lambda k: self.cat_transform[k])
@@ -199,6 +201,7 @@ class CatHyperParameter(HyperParameter):
         return np.vectorize(self.cat_transform.get)(x)
 
     def inverse_transform(self, x):
+        # Compute the inverse dictionary
         inv_map = defaultdict(list)
         for key, value in self.cat_transform.items():
             inv_map[value].append(key)
@@ -208,6 +211,8 @@ class CatHyperParameter(HyperParameter):
             diff = (np.abs(keys - x))
             min_diff = diff[0]
             max_key = keys[0]
+
+            # Find the score which is closer to the given value
             for i in range(len(diff)):
                 if diff[i] < min_diff:
                     min_diff = diff[i]
@@ -216,9 +221,12 @@ class CatHyperParameter(HyperParameter):
                     min_diff = diff[i]
                     max_key = keys[i]
 
+            # Get a random category from the ones that had the given score
             return random.choice(np.vectorize(inv_map.get)(max_key))
 
         inv_trans = np.vectorize(invert)(inv_map, x)
+
+        # Handle equally scalars and numpy arrays
         return inv_trans.item() if np.ndim(inv_trans) == 0 else inv_trans
 
 
