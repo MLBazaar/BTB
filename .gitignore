@@ -106,3 +106,6 @@ ENV/
 
 # other
 .DS_Store
+
+# vim
+.*.swp

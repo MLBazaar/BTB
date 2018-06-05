@@ -150,9 +150,9 @@ class TestTuner(unittest.TestCase):
         t = BaseTuner(self.tunables)
         t.add(self.X, self.Y)
         X = np.array([
-            [2, 3.0, 3.0, -1.0, 0.5, 0.55, 0.5],
-            [1, 2.0, 1.9, -1.0, 0.6, 0.55, 0.6],
-            [3, 1.0, 2.6, -2.0, 0.1, 0.1, 0.1],
+            [2, 3.0, 3.0, -1.0, 2., 0., 0.],
+            [1, 2.0, 1.9, -1.0, 1., 0., 1.],
+            [3, 1.0, 2.6, -2.0, 0., 1., 2.],
         ], dtype=object)
         np.testing.assert_array_equal(t.X, X)
         self.assertEqual(t.X.dtype, np.float64)

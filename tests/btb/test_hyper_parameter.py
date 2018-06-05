@@ -61,7 +61,7 @@ class TestHyperparameter(unittest.TestCase):
             np.array([0.5, 0.6, 0.1]),
         )
         np.testing.assert_array_equal(transformed, np.array([2, 2.4, 3.1]))
-        inverse_transform = hyp.inverse_transform([1.7])
+        inverse_transform = hyp.inverse_transform(np.array([1.7]))
         np.testing.assert_array_equal(inverse_transform, np.array([1.7]))
 
     def test_float_exp(self):
@@ -75,9 +75,9 @@ class TestHyperparameter(unittest.TestCase):
             transformed,
             np.array([-2.0, 0.0, 1.0])
         )
-        inverse_transform = hyp.inverse_transform([-1.0])
+        inverse_transform = hyp.inverse_transform(np.array([-1.0]))
         np.testing.assert_array_equal(inverse_transform, np.array([0.1]))
-        inverse_transform = hyp.inverse_transform([1.0])
+        inverse_transform = hyp.inverse_transform(np.array([1.0]))
         np.testing.assert_array_equal(inverse_transform, np.array([10.0]))
 
     def test_int_exp(self):
@@ -85,7 +85,7 @@ class TestHyperparameter(unittest.TestCase):
         self.assertEqual(hyp.range, [1, 4])
         transformed = hyp.fit_transform(np.array([100]), np.array([0.5]))
         np.testing.assert_array_equal(transformed, np.array([2]))
-        inverse_transform = hyp.inverse_transform([3])
+        inverse_transform = hyp.inverse_transform(np.array([3]))
         np.testing.assert_array_equal(inverse_transform, np.array([1000]))
 
     def test_int_cat(self):
@@ -94,8 +94,8 @@ class TestHyperparameter(unittest.TestCase):
             np.array([10, 10000]),
             np.array([1, 2])
         )
-        np.testing.assert_array_equal(transformed, np.array([1, 2]))
-        inverse_transform = hyp.inverse_transform([3, 0, 1, 2])
+        np.testing.assert_array_equal(transformed, np.array([0, 1]))
+        inverse_transform = hyp.inverse_transform(np.array([1, 0, 0, 1]))
         np.testing.assert_array_equal(
             inverse_transform,
             np.array([10000, 10, 10, 10000])
@@ -109,13 +109,13 @@ class TestHyperparameter(unittest.TestCase):
         )
         np.testing.assert_array_equal(
             transformed,
-            np.array([2.0, 3.0, 2.0, 3.0])
+            np.array([0, 1, 0, 1])
         )
-        self.assertEqual(hyp.range, [0.0, 3.0])
-        inverse_transform = hyp.inverse_transform([3, 0, 1, 5, 2.5])
+        self.assertEqual(hyp.range, [0, 2])
+        inverse_transform = hyp.inverse_transform(np.array([0, 1, 1, 2]))
         np.testing.assert_array_equal(
             inverse_transform,
-            np.array([0.6, 0.5, 0.1, 0.6, 0.6])
+            np.array([0.1, 0.6, 0.6, 0.5])
         )
 
     def test_bool(self):
@@ -124,12 +124,12 @@ class TestHyperparameter(unittest.TestCase):
             np.array([True, False]),
             np.array([0.5, 0.7])
         )
-        np.testing.assert_array_equal(transformed, np.array([0.5, 0.7]))
-        self.assertEqual(hyp.range, [0.5, 0.7])
-        inverse_transform = hyp.inverse_transform([0.7, 0.6, 0.5])
+        np.testing.assert_array_equal(transformed, np.array([0, 1]))
+        self.assertEqual(hyp.range, [0, 1])
+        inverse_transform = hyp.inverse_transform(np.array([1, 0, 1]))
         np.testing.assert_array_equal(
             inverse_transform,
-            np.array([False, False, True])
+            np.array([False, True, False])
         )
 
     def test_string(self):
@@ -138,12 +138,12 @@ class TestHyperparameter(unittest.TestCase):
             np.array(['a', 'b', 'c']),
             np.array([2, 1, 3])
         )
-        self.assertEqual(hyp.range, [1.0, 3.0])
+        self.assertEqual(hyp.range, [0, 2])
         np.testing.assert_array_equal(
             transformed,
-            np.array([2.0, 1.0, 3.0])
+            np.array([0, 1, 2])
         )
-        inverse_transform = hyp.inverse_transform([3])
+        inverse_transform = hyp.inverse_transform(np.array([2]))
         np.testing.assert_array_equal(inverse_transform, np.array(['c']))
 
     def test_copy(self):

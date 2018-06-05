@@ -139,7 +139,7 @@ class GCP(BaseTuner):
         X_kernel_model = []
         for ki in range(X.shape[1]):
             columnX = X[:, ki]
-            if self.tunables[ki][1].is_integer:
+            if self.tunables[ki][1].is_discrete:
                 columnX = jitter(columnX, self.tunables[ki][1].range)
             kernel_pdf = st.gaussian_kde(columnX)
             kernel_cdf = make_cdf(kernel_pdf)
