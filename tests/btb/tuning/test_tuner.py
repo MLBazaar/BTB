@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import numpy as np
 import pytest
-from mock import patch
+from mock import call, patch
 from numpy.random import shuffle as np_shuffle
 
 from btb.hyper_parameter import HyperParameter, ParamTypes
@@ -84,6 +84,7 @@ class TestBaseTuner(TestCase):
     #     * returned value if less than n points remain
     #     * returned value if more than n points remain
     #     * BUG: no exception is raised if n > grid_size
+    #     * BUG: GH74: STRING ParamTypes do not work
     # TODO:
     #     * Split this method in 4 smaller methods
 
@@ -97,6 +98,7 @@ class TestBaseTuner(TestCase):
         tunables = (
             ('a_float_param', HyperParameter(ParamTypes.FLOAT, [1., 2.])),
             ('an_int_param', HyperParameter(ParamTypes.INT, [1, 5])),
+            ('a_string_param', HyperParameter(ParamTypes.STRING, ['a', 'b', 'c'])),
         )
         tuner = BaseTuner(tunables)
 
@@ -105,16 +107,20 @@ class TestBaseTuner(TestCase):
 
         # Assert
         expected_candidates = np.array([
-            [1.0, 1],
-            [1.2, 2],
-            [1.4, 3],
-            [1.6, 4],
-            [1.8, 5]
+            [1.0, 1, 0.],
+            [1.2, 2, 0.2],
+            [1.4, 3, 0.4],
+            [1.6, 4, 0.6],
+            [1.8, 5, 0.8]
         ])
 
         np.testing.assert_array_equal(candidates, expected_candidates)
 
-        np_random_mock.rand.assert_called_once_with(5)
+        expected_calls = [
+            call(5),
+            call(5),
+        ]
+        np_random_mock.rand.assert_has_calls(expected_calls)
         np_random_mock.randint.assert_called_once_with(1, 6, size=5)
 
     def test__create_candidates_every_point_used(self):
