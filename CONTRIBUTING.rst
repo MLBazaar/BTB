@@ -190,5 +190,5 @@ Once this is done, just run the following commands::
     make release
     git checkout master
     git merge stable
-    bumpversion --no-tag minor
+    bumpversion --no-tag patch
     git push
