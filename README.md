@@ -1,3 +1,11 @@
+<p align="center"> 
+<img width=20% src="https://dai.lids.mit.edu/wp-content/uploads/2018/06/BTB-Icon.png" alt=“BTB” />
+</p>
+
+<p align="center"> 
+<i>Bayesian Tuning and Bandits is a simple, extensible backend for developing your own auto tuning systems. It's most common use is to build AutoML systems.</i>
+</p>
+
 [![][pypi-img]][pypi-url]
 [![][travis-img]][travis-url]
 
@@ -6,17 +14,14 @@
 [pypi-img]: https://img.shields.io/pypi/v/baytune.svg
 [pypi-url]: https://pypi.python.org/pypi/baytune
 
-# BTB: Bayesian Tuning and Bandits
 
-Smart selection of hyperparameters
-
-* Free software: MIT license
-* Documentation: https://HDI-Project.github.io/BTB
 
 ## Overview
 
-Bayesian Tuning and Bandits is a simple, extensible Auto Machine Learning system
-that automates model selection and hyperparameter tuning.
+Bayesian Tuning and Bandits is a simple, extensible backend for developing your own auto tuning systems. It's most common use is to build AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers), and MIT's system being delivered to DARPA [Data driven discovery program](https://www.darpa.mil/program/data-driven-discovery-of-models). 
+
+* Free software: MIT license
+* Documentation: https://HDI-Project.github.io/BTB
 
 ## Submodules
 
