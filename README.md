@@ -3,7 +3,7 @@
 </p>
 
 <p align="center"> 
-<i>Bayesian Tuning and Bandits is a simple, extensible backend for developing your own auto tuning systems. It's most common use is to  build AutoML systems.</i>
+<i>Bayesian Tuning and Bandits is a simple, extensible backend for developing your own auto tuning systems. It's most common use is to build AutoML systems.</i>
 </p>
 
 [![][pypi-img]][pypi-url]
@@ -18,7 +18,7 @@
 
 ## Overview
 
-Bayesian Tuning and Bandits is a simple, extensible backend for developing your own auto tuning systems. It's most common use is to  build AutoML systems. It is currently used being in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers), and MIT's system being delivered to DARPA [Data driven discovery program](https://www.darpa.mil/program/data-driven-discovery-of-models). 
+Bayesian Tuning and Bandits is a simple, extensible backend for developing your own auto tuning systems. It's most common use is to build AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers), and MIT's system being delivered to DARPA [Data driven discovery program](https://www.darpa.mil/program/data-driven-discovery-of-models). 
 
 * Free software: MIT license
 * Documentation: https://HDI-Project.github.io/BTB
