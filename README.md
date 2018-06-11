@@ -193,3 +193,21 @@ RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
 0.89
 >>> tuners[next_choice].add(parameters, score)
 ```
+## Publications 
+
+Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
+
+Bibtex entry:
+
+```bibtex 
+@MastersThesis{Laura:2018,
+  title = “Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML“,
+  author = “Laura Gustafson“,
+  month = “May”,
+  year = "2018",
+  url = “https://dai.lids.mit.edu/wp-content/uploads/2018/05/Micah_SM_Final.pdf”,
+  type = “M. Eng Thesis",
+  address = "Cambridge, MA",
+  school = "Massachusetts Institute of Technology",
+}
+```
