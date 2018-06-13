@@ -32,7 +32,7 @@ class TestHyperparameter(unittest.TestCase):
         subclasses_mock.return_value = [FakeHyperParameter]
 
         with self.assertRaises(NotImplementedError):
-            fake = HyperParameter(ParamTypes.INT, [1])
+            HyperParameter(ParamTypes.INT, [1])
 
     def test_copy(self):
         for typ, rang in self.parameter_constructions:
@@ -82,14 +82,12 @@ class TestHyperparameter(unittest.TestCase):
             with self.assertRaises(ValueError):
                 HyperParameter(invalid_param_type, [None])
 
-
     def test___eq__not_implemented(self):
         an_hyperparam = HyperParameter(ParamTypes.INT, [1, 5])
         not_an_hyperparam = 3
 
         self.assertEqual(an_hyperparam.__eq__(not_an_hyperparam), NotImplemented)
         self.assertNotEqual(an_hyperparam, not_an_hyperparam)
-
 
     # ############## #
     # Specific Types #
