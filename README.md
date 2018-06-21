@@ -201,12 +201,12 @@ Bibtex entry:
 
 ```bibtex 
 @MastersThesis{Laura:2018,
-  title = “Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML“,
-  author = “Laura Gustafson“,
-  month = “May”,
+  title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
+  author = "Laura Gustafson",
+  month = "May",
   year = "2018",
-  url = “https://dai.lids.mit.edu/wp-content/uploads/2018/05/Micah_SM_Final.pdf”,
-  type = “M. Eng Thesis",
+  url = "https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf",
+  type = "M. Eng Thesis",
   address = "Cambridge, MA",
   school = "Massachusetts Institute of Technology",
 }
