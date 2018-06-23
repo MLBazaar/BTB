@@ -54,6 +54,12 @@ This is an application of what is called the Multi-armed Bandit Problem.
 The process works by letting know the selector which models have been already tested
 and which scores they have obtained, and letting it decide which model to test next.
 
+### Recommenders 
+If you have trained m pipelines on n datasets, recommenders allow you to get proposals for a new dataset based on the accuracy of the previous performance of the pipelines. We have a simple implementation of the recommender system in the submodule called [recommendation](https://github.com/HDI-Project/BTB/tree/master/btb/recommendation). 
+
+We will be providing a few examples soon. Meanwhile you can read about our current results in the following thesis by Laura Gustafson [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
+
+
 ## Installation
 
 ### Install with pip
@@ -193,6 +199,8 @@ RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
 0.89
 >>> tuners[next_choice].add(parameters, score)
 ```
+
+
 ## Publications 
 
 Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
