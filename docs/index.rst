@@ -1,17 +1,14 @@
-Welcome to BTB's documentation!
-======================================
+.. include:: readme.rst
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
-   :caption: Contents:
 
    readme
-   installation
-   usage
-   modules
    contributing
    authors
    history
+   API Reference <api/btb>
 
 Indices and tables
 ==================

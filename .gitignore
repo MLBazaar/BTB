@@ -64,9 +64,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
-docs/btb.rst
-docs/modules.rst
-docs/btb.*.rst
+docs/api/
 
 # PyBuilder
 target/

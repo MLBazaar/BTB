@@ -19,7 +19,6 @@
 # absolute, like shown here.
 
 import sphinx_rtd_theme  # For read the docs theme
-from recommonmark.parser import CommonMarkParser
 
 import btb
 
@@ -31,7 +30,12 @@ import btb
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = [
+    'm2r',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode'
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -40,10 +44,6 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 source_suffix = ['.rst', '.md']
 
-source_parsers = {
-    '.md': CommonMarkParser,
-}
-
 # The master toctree document.
 master_doc = 'index'
 
@@ -51,6 +51,8 @@ master_doc = 'index'
 project = u'BTB'
 copyright = u"2018, MIT Data To AI Lab"
 author = u"MIT Data To AI Lab"
+
+github_doc_root = 'https://github.com/HDI-Project/BTB/tree/master/docs/'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout

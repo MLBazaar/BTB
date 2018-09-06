@@ -79,13 +79,13 @@ coverage: clean-coverage ## check code coverage quickly with the default Python
 	$(BROWSER) htmlcov/index.html
 
 clean-docs: ## remove previously built docs
-	rm -f docs/btb.rst
-	rm -f docs/btb.*.rst
+	rm -f docs/api/btb.rst
+	rm -f docs/api/btb.*.rst
 	rm -f docs/modules.rst
 	$(MAKE) -C docs clean
 
 docs: clean-docs ## generate Sphinx HTML documentation, including API docs
-	sphinx-apidoc -o docs/ btb
+	sphinx-apidoc -o docs/api/ btb
 	$(MAKE) -C docs html
 	touch docs/_build/html/.nojekyll
 
