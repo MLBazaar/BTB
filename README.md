@@ -152,7 +152,7 @@ we want to try out, as well as the selector instance.
 ...     'SVC': SVC
 ... }
 >>> from btb.selection import UCB1
->>> selector = UCB1(['RF', 'SVM'])
+>>> selector = UCB1(['RF', 'SVC'])
 >>> tuners = {
 ...     'RF': GP([
 ...         ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
