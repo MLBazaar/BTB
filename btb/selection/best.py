@@ -11,16 +11,18 @@ logger = logging.getLogger('btb')
 
 
 class BestKReward(UCB1):
+    """Best K reward selector
+
+    Args:
+        k (int): number of best scores to consider
+    """
+
     def __init__(self, choices, k=K_MIN):
-        """
-        Extra args:
-            k: number of best scores to consider
-        """
         super(BestKReward, self).__init__(choices)
         self.k = k
 
     def compute_rewards(self, scores):
-        """ Retain the K best scores, and replace the rest with zeros """
+        """Retain the K best scores, and replace the rest with zeros"""
         if len(scores) > self.k:
             kth_best = sorted(scores, reverse=True)[self.k - 1]
             return [(s if s >= kth_best else 0.) for s in scores]
@@ -36,11 +38,15 @@ class BestKReward(UCB1):
         # reward function
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
-            logger.info('BestK: using Best K bandit selection')
+            logger.info(
+                '{klass}: using Best K bandit selection'
+                .format(klass=type(self).__name__))
             reward_func = self.compute_rewards
 
         else:
-            logger.warn('BestK: Not enough choices to do K-selection; using plain UCB1')
+            logger.warning(
+                '{klass}: Not enough choices to do K-selection; using plain UCB1'
+                .format(klass=type(self).__name__))
             reward_func = super(BestKReward, self).compute_rewards
 
         # convert the raw scores list for each choice to a "rewards" list
@@ -55,6 +61,8 @@ class BestKReward(UCB1):
 
 
 class BestKVelocity(BestKReward):
+    """Best K velocity selector"""
+
     def compute_rewards(self, scores):
         """
         Compute the "velocity" of (average distance between) the k+1 best
@@ -66,6 +74,6 @@ class BestKVelocity(BestKReward):
         velocities = [best_scores[i] - best_scores[i + 1]
                       for i in range(len(best_scores) - 1)]
 
-        # pad the list out with zeros to maintain the lenghth of the list
+        # pad the list out with zeros to maintain the length of the list
         zeros = (len(scores) - self.k) * [0]
         return velocities + zeros
