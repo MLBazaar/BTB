@@ -145,6 +145,7 @@ In order to use the selector we will create a Tuner instance for each model that
 we want to try out, as well as the selector instance.
 
 ```
+>>> from sklearn.ensemble import RandomForestClassifier
 >>> from sklearn.svm import SVC
 >>> models = {
 ...     'RF': RandomForestClassifier,
@@ -157,8 +158,8 @@ we want to try out, as well as the selector instance.
 ...         ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
 ...         ('max_depth', HyperParameter(ParamTypes.INT, [3, 20]))
 ...     ]),
-...     'SVM': GP([
-...         ('c', HyperParameter(ParamTypes.FLOAT_EXP, [0.01, 10.0])),
+...     'SVC': GP([
+...         ('C', HyperParameter(ParamTypes.FLOAT_EXP, [0.01, 10.0])),
 ...         ('gamma', HyperParameter(ParamTypes.FLOAT, [0.000000001, 0.0000001]))
 ...     ])
 ... }
@@ -169,7 +170,7 @@ Then, we will go into a loop and, at each iteration, perform the steps:
 #### 1. Pass all the obtained scores to the selector and let it decide which model to test
 
 ```
->>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVM': tuners['SVM'].y})
+>>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVC': tuners['SVC'].y})
 >>> next_choice
 'RF'
 ```
