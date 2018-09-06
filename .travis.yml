@@ -1,6 +1,7 @@
 # Config file for automatic testing at travis-ci.org
 language: python
 python:
+  - 3.7
   - 3.6
   - 3.5
   - 3.4
@@ -29,7 +30,7 @@ deploy:
       tags: true
       branch: master
       repo: HDI-Project/BTB
-      python: 3.6
+      python: 3.7
 
   # Automatically build and deploy documentation to GitHub Pages after every
   # commit
@@ -44,5 +45,4 @@ deploy:
     target-branch: gh-pages
     on:
       branch: master
-      python: 3.6
-
+      python: 3.7
