@@ -13,19 +13,18 @@ logger = logging.getLogger('btb')
 
 
 class GP(BaseTuner):
+    """GP tuner
+
+    Args:
+        r_minimum (int): the minimum number of past results this selector needs in order to use gaussian process for
+            prediction. If not enough results are present during a ``fit``, subsequent calls to ``propose`` will revert
+            to uniform selection.
+    """
     def __init__(self, tunables, gridding=0, r_minimum=2):
-        """
-        Extra args:
-            r_minimum: the minimum number of past results this selector needs in
-                order to use gaussian process for prediction. If not enough
-                results are present during a fit(), subsequent calls to
-                propose() will revert to uniform selection.
-        """
         super(GP, self).__init__(tunables, gridding=gridding)
         self.r_minimum = r_minimum
 
     def fit(self, X, y):
-        """ Use X and y to train a Gaussian process. """
         super(GP, self).fit(X, y)
 
         # skip training the process if there aren't enough samples
@@ -55,15 +54,13 @@ class GP(BaseTuner):
 
 
 class GPEi(GP):
+    """GPEi tuner
+
+    Expected improvement criterion:
+    http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
+    """
+
     def _acquire(self, predictions):
-        """
-        Expected improvement criterion:
-        http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
-        Args:
-            predictions: np.array of (estimated y, estimated error) tuples that
-                the gaussian process generated for a series of
-                proposed hyperparameters.
-        """
         y_est, stderr = predictions.T
         best_y = max(self.y)
 
@@ -75,6 +72,8 @@ class GPEi(GP):
 
 
 class GPEiVelocity(GPEi):
+    """GCPEiVelocity tuner"""
+
     MULTIPLIER = -100   # magic number; modify with care
     N_BEST_Y = 5        # number of top values w/w to compute velocity
 
