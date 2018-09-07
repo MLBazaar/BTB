@@ -11,7 +11,7 @@ class BaseTuner(object):
 
     Args:
         tunables (List[Tuple[str, HyperParameter]]): Ordered list of hyperparameter names and metadata objects. These
-            describe the hyperparameters that this Tuner will be tuning. e.g.:
+            describe the hyperparameters that this Tuner will be tuning. e.g.::
 
                 [
                     ('degree', HyperParameter(type='INT', range=(2, 4))),
