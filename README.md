@@ -37,10 +37,10 @@ make install
 
 ### Tuners
 
-In order to use a Tuner we will create a Tuner instance indicating which parameters
-we want to tune, their types and the range of values that we want to try
+In order to use a tuner we will create a ``Tuner`` instance indicating which parameters
+we want to tune, their types and the range of values that we want to try.
 
-```
+``` python
 >>> from btb.tuning import GP
 >>> from btb import HyperParameter, ParamTypes
 >>> tunables = [
@@ -50,52 +50,52 @@ we want to tune, their types and the range of values that we want to try
 >>> tuner = GP(tunables)
 ```
 
-Then we into a loop and perform three steps:
+Then we perform the following three steps in a loop.
 
-#### 1. Let the Tuner propose a new set of parameters
+1. Let the Tuner propose a new set of parameters
 
-```
->>> parameters = tuner.propose()
->>> parameters
-{'n_estimators': 297, 'max_depth': 3}
-```
+    ``` python
+    >>> parameters = tuner.propose()
+    >>> parameters
+    {'n_estimators': 297, 'max_depth': 3}
+    ```
 
-#### 2. Fit and score a new model using these parameters
+2. Fit and score a new model using these parameters
 
-```
->>> model = RandomForestClassifier(**parameters)
->>> model.fit(X_train, y_train)
-RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
-            max_depth=3, max_features='auto', max_leaf_nodes=None,
-            min_impurity_decrease=0.0, min_impurity_split=None,
-            min_samples_leaf=1, min_samples_split=2,
-            min_weight_fraction_leaf=0.0, n_estimators=297, n_jobs=1,
-            oob_score=False, random_state=None, verbose=0,
-            warm_start=False)
->>> score = model.score(X_test, y_test)
->>> score
-0.77
-```
+    ``` python
+    >>> model = RandomForestClassifier(**parameters)
+    >>> model.fit(X_train, y_train)
+    RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+                max_depth=3, max_features='auto', max_leaf_nodes=None,
+                min_impurity_decrease=0.0, min_impurity_split=None,
+                min_samples_leaf=1, min_samples_split=2,
+                min_weight_fraction_leaf=0.0, n_estimators=297, n_jobs=1,
+                oob_score=False, random_state=None, verbose=0,
+                warm_start=False)
+    >>> score = model.score(X_test, y_test)
+    >>> score
+    0.77
+    ```
 
-#### 3. Pass the used parameters and the score obtained back to the tuner
+3. Pass the used parameters and the score obtained back to the tuner
 
-```
-tuner.add(parameters, score)
-```
+    ``` python
+    tuner.add(parameters, score)
+    ```
 
-At each iteration, the Tuner will use the information about the previous tests
+At each iteration, the `Tuner` will use the information about the previous tests
 to evaluate and propose the set of parameter values that have the highest probability
 of obtaining the highest score.
 
-For a more detailed example, check scripts from the `examples` folder.
+For more detailed examples, check scripts from the `examples` folder.
 
 ### Selectors
 
-The selectors are intended to be used in combination with the Tuners in order to find
+The selectors are intended to be used in combination with tuners in order to find
 out and decide which model seems to get the best results once it is properly fine tuned.
 
-In order to use the selector we will create a Tuner instance for each model that
-we want to try out, as well as the selector instance.
+In order to use the selector we will create a ``Tuner`` instance for each model that
+we want to try out, as well as the ``Selector`` instance.
 
 ```
 >>> from sklearn.svm import SVC
@@ -117,41 +117,41 @@ we want to try out, as well as the selector instance.
 ... }
 ```
 
-Then, we will go into a loop and, at each iteration, perform the steps:
+Then we perform the following steps in a loop.
 
-#### 1. Pass all the obtained scores to the selector and let it decide which model to test
+1. Pass all the obtained scores to the selector and let it decide which model to test.
 
-```
->>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVM': tuners['SVM'].y})
->>> next_choice
-'RF'
-```
+    ``` python
+    >>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVM': tuners['SVM'].y})
+    >>> next_choice
+    'RF'
+    ```
 
-#### 2. Obtain a new set of parameters from the indicated tuner and create a model instance
+2. Obtain a new set of parameters from the indicated tuner and create a model instance.
 
-```
->>> parameters = tuners[next_choice].propose()
->>> parameters
-{'n_estimators': 289, 'max_depth': 18}
->>> model = models[next_choice](**parameters)
-```
+    ``` python
+    >>> parameters = tuners[next_choice].propose()
+    >>> parameters
+    {'n_estimators': 289, 'max_depth': 18}
+    >>> model = models[next_choice](**parameters)
+    ```
 
-#### 3. Evaluate the score of the new model instance and pass it back to the tuner
+3. Evaluate the score of the new model instance and pass it back to the tuner
 
-```
->>> model.fit(X_train, y_train)
-RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
-            max_depth=18, max_features='auto', max_leaf_nodes=None,
-            min_impurity_decrease=0.0, min_impurity_split=None,
-            min_samples_leaf=1, min_samples_split=2,
-            min_weight_fraction_leaf=0.0, n_estimators=289, n_jobs=1,
-            oob_score=False, random_state=None, verbose=0,
-            warm_start=False)
->>> score = model.score(X_test, y_test)
->>> score
-0.89
->>> tuners[next_choice].add(parameters, score)
-```
+    ``` python
+    >>> model.fit(X_train, y_train)
+    RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+                max_depth=18, max_features='auto', max_leaf_nodes=None,
+                min_impurity_decrease=0.0, min_impurity_split=None,
+                min_samples_leaf=1, min_samples_split=2,
+                min_weight_fraction_leaf=0.0, n_estimators=289, n_jobs=1,
+                oob_score=False, random_state=None, verbose=0,
+                warm_start=False)
+    >>> score = model.score(X_test, y_test)
+    >>> score
+    0.89
+    >>> tuners[next_choice].add(parameters, score)
+    ```
 
 ## References
 
@@ -159,7 +159,7 @@ If you use BTB, please consider citing the following work:
 
 - Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
 
-  ```bibtex 
+  ``` bibtex 
   @MastersThesis{Laura:2018,
     title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
     author = "Laura Gustafson",
