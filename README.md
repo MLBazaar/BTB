@@ -1,67 +1,31 @@
-![](_static/BTB-Icon-small.png)
+![](https://raw.githubusercontent.HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png)
 
-A simple, extensible backend for developing auto tuning systems.
+A simple, extensible backend for developing auto-tuning systems.
 
 [![PyPI Shield](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
 [![Travis CI Shield](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
 
 # Overview
 
-Bayesian Tuning and Bandits is a simple, extensible backend for developing your own auto tuning systems. It's most common use is to build AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers), and MIT's system being delivered to DARPA [Data driven discovery program](https://www.darpa.mil/program/data-driven-discovery-of-models). 
+Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models). 
 
 * Free software: MIT license
 * Documentation: https://HDI-Project.github.io/BTB
-
-## Submodules
-
-* `selection` defines Selectors: classes for choosing from a set of discrete
-  options with multi-armed bandits
-* `tuning` defines Tuners: classes with a fit/predict/propose interface for
-  suggesting sets of hyperparameters
-
-### Tuners
-
-Tuners are specifically designed to speed up the process of selecting the
-optimal hyper parameter values for a specific machine learning algorithm.
-
-This is done by following a Bayesian Optimization approach and iteratively:
-
-* letting the tuner propose new sets of hyper parameter
-* fitting and scoring the model with the proposed hyper parameters
-* passing the score obtained back to the tuner
-
-At each iteration the tuner will use the information already obtained to propose
-the set of hyper parameters that it considers that have the highest probability
-to obtain the best results.
-
-### Selectors
-
-Selectors apply multiple strategies to decide which models or families of models to
-train and test next based on how well thay have been performing in the previous test runs.
-This is an application of what is called the Multi-armed Bandit Problem.
-
-The process works by letting know the selector which models have been already tested
-and which scores they have obtained, and letting it decide which model to test next.
-
-### Recommenders 
-If you have trained m pipelines on n datasets, recommenders allow you to get proposals for a new dataset based on the accuracy of the previous performance of the pipelines. We have a simple implementation of the recommender system in the submodule called [recommendation](https://github.com/HDI-Project/BTB/tree/master/btb/recommendation). 
-
-We will be providing a few examples soon. Meanwhile you can read about our current results in the following thesis by Laura Gustafson [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
-
+* Homepage: https://github.com/HDI-Project/BTB
 
 ## Installation
 
 ### Install with pip
 
-The easiest way to install BTB is using `pip`
+The easiest way to install BTB is using `pip`.
 
 ```
 pip install baytune
 ```
 
-### Install from sources
+### Build from source
 
-You can also clone the repository and install it from sources
+You can also clone the repository and build it from source.
 
 ```
 git clone git@github.com:HDI-Project/BTB.git
@@ -69,7 +33,7 @@ cd BTB
 make install
 ```
 
-## Usage examples
+## Basic Usage
 
 ### Tuners
 
@@ -189,22 +153,21 @@ RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
 >>> tuners[next_choice].add(parameters, score)
 ```
 
+## References
 
-## Publications 
+If you use BTB, please consider citing the following work:
 
-Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
+- Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
 
-Bibtex entry:
-
-```bibtex 
-@MastersThesis{Laura:2018,
-  title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
-  author = "Laura Gustafson",
-  month = "May",
-  year = "2018",
-  url = "https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf",
-  type = "M. Eng Thesis",
-  address = "Cambridge, MA",
-  school = "Massachusetts Institute of Technology",
-}
+  ```bibtex 
+  @MastersThesis{Laura:2018,
+    title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
+    author = "Laura Gustafson",
+    month = "May",
+    year = "2018",
+    url = "https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf",
+    type = "M. Eng Thesis",
+    address = "Cambridge, MA",
+    school = "Massachusetts Institute of Technology",
+  }
 ```
