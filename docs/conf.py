@@ -33,6 +33,7 @@ import btb
 extensions = [
     'm2r',
     'sphinx.ext.autodoc',
+    'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode'
 ]

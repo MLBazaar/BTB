@@ -87,7 +87,6 @@ clean-docs: ## remove previously built docs
 docs: clean-docs ## generate Sphinx HTML documentation, including API docs
 	sphinx-apidoc -o docs/api/ btb
 	$(MAKE) -C docs html
-	touch docs/_build/html/.nojekyll
 
 viewdocs: docs ## view docs in browser
 	$(BROWSER) docs/_build/html/index.html
