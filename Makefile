@@ -79,9 +79,7 @@ coverage: clean-coverage ## check code coverage quickly with the default Python
 	$(BROWSER) htmlcov/index.html
 
 clean-docs: ## remove previously built docs
-	rm -f docs/api/btb.rst
-	rm -f docs/api/btb.*.rst
-	rm -f docs/modules.rst
+	rm -f docs/api/*.rst
 	$(MAKE) -C docs clean
 
 docs: clean-docs ## generate Sphinx HTML documentation, including API docs
