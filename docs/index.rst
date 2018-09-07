@@ -8,7 +8,7 @@
    contributing
    authors
    history
-   API Reference <api/btb>
+   api_reference
 
 Indices and tables
 ==================

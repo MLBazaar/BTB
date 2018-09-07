@@ -85,7 +85,7 @@ clean-docs: ## remove previously built docs
 	$(MAKE) -C docs clean
 
 docs: clean-docs ## generate Sphinx HTML documentation, including API docs
-	sphinx-apidoc -o docs/api/ btb
+	sphinx-apidoc --module-first --separate -o docs/api/ btb '*__init.py'
 	$(MAKE) -C docs html
 
 viewdocs: docs ## view docs in browser
