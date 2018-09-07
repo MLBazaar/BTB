@@ -98,19 +98,20 @@ In order to use the selector we will create a ``Tuner`` instance for each model 
 we want to try out, as well as the ``Selector`` instance.
 
 ```
+>>> from sklearn.ensemble import RandomForestClassifier
 >>> from sklearn.svm import SVC
 >>> models = {
 ...     'RF': RandomForestClassifier,
 ...     'SVC': SVC
 ... }
 >>> from btb.selection import UCB1
->>> selector = UCB1(['RF', 'SVM'])
+>>> selector = UCB1(['RF', 'SVC'])
 >>> tuners = {
 ...     'RF': GP([
 ...         ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
 ...         ('max_depth', HyperParameter(ParamTypes.INT, [3, 20]))
 ...     ]),
-...     'SVM': GP([
+...     'SVC': GP([
 ...         ('c', HyperParameter(ParamTypes.FLOAT_EXP, [0.01, 10.0])),
 ...         ('gamma', HyperParameter(ParamTypes.FLOAT, [0.000000001, 0.0000001]))
 ...     ])
@@ -122,7 +123,7 @@ Then we perform the following steps in a loop.
 1. Pass all the obtained scores to the selector and let it decide which model to test.
 
     ``` python
-    >>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVM': tuners['SVM'].y})
+    >>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVC': tuners['SVC'].y})
     >>> next_choice
     'RF'
     ```
