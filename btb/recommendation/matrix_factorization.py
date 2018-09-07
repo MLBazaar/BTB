@@ -1,5 +1,3 @@
-import logging
-
 import numpy as np
 import scipy.stats as stats
 from sklearn.decomposition import NMF
@@ -7,60 +5,31 @@ from sklearn.decomposition import NMF
 from btb.recommendation.recommender import BaseRecommender
 from btb.recommendation.uniform import UniformRecommender
 
-LOGGER = logging.getLogger('btb')
-
 
 class MFRecommender(BaseRecommender):
-    """
-    Recommender for recomending pipelines to try on a new dataset D based
-    on performances of datasets on the different pipeline options. Recommends
-    pipelines that would maximize the score value. Uses Matrix Factorization
-    to determine which pipeline to recommend.
+    """Matrix factorization recommender
 
-    Attributes:
-        dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num
-            datasets by num pipelines matrix where each row i corresponds to a
-            dataset and each collumn j corresponds to a pipeline. The
-            dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
-            pipeline j has not beentried on dataset i.
-        n_components: (int) The number of components (columsn) to keep after
-            Matrix Factorxation.
-        mf_model: Matrix Factorization model that reduces dimensionailty from
-            num pipelines space to n_components space.
-        dpp_ranked: (2D np.array) Matrix of rankings for each row of dpp_matrix
-            after matrix facorization has been applied.
-        dpp_vector: (1D np.array) Vector representing pipeline performances on
-            a new dataset D.
-        matching_dataset: (1D np.array) Row from dpp_matrix representing
-            pipeline performances for the dataset that most closely matches the
-            new dataset D. Identified in fit.
-        r_minimum: the minimum number of past results this recommender
-            needs in order to use Matrix Factorization for prediction. If
-            not enough results are present during a predict(),
-            a uniform recommender is used.
+    Uses Matrix Factorization to determine which pipeline to recommend.
+
+    Args:
+        n_components (int): Corresponds to the number of features to keep in matrix decomposition. Must be greater than
+            the number of rows in matrix.
+        r_minimum (int): The minimum number of past results this recommender needs in order to use Matrix Factorization
+            for prediction. If not enough results are present during a ``predict``, a uniform recommender is used.
     """
 
     def __init__(self, dpp_matrix, n_components=100, r_minimum=5):
-        """
-        Args:
-            dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse
-                dataset performance matrix pertaining to pipeline
-                scores on different dataset. Each row i coresponds to a dataset
-                and each column j corresponds to a pipeline. dpp_matrix[i,j]
-                corresponds to the score of the pipeline j on the dataset and
-                is 0 if the pipeline was not tried on the dataset
-            n_components: int. Corresponds to the number of features to keep
-                in matrix decomposition. Must be >= number of rows in matrix
-            r_minimum: the minimum number of past results this recommender
-                needs in order to use Matrix Factorization for prediction. If
-                not enough results are present during a predict(),
-                a uniform recommender is used.
-        """
-        self.dpp_matrix = dpp_matrix
+        super(MFRecommender, self).__init__(dpp_matrix)
+
         self.n_components = n_components
         self.r_minimum = r_minimum
+
+        # Matrix Factorization model that reduces dimensionality from num pipelines space to n_components space.
         self.mf_model = NMF(n_components=n_components, init='nndsvd')
+
         dpp_decomposed = self.mf_model.fit_transform(dpp_matrix)
+
+        # Matrix of rankings for each row of dpp_matrix after matrix facorization has been applied.
         self.dpp_ranked = np.empty(dpp_decomposed.shape)
         for i in range(dpp_decomposed.shape[0]):
             rankings = stats.rankdata(
@@ -68,8 +37,11 @@ class MFRecommender(BaseRecommender):
                 method='dense'
             )
             self.dpp_ranked[i, :] = rankings
-        self.dpp_vector = np.zeros(self.dpp_matrix.shape[1])
+
         random_matching_index = np.random.randint(self.dpp_matrix.shape[0])
+
+        # Row from dpp_matrix representing pipeline performances for the dataset that most closely matches the new
+        # dataset D. Identified in fit.
         self.matching_dataset = self.dpp_matrix[random_matching_index, :]
 
     def fit(self, dpp_vector):
@@ -79,7 +51,7 @@ class MFRecommender(BaseRecommender):
         https://en.wikipedia.org/wiki/Kendall_tau_distance
 
         Args:
-            dpp_vector: np.array shape = (self.n_components,)
+            dpp_vector (np.array): Array with shape (n_components, )
         """
 
         # decompose X and generate the rankings of the elements in the
@@ -107,21 +79,11 @@ class MFRecommender(BaseRecommender):
         # store the row with the highest agreement for prediction
         self.matching_dataset = self.dpp_matrix[max_agreement_index, :]
 
-    def predict(self, indicies):
-        """
-        Predicts the relative rankings of the pipelines on dpp_vector for
-        a series of pipelines represented by their indicies.
-
-        Args:
-            indicies: np.array of pipeline indicies, shape = (n_samples)
-
-        Returns:
-            y: np.array of predicted scores, shape = (n_samples)
-        """
+    def predict(self, indices):
         num_tried_candidates = len(np.where(self.dpp_vector != 0)[0])
         if num_tried_candidates < self.r_minimum:
-            return UniformRecommender(self.dpp_matrix).predict(indicies)
+            return UniformRecommender(self.dpp_matrix).predict(indices)
         matching_scores = np.array(
-            [self.matching_dataset[each] for each in indicies]
+            [self.matching_dataset[each] for each in indices]
         )
         return stats.rankdata(matching_scores, method='dense')
