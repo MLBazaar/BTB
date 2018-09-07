@@ -5,7 +5,8 @@ class Selector(object):
     """Base selector
 
     Args:
-        choices (list): a list of discrete choices from which the selector must choose at every call to ``select``.
+        choices (list): a list of discrete choices from which the selector must choose at every
+            call to ``select``.
     """
 
     def __init__(self, choices):
@@ -14,16 +15,17 @@ class Selector(object):
     def compute_rewards(self, scores):
         """Compute rewards from choice's scores
 
-        Convert a list of scores associated with one choice into a list of rewards. Normally, the length of the list
-        will be preserved, even if some of the scores are dropped.
+        Convert a list of scores associated with one choice into a list of rewards. Normally, the
+        length of the list will be preserved, even if some of the scores are dropped.
         """
         return list(scores)
 
     def bandit(self, choice_rewards):
         """Return the choice to take next using multi-armed bandit
 
-        Multi-armed bandit method. Accepts a mapping of choices to rewards which indicate their historical performance,
-        and returns the choice that we should make next in order to maximize expected reward in the long term.
+        Multi-armed bandit method. Accepts a mapping of choices to rewards which indicate their
+        historical performance, and returns the choice that we should make next in order to
+        maximize expected reward in the long term.
 
         The default implementation is to return the arm with the highest average score.
 
@@ -39,10 +41,11 @@ class Selector(object):
         """Select the next best choice to make
 
         Args:
-            choice_scores (Dict[object, List[float]]): Mapping of choice to list of scores for each possible choice.
-                The caller is responsible for making sure each choice that is possible at this juncture is represented
-                in the dict, even those with no scores. Score lists should be in ascending chronological order, that is,
-                the score from the earliest trial should be listed first.
+            choice_scores (Dict[object, List[float]]): Mapping of choice to list of scores for each
+                possible choice. The caller is responsible for making sure each choice that is
+                possible at this juncture is represented in the dict, even those with no scores.
+                Score lists should be in ascending chronological order, that is, the score from the
+                earliest trial should be listed first.
 
                 For example::
 

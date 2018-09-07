@@ -46,8 +46,10 @@ class PureBestKVelocity(Selector):
             logger.info('PureBestKVelocity: using Pure Best K velocity selection')
             reward_func = self.compute_rewards
         else:
-            logger.warning('PureBestKVelocity: Not enough choices to do K-selection; '
-                        'returning choice with fewest scores')
+            logger.warning(
+                '{klass}: Not enough choices to do K-selection; '
+                'returning choice with fewest scores'
+                .format(klass=type(self).__name__))
             # reward choices with the fewest scores
             # NOTE: "reward_func = lambda " changed to "def reward_func"
             # as per flake8 suggestions

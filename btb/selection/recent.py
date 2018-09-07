@@ -56,8 +56,8 @@ class RecentKVelocity(RecentKReward):
     def compute_rewards(self, scores):
         """Compute the velocity of thte k+1 most recent scores.
 
-        The velocity is the average distance between scores. Return a list with those k velocities padded out with zeros
-        so that the count remains the same.
+        The velocity is the average distance between scores. Return a list with those k velocities
+        padded out with zeros so that the count remains the same.
         """
         # take the k + 1 most recent scores so we can get k velocities
         recent_scores = scores[:-self.k - 2:-1]

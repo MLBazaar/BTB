@@ -4,14 +4,16 @@ import numpy as np
 class BaseRecommender(object):
     """Base recommender
 
-    Base recommender class for recommending pipelines to try on a new dataset D based on performances of datasets on the
-    different pipeline options. Recommends pipelines that would maximize the score value.
+    Base recommender class for recommending pipelines to try on a new dataset D based on
+    performances of datasets on the different pipeline options. Recommends pipelines that would
+    maximize the score value.
 
     Args:
-        dpp_matrix (np.array): Sparse dataset performance matrix pertaining to pipeline scores on different dataset with
-            shape ``(num_datasets, num_pipelines)``. Each row ``i`` corresponds to a dataset and each column ``j``
-            corresponds to a pipeline. The element ``dpp_matrix[i,j]`` corresponds to the score of the pipeline ``j``
-            on the dataset and is ``0`` if the pipeline was not tried on the dataset.
+        dpp_matrix (np.array): Sparse dataset performance matrix pertaining to pipeline scores on
+            different dataset with shape ``(num_datasets, num_pipelines)``. Each row ``i``
+            corresponds to a dataset and each column ``j`` corresponds to a pipeline. The element
+            ``dpp_matrix[i,j]`` corresponds to the score of the pipeline ``j`` on the dataset and
+            is ``0`` if the pipeline was not tried on the dataset.
     """
 
     def __init__(self, dpp_matrix):
@@ -46,7 +48,8 @@ class BaseRecommender(object):
         """Finds the best candidate given a series of predictions.
 
         Args:
-            predictions (np.array): Array of predictions corresponding to a set of possible pipelines.
+            predictions (np.array): Array of predictions corresponding to a set of possible
+                pipelines.
 
         Returns:
             int: Index of the selected candidate from predictions
@@ -54,11 +57,11 @@ class BaseRecommender(object):
         return np.argmax(predictions)
 
     def _get_candidates(self):
-        """Finds the pipelines that are not yet tried for the new dataset D represented by dpp_vector.
+        """Finds the pipelines that are not yet tried.
 
         Returns:
-            np.array: Indices corresponding to columns in ``dpp_matrix`` that haven't been tried on ``X``. ``None`` if
-                all pipelines have been tried on X.
+            np.array: Indices corresponding to columns in ``dpp_matrix`` that haven't been tried on
+                ``X``. ``None`` if all pipelines have been tried on X.
         """
         candidates = np.where(self.dpp_vector == 0)
         return None if len(candidates[0]) == 0 else candidates[0]
@@ -90,8 +93,9 @@ class BaseRecommender(object):
         Updates ``dpp_vector`` and refits model with all data.
 
         Args:
-            X (dict): mapping of pipeline indices to scores. Keys must correspond to the index of a column in
-                ``dpp_matrix`` and values are the corresponding score for pipeline on the dataset.
+            X (dict): mapping of pipeline indices to scores. Keys must correspond to the index of a
+                column in ``dpp_matrix`` and values are the corresponding score for pipeline on
+                the dataset.
         """
         for each in X:
             self.dpp_vector[each] = X[each]

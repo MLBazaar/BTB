@@ -10,8 +10,9 @@ class BaseTuner(object):
     """Base tuner
 
     Args:
-        tunables (List[Tuple[str, HyperParameter]]): Ordered list of hyperparameter names and metadata objects. These
-            describe the hyperparameters that this Tuner will be tuning. e.g.::
+        tunables (List[Tuple[str, HyperParameter]]): Ordered list of hyperparameter names and
+            metadata objects. These describe the hyperparameters that this Tuner will be tuning,
+            e.g.::
 
                 [
                     ('degree', HyperParameter(type='INT', range=(2, 4))),
@@ -20,8 +21,8 @@ class BaseTuner(object):
                     ('gamma', HyperParameter('FLOAT_EXP', (1e-05, 100000)))
                 ]
 
-        gridding (int): If a positive integer, controls the number of points on each axis of the grid. If 0, gridding
-            does not occur.
+        gridding (int): If a positive integer, controls the number of points on each axis of the
+            grid. If 0, gridding does not occur.
     """
 
     def __init__(self, tunables, gridding=0):
@@ -99,7 +100,8 @@ class BaseTuner(object):
             n (int, optional): number of candidates to generate. Defaults to 1000.
 
         Returns:
-            candidates (np.array): Array of candidate hyperparameter vectors with shape (n_samples, len(tunables))
+            candidates (np.array): Array of candidate hyperparameter vectors with shape
+                (n_samples, len(tunables))
         """
         # If using a grid, generate a list of previously unused grid points
         if self.grid:
@@ -123,12 +125,12 @@ class BaseTuner(object):
     def _acquire(self, predictions):
         """Acquire
 
-        Acquisition function. Accepts a list of predicted values for candidate parameter sets, and returns the index of
-        the best candidate.
+        Acquisition function. Accepts a list of predicted values for candidate parameter sets, and
+            returns the index of the best candidate.
 
         Args:
-            predictions (np.array): Array of predictions, corresponding to a set of proposed hyperparameter vectors.
-                Each prediction may be a sequence with more than one value.
+            predictions (np.array): Array of predictions, corresponding to a set of proposed
+                hyperparameter vectors. Each prediction may be a sequence with more than one value.
 
         Returns:
             int: index of the selected hyperparameter vector
@@ -142,7 +144,8 @@ class BaseTuner(object):
             n (int, optional): number of candidates to propose
 
         Returns:
-            Mapping of tunable name to proposed value. If called with n>1 then proposal is a list of dictionaries.
+            Mapping of tunable name to proposed value. If called with n>1 then proposal is a list
+                of dictionaries.
         """
         proposed_params = []
 
@@ -181,10 +184,12 @@ class BaseTuner(object):
         Refits model with all data.
 
         Args:
-            X (Union[Dict[str, object], List[Dict[str, object]]]): dict or list of dicts of hyperparameter combinations.
-                Keys may only be the name of a tunable, and the dictionary must contain values for all tunables.
-            y (Union[float, List[float]]): float or list of floats of scores of the hyperparameter combinations.
-                Order of scores must match the order of the hyperparameter dictionaries that the scores corresponds
+            X (Union[Dict[str, object], List[Dict[str, object]]]): dict or list of dicts of
+                hyperparameter combinations. Keys may only be the name of a tunable, and the
+                dictionary must contain values for all tunables.
+            y (Union[float, List[float]]): float or list of floats of scores of the hyperparameter
+                combinations. Order of scores must match the order of the hyperparameter
+                dictionaries that the scores corresponds
         """
         if isinstance(X, dict):
             X = [X]

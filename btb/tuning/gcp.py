@@ -94,9 +94,9 @@ class GCP(BaseTuner):
     """GCP tuner
 
     Args:
-        r_minimum (int): the minimum number of past results this selector needs in order to use gaussian process for
-            prediction. If not enough results are present during a ``fit``, subsequent calls to ``propose`` will revert
-            to uniform selection.
+        r_minimum (int): the minimum number of past results this selector needs in order to use
+            gaussian process for prediction. If not enough results are present during a ``fit``,
+            subsequent calls to ``propose`` will revert to uniform selection.
     """
 
     def __init__(self, tunables, gridding=0, r_minimum=2):

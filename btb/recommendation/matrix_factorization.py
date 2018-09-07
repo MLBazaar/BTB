@@ -12,10 +12,11 @@ class MFRecommender(BaseRecommender):
     Uses Matrix Factorization to determine which pipeline to recommend.
 
     Args:
-        n_components (int): Corresponds to the number of features to keep in matrix decomposition. Must be greater than
-            the number of rows in matrix.
-        r_minimum (int): The minimum number of past results this recommender needs in order to use Matrix Factorization
-            for prediction. If not enough results are present during a ``predict``, a uniform recommender is used.
+        n_components (int): Corresponds to the number of features to keep in matrix decomposition.
+            Must be greater than the number of rows in matrix.
+        r_minimum (int): The minimum number of past results this recommender needs in order to use
+            Matrix Factorization for prediction. If not enough results are present during a
+            ``predict``, a uniform recommender is used.
     """
 
     def __init__(self, dpp_matrix, n_components=100, r_minimum=5):
@@ -24,7 +25,8 @@ class MFRecommender(BaseRecommender):
         self.n_components = n_components
         self.r_minimum = r_minimum
 
-        # Matrix Factorization model that reduces dimensionality from num pipelines space to n_components space.
+        # Matrix Factorization model that reduces dimensionality from num pipelines space to
+        # n_components space.
         self.mf_model = NMF(n_components=n_components, init='nndsvd')
 
         dpp_decomposed = self.mf_model.fit_transform(dpp_matrix)
@@ -40,8 +42,8 @@ class MFRecommender(BaseRecommender):
 
         random_matching_index = np.random.randint(self.dpp_matrix.shape[0])
 
-        # Row from dpp_matrix representing pipeline performances for the dataset that most closely matches the new
-        # dataset D. Identified in fit.
+        # Row from dpp_matrix representing pipeline performances for the dataset that most closely
+        # matches the new dataset D. Identified in fit.
         self.matching_dataset = self.dpp_matrix[random_matching_index, :]
 
     def fit(self, dpp_vector):
