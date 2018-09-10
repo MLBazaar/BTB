@@ -1,0 +1,7 @@
+btb.tuning.gp module
+====================
+
+.. automodule:: btb.tuning.gp
+    :members:
+    :undoc-members:
+    :show-inheritance:

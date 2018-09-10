@@ -1,0 +1,7 @@
+btb.selection.custom\_selector module
+=====================================
+
+.. automodule:: btb.selection.custom_selector
+    :members:
+    :undoc-members:
+    :show-inheritance:

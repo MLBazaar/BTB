@@ -1,0 +1,7 @@
+btb.tuning.custom\_tuner module
+===============================
+
+.. automodule:: btb.tuning.custom_tuner
+    :members:
+    :undoc-members:
+    :show-inheritance:

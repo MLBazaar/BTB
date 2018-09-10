@@ -1,0 +1,7 @@
+btb.recommendation.recommender module
+=====================================
+
+.. automodule:: btb.recommendation.recommender
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+btb.recommendation.uniform module
+=================================
+
+.. automodule:: btb.recommendation.uniform
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; BTB 0.2.2-dev documentation</title>
+  <title>Overview &mdash; BTB 0.2.2-dev documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="installation.html" />
-    <link rel="prev" title="Welcome to BTB’s documentation!" href="index.html" /> 
+    <link rel="next" title="Tuners" href="tuners.html" />
+    <link rel="prev" title="Overview" href="index.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -75,25 +75,60 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-with-pip">Install with pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-from-source">Build from source</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">btb</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="btb.html">btb package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="btb.recommendation.html">btb.recommendation package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="btb.selection.html">btb.selection package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tuners">Tuners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selectors">Selectors</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="btb.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.html#module-btb.hyper_parameter">btb.hyper_parameter module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tuners.html">Tuners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommenders.html">Recommenders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.hyper_parameter.html">btb.hyper_parameter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.constants.html">btb.tuning.constants module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.custom_tuner.html">btb.tuning.custom_tuner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.gcp.html">btb.tuning.gcp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.gp.html">btb.tuning.gp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuner.html">btb.tuning.tuner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.uniform.html">btb.tuning.uniform module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.constants.html">btb.selection.constants module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.recommendation.html">btb.recommendation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.recommendation.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.recommendation.matrix_factorization.html">btb.recommendation.matrix_factorization module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.recommendation.recommender.html">btb.recommendation.recommender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.recommendation.uniform.html">btb.recommendation.uniform module</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -116,6 +151,21 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="history.html#id1">0.2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="history.html#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="history.html#id2">0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="history.html#new-features">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="history.html#internal-improvements">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="history.html#id3">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="history.html#id4">0.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="history.html#id5">0.1.1</a></li>
 </ul>
 </li>
 </ul>
@@ -163,7 +213,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>&lt;no title&gt;</li>
+      <li>Overview</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -184,7 +234,172 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  
+  <a class="reference external image-reference" href="https://raw.githubusercontent.HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png"><img alt="" src="https://raw.githubusercontent.HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png" /></a>
+<p>A simple, extensible backend for developing auto-tuning systems.</p>
+<a class="reference external image-reference" href="https://pypi.python.org/pypi/baytune"><img alt="PyPI Shield" src="https://img.shields.io/pypi/v/baytune.svg" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/HDI-Project/BTB"><img alt="Travis CI Shield" src="https://travis-ci.org/HDI-Project/BTB.svg?branch=master" /></a>
+<div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in <a class="reference external" href="https://github.com/HDI-Project/ATM">ATM</a> (an AutoML system that allows tuning of classifiers) and MIT’s system for the DARPA <a class="reference external" href="https://www.darpa.mil/program/data-driven-discovery-of-models">Data driven discovery of models program</a>.</p>
+<ul class="simple">
+<li>Free software: MIT license</li>
+<li>Documentation: <a class="reference external" href="https://HDI-Project.github.io/BTB">https://HDI-Project.github.io/BTB</a></li>
+<li>Homepage: <a class="reference external" href="https://github.com/HDI-Project/BTB">https://github.com/HDI-Project/BTB</a></li>
+</ul>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-with-pip">
+<h3>Install with pip<a class="headerlink" href="#install-with-pip" title="Permalink to this headline">¶</a></h3>
+<p>The easiest way to install BTB is using <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>pip install baytune
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-from-source">
+<h3>Build from source<a class="headerlink" href="#build-from-source" title="Permalink to this headline">¶</a></h3>
+<p>You can also clone the repository and build it from source.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:HDI-Project/BTB.git
+cd BTB
+make install
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tuners">
+<h3>Tuners<a class="headerlink" href="#tuners" title="Permalink to this headline">¶</a></h3>
+<p>In order to use a tuner we will create a <code class="docutils literal notranslate"><span class="pre">Tuner</span></code> instance indicating which parameters
+we want to tune, their types and the range of values that we want to try.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="kn">import</span> <span class="n">GP</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb</span> <span class="kn">import</span> <span class="n">HyperParameter</span><span class="p">,</span> <span class="n">ParamTypes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tunables</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span><span class="p">(</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">])),</span>
+<span class="gp">... </span><span class="p">(</span><span class="s1">&#39;max_depth&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">]))</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">GP</span><span class="p">(</span><span class="n">tunables</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then we perform the following three steps in a loop.</p>
+<ol class="arabic">
+<li><p class="first">Let the Tuner propose a new set of parameters</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span>
+<span class="go">{&#39;n_estimators&#39;: 297, &#39;max_depth&#39;: 3}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Fit and score a new model using these parameters</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="go">RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,</span>
+<span class="go">            max_depth=3, max_features=&#39;auto&#39;, max_leaf_nodes=None,</span>
+<span class="go">            min_impurity_decrease=0.0, min_impurity_split=None,</span>
+<span class="go">            min_samples_leaf=1, min_samples_split=2,</span>
+<span class="go">            min_weight_fraction_leaf=0.0, n_estimators=297, n_jobs=1,</span>
+<span class="go">            oob_score=False, random_state=None, verbose=0,</span>
+<span class="go">            warm_start=False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span>
+<span class="go">0.77</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Pass the used parameters and the score obtained back to the tuner</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuner</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>At each iteration, the <code class="docutils literal notranslate"><span class="pre">Tuner</span></code> will use the information about the previous tests
+to evaluate and propose the set of parameter values that have the highest probability
+of obtaining the highest score.</p>
+<p>For more detailed examples, check scripts from the <code class="docutils literal notranslate"><span class="pre">examples</span></code> folder.</p>
+</div>
+<div class="section" id="selectors">
+<h3>Selectors<a class="headerlink" href="#selectors" title="Permalink to this headline">¶</a></h3>
+<p>The selectors are intended to be used in combination with tuners in order to find
+out and decide which model seems to get the best results once it is properly fine tuned.</p>
+<p>In order to use the selector we will create a <code class="docutils literal notranslate"><span class="pre">Tuner</span></code> instance for each model that
+we want to try out, as well as the <code class="docutils literal notranslate"><span class="pre">Selector</span></code> instance.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>     <span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">,</span>
+<span class="o">...</span>     <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">SVC</span>
+<span class="o">...</span> <span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">btb.selection</span> <span class="kn">import</span> <span class="n">UCB1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">selector</span> <span class="o">=</span> <span class="n">UCB1</span><span class="p">([</span><span class="s1">&#39;RF&#39;</span><span class="p">,</span> <span class="s1">&#39;SVC&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tuners</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>     <span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">GP</span><span class="p">([</span>
+<span class="o">...</span>         <span class="p">(</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">])),</span>
+<span class="o">...</span>         <span class="p">(</span><span class="s1">&#39;max_depth&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">]))</span>
+<span class="o">...</span>     <span class="p">]),</span>
+<span class="o">...</span>     <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">GP</span><span class="p">([</span>
+<span class="o">...</span>         <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">FLOAT_EXP</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">])),</span>
+<span class="o">...</span>         <span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.000000001</span><span class="p">,</span> <span class="mf">0.0000001</span><span class="p">]))</span>
+<span class="o">...</span>     <span class="p">])</span>
+<span class="o">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Then we perform the following steps in a loop.</p>
+<ol class="arabic">
+<li><p class="first">Pass all the obtained scores to the selector and let it decide which model to test.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">next_choice</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select</span><span class="p">({</span><span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">tuners</span><span class="p">[</span><span class="s1">&#39;RF&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">tuners</span><span class="p">[</span><span class="s1">&#39;SVC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">next_choice</span>
+<span class="go">&#39;RF&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Obtain a new set of parameters from the indicated tuner and create a model instance.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span> <span class="o">=</span> <span class="n">tuners</span><span class="p">[</span><span class="n">next_choice</span><span class="p">]</span><span class="o">.</span><span class="n">propose</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span>
+<span class="go">{&#39;n_estimators&#39;: 289, &#39;max_depth&#39;: 18}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">next_choice</span><span class="p">](</span><span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Evaluate the score of the new model instance and pass it back to the tuner</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="go">RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,</span>
+<span class="go">            max_depth=18, max_features=&#39;auto&#39;, max_leaf_nodes=None,</span>
+<span class="go">            min_impurity_decrease=0.0, min_impurity_split=None,</span>
+<span class="go">            min_samples_leaf=1, min_samples_split=2,</span>
+<span class="go">            min_weight_fraction_leaf=0.0, n_estimators=289, n_jobs=1,</span>
+<span class="go">            oob_score=False, random_state=None, verbose=0,</span>
+<span class="go">            warm_start=False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span>
+<span class="go">0.89</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuners</span><span class="p">[</span><span class="n">next_choice</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>If you use BTB, please consider citing the following work:</p>
+<ul>
+<li><p class="first">Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. <a class="reference external" href="https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf">(pdf)</a></p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@MastersThesis</span><span class="p">{</span><span class="nl">Laura:2018</span><span class="p">,</span>
+  <span class="na">title</span> <span class="p">=</span> <span class="s">&quot;Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML&quot;</span><span class="p">,</span>
+  <span class="na">author</span> <span class="p">=</span> <span class="s">&quot;Laura Gustafson&quot;</span><span class="p">,</span>
+  <span class="na">month</span> <span class="p">=</span> <span class="s">&quot;May&quot;</span><span class="p">,</span>
+  <span class="na">year</span> <span class="p">=</span> <span class="s">&quot;2018&quot;</span><span class="p">,</span>
+  <span class="na">url</span> <span class="p">=</span> <span class="s">&quot;https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf&quot;</span><span class="p">,</span>
+  <span class="na">type</span> <span class="p">=</span> <span class="s">&quot;M. Eng Thesis&quot;</span><span class="p">,</span>
+  <span class="na">address</span> <span class="p">=</span> <span class="s">&quot;Cambridge, MA&quot;</span><span class="p">,</span>
+  <span class="na">school</span> <span class="p">=</span> <span class="s">&quot;Massachusetts Institute of Technology&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
 
            </div>
            
@@ -193,10 +408,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tuners.html" class="btn btn-neutral float-right" title="Tuners" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to BTB’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

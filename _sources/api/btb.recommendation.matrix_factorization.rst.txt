@@ -1,0 +1,7 @@
+btb.recommendation.matrix\_factorization module
+===============================================
+
+.. automodule:: btb.recommendation.matrix_factorization
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,20 @@
+btb.tuning package
+==================
+
+.. automodule:: btb.tuning
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   btb.tuning.constants
+   btb.tuning.custom_tuner
+   btb.tuning.gcp
+   btb.tuning.gp
+   btb.tuning.tuner
+   btb.tuning.uniform
+

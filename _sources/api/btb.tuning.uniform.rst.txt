@@ -1,0 +1,7 @@
+btb.tuning.uniform module
+=========================
+
+.. automodule:: btb.tuning.uniform
+    :members:
+    :undoc-members:
+    :show-inheritance:
