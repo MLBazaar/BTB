@@ -7,19 +7,25 @@ logger = logging.getLogger('btb')
 
 
 class BaseTuner(object):
+    """Base tuner
+
+    Args:
+        tunables (List[Tuple[str, HyperParameter]]): Ordered list of hyperparameter names and
+            metadata objects. These describe the hyperparameters that this Tuner will be tuning,
+            e.g.::
+
+                [
+                    ('degree', HyperParameter(type='INT', range=(2, 4))),
+                    ('coef0', HyperParameter('INT', (0, 1))),
+                    ('C', HyperParameter('FLOAT_EXP', (1e-05, 100000))),
+                    ('gamma', HyperParameter('FLOAT_EXP', (1e-05, 100000)))
+                ]
+
+        gridding (int): If a positive integer, controls the number of points on each axis of the
+            grid. If 0, gridding does not occur.
+    """
+
     def __init__(self, tunables, gridding=0):
-        """
-        Args:
-            tunables: Ordered list of hyperparameter names and metadata
-            objects. These describe the hyperparameters that this Tuner will
-                be tuning. e.g.:
-                [('degree', HyperParameter(type='INT', range=(2, 4))),
-                 ('coef0', HyperParameter('INT', (0, 1))),
-                 ('C', HyperParameter('FLOAT_EXP', (1e-05, 100000))),
-                 ('gamma', HyperParameter('FLOAT_EXP', (1e-05, 100000)))]
-            gridding: int. If a positive integer, controls the number of points
-                on each axis of the grid. If 0, gridding does not occur.
-        """
         self.tunables = tunables
         self.grid = gridding > 0
         self._best_score = -1 * float('inf')
@@ -44,11 +50,11 @@ class BaseTuner(object):
         return grid_axes
 
     def fit(self, X, y):
-        """
+        """Fit
+
         Args:
-            X: np.array of hyperparameters,
-                shape = (n_samples, len(tunables))
-            y: np.array of scores, shape = (n_samples,)
+            X (np.array): Array of hyperparameter values with shape (n_samples, len(tunables))
+            y (np.array): Array of scores with shape (n_samples, )
         """
         self.X = X
         self.y = y
@@ -88,18 +94,15 @@ class BaseTuner(object):
         return candidates
 
     def _create_candidates(self, n=1000):
-        """
-        Generate a number of random hyperparameter vectors based on the
-        specifications in self.tunables
+        """Generate random hyperparameter vectors
 
         Args:
-            n (optional): number of candidates to generate
+            n (int, optional): number of candidates to generate. Defaults to 1000.
 
         Returns:
-            np.array of candidate hyperparameter vectors,
-                shape = (n_samples, len(tunables))
+            candidates (np.array): Array of candidate hyperparameter vectors with shape
+                (n_samples, len(tunables))
         """
-
         # If using a grid, generate a list of previously unused grid points
         if self.grid:
             return self._candidates_from_grid(n)
@@ -110,41 +113,39 @@ class BaseTuner(object):
             return self._random_candidates(n)
 
     def predict(self, X):
-        """
+        """Predict
         Args:
-            X: np.array of hyperparameters,
-                shape = (n_samples, len(tunables))
+            X (np.array): Array of hyperparameters with shape  (n_samples, len(tunables))
 
         Returns:
-            y: np.array of predicted scores, shape = (n_samples)
+            np.array: Array of predicted scores with shape (n_samples)
         """
-        raise NotImplementedError(
-            'predict() needs to be implemented by a subclass of Tuner.')
+        raise NotImplementedError
 
     def _acquire(self, predictions):
-        """
-        Acquisition function. Accepts a list of predicted values for candidate
-        parameter sets, and returns the index of the best candidate.
+        """Acquire
+
+        Acquisition function. Accepts a list of predicted values for candidate parameter sets, and
+            returns the index of the best candidate.
 
         Args:
-            predictions: np.array of predictions, corresponding to a set of
-                proposed hyperparameter vectors. Each prediction may be a
-                sequence with more than one value.
+            predictions (np.array): Array of predictions, corresponding to a set of proposed
+                hyperparameter vectors. Each prediction may be a sequence with more than one value.
 
         Returns:
-            idx: index of the selected hyperparameter vector
+            int: index of the selected hyperparameter vector
         """
         return np.argmax(predictions)
 
     def propose(self, n=1):
-        """
-        Use the trained model to propose a new set of parameters.
+        """Use the trained model to propose a new set of parameters.
+
         Args:
-            n (optional): number of candidates to propose
+            n (int, optional): number of candidates to propose
 
         Returns:
-            proposal: dictionary of tunable name to proposed value.
-            If called with n>1 then proposal is a list of dictionaries.
+            Mapping of tunable name to proposed value. If called with n>1 then proposal is a list
+                of dictionaries.
         """
         proposed_params = []
 
@@ -178,17 +179,17 @@ class BaseTuner(object):
         return params if n == 1 else proposed_params
 
     def add(self, X, y):
-        """
-        Add data about known tunable hyperparameter configurations and scores.
-        Refits model with all data.
-        Args:
-            X: dict or list of dicts of hyperparameter combinations.
-                Keys may only be the name of a tunable, and the dictionary
-                must contain values for all tunables.
-            y: float or list of floats of scores of the hyperparameter
-                combinations. Order of scores must match the order
-                of the hyperparameter dictionaries that the scores corresponds
+        """Add data about known tunable hyperparameter configurations and scores.
 
+        Refits model with all data.
+
+        Args:
+            X (Union[Dict[str, object], List[Dict[str, object]]]): dict or list of dicts of
+                hyperparameter combinations. Keys may only be the name of a tunable, and the
+                dictionary must contain values for all tunables.
+            y (Union[float, List[float]]): float or list of floats of scores of the hyperparameter
+                combinations. Order of scores must match the order of the hyperparameter
+                dictionaries that the scores corresponds
         """
         if isinstance(X, dict):
             X = [X]

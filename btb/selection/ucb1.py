@@ -6,7 +6,8 @@ from btb.selection.selector import Selector
 
 
 class UCB1(Selector):
-    """
+    """UCB1 selector
+
     The most common Selector implementation.
     Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.
     """
@@ -17,12 +18,6 @@ class UCB1(Selector):
         confidence bound (UCB) of expected reward is greatest.
         An explanation is here:
         https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf
-
-        choice_rewards: a dict, {choice -> [rewards]}, mapping each potential
-            choice to a series of "rewards" granted for its past behavior.
-
-        Returns: the single choice (one of choice_rewards.keys()) which we
-            expect will perform best.
         """
         # count the total number of times all "levers" have been "pulled" so far.
         # don't let the value go below 1, so that log() and division still work.

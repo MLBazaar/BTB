@@ -11,10 +11,12 @@ logger = logging.getLogger('btb')
 
 
 class PureBestKVelocity(Selector):
+    """Pure Best K Velocity Selector
+
+    Simply returns the choice with the best best-K velocity.
+    """
+
     def __init__(self, choices, k=K_MIN):
-        """
-        Simply returns the choice with the best best-K velocity.
-        """
         super(PureBestKVelocity, self).__init__(choices)
         self.k = k
 
@@ -29,7 +31,7 @@ class PureBestKVelocity(Selector):
         velocities = [best_scores[i] - best_scores[i + 1]
                       for i in range(len(best_scores) - 1)]
 
-        # pad the list out with zeros to maintain the lenghth of the list
+        # pad the list out with zeros to maintain the length of the list
         zeros = (len(scores) - self.k) * [0]
         return velocities + zeros
 
@@ -44,8 +46,10 @@ class PureBestKVelocity(Selector):
             logger.info('PureBestKVelocity: using Pure Best K velocity selection')
             reward_func = self.compute_rewards
         else:
-            logger.warn('PureBestKVelocity: Not enough choices to do K-selection; '
-                        'returning choice with fewest scores')
+            logger.warning(
+                '{klass}: Not enough choices to do K-selection; '
+                'returning choice with fewest scores'
+                .format(klass=type(self).__name__))
             # reward choices with the fewest scores
             # NOTE: "reward_func = lambda " changed to "def reward_func"
             # as per flake8 suggestions

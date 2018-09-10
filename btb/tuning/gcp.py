@@ -91,14 +91,15 @@ def make_ppf(kernel_pdf):
 
 
 class GCP(BaseTuner):
+    """GCP tuner
+
+    Args:
+        r_minimum (int): the minimum number of past results this selector needs in order to use
+            gaussian process for prediction. If not enough results are present during a ``fit``,
+            subsequent calls to ``propose`` will revert to uniform selection.
+    """
+
     def __init__(self, tunables, gridding=0, r_minimum=2):
-        """
-        Extra args:
-            r_minimum: the minimum number of past results this selector needs in
-                order to use gaussian process for prediction. If not enough
-                results are present during a fit(), subsequent calls to
-                propose() will revert to uniform selection.
-        """
         super(GCP, self).__init__(tunables, gridding=gridding)
         self.r_minimum = r_minimum
 
@@ -161,7 +162,7 @@ class GCP(BaseTuner):
     def predict(self, X):
         if self.X.shape[0] < self.r_minimum:
             # we probably don't have enough
-            logger.warn('GP: not enough data, falling back to uniform sampler')
+            logger.warning('GP: not enough data, falling back to uniform sampler')
             return Uniform(self.tunables).predict(X)
 
         def get_valid_row(U):
@@ -199,17 +200,16 @@ class GCP(BaseTuner):
         # Otherwise, swap to version 2.
         mu_y = y_kernel_model['ppf'](mu_vF)
         stdev_y = y_kernel_model['ppf'](stdev_vF)
-        '''
-        # VERSION 2:
-        # It should be used in case of mu_y and stdev_y must have the same length
-        # than X. Otherwise, Version 1 is faster.
-        # -- Transform back mu_uF-->F.ppf-->mu_y
-        #    mu_y has the same length than U, but is positive only for safe rows
-        mu_y = np.zeros([U.shape[0]])
-        stdev_y = np.zeros([U.shape[0]])
-        mu_y[ind_OK] = y_kernel_model['ppf'](mu_vF)
-        stdev_y[ind_OK] = y_kernel_model['ppf'](stdev_vF)
-        '''
+
+        # # VERSION 2:
+        # # It should be used in case of mu_y and stdev_y must have the same length
+        # # than X. Otherwise, Version 1 is faster.
+        # # -- Transform back mu_uF-->F.ppf-->mu_y
+        # #    mu_y has the same length than U, but is positive only for safe rows
+        # mu_y = np.zeros([U.shape[0]])
+        # stdev_y = np.zeros([U.shape[0]])
+        # mu_y[ind_OK] = y_kernel_model['ppf'](mu_vF)
+        # stdev_y[ind_OK] = y_kernel_model['ppf'](stdev_vF)
 
         return np.array(list(zip(mu_y, stdev_y)))
 
@@ -223,16 +223,12 @@ class GCP(BaseTuner):
 
 
 class GCPEi(GCP):
-    # -- question: I have changed GPEi(GP) for GPEi(GCP), is that ok?
+    """GCPEi tuner
+
+    Expected improvement criterion:
+    http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
+    """
     def _acquire(self, predictions):
-        """
-        Expected improvement criterion:
-        http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
-        Args:
-            predictions: np.array of (estimated y, estimated error) tuples that
-                the gaussian process generated for a series of
-                proposed hyperparameters.
-        """
         y_est, stderr = predictions.T
         best_y = max(self.y)
 
@@ -244,6 +240,8 @@ class GCPEi(GCP):
 
 
 class GCPEiVelocity(GCPEi):
+    """GCPEiVelocity tuner"""
+
     MULTIPLIER = -100   # magic number; modify with care
     N_BEST_Y = 5        # number of top values w/w to compute velocity
 
