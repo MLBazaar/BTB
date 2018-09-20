@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png)
+![](https://raw.githubusercontent.com/HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png)
 
 A simple, extensible backend for developing auto-tuning systems.
 
