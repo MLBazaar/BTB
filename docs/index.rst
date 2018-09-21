@@ -1,4 +1,4 @@
-.. include:: readme.rst
+.. mdinclude:: readme.rst
 
 .. toctree::
    :hidden:
