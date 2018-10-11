@@ -5,6 +5,7 @@ from collections import defaultdict
 from enum import Enum
 
 import numpy as np
+import six
 
 
 class ParamTypes(Enum):
@@ -43,7 +44,7 @@ class HyperParameter(object):
 
     def __new__(cls, param_type=None, param_range=None):
         if not isinstance(param_type, ParamTypes):
-            if (isinstance(param_type, str) and
+            if (isinstance(param_type, six.string_types) and
                     param_type.upper() in ParamTypes.__members__):
                 param_type = ParamTypes[param_type.upper()]
             else:
@@ -103,7 +104,7 @@ class HyperParameter(object):
         )
 
     def __eq__(self, other):
-        # See https://stackoverflow.com/a/25176504/2514228 for details
+        # See https://stackoverflow.com/a/25176504 for details
         if isinstance(self, other.__class__):
             return (self.param_type is other.param_type and
                     self.is_integer == other.is_integer and
@@ -112,7 +113,7 @@ class HyperParameter(object):
 
     def __ne__(self, other):
         # Not needed in Python 3
-        # See https://stackoverflow.com/a/25176504/2514228 for details
+        # See https://stackoverflow.com/a/25176504 for details
         x = self.__eq__(other)
         if x is not NotImplemented:
             return not x

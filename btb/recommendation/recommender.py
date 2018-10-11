@@ -1,98 +1,76 @@
-import logging
-
 import numpy as np
-
-logger = logging.getLogger('btb')
 
 
 class BaseRecommender(object):
-    """
-    Base Recommender class for recomending pipelines to try on a new dataset
-    D based on performances of datasets on the different pipeline options.
-    Recommends pipelines that would maximize the score value.
+    """Base recommender
 
-    Attributes:
-        dpp_matrix: (2D np.array) Dataset performance pipeline matrix. Num
-            datasets by num pipelines matrix where each row i corresponds to a
-            dataset and each collumn j corresponds to a pipeline. The
-            dpp_marix[i,j] is the score of pipeline j on dataset i or 0 if
-            pipeline j has not beentried on dataset i.
-        dpp_vector: (1D np.array) Vector representing pipeline performances on
-            a new dataset D.
+    Base recommender class for recommending pipelines to try on a new dataset D based on
+    performances of datasets on the different pipeline options. Recommends pipelines that would
+    maximize the score value.
+
+    Args:
+        dpp_matrix (np.array): Sparse dataset performance matrix pertaining to pipeline scores on
+            different dataset with shape ``(num_datasets, num_pipelines)``. Each row ``i``
+            corresponds to a dataset and each column ``j`` corresponds to a pipeline. The element
+            ``dpp_matrix[i,j]`` corresponds to the score of the pipeline ``j`` on the dataset and
+            is ``0`` if the pipeline was not tried on the dataset.
     """
 
     def __init__(self, dpp_matrix):
-        """
-        Args:
-            dpp_matrix: np.array shape = (num_datasets, num_pipelines) Sparse
-                dataset performance matrix pertaining to pipeline
-                scores on different dataset. Each row i coresponds to a dataset
-                and each column j corresponds to a pipeline. dpp_matrix[i,j]
-                corresponds to the score of the pipeline j on the dataset and
-                is 0 if the pipeline was not tried on the dataset
-        """
+        # Dataset performance pipeline matrix
         self.dpp_matrix = dpp_matrix
+
+        # Vector representing pipeline performances on a new dataset D
         self.dpp_vector = np.zeros(self.dpp_matrix.shape[1])
 
     def fit(self, dpp_vector):
-        """
-        Fits the Recommender model.
+        """Fit the recommender model.
+
         Args:
-            dpp_vector: np.array shape = (self.n_components,)
+            dpp_vector (np.array): Array with shape (n_components, )
         """
         self.dpp_vector = dpp_vector
 
-    def predict(self, indicies):
+    def predict(self, indices):
         """
         Predicts the relative rankings of the pipelines on dpp_vector for
-        a series of pipelines represented by their indicies.
+        a series of pipelines represented by their indices.
 
         Args:
-            indicies: np.array of pipeline indicies, shape = (n_samples)
+            indices (np.array): Array of pipeline indices with shape (n_samples)
 
         Returns:
-            y: np.array of predicted scores, shape = (n_samples)
+            np.array: Array of predicted scores with shape (n_samples)
         """
-        raise NotImplementedError(
-            'predict() needs to be implemented by a' +
-            'subclass of BaseRecommender'
-        )
+        raise NotImplementedError
 
     def _acquire(self, predictions):
-        """
-        Acquisition function. Finds the best candidate given a series of
-        predictions.
+        """Finds the best candidate given a series of predictions.
 
         Args:
-            predictions: np.array of predictions, corresponding to a set of
-                possible pipelines.
+            predictions (np.array): Array of predictions corresponding to a set of possible
+                pipelines.
 
         Returns:
-            idx: index of the selected candidate from predictions
+            int: Index of the selected candidate from predictions
         """
         return np.argmax(predictions)
 
     def _get_candidates(self):
-        """
-        Finds the pipelines that are not yet tried for the new dataset D
-        represented by dpp_vector.
+        """Finds the pipelines that are not yet tried.
 
         Returns:
-            indicies: np.array. Indicies corresponding to collumns in
-                self.dpp_matrix that haven't been tried on X.
-                None if all pipelines have been tried on X.
+            np.array: Indices corresponding to columns in ``dpp_matrix`` that haven't been tried on
+                ``X``. ``None`` if all pipelines have been tried on X.
         """
         candidates = np.where(self.dpp_vector == 0)
         return None if len(candidates[0]) == 0 else candidates[0]
 
     def propose(self):
-        """
-        Use the trained model to propose a new pipeline.
+        """Use the trained model to propose a new pipeline.
 
         Returns:
-            proposal: int. index corresponding to pipeline to try. the
-                pipeline corresponds to the proposal'th column of
-                self.dpp_matrix
+            int: Index corresponding to pipeline to try in ``dpp_matrix``.
         """
         # generate a list of all the untried candidate pipelines
         candidates = self._get_candidates()
@@ -110,15 +88,14 @@ class BaseRecommender(object):
         return candidates[idx]
 
     def add(self, X):
-        """
-        Updates self.dpp_vector.
-        Adds data about known pipelines and scores.
-        Refits model with all data.
+        """Add data about known pipeline and scores.
+
+        Updates ``dpp_vector`` and refits model with all data.
+
         Args:
-            X: dict mapping pipeline indicies to scores.
-                Keys must correspond to the index of a collumn in
-                self.dpp_matrix
-                Values are the corresponding score for pipeline on the dataset
+            X (dict): mapping of pipeline indices to scores. Keys must correspond to the index of a
+                column in ``dpp_matrix`` and values are the corresponding score for pipeline on
+                the dataset.
         """
         for each in X:
             self.dpp_vector[each] = X[each]

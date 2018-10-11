@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
 from btb import HyperParameter, ParamTypes
-from btb.selection import Selector
+from btb.selection.selector import Selector
 from btb.tuning import GP
 
 
