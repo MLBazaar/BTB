@@ -187,6 +187,15 @@ class TestHyperparameter(unittest.TestCase):
                     HyperParameter(type_, range_)
                 )
 
+    def test_init_with_unicode_param_type(self):
+        param_type_str = 'int'
+        param_type_unicode = u'int'
+        param_range = [0, 10]
+
+        self.assertEqual(
+            HyperParameter(param_type_unicode, param_range),
+            HyperParameter(param_type_str, param_range))
+
     def test_init_with_string_param_type_invalid(self):
         # invalid string param types
         invalid_param_types = ['a', 0, object(), 'integer', 'foo']
