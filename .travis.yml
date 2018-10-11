@@ -24,10 +24,9 @@ deploy:
     distributions: sdist bdist_wheel
     user: dai_lab_mit
     password:
-      secure: BMsYqhu2RxlxLSnJczsMVShDqjdx96nZHq553QrzkhZAedtUKaB+EsqKmdytEOv1uLA8Qz+IqnhJsZfH+AwAMm0uDOxa2p3Eanqr5n/nmf4Qc5hutpex83ftPNKpf5+5WqIgOpKe94s0T330NRNw363emop/WlCS2xipghAv2Z/IED1vT3V12Z6KaPjF9GV4SR/Eeuz8czr0tBUvQbOcCP4zKYQr5zppbfceVPLewbmPWeOD/+pVH6+aQ6IbaxXJLCxJfhZziYAV5Hs/x2b5KMS06yaYzstQ4iCzFS/slgKqP16KppfngFx3UVtLqJajgy2JWqigB9DsUT3JWQJaDFpehrq/z+ypGUQSQB/uIrUkmG6WCJd+1BdfHDz4CGAMwxVb05lIrssfsAq18C0O/sZziLcTB/z3QkF3Za3ZXSqQ+Yp8UdLJSHiYh5nF6VTxqRrgfLtY6PuUoIY7ZFzBRSC/krbhxZES1QkQS5x9qIsqSivj0V3mz05ONpu9QK28d2G3En0cADP1QGMQV80iTPvIKy6p/HN7lUGMeXpl+FYeN58ECOZIkn1aXh06vVrTRJHDea3dvYP84iw3qelR4LKRFsb3Lw6fWiC8/KKdb2j4pemQxOQO2wH6dbCpbz9g6j9ubr8KmTt4DQWz876NhbT8T2mlRq1pZu4JQsuMzU0=
+      secure: "DZpyAQdn1Kax0lnrXRTF/GsP/+FdtuaPY8dwGyGS0tgD9LukOVScqemxfpi4KdrP+H0W9ELJ33dxrzeNN53LMm+Cf3rQ9kaoGy54JAYfV4j4osF7fghDXCpdOZGylBsy0tRHqsczS7m97zIA349/bNoiSOBTUuVSbJMP+G36qaqvX3Dc2moeN5yCvGWURAcEGMH/nBGirysuqEPK+Au/ohgt5tbWRsAnWzKslsuci7pOh4EqkH57QENPtj2eLIY5dqZPR+g9reUnZsLZWRRBpvEGV863dw4YaJ7RPNjBGyrD1yAJPtfYf+k9AKBfqULOsk0xqMvO43z/3hptMSCB2s8AmsPMIKbPKX4GvFCOF+u9KRbjFnsAz1p+TCzj0Nzxk503KB8xdPrXy0Aw82y0bSuaziGy1ubzzMQZ7qq+5Coa0nlAyOuyd2AJxwy5Sz0Mk+3b40LPWuAmhxuwNRnwvaWKWhtGEomhV7RD4mX/LJzge/UMFlRiL3sjHbdFK4UFdCKoJoXbF1yxe01ZwPhDscuSOzQjDV/2mVlYEVGj3jjLC8TJD6jz2md0sAOlIlK0+EZru0piD8kRGMSELOlDTcjNqkNWu3oSwrfszPaCG0xbUUsuo863mPlxrU/Q5BbO3z67aYC81BKjSPhwLiKV/E6sI1FjDufIE5yrnAQKYpQ="
     on:
       tags: true
-      branch: master
       repo: HDI-Project/BTB
       python: 3.6
 
