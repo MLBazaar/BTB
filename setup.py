@@ -15,7 +15,8 @@ install_requires = [
     'enum34>=1.1.6; python_version=="2.7"',
     'numpy>=1.14.2',
     'scikit-learn>=0.19.1',
-    'scipy>=1.0.1'
+    'scipy>=1.0.1',
+    'six>=1.0',
 ]
 
 tests_require = [
