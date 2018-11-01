@@ -20,6 +20,7 @@ class GP(BaseTuner):
             gaussian process for prediction. If not enough results are present during a ``fit``,
             subsequent calls to ``propose`` will revert to uniform selection.
     """
+
     def __init__(self, tunables, gridding=0, r_minimum=2):
         super(GP, self).__init__(tunables, gridding=gridding)
         self.r_minimum = r_minimum
