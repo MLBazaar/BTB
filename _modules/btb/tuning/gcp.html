@@ -464,6 +464,7 @@
 <span class="sd">    Expected improvement criterion:</span>
 <span class="sd">    http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">_acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
         <span class="n">y_est</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">T</span>
         <span class="n">best_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
