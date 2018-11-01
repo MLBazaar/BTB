@@ -221,6 +221,7 @@ class TestGPEi(TestCase):
         # assert
         assert best == 0
 
+    @unittest.expectedFailure
     def test__acquire_possible_error(self):
         """Manually crafted case that seems to be an error in the formula:
 
@@ -240,7 +241,7 @@ class TestGPEi(TestCase):
         best = tuner._acquire(predictions)
 
         # assert
-        assert best == 0
+        assert best == 1
 
 
 class TestGPEiVelocity(TestCase):
