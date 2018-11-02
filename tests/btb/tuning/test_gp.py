@@ -188,8 +188,8 @@ class TestGPEi(TestCase):
     # VALIDATE:
     #     * return values according to the formula
 
-    def test__acquire_best_ei_eq_best_y(self):
-        """Best Expected Improvement corresponds to the best prediction."""
+    def test__acquire_higher_mean_and_std(self):
+        # When both the mean and std of one point is higher, it is selected
 
         # Set-up
         tuner = GPEi(tuple(), r_minimum=2)
@@ -205,8 +205,9 @@ class TestGPEi(TestCase):
         # assert
         assert best == 1
 
-    def test__acquire_best_ei_neq_best_y(self):
-        """Best Expected Improvement does NOT correspond to the best prediction."""
+    def test__acquire_lower_mean_higher_std(self):
+        # When the mean is higher but the std is lower, both outcomes are possible
+        # Create a situation with a much larger std to demonstrate.
 
         # Set-up
         tuner = GPEi(tuple(), r_minimum=2)
@@ -214,21 +215,33 @@ class TestGPEi(TestCase):
 
         # Run
         predictions = np.array([
-            [0.8, 2],
-            [0.9, 1]
+            [0.9, 1],
+            [0.8, 100],
         ])
         best = tuner._acquire(predictions)
 
         # assert
-        assert best == 0
+        assert best == 1
 
-    @unittest.expectedFailure
-    def test__acquire_possible_error(self):
-        """Manually crafted case that seems to be an error in the formula:
+    def test__acquire_equal_mean_higher_std(self):
+        # When the means are equal but the std is higher, it is selected
 
-        The second prediction has a higher score and both have the same stdev.
-        However, the formula indicates that the first prediction is the best one.
-        """
+        # Set-up
+        tuner = GPEi(tuple(), r_minimum=2)
+        tuner.y = np.array([0.5, 0.6, 0.7])
+
+        # Run
+        predictions = np.array([
+            [0.9, 1],
+            [0.9, 2]
+        ])
+        best = tuner._acquire(predictions)
+
+        # assert
+        assert best == 1
+
+    def test__acquire_higher_mean_equal_std(self):
+        # When the stds are equal but the mean s higher, it is selected
 
         # Set-up
         tuner = GPEi(tuple(), r_minimum=2)
