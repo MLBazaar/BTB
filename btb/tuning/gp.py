@@ -57,17 +57,27 @@ class GP(BaseTuner):
 class GPEi(GP):
     """GPEi tuner
 
-    Expected improvement criterion:
-    http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
+    The expected improvement criterion encodes a tradeoff between exploitation (points with high
+    mean) and exploration (points with high uncertainty).
+
+    See also::
+
+        http://www.cs.toronto.edu/~kswersky/wp-content/uploads/nips2013transfer.pdf
+        https://www.cse.wustl.edu/~garnett/cse515t/spring_2015/files/lecture_notes/12.pdf
     """
 
     def _acquire(self, predictions):
-        y_est, stderr = predictions.T
-        best_y = max(self.y)
+        Phi = norm.cdf
+        N = norm.pdf
 
-        # even though best_y is scalar and the others are vectors, this works
-        z_score = (best_y - y_est) / stderr
-        ei = stderr * (z_score * norm.cdf(z_score) + norm.pdf(z_score))
+        mu, sigma = predictions.T
+        y_best = np.max(self.y)
+
+        # because we are maximizing the scores, we do mu-y_best rather than the inverse, as is
+        # shown in most reference materials
+        z = (mu - y_best) / sigma
+
+        ei = sigma * (z * Phi(z) + N(z))
 
         return np.argmax(ei)
 
