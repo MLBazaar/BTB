@@ -1,4 +1,3 @@
-import unittest
 from unittest import TestCase
 
 import numpy as np
