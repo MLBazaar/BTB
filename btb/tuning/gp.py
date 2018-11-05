@@ -32,6 +32,12 @@ class GP(BaseTuner):
         if X.shape[0] < self.r_minimum:
             return
 
+        if X.ndim == 1:
+            X = X.reshape(-1, 1)
+
+        if y.ndim == 1:
+            y = y.reshape(-1, 1)
+
         self.gp = GaussianProcessRegressor(normalize_y=True)
         self.gp.fit(X, y)
 
