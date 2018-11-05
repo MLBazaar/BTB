@@ -51,7 +51,7 @@ class TestBestKReward(TestCase):
         assert rewards == [0.83, 0.0, 0.86, 0.9]
 
     def test_compute_rewards_duplicates(self):
-        k=3
+        k = 3
         choices = ['RF', 'SVM']
         scores = [0.7, 0.8, 0.7, 0.1, 0.8, 0.7]
         selector = BestKReward(choices, k=k)
