@@ -1,46 +1,40 @@
-import random
-
 import numpy as np
 
 from btb.selection.selector import Selector
+from btb.util import shuffle
 
 
 class UCB1(Selector):
     """UCB1 selector
 
-    The most common Selector implementation.
     Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.
+
+    See also::
+
+       Auer, Peter et al. “Finite-time Analysis of the Multiarmed Bandit Problem.”
+       Machine Learning 47 (2002): 235-256.
     """
 
     def bandit(self, choice_rewards):
         """
         Multi-armed bandit method which chooses the arm for which the upper
         confidence bound (UCB) of expected reward is greatest.
+
+        If there are multiple arms with the same UCB1 index, then one is chosen
+        at random.
+
         An explanation is here:
         https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf
         """
-        # count the total number of times all "levers" have been "pulled" so far.
-        # don't let the value go below 1, so that log() and division still work.
-        total_pulls = max(sum(len(r) for r in choice_rewards.values()), 1)
 
-        scores = dict()
+        # count the larger of 1 and the total number of arm pulls
+        total_pulls = max(1, sum(len(r) for r in choice_rewards.values()))
 
-        for choice, rewards in choice_rewards.items():
-            # count the number of pulls for this choice, with a floor of 1
+        def ucb1(choice):
+            rewards = choice_rewards[choice]
             choice_pulls = max(len(rewards), 1)
-
-            # compute the 2-stdev error for the estimate of this choice
+            average_reward = np.nanmean(rewards) if len(rewards) else 0
             error = np.sqrt(2.0 * np.log(total_pulls) / choice_pulls)
+            return average_reward + error
 
-            # compute the average reward, or default to 0
-            avg_reward = np.mean(rewards) if len(rewards) else 0
-
-            # this choice's score is the upper bound of what we think is possible
-            scores[choice] = avg_reward + error
-
-        # there may be many choices which are equally desirable
-        best_score = max(scores.values())
-        best_choices = [k for k, v in scores.items() if v == best_score]
-
-        # make sure we don't choose the same one every time
-        return random.choice(best_choices)
+        return max(shuffle(choice_rewards), key=ucb1)
