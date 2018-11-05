@@ -1,5 +1,7 @@
 import logging
 
+import numpy as np
+
 from btb.selection.ucb1 import UCB1
 
 # the minimum number of scores that each choice must have in order to use best-K
@@ -24,10 +26,11 @@ class BestKReward(UCB1):
     def compute_rewards(self, scores):
         """Retain the K best scores, and replace the rest with zeros"""
         if len(scores) > self.k:
-            kth_best = sorted(scores, reverse=True)[self.k - 1]
-            return [(s if s >= kth_best else 0.) for s in scores]
-        else:
-            return list(scores)
+            scores = np.copy(scores)
+            inds = np.argsort(scores)[:-self.k]
+            scores[inds] = 0.0
+
+        return list(scores)
 
     def select(self, choice_scores):
         """
