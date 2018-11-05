@@ -50,6 +50,14 @@ class TestBestKReward(TestCase):
         # Assert
         assert rewards == [0.83, 0.0, 0.86, 0.9]
 
+    def test_compute_rewards_duplicates(self):
+        k=3
+        choices = ['RF', 'SVM']
+        scores = [0.7, 0.8, 0.7, 0.1, 0.8, 0.7]
+        selector = BestKReward(choices, k=k)
+        rewards = selector.compute_rewards(scores)
+        assert sorted(rewards) == [0.0, 0.0, 0.0, 0.7, 0.8, 0.8]
+
     # METHOD: select(self, choice_scores)
     # VALIDATE:
     #     * Returned values for multiple cases
