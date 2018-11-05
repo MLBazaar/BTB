@@ -11,7 +11,7 @@ class UCB1(Selector):
 
     See also::
 
-       Auer, Peter et al. “Finite-time Analysis of the Multiarmed Bandit Problem.”
+       Auer, Peter et al. "Finite-time Analysis of the Multiarmed Bandit Problem."
        Machine Learning 47 (2002): 235-256.
     """
 
