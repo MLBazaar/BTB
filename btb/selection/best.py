@@ -39,7 +39,7 @@ class BestKReward(UCB1):
         """
         # if we don't have enough scores to do K-selection, use the default UCB1
         # reward function
-        min_num_scores = min([len(s) for s in choice_scores.values()])
+        min_num_scores = min(len(s) for s in choice_scores.values())
         if min_num_scores >= K_MIN:
             logger.info(
                 '{klass}: using Best K bandit selection'
