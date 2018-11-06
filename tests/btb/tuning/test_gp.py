@@ -77,7 +77,11 @@ class TestGP(TestCase):
         np.testing.assert_array_equal(tuner.X, X)
         np.testing.assert_array_equal(tuner.y, y)
         gpr_mock.assert_called_once_with(normalize_y=True)
-        gp_mock.fit.assert_called_once_with(X, y)
+
+        # compare arrays for equality, ignoring differences from reshaping
+        (X_actual, y_actual), _ = gp_mock.fit.call_args
+        np.testing.assert_array_equal(X_actual.ravel(), X.ravel())
+        np.testing.assert_array_equal(y_actual.ravel(), y.ravel())
 
     # METHOD: predict(self, X)
     # VALIDATE:
@@ -374,3 +378,12 @@ class TestGPEiVelocity(TestCase):
         # assert
         predict_mock.assert_called_once_with(X)
         uniform_mock.assert_not_called()
+
+    def test_add_single_tunable(self):
+        # See HDI-Project/BTB#84
+        tunables = [
+            ('a_float_param', HyperParameter(ParamTypes.FLOAT_EXP, [1., 2.])),
+        ]
+        tuner = GP(tunables)
+        tuner.add({'a_float_param': 1.}, 1)
+        tuner.add({'a_float_param': 1.}, 1)
