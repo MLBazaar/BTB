@@ -69,16 +69,13 @@ class BestKVelocity(BestKReward):
     """Best K velocity selector"""
 
     def compute_rewards(self, scores):
-        """
-        Compute the "velocity" of (average distance between) the k+1 best
-        scores. Return a list with those k velocities padded out with zeros so
-        that the count remains the same.
-        """
-        # get the k + 1 best scores in descending order
-        best_scores = sorted(scores, reverse=True)[:self.k + 1]
-        velocities = [best_scores[i] - best_scores[i + 1]
-                      for i in range(len(best_scores) - 1)]
+        """Compute the velocity of the best scores
 
-        # pad the list out with zeros to maintain the length of the list
-        zeros = (len(scores) - self.k) * [0]
-        return velocities + zeros
+        The velocities are the k distances between the k+1 best scores.
+        """
+        k = self.k
+        m = max(len(scores) - k, 0)
+        best_scores = sorted(scores)[-k - 1:]
+        velocities = np.diff(best_scores)
+        nans = np.full(m, np.nan)
+        return list(velocities) + list(nans)
