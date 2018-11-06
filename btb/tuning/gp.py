@@ -5,6 +5,7 @@ import logging
 import numpy as np
 from scipy.stats import norm
 from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import Matern
 
 from btb.tuning.tuner import BaseTuner
 from btb.tuning.uniform import Uniform
@@ -24,6 +25,7 @@ class GP(BaseTuner):
     def __init__(self, tunables, gridding=0, r_minimum=2):
         super(GP, self).__init__(tunables, gridding=gridding)
         self.r_minimum = r_minimum
+        self.gp = GaussianProcessRegressor(normalize_y=True)
 
     def fit(self, X, y):
         super(GP, self).fit(X, y)
@@ -38,7 +40,6 @@ class GP(BaseTuner):
         if y.ndim == 1:
             y = y.reshape(-1, 1)
 
-        self.gp = GaussianProcessRegressor(normalize_y=True)
         self.gp.fit(X, y)
 
     def predict(self, X):
@@ -72,20 +73,38 @@ class GPEi(GP):
         https://www.cse.wustl.edu/~garnett/cse515t/spring_2015/files/lecture_notes/12.pdf
     """
 
-    def _acquire(self, predictions):
+    @staticmethod
+    def compute_ei(mu, sigma, y_best):
         Phi = norm.cdf
         N = norm.pdf
-
-        mu, sigma = predictions.T
-        y_best = np.max(self.y)
 
         # because we are maximizing the scores, we do mu-y_best rather than the inverse, as is
         # shown in most reference materials
         z = (mu - y_best) / sigma
 
         ei = sigma * (z * Phi(z) + N(z))
+        return ei
 
+    def _acquire(self, predictions):
+        mu, sigma = predictions.T
+        y_best = np.max(self.y)
+        ei = self.compute_ei(mu, sigma, y_best)
         return np.argmax(ei)
+
+
+class GPMatern52Ei(GPEi):
+    """GPEi tuner with Matern 5/2 kernel
+
+    See also::
+
+        Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. "Practical bayesian optimization of
+        machine learning algorithms." Advances in neural information processing systems. 2012.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(GPMatern52Ei, self).__init__(*args, **kwargs)
+        kernel = Matern(nu=5/2)
+        self.gp = GaussianProcessRegressor(kernel=kernel, normalize_y=True)
 
 
 class GPEiVelocity(GPEi):
