@@ -15,6 +15,10 @@ logger = logging.getLogger('btb')
 class BestKReward(UCB1):
     """Best K reward selector
 
+    Computes the average reward from the past scores by using only the highest k scores. In
+    implementation, the other scores are replaced with ``nan``s such that they still factor into
+    the number of arm pulls.
+
     Args:
         k (int): number of best scores to consider
     """
@@ -24,41 +28,39 @@ class BestKReward(UCB1):
         self.k = k
 
     def compute_rewards(self, scores):
-        """Retain the K best scores, and replace the rest with zeros"""
+        """Retain the K best scores, and replace the rest with nans"""
         if len(scores) > self.k:
             scores = np.copy(scores)
             inds = np.argsort(scores)[:-self.k]
-            scores[inds] = 0.0
+            scores[inds] = np.nan
 
         return list(scores)
 
     def select(self, choice_scores):
+        """Select a choice using the K best scores
+
+        Keeps the choice counts intact, but only let the bandit see the top k learners' scores.
+        If there is not enough score history to do K-selection, use the default UCB1 reward
+        function.
         """
-        Keeps the choice counts intact, but only let the bandit see the top k
-        learners' scores.
-        """
-        # if we don't have enough scores to do K-selection, use the default UCB1
-        # reward function
         min_num_scores = min(len(s) for s in choice_scores.values())
         if min_num_scores >= K_MIN:
             logger.info(
                 '{klass}: using Best K bandit selection'
                 .format(klass=type(self).__name__))
-            reward_func = self.compute_rewards
-
+            compute_rewards = self.compute_rewards
         else:
             logger.warning(
                 '{klass}: Not enough choices to do K-selection; using plain UCB1'
                 .format(klass=type(self).__name__))
-            reward_func = super(BestKReward, self).compute_rewards
+            compute_rewards = super(BestKReward, self).compute_rewards
 
         # convert the raw scores list for each choice to a "rewards" list
-        choice_rewards = {}
-        for choice, scores in choice_scores.items():
-            # only consider choices that this object was initialized with
-            if choice not in self.choices:
-                continue
-            choice_rewards[choice] = reward_func(scores)
+        choice_rewards = {
+            choice: compute_rewards(choice_scores[choice])
+            for choice in choice_scores
+            if choice in self.choices
+        }
 
         return self.bandit(choice_rewards)
 
