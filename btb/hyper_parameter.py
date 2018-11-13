@@ -123,7 +123,6 @@ class HyperParameter(object):
             return not x
         return NotImplemented
 
-
     def __getnewargs__(self):
         return (self.param_type, self._param_range)
 
