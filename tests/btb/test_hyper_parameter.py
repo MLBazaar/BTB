@@ -205,10 +205,10 @@ class TestHyperparameter(unittest.TestCase):
             with self.assertRaises(ValueError):
                 HyperParameter(invalid_param_type, [None])
 
-    @unittest.expectedFailure
     def test_can_pickle(self):
-        for param_type, param_range in self.parameter_constructions:
-            param = HyperParameter(param_type, param_range)
-            pickled = pickle.dumps(param, pickle.HIGHEST_PROTOCOL)
-            unpickled = pickle.loads(pickled)
-            self.assertEqual(param, unpickled)
+        for protocol in range(0, pickle.HIGHEST_PROTOCOL+1):
+            for param_type, param_range in self.parameter_constructions:
+                param = HyperParameter(param_type, param_range)
+                pickled = pickle.dumps(param, protocol)
+                unpickled = pickle.loads(pickled)
+                self.assertEqual(param, unpickled)
