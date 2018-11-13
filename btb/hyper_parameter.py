@@ -58,6 +58,10 @@ class HyperParameter(object):
         raise NotImplementedError()
 
     def __init__(self, param_type=None, param_range=None):
+        # maintain original param_range
+        self._param_range = param_range
+
+        # transformed range
         self.range = [
             self.cast(value)
             # "the value None is allowed for every parameter type"
@@ -120,6 +124,10 @@ class HyperParameter(object):
         return NotImplemented
 
 
+    def __getnewargs__(self):
+        return (self.param_type, self._param_range)
+
+
 class IntHyperParameter(HyperParameter):
     param_type = ParamTypes.INT
     is_integer = True
@@ -163,6 +171,7 @@ class IntExpHyperParameter(FloatExpHyperParameter):
 class CatHyperParameter(HyperParameter):
 
     def __init__(self, param_type=None, param_range=None):
+        super(CatHyperParameter, self).__init__(param_type, param_range)
         self.cat_transform = {self.cast(each): 0 for each in param_range}
         self.range = [0.0, 1.0]
 
