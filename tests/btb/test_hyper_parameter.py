@@ -1,5 +1,7 @@
 import copy
+import pickle
 import random
+import tempfile
 import unittest
 
 import numpy as np
@@ -202,3 +204,11 @@ class TestHyperparameter(unittest.TestCase):
         for invalid_param_type in invalid_param_types:
             with self.assertRaises(ValueError):
                 HyperParameter(invalid_param_type, [None])
+
+    @unittest.expectedFailure
+    def test_can_pickle(self):
+        for param_type, param_range in self.parameter_constructions:
+            param = HyperParameter(param_type, param_range)
+            pickled = pickle.dumps(param, pickle.HIGHEST_PROTOCOL)
+            unpickled = pickle.loads(pickled)
+            self.assertEqual(param, unpickled)
