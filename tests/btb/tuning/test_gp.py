@@ -4,7 +4,7 @@ import numpy as np
 from mock import Mock, patch
 
 from btb.hyper_parameter import HyperParameter, ParamTypes
-from btb.tuning.gp import GP, GPEi, GPEiVelocity
+from btb.tuning.gp import GP, GPEi, GPMatern52Ei, GPEiVelocity
 
 
 class TestGP(TestCase):
@@ -259,6 +259,30 @@ class TestGPEi(TestCase):
 
         # assert
         assert best == 1
+
+    def test_add_propose(self):
+        tunables = [
+            ('a', HyperParameter('int', [0, 10]))
+        ]
+        tuner = GPEi(tunables)
+        tuner.add({'a': 1}, 0.5)
+        tuner.add({'a': 2}, 0.5)
+        tuner.propose()
+
+
+class TestGPMatern52Ei(TestCase):
+
+    def test(self):
+        tunables = [
+            ('a', HyperParameter('int', [0, 10]))
+        ]
+        tuner = GPEi(tunables)
+        tuner.add({'a': 1}, 0.5)
+        tuner.add({'a': 3}, 0.7)
+        tuner.add({'a': 5}, 0.6)
+        params = tuner.propose()
+        assert 'a' in params
+        assert np.isfinite(params['a'])
 
 
 class TestGPEiVelocity(TestCase):

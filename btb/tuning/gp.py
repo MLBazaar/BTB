@@ -74,13 +74,22 @@ class GPEi(GP):
     """
 
     @staticmethod
-    def compute_ei(mu, sigma, y_best):
+    def compute_ei(mu, sigma, t):
+        """Compute expected improvement
+
+        Args:
+            mu (array-like): m x d array, where m is the number of candidates and d is the
+                dimensionality of the hyperparameter space.
+            sigma (array-like):
+            t (scalar): best score so far
+
+        """
         Phi = norm.cdf
         N = norm.pdf
 
         # because we are maximizing the scores, we do mu-y_best rather than the inverse, as is
         # shown in most reference materials
-        z = (mu - y_best) / sigma
+        z = (mu - t) / sigma
 
         ei = sigma * (z * Phi(z) + N(z))
         return ei
