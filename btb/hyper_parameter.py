@@ -1,4 +1,3 @@
-import copy
 import math
 import random
 from collections import defaultdict
@@ -68,24 +67,6 @@ class HyperParameter(object):
             if value is not None else None
             for value in param_range
         ]
-
-    def __copy__(self):
-        cls = self.__class__
-        result = cls.__new__(cls, self.param_type, self.range)
-        result.__dict__.update(self.__dict__)
-        return result
-
-    def __deepcopy__(self, memo):
-        cls = self.__class__
-        result = cls.__new__(cls, self.param_type, self.range)
-        result.__dict__.update(self.__dict__)
-
-        memo[id(self)] = result
-
-        for k, v in self.__dict__.items():
-            setattr(result, k, copy.deepcopy(v, memo))
-
-        return result
 
     def fit_transform(self, x, y):
         return x
