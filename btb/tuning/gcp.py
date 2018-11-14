@@ -228,6 +228,7 @@ class GCPEi(GCP):
     Expected improvement criterion:
     http://people.seas.harvard.edu/~jsnoek/nips2013transfer.pdf
     """
+
     def _acquire(self, predictions):
         y_est, stderr = predictions.T
         best_y = max(self.y)
