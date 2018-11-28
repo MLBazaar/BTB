@@ -276,10 +276,9 @@ class TestGPMatern52Ei(TestCase):
         tunables = [
             ('a', HyperParameter('int', [0, 10]))
         ]
-        tuner = GPEi(tunables)
-        tuner.add({'a': 1}, 0.5)
-        tuner.add({'a': 3}, 0.7)
-        tuner.add({'a': 5}, 0.6)
+        tuner = GPMatern52Ei(tunables)
+        for s in [0.5, 0.7, 0.6, 0.6]:
+            tuner.add(tuner.propose(), s)
         params = tuner.propose()
         assert 'a' in params
         assert np.isfinite(params['a'])
