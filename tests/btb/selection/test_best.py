@@ -48,7 +48,18 @@ class TestBestKReward(TestCase):
         rewards = selector.compute_rewards(scores)
 
         # Assert
-        assert rewards == [0.83, 0.0, 0.86, 0.9]
+        np.testing.assert_array_equal(rewards, [0.83, np.nan, 0.86, 0.9])
+
+    def test_compute_rewards_duplicates(self):
+        k = 3
+        choices = ['RF', 'SVM']
+        scores = [0.7, 0.8, 0.7, 0.1, 0.8, 0.7]
+        selector = BestKReward(choices, k=k)
+        rewards = selector.compute_rewards(scores)
+        np.testing.assert_array_equal(
+            np.sort(rewards),
+            np.sort([np.nan, np.nan, np.nan, 0.7, 0.8, 0.8])
+        )
 
     # METHOD: select(self, choice_scores)
     # VALIDATE:
@@ -63,7 +74,7 @@ class TestBestKReward(TestCase):
     def test_select_more_scores_than_k_min(self, bandit_mock):
         """If min length is gt k_min, self.compute_rewards is used.
 
-        In this case, we expect the lower scores to be zeroed.
+        In this case, we expect the lower scores to be nan.
         """
 
         # Set-up
@@ -82,11 +93,19 @@ class TestBestKReward(TestCase):
         # Assert
         assert best == 'SVM'
 
-        choice_rewards = {
-            'RF': [0., 0.85, 0.83],
-            'SVM': [0., 0.95, 0.93],
+        choice_rewards_expected = {
+            'RF': [np.nan, 0.85, 0.83],
+            'SVM': [np.nan, 0.95, 0.93],
         }
-        bandit_mock.assert_called_once_with(choice_rewards)
+        # TODO
+        (choice_rewards, ), _ = bandit_mock.call_args
+        assert choice_rewards.keys() == choice_rewards_expected.keys()
+        for k in choice_rewards:
+            assert k in choice_rewards_expected
+            np.testing.assert_array_equal(
+                choice_rewards[k],
+                choice_rewards_expected[k]
+            )
 
     @patch('btb.selection.best.BestKReward.bandit')
     def test_select_less_scores_than_k_min(self, bandit_mock):
@@ -135,7 +154,10 @@ class TestBestKVelocity(TestCase):
         rewards = selector.compute_rewards(scores)
 
         # Assert
-        np.testing.assert_allclose(rewards, [0.05, 0.15, 0.1])
+        np.testing.assert_allclose(
+            np.sort(rewards),
+            np.sort([0.05, 0.15, 0.1])
+        )
 
     def test_compute_rewards_gt_k(self):
         """More scores than self.k: padding"""
@@ -148,4 +170,7 @@ class TestBestKVelocity(TestCase):
         rewards = selector.compute_rewards(scores)
 
         # Assert
-        np.testing.assert_allclose(rewards, [0.05, 0.15, 0.1, 0., 0.])
+        np.testing.assert_allclose(
+            np.sort(rewards),
+            np.sort([0.05, 0.15, 0.1, np.nan, np.nan])
+        )
