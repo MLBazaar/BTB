@@ -250,6 +250,9 @@
 <em class="property">class </em><code class="descclassname">btb.selection.best.</code><code class="descname">BestKReward</code><span class="sig-paren">(</span><em>choices</em>, <em>k=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/best.html#BestKReward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKReward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="btb.selection.ucb1.html#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.ucb1.UCB1</span></code></a></p>
 <p>Best K reward selector</p>
+<p>Computes the average reward from the past scores by using only the highest k scores. In
+implementation, the other scores are replaced with <a href="#id1"><span class="problematic" id="id2">``</span></a>nan``s such that they still factor into
+the number of arm pulls.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -261,14 +264,16 @@
 <dl class="method">
 <dt id="btb.selection.best.BestKReward.compute_rewards">
 <code class="descname">compute_rewards</code><span class="sig-paren">(</span><em>scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/best.html#BestKReward.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKReward.compute_rewards" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retain the K best scores, and replace the rest with zeros</p>
+<dd><p>Retain the K best scores, and replace the rest with nans</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="btb.selection.best.BestKReward.select">
 <code class="descname">select</code><span class="sig-paren">(</span><em>choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/best.html#BestKReward.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKReward.select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Keeps the choice counts intact, but only let the bandit see the top k
-learners’ scores.</p>
+<dd><p>Select a choice using the K best scores</p>
+<p>Keeps the choice counts intact, but only let the bandit see the top k learners’ scores.
+If there is not enough score history to do K-selection, use the default UCB1 reward
+function.</p>
 </dd></dl>
 
 </dd></dl>
@@ -281,9 +286,8 @@ learners’ scores.</p>
 <dl class="method">
 <dt id="btb.selection.best.BestKVelocity.compute_rewards">
 <code class="descname">compute_rewards</code><span class="sig-paren">(</span><em>scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/best.html#BestKVelocity.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.best.BestKVelocity.compute_rewards" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the “velocity” of (average distance between) the k+1 best
-scores. Return a list with those k velocities padded out with zeros so
-that the count remains the same.</p>
+<dd><p>Compute the velocity of the best scores</p>
+<p>The velocities are the k distances between the k+1 best scores.</p>
 </dd></dl>
 
 </dd></dl>

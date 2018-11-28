@@ -1,0 +1,7 @@
+btb.util module
+===============
+
+.. automodule:: btb.util
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>btb package &mdash; BTB 0.2.4-dev documentation</title>
+  <title>btb.util module &mdash; BTB 0.2.4-dev documentation</title>
   
 
   
@@ -216,14 +216,14 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>btb package</li>
+      <li>btb.util module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/HDI-Project/btb/blob/master/docs/api/btb.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/HDI-Project/btb/blob/master/docs/api/btb.util.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -237,149 +237,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-btb">
-<span id="btb-package"></span><h1>btb package<a class="headerlink" href="#module-btb" title="Permalink to this headline">¶</a></h1>
-<p>Top-level package for BTB.</p>
-<dl class="class">
-<dt id="btb.HyperParameter">
-<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">HyperParameter</code><span class="sig-paren">(</span><em>param_type=None</em>, <em>param_range=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/hyper_parameter.html#HyperParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="btb.HyperParameter.cast">
-<code class="descname">cast</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/hyper_parameter.html#HyperParameter.cast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.cast" title="Permalink to this definition">¶</a></dt>
+  <div class="section" id="module-btb.util">
+<span id="btb-util-module"></span><h1>btb.util module<a class="headerlink" href="#module-btb.util" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="btb.util.shuffle">
+<code class="descclassname">btb.util.</code><code class="descname">shuffle</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/util.html#shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.util.shuffle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="btb.HyperParameter.fit_transform">
-<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/hyper_parameter.html#HyperParameter.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="btb.HyperParameter.get_grid_axis">
-<code class="descname">get_grid_axis</code><span class="sig-paren">(</span><em>grid_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/hyper_parameter.html#HyperParameter.get_grid_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.get_grid_axis" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="btb.HyperParameter.inverse_transform">
-<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/hyper_parameter.html#HyperParameter.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.inverse_transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.HyperParameter.is_integer">
-<code class="descname">is_integer</code><em class="property"> = False</em><a class="headerlink" href="#btb.HyperParameter.is_integer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.HyperParameter.param_type">
-<code class="descname">param_type</code><em class="property"> = None</em><a class="headerlink" href="#btb.HyperParameter.param_type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="btb.HyperParameter.subclasses">
-<em class="property">classmethod </em><code class="descname">subclasses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/hyper_parameter.html#HyperParameter.subclasses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.HyperParameter.subclasses" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="btb.ParamTypes">
-<em class="property">class </em><code class="descclassname">btb.</code><code class="descname">ParamTypes</code><a class="reference internal" href="../_modules/btb/hyper_parameter.html#ParamTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.ParamTypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
-<p>An enumeration.</p>
-<dl class="attribute">
-<dt id="btb.ParamTypes.BOOL">
-<code class="descname">BOOL</code><em class="property"> = 8</em><a class="headerlink" href="#btb.ParamTypes.BOOL" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.ParamTypes.FLOAT">
-<code class="descname">FLOAT</code><em class="property"> = 4</em><a class="headerlink" href="#btb.ParamTypes.FLOAT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.ParamTypes.FLOAT_CAT">
-<code class="descname">FLOAT_CAT</code><em class="property"> = 6</em><a class="headerlink" href="#btb.ParamTypes.FLOAT_CAT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.ParamTypes.FLOAT_EXP">
-<code class="descname">FLOAT_EXP</code><em class="property"> = 5</em><a class="headerlink" href="#btb.ParamTypes.FLOAT_EXP" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.ParamTypes.INT">
-<code class="descname">INT</code><em class="property"> = 1</em><a class="headerlink" href="#btb.ParamTypes.INT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.ParamTypes.INT_CAT">
-<code class="descname">INT_CAT</code><em class="property"> = 3</em><a class="headerlink" href="#btb.ParamTypes.INT_CAT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.ParamTypes.INT_EXP">
-<code class="descname">INT_EXP</code><em class="property"> = 2</em><a class="headerlink" href="#btb.ParamTypes.INT_EXP" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.ParamTypes.STRING">
-<code class="descname">STRING</code><em class="property"> = 7</em><a class="headerlink" href="#btb.ParamTypes.STRING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="btb.recommendation.html">btb.recommendation package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="btb.recommendation.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.recommendation.matrix_factorization.html">btb.recommendation.matrix_factorization module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.recommendation.recommender.html">btb.recommendation.recommender module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.recommendation.uniform.html">btb.recommendation.uniform module</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.constants.html">btb.selection.constants module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.selection.uniform.html">btb.selection.uniform module</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.constants.html">btb.tuning.constants module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.custom_tuner.html">btb.tuning.custom_tuner module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.gcp.html">btb.tuning.gcp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.gp.html">btb.tuning.gp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tuner.html">btb.tuning.tuner module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.uniform.html">btb.tuning.uniform module</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="btb.hyper_parameter.html">btb.hyper_parameter module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="btb.util.html">btb.util module</a></li>
-</ul>
-</div>
-</div>
 </div>
 
 
