@@ -1,4 +1,3 @@
-import copy
 import math
 import random
 from collections import defaultdict
@@ -58,30 +57,16 @@ class HyperParameter(object):
         raise NotImplementedError()
 
     def __init__(self, param_type=None, param_range=None):
+        # maintain original param_range
+        self._param_range = param_range
+
+        # transformed range
         self.range = [
             self.cast(value)
             # "the value None is allowed for every parameter type"
             if value is not None else None
             for value in param_range
         ]
-
-    def __copy__(self):
-        cls = self.__class__
-        result = cls.__new__(cls, self.param_type, self.range)
-        result.__dict__.update(self.__dict__)
-        return result
-
-    def __deepcopy__(self, memo):
-        cls = self.__class__
-        result = cls.__new__(cls, self.param_type, self.range)
-        result.__dict__.update(self.__dict__)
-
-        memo[id(self)] = result
-
-        for k, v in self.__dict__.items():
-            setattr(result, k, copy.deepcopy(v, memo))
-
-        return result
 
     def fit_transform(self, x, y):
         return x
@@ -118,6 +103,9 @@ class HyperParameter(object):
         if x is not NotImplemented:
             return not x
         return NotImplemented
+
+    def __getnewargs__(self):
+        return (self.param_type, self._param_range)
 
 
 class IntHyperParameter(HyperParameter):
@@ -163,6 +151,7 @@ class IntExpHyperParameter(FloatExpHyperParameter):
 class CatHyperParameter(HyperParameter):
 
     def __init__(self, param_type=None, param_range=None):
+        super(CatHyperParameter, self).__init__(param_type, param_range)
         self.cat_transform = {self.cast(each): 0 for each in param_range}
         self.range = [0.0, 1.0]
 

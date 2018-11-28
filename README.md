@@ -13,6 +13,8 @@ Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
 
+*BTB is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).*
+
 ## Installation
 
 ### Install with pip
