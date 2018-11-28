@@ -9,6 +9,7 @@ from sklearn.gaussian_process.kernels import Matern
 
 from btb.tuning.tuner import BaseTuner
 from btb.tuning.uniform import Uniform
+from btb.util import asarray2d
 
 logger = logging.getLogger('btb')
 
@@ -25,7 +26,6 @@ class GP(BaseTuner):
     def __init__(self, tunables, gridding=0, r_minimum=2):
         super(GP, self).__init__(tunables, gridding=gridding)
         self.r_minimum = r_minimum
-        self.gp = GaussianProcessRegressor(normalize_y=True)
 
     def fit(self, X, y):
         super(GP, self).fit(X, y)
@@ -34,12 +34,10 @@ class GP(BaseTuner):
         if X.shape[0] < self.r_minimum:
             return
 
-        if X.ndim == 1:
-            X = X.reshape(-1, 1)
+        X = asarray2d(X)
+        y = asarray2d(y)
 
-        if y.ndim == 1:
-            y = y.reshape(-1, 1)
-
+        self.gp = GaussianProcessRegressor(normalize_y=True)
         self.gp.fit(X, y)
 
     def predict(self, X):
@@ -50,7 +48,7 @@ class GP(BaseTuner):
             return Uniform(self.tunables).predict(X)
 
         y, stdev = self.gp.predict(X, return_std=True)
-        return np.array(list(zip(y, stdev)))
+        return np.hstack((asarray2d(y), asarray2d(stdev)))
 
     def _acquire(self, predictions):
         """
@@ -95,6 +93,12 @@ class GPEi(GP):
         return ei
 
     def _acquire(self, predictions):
+        # if ``predictions`` is not an array with shape (n, 2), then we must have been using the
+        # Uniform tuner because of insufficient data. In this case, we defer to the default GP
+        # acquisition function, which is to return the max prediction.
+        if predictions.ndim <= 1 or (predictions.ndim == 2 and predictions.shape[1] == 1):
+            return super(GPEi, self)._acquire(predictions)
+
         mu, sigma = predictions.T
         y_best = np.max(self.y)
         ei = self.compute_ei(mu, sigma, y_best)
