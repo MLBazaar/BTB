@@ -113,8 +113,8 @@ class TestHyperparameter(unittest.TestCase):
     # ############## #
 
     def test_int(self):
-        hyp = HyperParameter(ParamTypes.INT, [1, 3])
-        self.assertEqual(hyp.range, [1, 3])
+        hyp = HyperParameter(ParamTypes.INT, [None, 1, 3])
+        self.assertEqual(hyp.range, [None, 1, 3])
         transformed = hyp.fit_transform(
             np.array([1, 2, 3]),
             np.array([0.5, 0.6, 0.1])
@@ -126,8 +126,8 @@ class TestHyperparameter(unittest.TestCase):
         self.assertEqual(hyp.range, [1, 3])
 
     def test_float(self):
-        hyp = HyperParameter(ParamTypes.FLOAT, [1.5, 3.2])
-        self.assertEqual(hyp.range, [1.5, 3.2])
+        hyp = HyperParameter(ParamTypes.FLOAT, [None, 1.5, 3.2])
+        self.assertEqual(hyp.range, [None, 1.5, 3.2])
         transformed = hyp.fit_transform(
             np.array([2, 2.4, 3.1]),
             np.array([0.5, 0.6, 0.1]),
@@ -137,8 +137,8 @@ class TestHyperparameter(unittest.TestCase):
         np.testing.assert_array_equal(inverse_transform, np.array([1.7]))
 
     def test_float_exp(self):
-        hyp = HyperParameter(ParamTypes.FLOAT_EXP, [0.001, 100])
-        self.assertEqual(hyp.range, [-3.0, 2.0])
+        hyp = HyperParameter(ParamTypes.FLOAT_EXP, [None, 0.001, 100])
+        self.assertEqual(hyp.range, [None, -3.0, 2.0])
         transformed = hyp.fit_transform(
             np.array([0.01, 1, 10]),
             np.array([-2.0, 0.0, 1.0])
@@ -153,8 +153,8 @@ class TestHyperparameter(unittest.TestCase):
         np.testing.assert_array_equal(inverse_transform, np.array([10.0]))
 
     def test_int_exp(self):
-        hyp = HyperParameter(ParamTypes.INT_EXP, [10, 10000])
-        self.assertEqual(hyp.range, [1, 4])
+        hyp = HyperParameter(ParamTypes.INT_EXP, [None, 10, 10000])
+        self.assertEqual(hyp.range, [None, 1, 4])
         transformed = hyp.fit_transform(np.array([100]), np.array([0.5]))
         np.testing.assert_array_equal(transformed, np.array([2]))
         inverse_transform = hyp.inverse_transform([3])
