@@ -1,4 +1,4 @@
-class Tuners(object):
+class Tuners(object):    # pragma: no cover
     """Enum class for mapping symbols to string names."""
     UNIFORM = "uniform"
     GP = "gp"

@@ -1,4 +1,3 @@
-from collections import OrderedDict
 from unittest import TestCase
 
 from mock import patch
@@ -10,32 +9,29 @@ class TestUCB1(TestCase):
 
     # METHOD: bandit(self, choice_rewards)
     # VALIDATE:
-    #     * returned balues
+    #     * returned values
     # NOTES:
     #     * random.choice will need to be mocked
 
-    @patch('btb.selection.ucb1.random')
-    def test_bandit(self, random_mock):
+    @patch('btb.selection.ucb1.shuffle')
+    def test_bandit(self, mock_shuffle):
         """Only the choices with the highest scores are returned."""
+        choices = ['DT', 'SVM', 'RF']
+        mock_shuffle.return_value = choices
 
         # Set-up
-        selector = UCB1(['DT', 'RF', 'SVM'])
-
-        random_mock.choice.return_value = 'SVM'
+        selector = UCB1(choices)
 
         # Run
-        choice_rewards = OrderedDict((
-            ('DT', [0.7, 0.8, 0.9]),
-            ('RF', [0.9, 0.93, 0.95]),
-            ('SVM', [0.9, 0.93, 0.95])
-        ))
+        choice_rewards = {
+            'DT': [0.7, 0.8, 0.9],
+            'RF': [0.9, 0.93, 0.95],
+            'SVM': [0.9, 0.93, 0.95]
+        }
 
-        # We patch dict as OrderedDict to preserve the order
-        # in .items() and make the later assert simpler.
-        # Otherwise, we could not rely on the list order.
-        with patch('btb.selection.ucb1.dict', new=OrderedDict):
-            best = selector.bandit(choice_rewards)
+        best = selector.bandit(choice_rewards)
 
         # Assert
+        # The first choice tried wins if there are duplicate max scores
         assert best == 'SVM'
-        random_mock.choice.assert_called_once_with(['RF', 'SVM'])
+        mock_shuffle.assert_called_once()

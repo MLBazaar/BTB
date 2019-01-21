@@ -2,12 +2,13 @@ from btb.selection.ucb1 import UCB1
 
 
 class HierarchicalByAlgorithm(UCB1):
+    """Hierarchical selector
+
+    Args:
+        by_algorithm (Dict[str, List]): mapping of ML algorithms to frozen set choices
+    """
+
     def __init__(self, choices, by_algorithm):
-        """
-        Needs:
-            by_algorithm: {str -> list[choice]} grouping of frozen set choices
-                by ML algorithm
-        """
         super(HierarchicalByAlgorithm, self).__init__(choices)
         self.by_algorithm = by_algorithm
 
