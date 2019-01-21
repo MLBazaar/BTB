@@ -236,7 +236,7 @@
   <h1>Source code for btb.hyper_parameter</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -293,16 +293,11 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
         <span class="c1"># maintain original param_range</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_param_range</span> <span class="o">=</span> <span class="n">param_range</span>
 
-        <span class="c1"># transformed range</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-            <span class="c1"># &quot;the value None is allowed for every parameter type&quot;</span>
-            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">param_range</span>
-        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">param_range</span><span class="p">]</span>
 
 <div class="viewcode-block" id="HyperParameter.fit_transform"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.HyperParameter.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x</span></div>
@@ -330,14 +325,16 @@
             <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param_type</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="n">param_type</span> <span class="ow">and</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">is_integer</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">is_integer</span> <span class="ow">and</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="bp">NotImplemented</span>
 
-    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>   <span class="c1"># pragma: no cover</span>
         <span class="c1"># Not needed in Python 3</span>
         <span class="c1"># See https://stackoverflow.com/a/25176504 for details</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">NotImplemented</span><span class="p">:</span>
             <span class="k">return</span> <span class="ow">not</span> <span class="n">x</span>
+
         <span class="k">return</span> <span class="bp">NotImplemented</span>
 
     <span class="k">def</span> <span class="nf">__getnewargs__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -349,7 +346,10 @@
     <span class="n">is_integer</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="IntHyperParameter.cast"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.IntHyperParameter.cast">[docs]</a>    <span class="k">def</span> <span class="nf">cast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="IntHyperParameter.inverse_transform"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.IntHyperParameter.inverse_transform">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span></div></div>
@@ -359,14 +359,20 @@
     <span class="n">param_type</span> <span class="o">=</span> <span class="n">ParamTypes</span><span class="o">.</span><span class="n">FLOAT</span>
 
 <div class="viewcode-block" id="FloatHyperParameter.cast"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.FloatHyperParameter.cast">[docs]</a>    <span class="k">def</span> <span class="nf">cast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
 <div class="viewcode-block" id="FloatExpHyperParameter"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.FloatExpHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">FloatExpHyperParameter</span><span class="p">(</span><span class="n">HyperParameter</span><span class="p">):</span>
     <span class="n">param_type</span> <span class="o">=</span> <span class="n">ParamTypes</span><span class="o">.</span><span class="n">FLOAT_EXP</span>
 
 <div class="viewcode-block" id="FloatExpHyperParameter.cast"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.FloatExpHyperParameter.cast">[docs]</a>    <span class="k">def</span> <span class="nf">cast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="FloatExpHyperParameter.fit_transform"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.FloatExpHyperParameter.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
@@ -432,8 +438,9 @@
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_transform</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">inv_map</span><span class="p">[</span><span class="n">value</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="n">inv_map</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-            <span class="n">keys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">inv_map</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">inv_map</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
             <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">keys</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span>
             <span class="n">min_diff</span> <span class="o">=</span> <span class="n">diff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">max_key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -450,38 +457,55 @@
             <span class="c1"># Get a random category from the ones that had the given score</span>
             <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">inv_map</span><span class="o">.</span><span class="n">get</span><span class="p">)(</span><span class="n">max_key</span><span class="p">))</span>
 
-        <span class="n">inv_trans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">invert</span><span class="p">)(</span><span class="n">inv_map</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="n">transformed</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">invert</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">transformed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
 
-        <span class="c1"># Handle equally scalars and numpy arrays</span>
-        <span class="k">return</span> <span class="n">inv_trans</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">inv_trans</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">inv_trans</span></div></div>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">transformed</span> <span class="o">=</span> <span class="n">invert</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">transformed</span></div></div>
 
 
 <div class="viewcode-block" id="IntCatHyperParameter"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.IntCatHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">IntCatHyperParameter</span><span class="p">(</span><span class="n">CatHyperParameter</span><span class="p">):</span>
     <span class="n">param_type</span> <span class="o">=</span> <span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT_CAT</span>
 
 <div class="viewcode-block" id="IntCatHyperParameter.cast"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.IntCatHyperParameter.cast">[docs]</a>    <span class="k">def</span> <span class="nf">cast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
 <div class="viewcode-block" id="FloatCatHyperParameter"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.FloatCatHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">FloatCatHyperParameter</span><span class="p">(</span><span class="n">CatHyperParameter</span><span class="p">):</span>
     <span class="n">param_type</span> <span class="o">=</span> <span class="n">ParamTypes</span><span class="o">.</span><span class="n">FLOAT_CAT</span>
 
 <div class="viewcode-block" id="FloatCatHyperParameter.cast"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.FloatCatHyperParameter.cast">[docs]</a>    <span class="k">def</span> <span class="nf">cast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
 <div class="viewcode-block" id="StringCatHyperParameter"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.StringCatHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">StringCatHyperParameter</span><span class="p">(</span><span class="n">CatHyperParameter</span><span class="p">):</span>
     <span class="n">param_type</span> <span class="o">=</span> <span class="n">ParamTypes</span><span class="o">.</span><span class="n">STRING</span>
 
 <div class="viewcode-block" id="StringCatHyperParameter.cast"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.StringCatHyperParameter.cast">[docs]</a>    <span class="k">def</span> <span class="nf">cast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
 <div class="viewcode-block" id="BoolCatHyperParameter"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.BoolCatHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">BoolCatHyperParameter</span><span class="p">(</span><span class="n">CatHyperParameter</span><span class="p">):</span>
     <span class="n">param_type</span> <span class="o">=</span> <span class="n">ParamTypes</span><span class="o">.</span><span class="n">BOOL</span>
 
 <div class="viewcode-block" id="BoolCatHyperParameter.cast"><a class="viewcode-back" href="../../api/btb.hyper_parameter.html#btb.BoolCatHyperParameter.cast">[docs]</a>    <span class="k">def</span> <span class="nf">cast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 
            </div>
