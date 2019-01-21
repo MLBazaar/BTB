@@ -15,7 +15,8 @@ install_requires = [
     'enum34>=1.1.6; python_version=="2.7"',
     'numpy>=1.14.2',
     'scikit-learn>=0.19.1',
-    'scipy>=1.0.1'
+    'scipy>=1.0.1',
+    'six>=1.0',
 ]
 
 tests_require = [
@@ -58,6 +59,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.2.2-dev',
+    version='0.2.4-dev',
     zip_safe=False,
 )

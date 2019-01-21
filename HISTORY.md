@@ -1,5 +1,15 @@
 # History
 
+## 0.2.2
+
+### Internal Improvements
+
+* Updated documentation
+
+### Bug fixes
+
+* Issue #94: Fix unicode `param_type` caused error on python 2.
+
 ## 0.2.1
 
 ### Bug fixes

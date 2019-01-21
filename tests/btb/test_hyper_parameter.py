@@ -1,4 +1,5 @@
 import copy
+import pickle
 import random
 import unittest
 
@@ -9,6 +10,7 @@ from btb.hyper_parameter import HyperParameter, ParamTypes
 
 
 class TestHyperparameter(unittest.TestCase):
+
     def setUp(self):
         self.parameter_constructions = [
             (ParamTypes.INT, [1, 3]),
@@ -34,28 +36,6 @@ class TestHyperparameter(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             HyperParameter(ParamTypes.INT, [1])
 
-    def test_copy(self):
-        for typ, rang in self.parameter_constructions:
-            hyp = HyperParameter(typ, rang)
-            hyp_copy = copy.copy(hyp)
-            self.assertIsNot(hyp, hyp_copy)
-            self.assertIs(type(hyp), type(hyp_copy))
-            self.assertEqual(hyp.range, hyp_copy.range)
-
-            # shallow copy should just have copied references
-            self.assertIs(hyp.range, hyp_copy.range)
-
-    def test_deepcopy(self):
-        for typ, rang in self.parameter_constructions:
-            hyp = HyperParameter(typ, rang)
-            hyp_copy = copy.deepcopy(hyp)
-            self.assertIsNot(hyp, hyp_copy)
-            self.assertIs(type(hyp), type(hyp_copy))
-            self.assertEqual(hyp.range, hyp_copy.range)
-
-            # deep copy should have new attributes
-            self.assertIsNot(hyp.range, hyp_copy.range)
-
     def test___init___with_string_param_type_valid(self):
         r = random.Random()
         r.seed(1)
@@ -75,6 +55,15 @@ class TestHyperparameter(unittest.TestCase):
                     HyperParameter(type_, range_)
                 )
 
+    def test___init___with_unicode_param_type(self):
+        param_type_str = 'int'
+        param_type_unicode = u'int'
+        param_range = [0, 10]
+
+        self.assertEqual(
+            HyperParameter(param_type_unicode, param_range),
+            HyperParameter(param_type_str, param_range))
+
     def test___init___with_string_param_type_invalid(self):
         # invalid string param types
         invalid_param_types = ['a', 0, object(), 'integer', 'foo']
@@ -82,12 +71,42 @@ class TestHyperparameter(unittest.TestCase):
             with self.assertRaises(ValueError):
                 HyperParameter(invalid_param_type, [None])
 
+    def test___copy__(self):
+        for typ, rang in self.parameter_constructions:
+            hyp = HyperParameter(typ, rang)
+            hyp_copy = copy.copy(hyp)
+            self.assertIsNot(hyp, hyp_copy)
+            self.assertIs(type(hyp), type(hyp_copy))
+            self.assertEqual(hyp.range, hyp_copy.range)
+
+            # shallow copy should just have copied references
+            self.assertIs(hyp.range, hyp_copy.range)
+
+    def test___deepcopy__(self):
+        for typ, rang in self.parameter_constructions:
+            hyp = HyperParameter(typ, rang)
+            hyp_copy = copy.deepcopy(hyp)
+            self.assertIsNot(hyp, hyp_copy)
+            self.assertIs(type(hyp), type(hyp_copy))
+            self.assertEqual(hyp.range, hyp_copy.range)
+
+            # deep copy should have new attributes
+            self.assertIsNot(hyp.range, hyp_copy.range)
+
     def test___eq__not_implemented(self):
         an_hyperparam = HyperParameter(ParamTypes.INT, [1, 5])
         not_an_hyperparam = 3
 
         self.assertEqual(an_hyperparam.__eq__(not_an_hyperparam), NotImplemented)
         self.assertNotEqual(an_hyperparam, not_an_hyperparam)
+
+    def test_can_pickle(self):
+        for protocol in range(0, pickle.HIGHEST_PROTOCOL + 1):
+            for param_type, param_range in self.parameter_constructions:
+                param = HyperParameter(param_type, param_range)
+                pickled = pickle.dumps(param, protocol)
+                unpickled = pickle.loads(pickled)
+                self.assertEqual(param, unpickled)
 
     # ############## #
     # Specific Types #
@@ -201,3 +220,6 @@ class TestHyperparameter(unittest.TestCase):
             inverse_transform,
             np.array([None, 'a', 'b', 'c'])
         )
+
+        inverse_transform = hyp.inverse_transform([3])
+        np.testing.assert_array_equal(inverse_transform, np.array(['c']))

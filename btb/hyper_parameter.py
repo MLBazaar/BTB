@@ -1,10 +1,10 @@
-import copy
 import math
 import random
 from collections import defaultdict
 from enum import Enum
 
 import numpy as np
+import six
 
 
 class ParamTypes(Enum):
@@ -43,7 +43,7 @@ class HyperParameter(object):
 
     def __new__(cls, param_type=None, param_range=None):
         if not isinstance(param_type, ParamTypes):
-            if (isinstance(param_type, str) and
+            if (isinstance(param_type, six.string_types) and
                     param_type.upper() in ParamTypes.__members__):
                 param_type = ParamTypes[param_type.upper()]
             else:
@@ -57,25 +57,11 @@ class HyperParameter(object):
         raise NotImplementedError()
 
     def __init__(self, param_type=None, param_range=None):
+
+        # maintain original param_range
+        self._param_range = param_range
+
         self.range = [self.cast(value) for value in param_range]
-
-    def __copy__(self):
-        cls = self.__class__
-        result = cls.__new__(cls, self.param_type, self.range)
-        result.__dict__.update(self.__dict__)
-        return result
-
-    def __deepcopy__(self, memo):
-        cls = self.__class__
-        result = cls.__new__(cls, self.param_type, self.range)
-        result.__dict__.update(self.__dict__)
-
-        memo[id(self)] = result
-
-        for k, v in self.__dict__.items():
-            setattr(result, k, copy.deepcopy(v, memo))
-
-        return result
 
     def fit_transform(self, x, y):
         return x
@@ -98,20 +84,25 @@ class HyperParameter(object):
         )
 
     def __eq__(self, other):
-        # See https://stackoverflow.com/a/25176504/2514228 for details
+        # See https://stackoverflow.com/a/25176504 for details
         if isinstance(self, other.__class__):
             return (self.param_type is other.param_type and
                     self.is_integer == other.is_integer and
                     self.range == other.range)
+
         return NotImplemented
 
     def __ne__(self, other):   # pragma: no cover
         # Not needed in Python 3
-        # See https://stackoverflow.com/a/25176504/2514228 for details
+        # See https://stackoverflow.com/a/25176504 for details
         x = self.__eq__(other)
         if x is not NotImplemented:
             return not x
+
         return NotImplemented
+
+    def __getnewargs__(self):
+        return (self.param_type, self._param_range)
 
 
 class IntHyperParameter(HyperParameter):
@@ -160,6 +151,7 @@ class IntExpHyperParameter(FloatExpHyperParameter):
 class CatHyperParameter(HyperParameter):
 
     def __init__(self, param_type=None, param_range=None):
+        super(CatHyperParameter, self).__init__(param_type, param_range)
         self.cat_transform = {self.cast(each): 0 for each in param_range}
         self.range = [0.0, 1.0]
 

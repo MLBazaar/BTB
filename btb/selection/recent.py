@@ -11,33 +11,34 @@ logger = logging.getLogger('btb')
 
 
 class RecentKReward(UCB1):
+    """Recent K reward selector
+
+    Args:
+        k (int): number of best scores to consider
+    """
+
     def __init__(self, choices, k=K_MIN):
-        """
-        Needs:
-            k: number of best scores to consider
-        """
         super(RecentKReward, self).__init__(choices)
         self.k = k
 
     def compute_rewards(self, scores):
-        """ Retain the K most recent scores, and replace the rest with zeros """
+        """Retain the K most recent scores, and replace the rest with zeros"""
         for i in range(len(scores)):
             if i >= self.k:
                 scores[i] = 0.
         return scores
 
     def select(self, choice_scores):
-        """
-        Keeps the choice counts intact but only uses the top k learner's
-        scores for usage in rewards for the bandit calculation
-        """
+        """Use the top k learner's scores for usage in rewards for the bandit calculation"""
         # if we don't have enough scores to do K-selection, fall back to UCB1
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
-            logger.info('RecentK: using Best K bandit selection')
+            logger.info('{klass}: using Best K bandit selection'.format(klass=type(self).__name__))
             reward_func = self.compute_rewards
         else:
-            logger.warn('RecentK: Not enough choices to do K-selection; using plain UCB1')
+            logger.warning(
+                '{klass}: Not enough choices to do K-selection; using plain UCB1'
+                .format(klass=type(self).__name__))
             reward_func = super(RecentKReward, self).compute_rewards
 
         choice_rewards = {}
@@ -50,11 +51,13 @@ class RecentKReward(UCB1):
 
 
 class RecentKVelocity(RecentKReward):
+    """Recent K velocity selector"""
+
     def compute_rewards(self, scores):
-        """
-        Compute the "velocity" of (average distance between) the k+1 most recent
-        scores. Return a list with those k velocities padded out with zeros so
-        that the count remains the same.
+        """Compute the velocity of thte k+1 most recent scores.
+
+        The velocity is the average distance between scores. Return a list with those k velocities
+        padded out with zeros so that the count remains the same.
         """
         # take the k + 1 most recent scores so we can get k velocities
         recent_scores = scores[:-self.k - 2:-1]
