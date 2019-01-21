@@ -1,6 +1,6 @@
 import math
 import random
-from collections import defaultdict
+from collections import Iterable, defaultdict
 from enum import Enum
 
 import numpy as np
@@ -57,16 +57,11 @@ class HyperParameter(object):
         raise NotImplementedError()
 
     def __init__(self, param_type=None, param_range=None):
+
         # maintain original param_range
         self._param_range = param_range
 
-        # transformed range
-        self.range = [
-            self.cast(value)
-            # "the value None is allowed for every parameter type"
-            if value is not None else None
-            for value in param_range
-        ]
+        self.range = [self.cast(value) for value in param_range]
 
     def fit_transform(self, x, y):
         return x
@@ -94,14 +89,16 @@ class HyperParameter(object):
             return (self.param_type is other.param_type and
                     self.is_integer == other.is_integer and
                     self.range == other.range)
+
         return NotImplemented
 
-    def __ne__(self, other):
+    def __ne__(self, other):   # pragma: no cover
         # Not needed in Python 3
         # See https://stackoverflow.com/a/25176504 for details
         x = self.__eq__(other)
         if x is not NotImplemented:
             return not x
+
         return NotImplemented
 
     def __getnewargs__(self):
@@ -113,7 +110,10 @@ class IntHyperParameter(HyperParameter):
     is_integer = True
 
     def cast(self, value):
-        return int(value)
+        if value is not None:
+            return int(value)
+        else:
+            return None
 
     def inverse_transform(self, x):
         return x.astype(int)
@@ -123,14 +123,20 @@ class FloatHyperParameter(HyperParameter):
     param_type = ParamTypes.FLOAT
 
     def cast(self, value):
-        return float(value)
+        if value is not None:
+            return float(value)
+        else:
+            return None
 
 
 class FloatExpHyperParameter(HyperParameter):
     param_type = ParamTypes.FLOAT_EXP
 
     def cast(self, value):
-        return math.log10(float(value))
+        if value is not None:
+            return math.log10(float(value))
+        else:
+            return None
 
     def fit_transform(self, x, y):
         x = x.astype(float)
@@ -196,8 +202,9 @@ class CatHyperParameter(HyperParameter):
         for key, value in self.cat_transform.items():
             inv_map[value].append(key)
 
-        def invert(inv_map, x):
-            keys = np.fromiter(inv_map.keys(), dtype=float)
+        keys = np.fromiter(inv_map.keys(), dtype=float)
+
+        def invert(x):
             diff = (np.abs(keys - x))
             min_diff = diff[0]
             max_key = keys[0]
@@ -214,35 +221,52 @@ class CatHyperParameter(HyperParameter):
             # Get a random category from the ones that had the given score
             return random.choice(np.vectorize(inv_map.get)(max_key))
 
-        inv_trans = np.vectorize(invert)(inv_map, x)
+        if isinstance(x, Iterable):
+            transformed = list(map(invert, x))
+            if isinstance(x, np.ndarray):
+                transformed = np.array(transformed)
 
-        # Handle equally scalars and numpy arrays
-        return inv_trans.item() if np.ndim(inv_trans) == 0 else inv_trans
+        else:
+            transformed = invert(x)
+
+        return transformed
 
 
 class IntCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.INT_CAT
 
     def cast(self, value):
-        return int(value)
+        if value is not None:
+            return int(value)
+        else:
+            return None
 
 
 class FloatCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.FLOAT_CAT
 
     def cast(self, value):
-        return float(value)
+        if value is not None:
+            return float(value)
+        else:
+            return None
 
 
 class StringCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.STRING
 
     def cast(self, value):
-        return str(value)
+        if value is not None:
+            return str(value)
+        else:
+            return None
 
 
 class BoolCatHyperParameter(CatHyperParameter):
     param_type = ParamTypes.BOOL
 
     def cast(self, value):
-        return bool(value)
+        if value is not None:
+            return bool(value)
+        else:
+            return None
