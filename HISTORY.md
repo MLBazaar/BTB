@@ -1,5 +1,24 @@
 # History
 
+## 0.2.4
+
+### Internal Improvements
+
+* Issue #62: Test for `None` in `HyperParameter.cast` instead of `HyperParameter.__init__`
+
+### Bug fixes
+
+* Issue #98: Categorical hyperparameters do not support `None` as input
+* Issue #89: Fix the computation of `avg_rewards` in `BestKReward`
+
+## 0.2.3
+
+### Bug fixes
+
+* Issue #84: Error in GP tuning when only one parameter is present bug
+* Issue #96: Fix pickling of HyperParameters
+* Issue #98: Fix implementation of the GPEi tuner
+
 ## 0.2.2
 
 ### Internal Improvements
