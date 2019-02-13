@@ -13,6 +13,7 @@ with open('HISTORY.md') as history_file:
 
 install_requires = [
     'enum34>=1.1.6; python_version=="2.7"',
+    'more-itertools<6; python_version=="2.7"',  # some upstream bug
     'numpy>=1.14.2',
     'scikit-learn>=0.19.1',
     'scipy>=1.0.1',
@@ -42,6 +43,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     description='Bayesian Tuning and Bandits',
     extras_require={

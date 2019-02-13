@@ -1,10 +1,16 @@
 # Config file for automatic testing at travis-ci.org
 language: python
 python:
-  - 3.6
-  - 3.5
-  - 3.4
   - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
+
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
 
 # Command to install dependencies
 install: pip install -U tox-travis
@@ -28,7 +34,7 @@ deploy:
     on:
       tags: true
       repo: HDI-Project/BTB
-      python: 3.6
+      python: 3.7
 
   # Automatically build and deploy documentation to GitHub Pages after every
   # commit
@@ -43,5 +49,4 @@ deploy:
     target-branch: gh-pages
     on:
       branch: master
-      python: 3.6
-
+      python: 3.7
