@@ -6,8 +6,8 @@ We compare the results given by a Uniform tuner and a GP-based tuner run for
 100 iterations each.
 """
 
-from btb import HyperParameter
 import btb.tuning
+from btb import HyperParameter
 
 
 def rosenbrock(x, y, a=1, b=100):
