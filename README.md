@@ -7,16 +7,9 @@
 
 A simple, extensible backend for developing auto-tuning systems.
 
-[![PyPi][pypi-img]][pypi-url]
-[![Travis][travis-img]][travis-url]
-[![CodeCov][codecov-img]][codecov-url]
-
-[pypi-img]: https://img.shields.io/pypi/v/baytune.svg
-[pypi-url]: https://pypi.python.org/pypi/baytune
-[travis-img]: https://travis-ci.org/HDI-Project/BTB.svg?branch=master
-[travis-url]: https://travis-ci.org/HDI-Project/BTB
-[codecov-img]: https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/HDI-Project/BTB
+[![PyPi][https://img.shields.io/pypi/v/baytune.svg]][https://pypi.python.org/pypi/baytune]
+[![Travis][https://travis-ci.org/HDI-Project/BTB.svg?branch=master]][https://travis-ci.org/HDI-Project/BTB]
+[![CodeCov][https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg]][https://codecov.io/gh/HDI-Project/BTB]
 
 # Overview
 

@@ -85,8 +85,8 @@ install-develop: clean-build clean-pyc ## install the package in editable mode a
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 btb tests
-	isort -c --recursive btb tests
+	flake8 btb tests examples
+	isort -c --recursive btb tests examples
 
 .PHONY: fix-lint
 fix-lint: ## fix lint issues using autoflake, autopep8, and isort
@@ -122,7 +122,6 @@ coverage: ## check code coverage quickly with the default Python
 .PHONY: docs
 docs: clean-docs ## generate Sphinx HTML documentation, including API docs
 	$(MAKE) -C docs html
-	touch docs/_build/html/.nojekyll
 
 .PHONY: view-docs
 view-docs: docs ## view docs in browser
