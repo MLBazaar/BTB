@@ -1,7 +1,0 @@
-btb.tuning.constants module
-===========================
-
-.. automodule:: btb.tuning.constants
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Credits" href="authors.html" />
-    <link rel="prev" title="btb.recommendation.uniform module" href="api/btb.recommendation.uniform.html" /> 
+    <link rel="prev" title="API Reference" href="api_reference.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,44 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tuners.html">Tuners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommenders.html">Recommenders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.hyper_parameter.html">btb.hyper_parameter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.html#submodules">Submodules</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.constants.html">btb.tuning.constants module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.custom_tuner.html">btb.tuning.custom_tuner module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.gcp.html">btb.tuning.gcp module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.gp.html">btb.tuning.gp module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuner.html">btb.tuning.tuner module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.uniform.html">btb.tuning.uniform module</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.html#submodules">Submodules</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.constants.html">btb.selection.constants module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.recommendation.html">btb.recommendation package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.recommendation.html#submodules">Submodules</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.recommendation.matrix_factorization.html">btb.recommendation.matrix_factorization module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.recommendation.recommender.html">btb.recommendation.recommender module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.recommendation.uniform.html">btb.recommendation.uniform module</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
@@ -310,8 +273,7 @@ are welcome :)</li>
 this is how you set up your fork for local development:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ mkvirtualenv BTB
 $ <span class="nb">cd</span> BTB/
-$ pip install -e .
-$ pip install -r requirements_dev.txt
+$ make install-develop
 </pre></div>
 </div>
 </li>
@@ -331,13 +293,13 @@ $ make coverage   <span class="c1"># Get the coverage report</span>
 </li>
 <li><p class="first">When you’re done making changes, check that your changes pass flake8 and the
 tests, including testing other Python versions with tox:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ make test-all
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ make lint       <span class="c1"># Check code styling</span>
+$ make test-all   <span class="c1"># Execute tests on all python versions</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Make also sure to include the necessary documentation in the code as docstrings following
-the [google](<a class="reference external" href="https://google.github.io/styleguide/pyguide.html?showone=Comments#Comments">https://google.github.io/styleguide/pyguide.html?showone=Comments#Comments</a>)
-or the [numpy](<a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">https://numpydoc.readthedocs.io/en/latest/format.html</a>) docstring style.
+the <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">google docstring</a> style.
 If you want to view how your documentation will look like when it is published, you can
 generate and view the docs with this command:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ make viewdocs
@@ -418,22 +380,31 @@ mocked.</li>
 <li>Update the version in <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> and <code class="docutils literal notranslate"><span class="pre">btb/__init__.py</span></code> to open the next
 development interation.</li>
 </ol>
-<p><strong>Note:</strong> Before starting the process, make sure that <code class="docutils literal notranslate"><span class="pre">HISTORY.md</span></code> has a section titled
-<strong>Unreleased</strong> with the list of changes that will be included in the new version, and that
-these changes are committed and available in <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.
-Normally this is just a list of the Pull Requests that have been merged since the latest version.</p>
-<p>Once this is done, just run the following commands:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout stable
-git merge --no-ff master    <span class="c1"># This creates a merge commit</span>
-bumpversion release   <span class="c1"># This creates a new commit and a TAG</span>
-git push --tags origin stable
-make release
-git checkout master
-git merge stable
-bumpversion --no-tag patch
-git push
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before starting the process, make sure that <code class="docutils literal notranslate"><span class="pre">HISTORY.md</span></code> has been updated with a new
+entry that explains the changes that will be included in the new version.
+Normally this is just a list of the Pull Requests that have been merged to master
+since the last release.</p>
+</div>
+<p>Once this is done, run of the following commands:</p>
+<ol class="arabic">
+<li><p class="first">If you are releasing a patch version:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make release
 </pre></div>
 </div>
+</li>
+<li><p class="first">If you are releasing a minor version:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make release-minor
+</pre></div>
+</div>
+</li>
+<li><p class="first">If you are releasing a major version:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make release-major
+</pre></div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 
@@ -448,7 +419,7 @@ git push
         <a href="authors.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="api/btb.recommendation.uniform.html" class="btn btn-neutral float-left" title="btb.recommendation.uniform module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api_reference.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

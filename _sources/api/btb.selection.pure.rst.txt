@@ -1,7 +1,0 @@
-btb.selection.pure module
-=========================
-
-.. automodule:: btb.selection.pure
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -1,7 +1,0 @@
-btb.selection.best module
-=========================
-
-.. automodule:: btb.selection.best
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -1,7 +1,0 @@
-btb.selection.selector module
-=============================
-
-.. automodule:: btb.selection.selector
-    :members:
-    :undoc-members:
-    :show-inheritance:
