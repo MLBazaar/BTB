@@ -69,8 +69,7 @@ Ready to contribute? Here's how to set up `BTB` for local development.
 
     $ mkvirtualenv BTB
     $ cd BTB/
-    $ pip install -e .
-    $ pip install -r requirements_dev.txt
+    $ make install-develop
 
 4. Create a branch for local development::
 
@@ -88,11 +87,11 @@ Ready to contribute? Here's how to set up `BTB` for local development.
 6. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
-    $ make test-all
+    $ make lint       # Check code styling
+    $ make test-all   # Execute tests on all python versions
 
 7. Make also sure to include the necessary documentation in the code as docstrings following
-   the [google](https://google.github.io/styleguide/pyguide.html?showone=Comments#Comments)
-   or the [numpy](https://numpydoc.readthedocs.io/en/latest/format.html) docstring style.
+   the `google docstring`_ style.
    If you want to view how your documentation will look like when it is published, you can
    generate and view the docs with this command::
 
@@ -105,6 +104,8 @@ Ready to contribute? Here's how to set up `BTB` for local development.
     $ git push origin name-of-your-bugfix-or-feature
 
 9. Submit a pull request through the GitHub website.
+
+.. _google docstring: https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
 
 Pull Request Guidelines
 -----------------------
@@ -119,7 +120,7 @@ Before you submit a pull request, check that it meets these guidelines:
 4. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-5. The pull request should work for Python2.7, 3.4, 3.5 and 3.6. Check
+5. The pull request should work for Python 2.7, 3.4, 3.5, 3.6, and 3.7. Check
    https://travis-ci.org/HDI-Project/BTB/pull_requests
    and make sure that all the checks pass.
 
@@ -176,19 +177,21 @@ The process of releasing a new version involves several steps combining both ``g
 5. Update the version in ``setup.cfg`` and ``btb/__init__.py`` to open the next
    development interation.
 
-**Note:** Before starting the process, make sure that ``HISTORY.md`` has a section titled
-**Unreleased** with the list of changes that will be included in the new version, and that
-these changes are committed and available in ``master`` branch.
-Normally this is just a list of the Pull Requests that have been merged since the latest version.
+.. note:: Before starting the process, make sure that ``HISTORY.md`` has been updated with a new
+          entry that explains the changes that will be included in the new version.
+          Normally this is just a list of the Pull Requests that have been merged to master
+          since the last release.
 
-Once this is done, just run the following commands::
+Once this is done, run of the following commands:
 
-    git checkout stable
-    git merge --no-ff master    # This creates a merge commit
-    bumpversion release   # This creates a new commit and a TAG
-    git push --tags origin stable
+1. If you are releasing a patch version::
+
     make release
-    git checkout master
-    git merge stable
-    bumpversion --no-tag patch
-    git push
+
+2. If you are releasing a minor version::
+
+    make release-minor
+
+3. If you are releasing a major version::
+
+    make release-major

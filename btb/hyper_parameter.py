@@ -34,12 +34,12 @@ class HyperParameter(object):
 
         return subclasses
 
-    @classmethod
-    def subclasses(cls):
-        if not cls._subclasses:
-            cls._subclasses = cls._get_subclasses()
+    @staticmethod
+    def subclasses():
+        if not HyperParameter._subclasses:
+            HyperParameter._subclasses = HyperParameter._get_subclasses()
 
-        return cls._subclasses
+        return HyperParameter._subclasses
 
     def __new__(cls, param_type=None, param_range=None):
         if not isinstance(param_type, ParamTypes):

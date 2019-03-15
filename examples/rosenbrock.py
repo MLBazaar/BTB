@@ -1,48 +1,56 @@
-from btb import HyperParameter, ParamTypes
-from btb.tuning import GP, Uniform
-
-
 """
-In this example, we use a Tuner to estimate the minimum of a Rosenbrok
+In this example, we use a Tuner to find the minimum of the Rosenbrock
 function https://en.wikipedia.org/wiki/Rosenbrock_function
 
 We compare the results given by a Uniform tuner and a GP-based tuner run for
 100 iterations each.
 """
 
-
-def rosenbrok(x, y):
-    a = 1
-    b = 100
-    return (a - x)**2 + b * (y - x**2)**2
+import btb.tuning
+from btb import HyperParameter
 
 
-def find_min_with_tuner(tuner):
+def rosenbrock(x, y, a=1, b=100):
+    """Bigger is better; global optimum at x=a, y=a**2"""
+    return -1 * ((a - x)**2 + b * (y - x**2)**2)
 
-    for i in range(100):
+
+def find_min_with_tuner(tuner, iterations=100):
+
+    # main tuning loop
+    for i in range(iterations):
+
         # use tuner to get next set of (x,y) to try
-        xy_to_try = tuner.propose()
-        score = rosenbrok(xy_to_try['x'], xy_to_try['y'])
-        tuner.add(xy_to_try, -1 * score)
-    print("minimum score:", tuner._best_score)
-    print("minimum score:", tuner._best_hyperparams)
-    print(
-        "minium score x:", tuner._best_hyperparams['x'],
-        "minimum score y:", tuner._best_hyperparams['y'],
-    )
+        candidate = tuner.propose()
+
+        # score the candidate point (x, y) -- always doing maximization!
+        score = rosenbrock(**candidate)
+
+        # report the results back to the tuner
+        tuner.add(candidate, score)
+
+    print('best score: ', tuner._best_score)
+    print('best hyperparameters: ', tuner._best_hyperparams)
 
 
-# initialize the tuneables, ie the function inputs x and y
-# we make a prior guess that the mimum function value will be found when
+# initialize the tunables, ie the function inputs x and y
+# we make a prior guess that the maximum function value will be found when
 # x and y are between -100 and 1000
 
-x = HyperParameter(ParamTypes.INT, [-100, 1000])
-y = HyperParameter(ParamTypes.INT, [-100, 1000])
+tunables = (
+    ('x', HyperParameter('float', [-100, 100])),
+    ('y', HyperParameter('float', [-100, 100])),
+)
 
-print("------------Minimum found with uniform tuner--------------")
-tuner = Uniform([("x", x), ("y", y)])
+print('Tuning with Uniform tuner')
+tuner = btb.tuning.Uniform(tunables)
 find_min_with_tuner(tuner)
+print()
 
-print("------------Minimum found with GP tuner--------------")
-tuner = GP([("x", x), ("y", y)])
+print('Tuning with GP tuner')
+tuner = btb.tuning.GP(tunables)
 find_min_with_tuner(tuner)
+print()
+
+actual = rosenbrock(1, 1)
+print('Actual optimum: ', actual)

@@ -1,34 +1,22 @@
 # Config file for automatic testing at travis-ci.org
 language: python
+dist: xenial
 python:
-  - 3.6
-  - 3.5
-  - 3.4
   - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
+  - 3.7
 
 # Command to install dependencies
-install: pip install -U tox-travis
+install: pip install -U tox-travis codecov
 
 # Command to run tests
 script: tox
 
-deploy:
+after_success: codecov
 
-  # Automatically deploy releases to PyPI for each tagged commit
-  # Assuming you have installed the travis-ci CLI tool, after you
-  # create the Github repo and add it to Travis, run the
-  # following command to finish PyPI deployment setup:
-  # $ travis encrypt MY_PYPI_PASSWORD
-  # and then copy the (really long) encrypted password as shown.
-  - provider: pypi
-    distributions: sdist bdist_wheel
-    user: dai_lab_mit
-    password:
-      secure: "y0Kne47Qz9O4nJzHMaB466rheOKCsPD3cwR6ClXCUOt1tIj3UeVogl+RVhjHAtoYcS4XLdacvc1nXIfVfyweQ5bRGuC5sAny1qMqmL7HVf6aO5Q7lBrRYOnBWkDpjGev9x2jND24GGGz1NHeVfy1oXVcDiMiJhTzAELr2ESE0uVsMuW7QOB5ET47gmPYR8EM6dKk2BtuRZ12vDUvk2P3gCfaBwfeGWk63WA6SB2IOLPu9Dj2kZzGz/X24U+iYQn6bbgKylrrhLjNso3m/O9XjaCEp12gnwCOfFGlhlw8ZWD0jNf17uwpmhgM7uep1lhfXoVjcRHWWZmEV3dwxdKJexMzUcO5nFpkDhQsftc3InV6sIW9CiCjnpDjeQnRdPjqSQLamR+/CJnQ/Nva27ZL7EWBf/5ut7lNRdSnTMSzrDemZtznoQl1IVv9/+KYCK1+g6hrrDmNuaRS7BLSpza+4a9U5lI4UXfUOlUSDtPXwVDbekBBir3dQ5C9uRyjnP5yJvrxG06HUmIWGPqjeZK0taUPe/85xCqb5YunID0cCI2Q8UhMIFuLR8NU1vKaJYYG0O5mYxmgSoHX7bWwkvs/qg2iKFdMx31IiqdR2B5N0BfHhkAEvSXdbs9q4ptbqFmojeXL5u4SavQ+UURPtLqT4wUUPRdTOB/OIg3J7Pm08Dk="
-    on:
-      tags: true
-      repo: HDI-Project/BTB
-      python: 3.6
+deploy:
 
   # Automatically build and deploy documentation to GitHub Pages after every
   # commit
@@ -43,5 +31,4 @@ deploy:
     target-branch: gh-pages
     on:
       branch: master
-      python: 3.6
-
+      python: 3.7
