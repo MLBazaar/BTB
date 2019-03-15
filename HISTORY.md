@@ -1,5 +1,11 @@
 # History
 
+## 0.2.5
+
+### Bug Fixes
+
+* Issue #115: HyperParameter subclass instantiation not working properly
+
 ## 0.2.4
 
 ### Internal Improvements
@@ -13,7 +19,7 @@
 
 ## 0.2.3
 
-### Bug fixes
+### Bug Fixes
 
 * Issue #84: Error in GP tuning when only one parameter is present bug
 * Issue #96: Fix pickling of HyperParameters
@@ -25,7 +31,7 @@
 
 * Updated documentation
 
-### Bug fixes
+### Bug Fixes
 
 * Issue #94: Fix unicode `param_type` caused error on python 2.
 
@@ -55,7 +61,7 @@
 * Resolve Issue #29: Make args explicit in `__init__` methods
 * Resolve Issue #34: make all imports explicit
 
-### Bug fixes
+### Bug Fixes
 
 * Fix error from mixing string/numerical hyperparameters
 * Inverse transform for categorical hyperparameter returns single item
