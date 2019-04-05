@@ -1,4 +1,4 @@
-from sklearn.datasets import fetch_mldata
+from sklearn.datasets import fetch_openml
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
     # Load data
     print("Loading MNIST Data........")
-    mnist = fetch_mldata('MNIST original')
+    mnist = fetch_openml('mnist_784')
     X, X_test, y, y_test = train_test_split(
         mnist.data,
         mnist.target,
