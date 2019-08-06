@@ -6,12 +6,20 @@
 from setuptools import find_packages, setup
 
 
-with open('README.md') as readme_file:
-    readme = readme_file.read()
+try:
+    with open('README.md') as readme_file:
+        readme = readme_file.read()
+
+except IOError:
+    readme = ''
 
 
-with open('HISTORY.md') as history_file:
-    history = history_file.read()
+try:
+    with open('HISTORY.md') as history_file:
+        history = history_file.read()
+
+except IOError:
+    history = ''
 
 
 install_requires = [
@@ -43,6 +51,7 @@ development_requires = [
     'watchdog>=0.8.3',
 
     # docs
+    'autodocsumm>=0.1.10',
     'm2r>=0.2.0',
     'Sphinx>=1.7.1',
     'sphinx_rtd_theme>=0.2.4',
@@ -52,8 +61,8 @@ development_requires = [
     'isort>=4.3.4',
 
     # fix style issues
-    'autoflake>=1.2',  # keep this after flake8 to avoid
-    'autopep8>=1.3.5', # version incompatibilities with flake8
+    'autoflake>=1.2',
+    'autopep8>=1.4.3',
 
     # distribute on PyPI
     'twine>=1.10.0',
@@ -80,15 +89,15 @@ setup(
     ],
     description='Bayesian Tuning and Bandits',
     extras_require={
-        'dev': development_requires + tests_require,
         'test': tests_require,
+        'dev': development_requires + tests_require,
     },
+    include_package_data=True,
     install_requires=install_requires,
+    keywords='machine learning hyperparameters tuning classification',
     license='MIT license',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
-    include_package_data=True,
-    keywords='machine learning hyperparameters tuning classification',
     name='baytune',
     packages=find_packages(include=['btb', 'btb.*']),
     python_requires='>=3.5',
@@ -96,6 +105,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.2.6-dev',
+    version='0.3.0-dev',
     zip_safe=False,
 )

@@ -4,11 +4,18 @@
    :hidden:
    :maxdepth: 2
 
-   readme
-   tuners
-   selectors
-   recommenders
-   api_reference
+   Overview <readme>
+
+.. toctree::
+   :caption: Advanced Usage
+   :hidden:
+
+   API Reference <api/btb>
+
+.. toctree::
+   :caption: Development Notes
+   :hidden:
+
    contributing
    authors
    history
