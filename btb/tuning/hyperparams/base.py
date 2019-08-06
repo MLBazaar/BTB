@@ -1,8 +1,51 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseHyperparameter is defined."""
+"""Package where the base hyperparameter is defined."""
 
 from abc import ABCMeta, abstractmethod
+
+import numpy as np
+
+
+def to_array(values, dimension):
+    """Perform a validation if the data can be converted to array for the hyperparameter.
+
+    Args:
+        values(scalar, ArrayLike):
+            A scalar value or ArrayLike values to be converted to ``numpy.array``.
+        dimension(int):
+            The dimension that the hyperparameter has.
+
+    Returns:
+        values(Array):
+            Values converted in to ``array`` of shape ``(n, dimension)`` where ``np`` is the
+            length of values.
+
+    Raises:
+        ValueError:
+            A ``ValueError`` is raised if any value from ``values`` is not within the dimension.
+    """
+
+    if not isinstance(values, (list, np.ndarray)):
+        if dimension != 1:
+            raise ValueError('Value not in dimension.')
+
+        values = [[values]]
+
+    else:
+        if dimension != 1:
+            if not isinstance(values[0], (list, np.ndarray)):
+                values = [values]
+
+            if not all(len(value) == dimension for value in values):
+                raise ValueError('Values not in dimension.')
+        else:
+            if not isinstance(values[0], (list, np.ndarray)):
+                values = [[value] for value in values]
+
+    values = np.array(values)
+
+    return values
 
 
 class BaseHyperParam(metaclass=ABCMeta):
@@ -15,9 +58,32 @@ class BaseHyperParam(metaclass=ABCMeta):
             Number of dimensions that this HyperParam uses to be represented in the search space.
     """
 
+    def _within_range(self, values, min=0, max=1):
+        """Ensure that the values are between a certain range.
+
+        Raises:
+            ValueError:
+                A ``ValueError`` is raised if any value from ``values`` is not inside the range.
+        """
+        if (values < min).any() or (values > max).any():
+            raise ValueError('Value not within range.')
+
+    def _within_hyperparam_space(self, values):
+        self._within_range(values, self.min, self.max)
+
+    def _within_search_space(self, values):
+        self._within_range(values, 0, 1)
+
     @abstractmethod
+    def _inverse_transform(self, values):
+        pass
+
+    @abstractmethod
+    def _transform(self, values):
+        pass
+
     def inverse_transform(self, values):
-        """Inverse transform one or more hyperparameter values.
+        """Revert one or more hyperparameter values.
 
         Transform one or more hyperparameter values from the normalized search
         space [0, 1]^k to the original hyperparameter space.
@@ -30,7 +96,10 @@ class BaseHyperParam(metaclass=ABCMeta):
             denormalized (Union[object, List[object]]):
                 Denormalized value or list of denormalized values.
         """
-        pass
+        values = to_array(values, self.K)
+        self._within_search_space(values)
+
+        return self._inverse_transform(values)
 
     @abstractmethod
     def sample(self, n_samples):
@@ -46,7 +115,6 @@ class BaseHyperParam(metaclass=ABCMeta):
         """
         pass
 
-    @abstractmethod
     def transform(self, values):
         """Transform one or more hyperparameter values.
 
@@ -61,4 +129,12 @@ class BaseHyperParam(metaclass=ABCMeta):
             normalized (ArrayLike):
                 2D array of shape(len(values), self.K)
         """
-        pass
+        if not isinstance(values, (list, np.ndarray)):
+            values = [values]
+
+        values = [[value] for value in values]
+
+        values = np.array(values)
+        self._within_hyperparam_space(values)
+
+        return self._transform(values)
