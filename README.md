@@ -163,6 +163,10 @@ Then we perform the following steps in a loop.
     0.89
     >>> tuners[next_choice].add(parameters, score)
     ```
+    
+## What's next?
+For more details about **BTB** and all its possibilities and features, please check the
+[project documentation site](https://HDI-Project.github.io/BTB/)!
 
 ## Citing BTB
 
