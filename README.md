@@ -10,14 +10,16 @@ A simple, extensible backend for developing auto-tuning systems.
 [![PyPi](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
 [![Travis](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
 [![CodeCov](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
+[![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
 
-# Overview
-
-Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
 
 * Free software: MIT license
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
+
+# Overview
+
+Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
 
 *BTB is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).*
 
@@ -41,7 +43,7 @@ cd BTB
 make install
 ```
 
-## Basic Usage
+## Quickstart
 
 ### Tuners
 
@@ -105,7 +107,7 @@ out and decide which model seems to get the best results once it is properly fin
 In order to use the selector we will create a ``Tuner`` instance for each model that
 we want to try out, as well as the ``Selector`` instance.
 
-```
+```python
 >>> from sklearn.ensemble import RandomForestClassifier
 >>> from sklearn.svm import SVC
 >>> models = {
@@ -162,7 +164,7 @@ Then we perform the following steps in a loop.
     >>> tuners[next_choice].add(parameters, score)
     ```
 
-## References
+## Citing BTB
 
 If you use BTB, please consider citing the following work:
 
