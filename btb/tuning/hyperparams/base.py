@@ -132,7 +132,8 @@ class BaseHyperParam(metaclass=ABCMeta):
         if not isinstance(values, (list, np.ndarray)):
             values = [values]
 
-        values = [[value] for value in values]
+        values = [[value] if not isinstance(value, (list, np.ndarray)) else value
+                  for value in values]
 
         values = np.array(values)
         self._within_hyperparam_space(values)
