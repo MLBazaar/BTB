@@ -84,12 +84,13 @@
 <li class="toctree-l3"><a class="reference internal" href="readme.html#build-from-source">Build from source</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="readme.html#tuners">Tuners</a></li>
 <li class="toctree-l3"><a class="reference internal" href="readme.html#selectors">Selectors</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#references">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#what-s-next">What’s next?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#citing-btb">Citing BTB</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tuners</a></li>
@@ -224,9 +225,9 @@ optimal hyper parameter values for a specific machine learning algorithm.</p>
 <p><code class="docutils literal notranslate"><span class="pre">btb.tuning</span></code> defines Tuners: classes with a fit/predict/propose interface for suggesting sets of hyperparameters.</p>
 <p>This is done by following a Bayesian Optimization approach and iteratively:</p>
 <ul class="simple">
-<li>letting the tuner propose new sets of hyper parameter</li>
-<li>fitting and scoring the model with the proposed hyper parameters</li>
-<li>passing the score obtained back to the tuner</li>
+<li><p>letting the tuner propose new sets of hyper parameter</p></li>
+<li><p>fitting and scoring the model with the proposed hyper parameters</p></li>
+<li><p>passing the score obtained back to the tuner</p></li>
 </ul>
 <p>At each iteration the tuner will use the information already obtained to propose
 the set of hyper parameters that it considers that have the highest probability

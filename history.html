@@ -83,12 +83,13 @@
 <li class="toctree-l3"><a class="reference internal" href="readme.html#build-from-source">Build from source</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="readme.html#tuners">Tuners</a></li>
 <li class="toctree-l3"><a class="reference internal" href="readme.html#selectors">Selectors</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#references">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#what-s-next">What’s next?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#citing-btb">Citing BTB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tuners.html">Tuners</a></li>
@@ -223,7 +224,7 @@
 <div class="section" id="bug-fixes">
 <h3>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Issue #115: HyperParameter subclass instantiation not working properly</li>
+<li><p>Issue #115: HyperParameter subclass instantiation not working properly</p></li>
 </ul>
 </div>
 </div>
@@ -232,14 +233,14 @@
 <div class="section" id="internal-improvements">
 <h3>Internal Improvements<a class="headerlink" href="#internal-improvements" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Issue #62: Test for <code class="docutils literal notranslate"><span class="pre">None</span></code> in <code class="docutils literal notranslate"><span class="pre">HyperParameter.cast</span></code> instead of <code class="docutils literal notranslate"><span class="pre">HyperParameter.__init__</span></code></li>
+<li><p>Issue #62: Test for <code class="docutils literal notranslate"><span class="pre">None</span></code> in <code class="docutils literal notranslate"><span class="pre">HyperParameter.cast</span></code> instead of <code class="docutils literal notranslate"><span class="pre">HyperParameter.__init__</span></code></p></li>
 </ul>
 </div>
 <div class="section" id="id3">
 <h3>Bug fixes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Issue #98: Categorical hyperparameters do not support <code class="docutils literal notranslate"><span class="pre">None</span></code> as input</li>
-<li>Issue #89: Fix the computation of <code class="docutils literal notranslate"><span class="pre">avg_rewards</span></code> in <code class="docutils literal notranslate"><span class="pre">BestKReward</span></code></li>
+<li><p>Issue #98: Categorical hyperparameters do not support <code class="docutils literal notranslate"><span class="pre">None</span></code> as input</p></li>
+<li><p>Issue #89: Fix the computation of <code class="docutils literal notranslate"><span class="pre">avg_rewards</span></code> in <code class="docutils literal notranslate"><span class="pre">BestKReward</span></code></p></li>
 </ul>
 </div>
 </div>
@@ -248,9 +249,9 @@
 <div class="section" id="id5">
 <h3>Bug Fixes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Issue #84: Error in GP tuning when only one parameter is present bug</li>
-<li>Issue #96: Fix pickling of HyperParameters</li>
-<li>Issue #98: Fix implementation of the GPEi tuner</li>
+<li><p>Issue #84: Error in GP tuning when only one parameter is present bug</p></li>
+<li><p>Issue #96: Fix pickling of HyperParameters</p></li>
+<li><p>Issue #98: Fix implementation of the GPEi tuner</p></li>
 </ul>
 </div>
 </div>
@@ -259,13 +260,13 @@
 <div class="section" id="id7">
 <h3>Internal Improvements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Updated documentation</li>
+<li><p>Updated documentation</p></li>
 </ul>
 </div>
 <div class="section" id="id8">
 <h3>Bug Fixes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Issue #94: Fix unicode <code class="docutils literal notranslate"><span class="pre">param_type</span></code> caused error on python 2.</li>
+<li><p>Issue #94: Fix unicode <code class="docutils literal notranslate"><span class="pre">param_type</span></code> caused error on python 2.</p></li>
 </ul>
 </div>
 </div>
@@ -274,7 +275,7 @@
 <div class="section" id="id10">
 <h3>Bug fixes<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Issue #74: <code class="docutils literal notranslate"><span class="pre">ParamTypes.STRING</span></code> tunables do not work</li>
+<li><p>Issue #74: <code class="docutils literal notranslate"><span class="pre">ParamTypes.STRING</span></code> tunables do not work</p></li>
 </ul>
 </div>
 </div>
@@ -283,44 +284,44 @@
 <div class="section" id="new-features">
 <h3>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>New Recommendation module</li>
-<li>New HyperParameter types</li>
-<li>Improved documentation and examples</li>
-<li>Fully tested Python 2.7, 3.4, 3.5 and 3.6 compatibility</li>
-<li>HyperParameter copy and deepcopy support</li>
-<li>Replace print statements with logging</li>
+<li><p>New Recommendation module</p></li>
+<li><p>New HyperParameter types</p></li>
+<li><p>Improved documentation and examples</p></li>
+<li><p>Fully tested Python 2.7, 3.4, 3.5 and 3.6 compatibility</p></li>
+<li><p>HyperParameter copy and deepcopy support</p></li>
+<li><p>Replace print statements with logging</p></li>
 </ul>
 </div>
 <div class="section" id="id12">
 <h3>Internal Improvements<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Integrated with Travis-CI</li>
-<li>Exhaustive unit testing</li>
-<li>New implementation of HyperParameter</li>
-<li>Tuner builds a grid of real values instead of indices</li>
-<li>Resolve Issue #29: Make args explicit in <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods</li>
-<li>Resolve Issue #34: make all imports explicit</li>
+<li><p>Integrated with Travis-CI</p></li>
+<li><p>Exhaustive unit testing</p></li>
+<li><p>New implementation of HyperParameter</p></li>
+<li><p>Tuner builds a grid of real values instead of indices</p></li>
+<li><p>Resolve Issue #29: Make args explicit in <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods</p></li>
+<li><p>Resolve Issue #34: make all imports explicit</p></li>
 </ul>
 </div>
 <div class="section" id="id13">
 <h3>Bug Fixes<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Fix error from mixing string/numerical hyperparameters</li>
-<li>Inverse transform for categorical hyperparameter returns single item</li>
+<li><p>Fix error from mixing string/numerical hyperparameters</p></li>
+<li><p>Inverse transform for categorical hyperparameter returns single item</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="id14">
 <h2>0.1.2<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Issue #47: Add missing requirements in v0.1.1 setup.py</li>
-<li>Issue #46: Error on v0.1.1: ‘GP’ object has no attribute ‘X’</li>
+<li><p>Issue #47: Add missing requirements in v0.1.1 setup.py</p></li>
+<li><p>Issue #46: Error on v0.1.1: ‘GP’ object has no attribute ‘X’</p></li>
 </ul>
 </div>
 <div class="section" id="id15">
 <h2>0.1.1<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>First release.</li>
+<li><p>First release.</p></li>
 </ul>
 </div>
 </div>
