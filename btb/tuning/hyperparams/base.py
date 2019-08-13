@@ -122,6 +122,7 @@ class BaseHyperParam(metaclass=ABCMeta):
         Transform one or more hyperparameter values from the original hyperparameter space to the
         normalized search space [0, 1]^k.
         The accepted value formats are:
+
             - Single value:
                 A single value from the original hyperparameter space.
             - List:
