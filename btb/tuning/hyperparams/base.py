@@ -43,9 +43,7 @@ def to_array(values, dimension):
             if not isinstance(values[0], (list, np.ndarray)):
                 values = [[value] for value in values]
 
-    values = np.array(values)
-
-    return values
+    return np.array(values)
 
 
 class BaseHyperParam(metaclass=ABCMeta):
@@ -65,8 +63,12 @@ class BaseHyperParam(metaclass=ABCMeta):
             ValueError:
                 A ``ValueError`` is raised if any value from ``values`` is not inside the range.
         """
-        if (values < min).any() or (values > max).any():
-            raise ValueError('Value not within range.')
+        inside_mask = np.ma.masked_inside(values, min, max)
+        if inside_mask.any():
+            outside = inside_mask[~inside_mask.mask].data.reshape(-1).tolist()
+            raise ValueError(
+                'Values found outside of the valid range [{}, {}]: {}'.format(min, max, outside)
+            )
 
     def _within_hyperparam_space(self, values):
         self._within_range(values, self.min, self.max)
@@ -83,7 +85,7 @@ class BaseHyperParam(metaclass=ABCMeta):
         pass
 
     def inverse_transform(self, values):
-        """Revert one or more hyperparameter values.
+        """Invert one or more hyperparameter values.
 
         Transform one or more hyperparameter values from the normalized search
         space [0, 1]^k to the original hyperparameter space.
@@ -113,13 +115,20 @@ class BaseHyperParam(metaclass=ABCMeta):
             samples (ArrayLike):
                 2D array with of shape (n_samples, self.K)
         """
-        pass
 
     def transform(self, values):
         """Transform one or more hyperparameter values.
 
         Transform one or more hyperparameter values from the original hyperparameter space to the
         normalized search space [0, 1]^k.
+        The accepted value formats are:
+            - Single value:
+                A single value from the original hyperparameter space.
+            - List:
+                A list composed by values from the original hyperparameter space.
+            - 2D Array:
+                Two dimension array like object that contains values from the original
+                hyperparameter space.
 
         Args:
             values (Union[object, List[object]]):
@@ -128,14 +137,35 @@ class BaseHyperParam(metaclass=ABCMeta):
         Returns:
             normalized (ArrayLike):
                 2D array of shape(len(values), self.K)
+
+        Examples:
+            >>> from btb.hyperparams.numerical import IntHyperParam
+            >>> ihp = IntHyperParam(min=1, max=4)
+            >>> ihp.transform(1)
+            array([[0.125]])
+
+            >>> ihp.transform([1, 2])
+            array([[0.125],
+                   [0.375]])
+
+            >>> ihp.transform([[1], [2]])
+            array([[0.125],
+                   [0.375]])
         """
-        if not isinstance(values, (list, np.ndarray)):
-            values = [values]
 
-        values = [[value] if not isinstance(value, (list, np.ndarray)) else value
-                  for value in values]
+        if not isinstance(values, np.ndarray):
+            values = np.asarray(values)
 
-        values = np.array(values)
+        dimensions = len(values.shape)
+        if dimensions > 2:
+            raise ValueError('Too many dimensions.')
+
+        elif dimensions < 2:
+            values = values.reshape(-1, 1)
+
+        if values.shape[1] > 1:
+            raise ValueError('More than one columns are not supported.')
+
         self._within_hyperparam_space(values)
 
         return self._transform(values)

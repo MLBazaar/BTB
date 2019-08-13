@@ -30,28 +30,30 @@ class BooleanHyperParam(BaseHyperParam):
 
     def _within_hyperparam_space(self, values):
         if values.dtype is not np.dtype('bool'):
-            raise ValueError('Value not within hyperparameter range.')
+            raise ValueError('Values: {} not within hyperparameter range.'.format(values))
 
     def _inverse_transform(self, values):
-        """Inverse trasnform one or more values from search space [0, 1]^K.
+        """Invert one or more values from search space [0, 1]^K.
 
         Converts normalized ``values`` from the search space [0, 1]^K to the original space
         of ``True`` and ``False`` by casting those values to ``boolean``.
 
         Args:
             values (ArrayLike):
-                Single value or 2D ArrayLike of normalized values.
+                2D ArrayLike of normalized values.
 
         Returns:
             denormalized (Union[object, List[object]]):
                 Denormalized value or list of denormalized values.
 
         Examples:
+            >>> import numpy
             >>> instance = BooleanHyperParam()
-            >>> instance.inverse_transform([0, 1])
-            array([True, False])
-            >>> instance.inverse_transform(0)
-            False
+            >>> instance._inverse_transform(numpy.asarray([[0], [1]])
+            array([[True],
+                   [False]])
+            >>> instance._inverse_transform(numpy.asarray([[0]])
+            array([[False]])
         """
         return values.astype(bool)
 
@@ -63,18 +65,20 @@ class BooleanHyperParam(BaseHyperParam):
 
         Args:
             values (Union[object, List[object]]):
-                Single value or list of values to be normalized.
+                2D ArrayLike of values to be normalized.
 
         Returns:
             normalized (ArrayLike):
-                2D array of shape(len(values)) or a single int value depending on the ``values``.
+                2D array of shape(len(values)).
 
         Examples:
+            >>> import numpy
             >>> instance = BooleanHyperParam()
-            >>> instance.transform([True, False])
-            array([1, 0])
-            >>> instance.transform(True)
-            1
+            >>> instance._transform(numpy.asarray([[True], [False]]))
+            array([[1],
+                   [0]])
+            >>> instance._transform(numpy.asarray([[True]])
+            array([[1]])
         """
 
         return values.astype(int)
@@ -94,7 +98,8 @@ class BooleanHyperParam(BaseHyperParam):
         Examples:
             >>> instance = BooleanHyperParam()
             >>> instance.sample(2)
-            array([[1], [1]])
+            array([[1],
+                   [1]])
 
         """
         sampled = np.random.random((n_samples, self.K))

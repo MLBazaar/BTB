@@ -32,7 +32,6 @@ class NumericalHyperParam(BaseHyperParam):
         step (int or float):
             Increase amount to take for each sample.
     """
-    pass
 
 
 class FloatHyperParam(NumericalHyperParam):
@@ -63,7 +62,7 @@ class FloatHyperParam(NumericalHyperParam):
         self.range = max - min
 
     def _inverse_transform(self, values):
-        """Inverse transform one or more ``normalized`` values.
+        """Invert one or more ``normalized`` values.
 
         Inverse transorm one or more normalized values from the search space [0, 1)^k. This is
         being computed by multiplying the hyperparameter's range with the values to be denormalized
@@ -71,18 +70,20 @@ class FloatHyperParam(NumericalHyperParam):
 
         Args:
             values (ArrayLike):
-                Single value or 2D ArrayLike of normalized values.
+                2D ArrayLike of normalized values.
 
         Returns:
             denormalized (Union[object, List[object]]):
                 Denormalized value or list of denormalized values.
 
         Examples:
-            >>> instance = FloatHyperParam(0.1, 0.9)
-            >>> instance.inverse_transform([0., 1.])
-            array([0.1, 0.9])
-            >>> instance.inverse_transform(0.875)
-            0.8
+            >>> import numpy
+            >>> instance = FloatHyperParam(min=0.1, max=0.9)
+            >>> instance._inverse_transform(numpy.asarray([[0.], [1.]]))
+            array([[0.1],
+                   [0.9]])
+            >>> instance._inverse_transform(numpy.asarray([[0.875]]))
+            array([[0.8]])
         """
         return values * self.range + self.min
 
@@ -103,11 +104,13 @@ class FloatHyperParam(NumericalHyperParam):
                 2D array of shape(len(values)) or a single float number.
 
         Examples:
-            >>> instance = FloatHyperParam(0.1, 0.9)
-            >>> instance.transform([0.1, 0.9])
-            array([0., 1.])
-            >>> instance.transform(0.8)
-            0.875
+            >>> import numpy
+            >>> instance = FloatHyperParam(min=0.1, max=0.9)
+            >>> instance._transform(numpy.asarray([[0.1], [0.9]])
+            array([[0.],
+                   [1.]])
+            >>> instance._transform(numpy.asarray([[0.8]])
+            array([[0.875]])
         """
         return (values - self.min) / self.range
 
@@ -124,9 +127,10 @@ class FloatHyperParam(NumericalHyperParam):
                 space [0, 1)^k.
 
         Examples:
-            >>> instance = FloatHyperParam(0.1, 0.9)
+            >>> instance = FloatHyperParam(min=0.1, max=0.9)
             >>> instance.sample(2)
-            array([0.52058728], [0.00582452]])
+            array([[0.52058728],
+                   [0.00582452]])
         """
         return np.random.random((n_samples, self.K))
 
@@ -160,7 +164,7 @@ class IntHyperParam(NumericalHyperParam):
         self.interval = 1 / self.range
 
     def _inverse_transform(self, values):
-        """Inverse transform one or more ``normalized`` values.
+        """Invert one or more ``normalized`` values.
 
         Inverse transorm one or more normalized values from the search space [0, 1)^k. This is
         being computed by divinding the hyperparameter's interval with the values to be inverted
@@ -176,11 +180,13 @@ class IntHyperParam(NumericalHyperParam):
                 Denormalized value or list of denormalized values.
 
         Examples:
-            >>> instance = IntHyperParam(1, 4)
-            >>> instance.inverse_transform([0.125, 0.875])
-            array([1, 4])
-            >>> instance.inverse_trasnfrom(0.625)
-            3
+            >>> import numpy
+            >>> instance = IntHyperParam(min=1, max=4)
+            >>> instance._inverse_transform(numpy.asarray([[0.125], [0.875]]))
+            array([[1],
+                   [4]])
+            >>> instance._inverse_trasnfrom(numpy.asarray([[0.625]]))
+            array([[3]])
         """
         unscaled_values = values / self.interval - 0.5 + self.min
         rounded = unscaled_values.round()
@@ -205,11 +211,13 @@ class IntHyperParam(NumericalHyperParam):
             normalized (ArrayLike): 2D array of shape(len(values)).
 
         Examples:
-            >>> instance = IntHyperParam(1, 4)
-            >>> instance.transform([1, 4])
-            array([0.125, 0.875])
-            >>> instance.trasnfrom(3)
-            0.625
+            >>> import numpy
+            >>> instance = IntHyperParam(min=1, max=4)
+            >>> instance._transform(numpy.asarray([[1], [4]]))
+            array([[0.125],
+                   [0.875]])
+            >>> instance._trasnfrom(numpy.asarray([[3]])
+            array([[0.625]])
         """
         return (values - self.min + 0.5) * self.interval
 

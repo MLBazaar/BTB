@@ -39,11 +39,19 @@ class CategoricalHyperParam(BaseHyperParam):
         self._encoder.fit(np.array(choices).reshape(-1, 1))
 
     def _within_hyperparam_space(self, values):
-        if not np.isin(values, self.choices).all():
-            raise ValueError('Value not within hyperparameter original space.')
+        mask = np.isin(values, self.choices)
+
+        if not mask.all():
+            if not isinstance(values, np.ndarray):
+                values = np.asarray(values)
+
+            not_in_space = values[~mask].tolist()
+            raise ValueError(
+                'Values found outside of the valid space {}: {}'.format(self.choices, not_in_space)
+            )
 
     def _inverse_transform(self, values):
-        """Inverse transform one or more values from search space [0, 1]^K.
+        """Invert one or more values from search space [0, 1]^K.
 
         Converts normalized ``values`` from the search space [0, 1]^K to the original space of
         ``choices`` that this hyperparameter has been instantiated with.
@@ -57,11 +65,13 @@ class CategoricalHyperParam(BaseHyperParam):
                 Denormalized value or list of denormalized values.
 
         Examples:
-            >>> instance = CategoricalHyperParam(['Cat', 'Dog', 'Tiger'])
-            >>> instance.inverse_transform([1, 0, 0])
+            >>> import numpy
+            >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
+            >>> instance._inverse_transform(numpy.asarray([[1, 0, 0]]))
             array([['Cat']])
-            >>> instance.inverse_transform([[1, 0, 0], [0, 0, 1]])
-            array([['Cat', 'Tiger']])
+            >>> instance._inverse_transform(numpy.asarray([[1, 0, 0], [0, 0, 1]]))
+            array([['Cat'],
+                   ['Tiger']])
         """
 
         if len(values.shape) == 1:
@@ -77,17 +87,21 @@ class CategoricalHyperParam(BaseHyperParam):
         initialization.
 
         Args:
-            values (ArrayLike): single value or 2D ArrayLike of normalized values.
+            values (ArrayLike):
+                2D ArrayLike of normalized values.
 
         Returns:
-            normalized (ArrayLike): 2D array of shape(len(values)).
+            normalized (ArrayLike):
+                2D array of shape(len(values)).
 
         Examples:
-            >>> instance = CategoricalHyperParam(['Cat', 'Dog', 'Tiger'])
-            >>> instance.transform('Cat')
+            >>> import numpy
+            >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
+            >>> instance._transform(numpy.asarray([['Cat']])
             array([[1, 0, 0]])
-            >>> instance.transform(['Cat', 'Tiger'])
-            array([[1, 0, 0], [0, 0, 1]])
+            >>> instance._transform(numpy.asarray([['Cat'], ['Tiger']])
+            array([[1, 0, 0],
+                   [0, 0, 1]])
         """
         return self._encoder.transform(values.reshape(-1, 1)).astype(int)
 
@@ -104,15 +118,14 @@ class CategoricalHyperParam(BaseHyperParam):
                 space [0, 1]^k.
 
         Examples:
-            >>> instance = CategoricalHyperParam(['Cat', 'Dog', 'Tiger'])
+            >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
             >>> instance.sample(2)
-            array([[1, 0, 0], [0, 1, 0]])
+            array([[1, 0, 0],
+                   [0, 1, 0]])
         """
-        sampled = np.random.random((n_samples, self.K))
-        indexes = np.argmax(sampled, axis=1)
+        randomized_values = np.random.random((n_samples, self.K))
+        indexes = np.argmax(randomized_values, axis=1)
 
-        sampled = list()
-        for index in indexes:
-            sampled.append(self.choices[index])
+        sampled = [self.choices[index] for index in indexes]
 
         return self.transform(sampled)
