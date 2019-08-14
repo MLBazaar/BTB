@@ -41,7 +41,7 @@ class FloatHyperParam(NumericalHyperParam):
         ``[min, max]``
 
     Search space:
-        ``[0, 1]``
+        ``[0, 1)``
     """
 
     K = 1
@@ -66,23 +66,22 @@ class FloatHyperParam(NumericalHyperParam):
 
         Inverse transorm one or more normalized values from the search space [0, 1)^k. This is
         being computed by multiplying the hyperparameter's range with the values to be denormalized
-        and adding the ``min`` value to them.
+        and adding the ``self.min`` value to them.
 
         Args:
-            values (ArrayLike):
-                2D ArrayLike of normalized values.
+            values (numpy.ndarray):
+                2D array of normalized values.
 
         Returns:
-            denormalized (Union[object, List[object]]):
-                Denormalized value or list of denormalized values.
+            denormalized (numpy.ndarray):
+                2D array of denormalized values.
 
         Examples:
-            >>> import numpy
             >>> instance = FloatHyperParam(min=0.1, max=0.9)
-            >>> instance._inverse_transform(numpy.asarray([[0.], [1.]]))
+            >>> instance._inverse_transform(np.array([[0.], [1.]]))
             array([[0.1],
                    [0.9]])
-            >>> instance._inverse_transform(numpy.asarray([[0.875]]))
+            >>> instance._inverse_transform(np.array([[0.875]]))
             array([[0.8]])
         """
         return values * self.range + self.min
@@ -90,26 +89,25 @@ class FloatHyperParam(NumericalHyperParam):
     def _transform(self, values):
         """Transform one or more ``float`` values.
 
-        Convert one or more `float` values from the original hyperparameter space to the
-        normalized search space [0, 1)^k. This is being computed by substracting the `min` value
-        that the hyperparameter can take from the values to be trasnformed and dividing them by
-        the range of the hyperparameter.
+        Convert one or more ``float`` values from the original hyperparameter space to the
+        normalized search space [0, 1)^k. This is being computed by substracting the ``self.min``
+        value that the hyperparameter can take from the values to be trasnformed and dividing them
+        by the ``self.range`` of the hyperparameter.
 
         Args:
-            values (Union[object, List[object]]):
-                Single value or list of values to be normalized.
+            values (numpy.ndarray):
+                2D array with values to be normalized.
 
         Returns:
-            normalized (ArrayLike):
-                2D array of shape(len(values)) or a single float number.
+            normalized (numpy.ndarray):
+                2D array of shape(len(values), self.K).
 
         Examples:
-            >>> import numpy
             >>> instance = FloatHyperParam(min=0.1, max=0.9)
-            >>> instance._transform(numpy.asarray([[0.1], [0.9]])
+            >>> instance._transform(np.array([[0.1], [0.9]])
             array([[0.],
                    [1.]])
-            >>> instance._transform(numpy.asarray([[0.8]])
+            >>> instance._transform(np.array([[0.8]])
             array([[0.875]])
         """
         return (values - self.min) / self.range
@@ -122,8 +120,8 @@ class FloatHyperParam(NumericalHyperParam):
                 Number of values to sample.
 
         Returns:
-            samples (ArrayLike):
-                2D arry with shape of (n_samples, self.K) with normalized values inside the search
+            samples (numpy.ndarray):
+                2D array with shape of (n_samples, self.K) with normalized values inside the search
                 space [0, 1)^k.
 
         Examples:
@@ -168,24 +166,23 @@ class IntHyperParam(NumericalHyperParam):
 
         Inverse transorm one or more normalized values from the search space [0, 1)^k. This is
         being computed by divinding the hyperparameter's interval with the values to be inverted
-        and adding the `min` value to them and resting the 0.5 that has been added during the
-        transformation.
+        and adding the ``self.min`` value to them and resting the 0.5 that has been added during
+        the transformation.
 
         Args:
-            values (ArrayLike):
-                Single value or 2D ArrayLike of normalized values.
+            values (numpy.ndarray):
+                2D array of normalized values.
 
         Returns:
-            denormalized (Union[object, List[object]]):
-                Denormalized value or list of denormalized values.
+            denormalized (numpy.ndarray):
+                2D array of denormalized values.
 
         Examples:
-            >>> import numpy
             >>> instance = IntHyperParam(min=1, max=4)
-            >>> instance._inverse_transform(numpy.asarray([[0.125], [0.875]]))
+            >>> instance._inverse_transform(np.array([[0.125], [0.875]]))
             array([[1],
                    [4]])
-            >>> instance._inverse_trasnfrom(numpy.asarray([[0.625]]))
+            >>> instance._inverse_trasnfrom(np.array([[0.625]]))
             array([[3]])
         """
         unscaled_values = values / self.interval - 0.5 + self.min
@@ -205,18 +202,19 @@ class IntHyperParam(NumericalHyperParam):
         then multiply by the interval.
 
         Args:
-            values (Union[object, List[object]]): single value or list of values to be normalized.
+            values (numpy.ndarray):
+                2D array of values to be normalized.
 
         Returns:
-            normalized (ArrayLike): 2D array of shape(len(values)).
+            normalized (numpy.ndarray):
+                2D array of shape(len(values), self.K).
 
         Examples:
-            >>> import numpy
             >>> instance = IntHyperParam(min=1, max=4)
-            >>> instance._transform(numpy.asarray([[1], [4]]))
+            >>> instance._transform(np.array([[1], [4]]))
             array([[0.125],
                    [0.875]])
-            >>> instance._trasnfrom(numpy.asarray([[3]])
+            >>> instance._trasnfrom(np.array([[3]])
             array([[0.625]])
         """
         return (values - self.min + 0.5) * self.interval

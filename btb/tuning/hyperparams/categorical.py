@@ -53,27 +53,25 @@ class CategoricalHyperParam(BaseHyperParam):
     def _inverse_transform(self, values):
         """Invert one or more values from search space [0, 1]^K.
 
-        Converts normalized ``values`` from the search space [0, 1]^K to the original space of
-        ``choices`` that this hyperparameter has been instantiated with.
+        Converts a numpy.ndarray with normalized values from the search space [0, 1]^K to the
+        original space of ``self.choices`` that this hyperparameter has been instantiated with.
 
         Args:
-            values (ArrayLike):
-                Single value or 2D ArrayLike of normalized values.
+            values (numpy.ndarray):
+                2D array of normalized values.
 
         Returns:
-            denormalized (Union[object, List[object]]):
-                Denormalized value or list of denormalized values.
+            denormalized (numpy.ndarray):
+                2D array with denormalized values.
 
         Examples:
-            >>> import numpy
             >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
-            >>> instance._inverse_transform(numpy.asarray([[1, 0, 0]]))
+            >>> instance._inverse_transform(np.array([[1, 0, 0]]))
             array([['Cat']])
-            >>> instance._inverse_transform(numpy.asarray([[1, 0, 0], [0, 0, 1]]))
+            >>> instance._inverse_transform(np.array([[1, 0, 0], [0, 0, 1]]))
             array([['Cat'],
                    ['Tiger']])
         """
-
         if len(values.shape) == 1:
             values = values.reshape(1, -1)
 
@@ -87,19 +85,18 @@ class CategoricalHyperParam(BaseHyperParam):
         initialization.
 
         Args:
-            values (ArrayLike):
-                2D ArrayLike of normalized values.
+            values (numpy.ndarray):
+                2D array of normalized values.
 
         Returns:
-            normalized (ArrayLike):
-                2D array of shape(len(values)).
+            normalized (numpy.ndarray):
+                2D array of shape(len(values), self.K) with normalized values.
 
         Examples:
-            >>> import numpy
             >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
-            >>> instance._transform(numpy.asarray([['Cat']])
+            >>> instance._transform(np.array([['Cat']])
             array([[1, 0, 0]])
-            >>> instance._transform(numpy.asarray([['Cat'], ['Tiger']])
+            >>> instance._transform(np.array([['Cat'], ['Tiger']])
             array([[1, 0, 0],
                    [0, 0, 1]])
         """
@@ -113,8 +110,8 @@ class CategoricalHyperParam(BaseHyperParam):
                 Number of values to sample.
 
         Returns:
-            samples (ArrayLike):
-                2D arry with shape of (n_samples, self.K) with normalized values inside the search
+            samples (numpy.ndarray):
+                2D array with shape of (n_samples, self.K) with normalized values inside the search
                 space [0, 1]^k.
 
         Examples:

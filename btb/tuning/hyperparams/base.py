@@ -18,7 +18,7 @@ def to_array(values, dimension):
 
     Returns:
         values(Array):
-            Values converted in to ``array`` of shape ``(n, dimension)`` where ``np`` is the
+            Values converted in to ``array`` of shape ``(n, dimension)`` where ``n`` is the
             length of values.
 
     Raises:
@@ -95,8 +95,8 @@ class BaseHyperParam(metaclass=ABCMeta):
                 Single value or 2D ArrayLike of normalized values.
 
         Returns:
-            denormalized (Union[object, List[object]]):
-                Denormalized value or list of denormalized values.
+            denormalized (numpy.ndarray):
+                2D array of denormalized values.
         """
         values = to_array(values, self.K)
         self._within_search_space(values)
@@ -105,14 +105,14 @@ class BaseHyperParam(metaclass=ABCMeta):
 
     @abstractmethod
     def sample(self, n_samples):
-        """Generate an array of ``num_samples`` random samples in the search space.
+        """Generate an array of ``n_samples`` random samples in the search space.
 
         Args:
             n_samples (int):
                 Number of values to sample.
 
         Returns:
-            samples (ArrayLike):
+            samples (numpy.ndarray):
                 2D array with of shape (n_samples, self.K)
         """
 
@@ -136,11 +136,11 @@ class BaseHyperParam(metaclass=ABCMeta):
                 Single value or list of values to normalize.
 
         Returns:
-            normalized (ArrayLike):
+            normalized (numpy.ndarray):
                 2D array of shape(len(values), self.K)
 
         Examples:
-            >>> from btb.hyperparams.numerical import IntHyperParam
+            >>> from btb.tuning.hyperparams.numerical import IntHyperParam
             >>> ihp = IntHyperParam(min=1, max=4)
             >>> ihp.transform(1)
             array([[0.125]])
@@ -165,7 +165,7 @@ class BaseHyperParam(metaclass=ABCMeta):
             values = values.reshape(-1, 1)
 
         if values.shape[1] > 1:
-            raise ValueError('More than one columns are not supported.')
+            raise ValueError('Only one column is supported.')
 
         self._within_hyperparam_space(values)
 

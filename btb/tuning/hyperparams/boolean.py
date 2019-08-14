@@ -30,29 +30,28 @@ class BooleanHyperParam(BaseHyperParam):
 
     def _within_hyperparam_space(self, values):
         if values.dtype is not np.dtype('bool'):
-            raise ValueError('Values: {} not within hyperparameter range.'.format(values))
+            raise ValueError('Values: {} not within hyperparameter space.'.format(values))
 
     def _inverse_transform(self, values):
         """Invert one or more values from search space [0, 1]^K.
 
-        Converts normalized ``values`` from the search space [0, 1]^K to the original space
-        of ``True`` and ``False`` by casting those values to ``boolean``.
+        Converts a ``numpy.ndarray`` with normalized values from the search space [0, 1]^K to the
+        original space of ``True`` and ``False`` by casting those values to ``boolean``.
 
         Args:
-            values (ArrayLike):
-                2D ArrayLike of normalized values.
+            values (numpy.ndarray):
+                2D array of normalized values.
 
         Returns:
-            denormalized (Union[object, List[object]]):
-                Denormalized value or list of denormalized values.
+            denormalized (numpy.ndarray):
+                2D array of denormalized values.
 
         Examples:
-            >>> import numpy
             >>> instance = BooleanHyperParam()
-            >>> instance._inverse_transform(numpy.asarray([[0], [1]])
+            >>> instance._inverse_transform(np.array([[0], [1]]))
             array([[True],
                    [False]])
-            >>> instance._inverse_transform(numpy.asarray([[0]])
+            >>> instance._inverse_transform(np.array([[0]]))
             array([[False]])
         """
         return values.astype(bool)
@@ -60,27 +59,25 @@ class BooleanHyperParam(BaseHyperParam):
     def _transform(self, values):
         """Transform one or more boolean values.
 
-        Converts the ``values`` in to a ``numpy.array`` in order to be able to perform the
-        normalization to the search space of [0, 1]^k by casting those ``values`` to ``int``.
+        Converts a ``numpy.array`` with values from the original hyperparameter space into
+        normalized values in the search space of [0, 1]^K by casting those values to ``int``.
 
         Args:
-            values (Union[object, List[object]]):
-                2D ArrayLike of values to be normalized.
+            values (numpy.ndarray):
+                2D array of values to be normalized.
 
         Returns:
-            normalized (ArrayLike):
-                2D array of shape(len(values)).
+            normalized (numpy.ndarray):
+                2D array of shape(len(values), self.K).
 
         Examples:
-            >>> import numpy
             >>> instance = BooleanHyperParam()
-            >>> instance._transform(numpy.asarray([[True], [False]]))
+            >>> instance._transform(np.array([[True], [False]]))
             array([[1],
                    [0]])
-            >>> instance._transform(numpy.asarray([[True]])
+            >>> instance._transform(np.array([[True]])
             array([[1]])
         """
-
         return values.astype(int)
 
     def sample(self, n_samples):
@@ -91,8 +88,8 @@ class BooleanHyperParam(BaseHyperParam):
                 Number of values to sample.
 
         Returns:
-            samples (ArrayLike):
-                2D arry with shape of (n_samples, self.K) with normalized values inside the
+            samples (numpy.ndarray):
+                2D array with shape of (n_samples, self.K) with normalized values inside the
                 search space [0, 1]^k.
 
         Examples:
