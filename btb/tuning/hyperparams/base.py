@@ -36,14 +36,19 @@ def to_array(values, dimension):
         if dimension != 1:
             if not isinstance(values[0], (list, np.ndarray)):
                 values = [values]
-
-            if not all(len(value) == dimension for value in values):
-                raise ValueError('Values not in dimension.')
         else:
             if not isinstance(values[0], (list, np.ndarray)):
                 values = [[value] for value in values]
 
-    return np.array(values)
+    if not all(len(value) == dimension for value in values):
+        raise ValueError('Values not in dimension.')
+
+    values = np.array(values)
+
+    if len(values.shape) > 2:
+        raise ValueError('Too many dimensions.')
+
+    return values
 
 
 class BaseHyperParam(metaclass=ABCMeta):
@@ -59,6 +64,10 @@ class BaseHyperParam(metaclass=ABCMeta):
     def _within_range(self, values, min=0, max=1):
         """Ensure that the values are between a certain range.
 
+        Args:
+            values(numpy.ndarray):
+                2D array of values that are going to be checked.
+
         Raises:
             ValueError:
                 A ``ValueError`` is raised if any value from ``values`` is not inside the range.
@@ -71,10 +80,10 @@ class BaseHyperParam(metaclass=ABCMeta):
             )
 
     def _within_hyperparam_space(self, values):
-        self._within_range(values, self.min, self.max)
+        self._within_range(values, min=self.min, max=self.max)
 
     def _within_search_space(self, values):
-        self._within_range(values, 0, 1)
+        self._within_range(values, min=0, max=1)
 
     @abstractmethod
     def _inverse_transform(self, values):

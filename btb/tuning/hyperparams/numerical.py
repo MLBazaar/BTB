@@ -57,6 +57,9 @@ class FloatHyperParam(NumericalHyperParam):
         if max is None or max == np.inf:
             max = sys.float_info.max
 
+        if min >= max:
+            raise ValueError('The `min` value can not be greater or equal to `max` value.')
+
         self.min = min
         self.max = max
         self.range = max - min
@@ -155,6 +158,9 @@ class IntHyperParam(NumericalHyperParam):
         if max is None:
             max = sys.maxsize / 2
 
+        if min >= max:
+            raise ValueError('The `min` value can not be greater or equal to `max` value.')
+
         self.min = int(min) if include_min else int(min) + 1
         self.max = int(max) if include_max else int(max) - 1
         self.step = step
@@ -221,6 +227,6 @@ class IntHyperParam(NumericalHyperParam):
 
     def sample(self, n_samples):
         sampled = np.random.random((n_samples, self.K))
-        inverted = self.inverse_transform(sampled)
+        inverted = self._inverse_transform(sampled)
 
-        return self.transform(inverted)
+        return self._transform(inverted)

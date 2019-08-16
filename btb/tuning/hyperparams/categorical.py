@@ -94,9 +94,9 @@ class CategoricalHyperParam(BaseHyperParam):
 
         Examples:
             >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
-            >>> instance._transform(np.array([['Cat']])
+            >>> instance._transform(np.array([['Cat']]))
             array([[1, 0, 0]])
-            >>> instance._transform(np.array([['Cat'], ['Tiger']])
+            >>> instance._transform(np.array([['Cat'], ['Tiger']]))
             array([[1, 0, 0],
                    [0, 0, 1]])
         """

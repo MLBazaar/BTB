@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
+from unittest.mock import patch
 
 import numpy as np
 
@@ -12,118 +13,104 @@ class TestBooleanHyperParam(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """Instantiate a BooleanHyperParam to be used in all the tests."""
         cls.instance = BooleanHyperParam()
 
-    def test_transform_list_values(self):
-        """Test that the method ``transform`` performs a normalization over a ``list`` of boolean
-        values and converts them in to a search space of [0, 1]^k.
-        """
-
+    def test__within_hyperparam_space_values_in_space(self):
+        """Test that the method ``_within_hyperparam_space`` does not raise a value error when
+        values in the hyperparameter space are given."""
         # setup
-        values_1 = [True, False, True]
-        values_2 = np.asarray([[True], [False]])
+        values = np.array([[True], [False]])
 
-        # run
-        result_1 = self.instance.transform(values_1)
-        result_2 = self.instance.transform(values_2)
+        # run assert
+        self.instance._within_hyperparam_space(values)
 
-        # assert
-        expected_result_1 = np.asarray([[1], [0], [1]])
-        expected_result_2 = np.asarray([[1], [0]])
-
-        np.testing.assert_array_equal(result_1, expected_result_1)
-        np.testing.assert_array_equal(result_2, expected_result_2)
-
-    def test_transform_list_out_of_shape(self):
-        """Test that a ``ValueError`` is being raised when an invalid shape of values has been
-        given.
-        """
+    def test__within_hyperparam_space_values_out_of_space(self):
+        """Test that the method ``_within_hyperparam_space`` does not raise a value error when
+        values in the hyperparameter space are given."""
         # setup
-        invalid_values = [[True, False]]
+        values = np.array([[1], [0]])
 
-        # run / assert
+        # run/assert
         with self.assertRaises(ValueError):
-            self.instance.transform(invalid_values)
+            self.instance._within_hyperparam_space(values)
 
-    def test_transform_sinlge_value(self):
-        """Test that the method ``transform`` performs a normalization over a sinlge boolean
-        value and converts them in to a search space of [0, 1]^k.
+    def test__inverse_transform_single_value(self):
+        """Test the method ``_inverse_transform`` to perform a denomalization over a value from
+        the search space [0, 1]^K.
+        """
+        # setup
+        values = np.array([[1]])
+
+        # run
+        result = self.instance._inverse_transform(values)
+
+        # assert
+        expected_result = np.array([[True]])
+
+        np.testing.assert_array_equal(result, expected_result)
+
+    def test__inverse_transform_multiple_values(self):
+        """Test the method ``_inverse_transform`` to perform a denomalization over multiple values
+        from the search space [0, 1]^K.
+        """
+        # setup
+        values = np.array([[1], [0], [0], [1]])
+
+        # run
+        result = self.instance._inverse_transform(values)
+
+        # assert
+        expected_result = np.array([[True], [False], [False], [True]])
+
+        np.testing.assert_array_equal(result, expected_result)
+
+    def test__transform_single_value(self):
+        """Test that the method ``_transform`` performs a normalization over a ``boolean`` value
+        and converts it in to a search space of [0, 1]^k.
         """
 
         # setup
-        values_1 = False
-        values_2 = [True]
+        values = np.array([[True]])
 
         # run
-        result_1 = self.instance.transform(values_1)
-        result_2 = self.instance.transform(values_2)
+        result = self.instance._transform(values)
 
         # assert
-        expected_result_1 = np.asarray([[0]])
-        expected_result_2 = np.asarray([[1]])
+        expected_result = np.array([[1]])
 
-        np.testing.assert_array_equal(result_1, expected_result_1)
-        np.testing.assert_array_equal(result_2, expected_result_2)
+        np.testing.assert_array_equal(result, expected_result)
 
-    def test_transform_invalid_values(self):
-        """Test that ``ValueError`` is being raised when a value out of the hyperparameter space
-        is given.
-        """
-
-        # run / assert
-        with self.assertRaises(ValueError):
-            self.instance.transform(1)
-
-    def test_inverse_transform_list_values(self):
-        """Test that the method ``inverse_transform`` performs a denormalization over the search
-        space values from a list to the original hyperparameter space.
+    def test__transform_multiple_values(self):
+        """Test that the method ``_transform`` performs a normalization over ``boolean`` values and
+        converts them in to a search space of [0, 1]^k.
         """
 
         # setup
-        values_1 = [0, 1, 0]
-        values_2 = [[1], [0], [1]]
+        values = np.array([[True], [False]])
 
         # run
-        result_1 = self.instance.inverse_transform(values_1)
-        result_2 = self.instance.inverse_transform(values_2)
+        result = self.instance._transform(values)
 
         # assert
-        expected_result_1 = np.asarray([[False], [True], [False]])
-        expected_result_2 = np.asarray([[True], [False], [True]])
+        expected_result = np.array([[1], [0]])
 
-        np.testing.assert_array_equal(result_1, expected_result_1)
-        np.testing.assert_array_equal(result_2, expected_result_2)
+        np.testing.assert_array_equal(result, expected_result)
 
-    def test_inverse_transform_single_value(self):
-        """Test that the method ``inverse_transform`` performs a denormalization over the search
-        space values from a sinlge to the original hyperparameter space.
-        """
-        # setup
-        values_1 = 0
-        values_2 = [1]
-
-        # run
-        result_1 = self.instance.inverse_transform(values_1)
-        result_2 = self.instance.inverse_transform(values_2)
-
-        # assert
-        expected_result_1 = np.asarray([[False]])
-        expected_result_2 = np.asarray([[True]])
-
-        np.testing.assert_array_equal(result_1, expected_result_1)
-        np.testing.assert_array_equal(result_2, expected_result_2)
-
-    def test_sample(self):
+    @patch('btb.tuning.hyperparams.boolean.np.random.random')
+    def test_sample(self, mock_np_random):
         """Test that the method ``sample`` returns values from the search space and not the
         original hyperparameter space.
         """
-
         # setup
-        n = 10
+        n = 4
+        mock_np_random.return_value = np.array([[0.1], [0.2], [0.5], [0.99]])
 
         # run
         result = self.instance.sample(n)
 
         # assert
+        expected_result = np.array([[0], [0], [0], [1]])
+        mock_np_random.assert_called_once_with((n, self.instance.K))
         self.assertEqual(len(result), n)
-        assert all(0 == res or res == 1 for res in result)
+        np.testing.assert_array_equal(result, expected_result)
