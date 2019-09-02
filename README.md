@@ -10,16 +10,18 @@ A simple, extensible backend for developing auto-tuning systems.
 [![PyPi](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
 [![Travis](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
 [![CodeCov](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
+[![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
 
-# Overview
-
-Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
 
 - Free software: MIT license
 - Documentation: https://hdi-project.github.io/BTB
 - Homepage: https://github.com/hdi-project/BTB
 
-# Installation
+# Overview
+
+Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
+
+*BTB is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).*
 
 ## Requirements
 
@@ -67,37 +69,7 @@ git checkout stable
 make install
 ```
 
-## Install for Development
-
-If you want to contribute to the project, a few more steps are required to make the project ready
-for development.
-
-First, please head to [the GitHub page of the project](https://github.com/HDI-Project/BTB)
-and make a fork of the project under you own username by clicking on the **fork** button on the
-upper right corner of the page.
-
-Afterwards, clone your fork and create a branch from master with a descriptive name that includes
-the number of the issue that you are going to work on:
-
-```bash
-git clone git@github.com:{your username}/BTB.git
-cd BTB
-git branch issue-xx-cool-new-feature master
-git checkout issue-xx-cool-new-feature
-```
-
-Finally, install the project with the following command, which will install some additional
-dependencies for code linting and testing.
-
-```bash
-make install-develop
-```
-
-Make sure to use them regularly while developing by running the commands `make lint` and `make test`.
-
-# Quickstart
-
-This section is a short series of tutorials to help you getting started with BTB.
+## Quickstart
 
 ## Tuners
 
@@ -187,7 +159,7 @@ out and decide which model seems to get the best results once it is properly fin
 In order to use the selector we will create a ``Tuner`` instance for each model that
 we want to try out, as well as the ``Selector`` instance.
 
-```
+```python
 >>> from sklearn.ensemble import RandomForestClassifier
 >>> from sklearn.svm import SVC
 >>> models = {
@@ -243,29 +215,12 @@ Then we perform the following steps in a loop.
     0.89
     >>> tuners[next_choice].add(parameters, score)
     ```
-
+    
 ## What's next?
+For more details about **BTB** and all its possibilities and features, please check the
+[project documentation site](https://HDI-Project.github.io/BTB/)!
 
-For more details about **BTB** and all its features, please check the
-[documentation site](https://HDI-Project.github.io/BTB/).
-
-
-# Credits
-
-BTB is an open source project from the Data to AI Lab at MIT which has been built and maintained
-over the years by the following team:
-
-* Carles Sala <csala@csail.mit.edu>
-* Micah Smith <micahs@mit.edu>
-* Laura Gustafson <lgustaf@mit.edu>
-* Bennett Cyphers <bennettcyphers@gmail.com>
-* Kalyan Veeramachaneni <kalyan@csail.mit.edu>
-* Alfredo Cuesta-Infante <alfredo.cuesta@urjc.es>
-* Plamen Valentinov <plamen@pythiac.com>
-* Sze Nga Wong <wsnalice@mit.edu>
-
-
-## Citing ATM
+## Citing BTB
 
 If you use BTB, please consider citing the following work:
 
