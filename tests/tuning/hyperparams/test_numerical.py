@@ -90,7 +90,6 @@ class TestFloatHyperParam(TestCase):
         # setup
         mock_sys.float_info.max = 1000.0  # This values can be different in each OS.
         mock_sys.float_info.min = 0.0
-        _range = 1000.0
 
         instance = FloatHyperParam()
         values = np.array([[0.9], [100.8]])
@@ -99,7 +98,8 @@ class TestFloatHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = values / _range
+        expected_result = np.array([[0.0009],
+                                    [0.1008]])
 
         np.testing.assert_array_equal(result, expected_result)
 
@@ -111,18 +111,18 @@ class TestFloatHyperParam(TestCase):
         # setup
         mock_sys.float_info.max = 10.0
         _min = 1.0
-        _range = 10.0 - _min
 
         instance = FloatHyperParam(min=_min)
-        values = np.array([[0.1], [1]])
+        values = np.array([[7.3], [4.6]])
 
         # run
         result = instance._transform(values)
 
         # assert
-        expected_result = (values - _min) / _range
+        expected_result = np.array([[0.7],
+                                    [0.4]])
 
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_allclose(result, expected_result)
 
     @patch('btb.tuning.hyperparams.numerical.sys')
     def test__transform_no_min_max(self, mock_sys):
@@ -132,7 +132,6 @@ class TestFloatHyperParam(TestCase):
         # setup
         mock_sys.float_info.min = 0.0
         _max = 1.0
-        _range = 1.0
 
         instance = FloatHyperParam(max=_max)
         values = np.array([[0.1], [0.9]])
@@ -141,7 +140,8 @@ class TestFloatHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = values / _range
+        expected_result = np.array([[0.1],
+                                    [0.9]])
 
         np.testing.assert_array_equal(result, expected_result)
 
@@ -153,15 +153,15 @@ class TestFloatHyperParam(TestCase):
         # setup
         _min = 0.0
         _max = 10.0
-        _range = _max - _min
-        instance = FloatHyperParam(min=0.0, max=10.0)
+        instance = FloatHyperParam(min=_min, max=_max)
         values = np.array([[0.1], [0.9]])
 
         # run
         result = instance._transform(values)
 
         # assert
-        expected_result = (values - _min) / _range
+        expected_result = np.array([[0.01],
+                                    [0.09]])
 
         np.testing.assert_array_equal(result, expected_result)
 
@@ -173,16 +173,16 @@ class TestFloatHyperParam(TestCase):
         # setup
         mock_sys.float_info.max = 1000.0
         mock_sys.float_info.min = 0.0
-        _range = 1000.0
 
         instance = FloatHyperParam()
-        values = np.array([[0.0009], [0.1008]])
+        values = np.array([[0.1], [0.2]])
 
         # run
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = values * _range
+        expected_result = np.array([[100.],
+                                    [200.]])
 
         np.testing.assert_array_equal(result, expected_result)
 
@@ -194,7 +194,6 @@ class TestFloatHyperParam(TestCase):
         # setup
         mock_sys.float_info.max = 10.0
         _min = 1.0
-        _range = 10.0 - _min
 
         instance = FloatHyperParam(min=_min)
         values = np.array([[0.1], [0.]])
@@ -203,7 +202,8 @@ class TestFloatHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = values * _range + _min
+        expected_result = np.array([[1.9],
+                                    [1.0]])
 
         np.testing.assert_array_equal(result, expected_result)
 
@@ -215,7 +215,6 @@ class TestFloatHyperParam(TestCase):
         # setup
         mock_sys.float_info.min = 0.0
         _max = 1.0
-        _range = 1.0
 
         instance = FloatHyperParam(max=_max)
         values = np.array([[0.1], [0.9]])
@@ -224,7 +223,8 @@ class TestFloatHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = values * _range
+        expected_result = np.array([[0.1],
+                                    [0.9]])
 
         np.testing.assert_array_equal(result, expected_result)
 
@@ -236,7 +236,6 @@ class TestFloatHyperParam(TestCase):
         # setup
         _min = 0.0
         _max = 10.0
-        _range = 10.0
 
         instance = FloatHyperParam(min=_min, max=_max)
         values = np.array([[0.1], [0.9]])
@@ -245,7 +244,8 @@ class TestFloatHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = values * _range
+        expected_result = np.array([[1.],
+                                    [9.]])
 
         np.testing.assert_array_equal(result, expected_result)
 
@@ -388,10 +388,6 @@ class TestIntHyperParam(TestCase):
         """
         # setup
         mock_sys.maxsize = 1000  # This values can be different in each OS.
-        _min = -500
-        _range = 1001
-        _interval = 1 / _range
-
         instance = IntHyperParam()
         values = np.array([[9], [100]])
 
@@ -399,9 +395,10 @@ class TestIntHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = (values - _min + 0.5) * _interval
+        expected_result = np.array([[0.50899101],
+                                    [0.5999001]])
 
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_allclose(result, expected_result)
 
     @patch('btb.tuning.hyperparams.numerical.sys')
     def test__transform_min_no_max(self, mock_sys):
@@ -411,9 +408,6 @@ class TestIntHyperParam(TestCase):
         # setup
         mock_sys.maxsize = 1000
         _min = 1
-        _range = 500
-        _interval = 1 / _range
-
         instance = IntHyperParam(min=_min)
         values = np.array([[5], [1]])
 
@@ -421,9 +415,10 @@ class TestIntHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = (values - _min + 0.5) * _interval
+        expected_result = np.array([[0.009],
+                                    [0.001]])
 
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_allclose(result, expected_result)
 
     @patch('btb.tuning.hyperparams.numerical.sys')
     def test__transform_no_min_max(self, mock_sys):
@@ -432,11 +427,7 @@ class TestIntHyperParam(TestCase):
         """
         # setup
         mock_sys.maxsize = 1000
-        _min = -500
-        _max = 1
-        _range = 502
-        _interval = 1 / _range
-
+        _max = 10
         instance = IntHyperParam(max=_max)
         values = np.array([[1], [9]])
 
@@ -444,9 +435,10 @@ class TestIntHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = (values - _min + 0.5) * _interval
+        expected_result = np.array([[0.981409],
+                                    [0.99706458]])
 
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_allclose(result, expected_result)
 
     @patch('btb.tuning.hyperparams.numerical.sys')
     def test__transform_min_max(self, mock_sys):
@@ -456,19 +448,18 @@ class TestIntHyperParam(TestCase):
         # setup
         _min = 0
         _max = 10
-        _range = 11
-        _interval = 1 / _range
 
         instance = IntHyperParam(min=_min, max=_max)
-        values = np.array([[1], [9]])
+        values = np.array([[9], [1]])
 
         # run
         result = instance._transform(values)
 
         # assert
-        expected_result = (values - _min + 0.5) * _interval
+        expected_result = np.array([[0.86363636],
+                                    [0.13636364]])
 
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_allclose(result, expected_result)
 
     @patch('btb.tuning.hyperparams.numerical.sys')
     def test__inverse_transform_no_min_no_max(self, mock_sys):
@@ -477,11 +468,6 @@ class TestIntHyperParam(TestCase):
         """
         # setup
         mock_sys.maxsize = 1000
-        _min = -500
-        _max = 500
-        _range = 1001
-        _interval = 1 / _range
-
         instance = IntHyperParam()
         values = np.array([[0.0009], [0.1008]])
 
@@ -489,9 +475,8 @@ class TestIntHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = (values / _interval - 0.5 + _min).round()
-        # Restrict to make sure that we stay within the valid range
-        expected_result = np.minimum(np.maximum(expected_result, _min), _max)
+        expected_result = np.array([[-500],
+                                    [-400]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
@@ -503,10 +488,6 @@ class TestIntHyperParam(TestCase):
         # setup
         mock_sys.maxsize = 1000
         _min = 1
-        _max = 500
-        _range = 500
-        _interval = 1 / _range
-
         instance = IntHyperParam(min=_min)
         values = np.array([[0.1], [0.]])
 
@@ -514,8 +495,8 @@ class TestIntHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = (values / _interval - 0.5 + _min).round()
-        expected_result = np.minimum(np.maximum(expected_result, _min), _max)
+        expected_result = np.array([[50],
+                                    [1]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
@@ -526,11 +507,7 @@ class TestIntHyperParam(TestCase):
         """
         # setup
         mock_sys.maxsize = 1000
-        _min = -500
-        _max = 1
-        _range = 502
-        _interval = 1 / _range
-
+        _max = 500
         instance = IntHyperParam(max=_max)
         values = np.array([[0.1], [0.9]])
 
@@ -538,8 +515,8 @@ class TestIntHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = (values / _interval - 0.5 + _min).round()
-        expected_result = np.minimum(np.maximum(expected_result, _min), _max)
+        expected_result = np.array([[-400],
+                                    [400]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
@@ -551,17 +528,15 @@ class TestIntHyperParam(TestCase):
         # setup
         _min = 0
         _max = 10
-        _range = 11
-        _interval = 1 / _range
-        instance = IntHyperParam(min=0, max=10)
+        instance = IntHyperParam(min=_min, max=_max)
         values = np.array([[0.1], [0.9]])
 
         # run
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = (values / _interval - 0.5 + _min).round()
-        expected_result = np.minimum(np.maximum(expected_result, _min), _max)
+        expected_result = np.array([[1],
+                                    [9]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
