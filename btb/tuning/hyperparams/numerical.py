@@ -32,6 +32,9 @@ class NumericalHyperParam(BaseHyperParam):
         step (int or float):
             Increase amount to take for each sample.
     """
+    def _within_range(self, values, min=0, max=1):
+        if (values < min).any() or (values > max).any():
+            raise ValueError('Value not within range [{}, {}]: {}'.format(min, max, values))
 
 
 class FloatHyperParam(NumericalHyperParam):
