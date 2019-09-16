@@ -61,10 +61,16 @@ class CategoricalHyperParam(BaseHyperParam):
                 2D array of normalized values.
 
         Returns:
-            denormalized (numpy.ndarray):
+            numpy.ndarray:
                 2D array with denormalized values.
 
-        Examples:
+        Example:
+            The example below shows simple usage case where a CategoricalHyperParam is being
+            created with three possible values, (Cat, Dog, Tiger), and it's method
+            ``_inverse_transform`` is being called with a valid ``numpy.ndarray`` containing
+            values from the search space and values from the hyperparameter space are being
+            returned.
+
             >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
             >>> instance._inverse_transform(np.array([[1, 0, 0]]))
             array([['Cat']])
@@ -89,10 +95,15 @@ class CategoricalHyperParam(BaseHyperParam):
                 2D array of normalized values.
 
         Returns:
-            normalized (numpy.ndarray):
+            numpy.ndarray:
                 2D array of shape(len(values), self.K) with normalized values.
 
-        Examples:
+        Example:
+            The example below shows simple usage case where a CategoricalHyperParam is being
+            created with three possible values, (Cat, Dog, Tiger), and it's method ``_transform``
+            is being called with a valid ``numpy.ndarray`` containing values from the
+            hyperparameter space and an array with normalized values is being returned.
+
             >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
             >>> instance._transform(np.array([['Cat']]))
             array([[1, 0, 0]])
@@ -110,11 +121,16 @@ class CategoricalHyperParam(BaseHyperParam):
                 Number of values to sample.
 
         Returns:
-            samples (numpy.ndarray):
+            numpy.ndarray:
                 2D array with shape of (n_samples, self.K) with normalized values inside the search
                 space [0, 1]^k.
 
-        Examples:
+        Example:
+            The example below shows simple usage case where a CategoricalHyperParam is being
+            created with three possible values, (Cat, Dog, Tiger), and it's method ``sample``
+            is being called with a number of samples to be obtained. A ``numpy.ndarray`` with
+            values from the search space is being returned.
+
             >>> instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Tiger'])
             >>> instance.sample(2)
             array([[1, 0, 0],

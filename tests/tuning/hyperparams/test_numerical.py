@@ -369,17 +369,28 @@ class TestIntHyperParam(TestCase):
     def test___init__min_max_step(self):
         """Test instantiation with ``min=n`` and ``max=x`` and step."""
         # setup
-        _min = 1
-        _max = 9
-        _step = 5
+        _min = 0
+        _max = 10
+        _step = 2
 
         # run
         instance = IntHyperParam(min=_min, max=_max, step=_step)
 
         # assert
-        self.assertEqual(instance.min, _min)
-        self.assertEqual(instance.max, _max)
-        self.assertEqual(instance.step, _step)
+        self.assertEqual(instance.min, 0)
+        self.assertEqual(instance.max, 10)
+        self.assertEqual(instance.step, 2)
+
+    def test___init__min_max_invalid_step(self):
+        """Test instantiation with ``min=n`` and ``max=x``"""
+        # setup
+        _min = 1
+        _max = 9
+        _step = 5
+
+        # run / assert
+        with self.assertRaises(ValueError):
+            IntHyperParam(min=_min, max=_max, step=_step)
 
     @patch('btb.tuning.hyperparams.numerical.sys')
     def test__transform_no_min_no_max(self, mock_sys):

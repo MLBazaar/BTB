@@ -14,24 +14,10 @@ class NumericalHyperParam(BaseHyperParam):
 
     The numerical hyperparameter class defines an abstraction to hyperparameters which ranges are
     defined by a numerical value and can take any number between that range.
-
-    Attributes:
-        K (int):
-            Number of dimensions that this hyperparameter uses to be represented in the search
-            space.
-
-    Args:
-        min (int or float):
-            Minimum numerical value that this hyperparameter can be set to.
-        max (int or float):
-            Maximum numerical value that this hyperparameter can be set to.
-        include_min (default=True):
-            Either ot include or not the ``min`` value inside the range.
-        include_max (default=True):
-            Either ot include or not the ``max`` value inside the range.
-        step (int or float):
-            Increase amount to take for each sample.
     """
+
+    K = 1
+
     def _within_range(self, values, min=0, max=1):
         if (values < min).any() or (values > max).any():
             raise ValueError('Value not within range [{}, {}]: {}'.format(min, max, values))
@@ -40,19 +26,36 @@ class NumericalHyperParam(BaseHyperParam):
 class FloatHyperParam(NumericalHyperParam):
     """NumericalHyperParam of type ``float``.
 
+    The FloatHyperParam class represents a single hyperparameter within an range of ``float``
+    numbers, where ``min`` and ``max`` can take as value any float number, having ``min`` to
+    be smaller than ``max``.
+
     Hyperparameter space:
-        ``[min, max]``
+        :math:`h_1, h_2,... h_n` where :math:`h_i = i * (max - min) + min`
 
     Search space:
-        ``[0, 1)``
+        :math:`s_1, s_2,... s_n` where :math:`s_i = (i - min) / (max - min)`
+
     """
 
-    K = 1
-
     def __init__(self, min=None, max=None, include_min=True, include_max=True):
+        """Instantiation of FloatHyperParam.
 
-        self.include_min = include_min
-        self.include_max = include_max
+        Args:
+            min (float):
+                Float number to represent the minimum value that this hyperparameter can take,
+                by default is ``None`` which will take the system's minimum float value possible.
+
+            max (float):
+                Float number to represent the maximum value that this hyperparameter can take,
+                by default is ``None`` which will take the system's maximum float value possible.
+
+            include_min (bool):
+                Wheither or not to include the minimum value in the search space.
+
+            include_max (bool):
+                Wheither or not to include the maximum value in the search space.
+        """
 
         if min is None or min == -np.inf:
             min = sys.float_info.min
@@ -61,7 +64,7 @@ class FloatHyperParam(NumericalHyperParam):
             max = sys.float_info.max
 
         if min >= max:
-            raise ValueError('The `min` value can not be greater or equal to `max` value.')
+            raise ValueError('The ``min`` value can not be greater or equal to ``max`` value.')
 
         self.min = min
         self.max = max
@@ -70,7 +73,7 @@ class FloatHyperParam(NumericalHyperParam):
     def _inverse_transform(self, values):
         """Invert one or more ``normalized`` values.
 
-        Inverse transorm one or more normalized values from the search space [0, 1)^k. This is
+        Inverse transorm one or more normalized values from the search space [0, 1]. This is
         being computed by multiplying the hyperparameter's range with the values to be denormalized
         and adding the ``self.min`` value to them.
 
@@ -79,10 +82,15 @@ class FloatHyperParam(NumericalHyperParam):
                 2D array of normalized values.
 
         Returns:
-            denormalized (numpy.ndarray):
+            numpy.ndarray:
                 2D array of denormalized values.
 
-        Examples:
+        Example:
+            The example below shows simple usage case where a FloatHyperParam is being created
+            with a range that goes from ``0.1`` to ``0.9`` and it's ``_inverse_transform`` method
+            is being called with a valid ``numpy.ndarray`` that contain values from the normalized
+            search space and values from the hyperparameter space are being returned.
+
             >>> instance = FloatHyperParam(min=0.1, max=0.9)
             >>> instance._inverse_transform(np.array([[0.], [1.]]))
             array([[0.1],
@@ -96,7 +104,7 @@ class FloatHyperParam(NumericalHyperParam):
         """Transform one or more ``float`` values.
 
         Convert one or more ``float`` values from the original hyperparameter space to the
-        normalized search space [0, 1)^k. This is being computed by substracting the ``self.min``
+        normalized search space [0, 1). This is being computed by substracting the ``self.min``
         value that the hyperparameter can take from the values to be trasnformed and dividing them
         by the ``self.range`` of the hyperparameter.
 
@@ -105,32 +113,42 @@ class FloatHyperParam(NumericalHyperParam):
                 2D array with values to be normalized.
 
         Returns:
-            normalized (numpy.ndarray):
+            numpy.ndarray:
                 2D array of shape(len(values), self.K).
 
-        Examples:
+        Example:
+            The example below shows simple usage case where a FloatHyperParam is being created
+            with a range that goes from ``0.1`` to ``0.9`` and it's ``_transform`` method
+            is being called with a valid ``numpy.ndarray`` that contain values from the
+            hyperparameter space and values from the search space are being returned.
+
             >>> instance = FloatHyperParam(min=0.1, max=0.9)
-            >>> instance._transform(np.array([[0.1], [0.9]])
+            >>> instance._transform(np.array([[0.1], [0.9]]))
             array([[0.],
                    [1.]])
-            >>> instance._transform(np.array([[0.8]])
+            >>> instance._transform(np.array([[0.8]]))
             array([[0.875]])
         """
         return (values - self.min) / self.range
 
     def sample(self, n_samples):
-        """Generate sample values in the hyperparameter search space of [0, 1)^k.
+        """Generate sample values in the hyperparameter search space of [0, 1).
 
         Args:
             n_samples (int):
                 Number of values to sample.
 
         Returns:
-            samples (numpy.ndarray):
-                2D array with shape of (n_samples, self.K) with normalized values inside the search
-                space [0, 1)^k.
+            numpy.ndarray:
+                2D array with shape of (n_samples, self.K) with normalized values inside the
+                search space [0, 1).
 
-        Examples:
+        Example:
+            The example below shows simple usage case where a FloatHyperParam is being created
+            with a range that goes from ``0.1`` to ``0.9`` and it's ``sample`` method
+            is being called with a number of samples to be obtained. A ``numpy.ndarray`` with
+            values from the search space is being returned.
+
             >>> instance = FloatHyperParam(min=0.1, max=0.9)
             >>> instance.sample(2)
             array([[0.52058728],
@@ -142,18 +160,38 @@ class FloatHyperParam(NumericalHyperParam):
 class IntHyperParam(NumericalHyperParam):
     """NumericalHyperParam of type ``int``.
 
+    The IntHyperParam class represents a single hyperparameter within an range of ``int``
+    numbers, where ``min`` and ``max`` can take as value any int number to compose that range
+    having ``min`` to be smaller than ``max``.
+
     Hyperparameter space:
-        ``{min, min + step, min + 2 * step...max}``
+        :math:`h_1, h_2,... h_n` where :math:`h_i = min + (i - 1) * step`
+
     Search space:
-        ``{i1...in} where n is ((max - min) / step) + 1``
+        :math:`s_1, s_2,... s_n` where :math:`s_i = \\frac{interval}{2} + (i - 1) * interval`
+
     """
 
     K = 1
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True, step=1):
+        """Instantiation of IntHyperParam.
 
-        self.include_min = include_min
-        self.include_max = include_max
+        Args:
+            min (int):
+                Integer number to represent the minimum value that this hyperparameter can take,
+                by default is ``None`` which will take the system's minimum int value possible.
+
+            max (int):
+                Integer number to represent the maximum value that this hyperparameter can take,
+                by default is ``None`` which will take the system's maximum int value possible.
+
+            include_min (bool):
+                Wheither or not to include the minimum value in the search space.
+
+            include_max (bool):
+                Wheither or not to include the maximum value in the search space.
+        """
 
         if min is None:
             min = -(sys.maxsize / 2)
@@ -168,12 +206,18 @@ class IntHyperParam(NumericalHyperParam):
         self.max = int(max) if include_max else int(max) - 1
         self.step = step
         self.range = ((self.max - self.min) / step) + 1
-        self.interval = 1 / self.range
+
+        if self.range % self.step:
+            raise ValueError(
+                "Invalid step of {} for values inside [{}, {}]".format(step, self.min, self.max)
+            )
+
+        self.interval = self.step / (self.max - self.min + self.step)
 
     def _inverse_transform(self, values):
         """Invert one or more ``normalized`` values.
 
-        Inverse transorm one or more normalized values from the search space [0, 1)^k. This is
+        Inverse transorm one or more normalized values from the search space [0, 1). This is
         being computed by divinding the hyperparameter's interval with the values to be inverted
         and adding the ``self.min`` value to them and resting the 0.5 that has been added during
         the transformation.
@@ -183,10 +227,15 @@ class IntHyperParam(NumericalHyperParam):
                 2D array of normalized values.
 
         Returns:
-            denormalized (numpy.ndarray):
+            numpy.ndarray:
                 2D array of denormalized values.
 
-        Examples:
+        Example:
+            The example below shows simple usage case where an IntHyperParam is being created
+            with a range that goes from ``1`` to ``4`` and it's ``_inverse_transform`` method
+            is being called with a valid ``numpy.ndarray`` that contain values from the
+            search space and values from the hyperparameter space are being returned.
+
             >>> instance = IntHyperParam(min=1, max=4)
             >>> instance._inverse_transform(np.array([[0.125], [0.875]]))
             array([[1],
@@ -206,7 +255,7 @@ class IntHyperParam(NumericalHyperParam):
         """Transform one or more ``int`` values.
 
         Convert one or more ``int`` values from the original hyperparameter space to the
-        normalized search space [0, 1)^k. This is being computed by substracting the `min` value
+        normalized search space [0, 1). This is being computed by substracting the ``min`` value
         that the hyperparameter can take from the values to be trasnformed and adding them 0.5,
         then multiply by the interval.
 
@@ -215,20 +264,47 @@ class IntHyperParam(NumericalHyperParam):
                 2D array of values to be normalized.
 
         Returns:
-            normalized (numpy.ndarray):
+            numpy.ndarray:
                 2D array of shape(len(values), self.K).
 
-        Examples:
+        Example:
+            The example below shows simple usage case where an IntHyperParam is being created
+            with a range that goes from ``1`` to ``4`` and it's ``_transform`` method
+            is being called with a valid ``numpy.ndarray`` that contain values from the
+            hyperparameter space and values from the search space are being returned.
+
             >>> instance = IntHyperParam(min=1, max=4)
             >>> instance._transform(np.array([[1], [4]]))
             array([[0.125],
                    [0.875]])
-            >>> instance._trasnfrom(np.array([[3]])
+            >>> instance._trasnfrom(np.array([[3]]))
             array([[0.625]])
         """
-        return (values - self.min + 0.5) * self.interval
+        return ((values - self.min) / self.step + 0.5) * self.interval
 
     def sample(self, n_samples):
+        """Generate sample values in the hyperparameter search space of [0, 1).
+
+        Args:
+            n_samples (int):
+                Number of values to sample.
+
+        Returns:
+            numpy.ndarray:
+                2D array with shape of (n_samples, self.K) with normalized values inside the
+                search space [0, 1).
+
+        Example:
+            The example below shows simple usage case where a IntHyperParam is being created
+            with a range that goes from ``1`` to ``4`` and it's ``sample`` method
+            is being called with a number of samples to be obtained. A ``numpy.ndarray`` with
+            values from the search space is being returned.
+
+            >>> instance = IntHyperParam(min=1, max=4)
+            >>> instance.sample(2)
+            array([[0.625],
+                   [0.375]])
+        """
         sampled = np.random.random((n_samples, self.K))
         inverted = self._inverse_transform(sampled)
 

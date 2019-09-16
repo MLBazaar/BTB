@@ -7,50 +7,6 @@ from abc import ABCMeta, abstractmethod
 import numpy as np
 
 
-def to_array(values, dimension):
-    """Perform a validation if the data can be converted to array for the hyperparameter.
-
-    Args:
-        values(scalar, ArrayLike):
-            A scalar value or ArrayLike values to be converted to ``numpy.array``.
-        dimension(int):
-            The dimension that the hyperparameter has.
-
-    Returns:
-        values(Array):
-            Values converted in to ``array`` of shape ``(n, dimension)`` where ``n`` is the
-            length of values.
-
-    Raises:
-        ValueError:
-            A ``ValueError`` is raised if any value from ``values`` is not within the dimension.
-    """
-
-    if not isinstance(values, (list, np.ndarray)):
-        if dimension != 1:
-            raise ValueError('Value not in dimension.')
-
-        values = [[values]]
-
-    else:
-        if dimension != 1:
-            if not isinstance(values[0], (list, np.ndarray)):
-                values = [values]
-        else:
-            if not isinstance(values[0], (list, np.ndarray)):
-                values = [[value] for value in values]
-
-    if not all(len(value) == dimension for value in values):
-        raise ValueError('Values not in dimension.')
-
-    values = np.array(values)
-
-    if len(values.shape) > 2:
-        raise ValueError('Too many dimensions.')
-
-    return values
-
-
 class BaseHyperParam(metaclass=ABCMeta):
     """Base hyperparameter class.
 
@@ -58,15 +14,16 @@ class BaseHyperParam(metaclass=ABCMeta):
 
     Attributes:
         K (int):
-            Number of dimensions that this HyperParam uses to be represented in the search space.
+            Number of dimensions that the hyperparameter uses to be represented in the search
+            space.
     """
 
     def _within_range(self, values, min=0, max=1):
         """Ensure that the values are between a certain range.
 
         Args:
-            values(numpy.ndarray):
-                2D array of values that are going to be checked.
+            values (numpy.ndarray):
+                2D array of values that the validation will be performed over.
 
         Raises:
             ValueError:
@@ -80,9 +37,21 @@ class BaseHyperParam(metaclass=ABCMeta):
             )
 
     def _within_hyperparam_space(self, values):
+        """Ensure that the values are between the range of the hyperparameter space.
+
+        Args:
+            values (numpy.ndarray):
+                2D array of values that the validation will be performed over.
+        """
         self._within_range(values, min=self.min, max=self.max)
 
     def _within_search_space(self, values):
+        """Ensure that the values are inside the range of the search space.
+
+        Args:
+            values (numpy.ndarray):
+                2D array of values that the validation will be performed over.
+        """
         self._within_range(values, min=0, max=1)
 
     @abstractmethod
@@ -100,14 +69,14 @@ class BaseHyperParam(metaclass=ABCMeta):
         space [0, 1]^k to the original hyperparameter space.
 
         Args:
-            values (ArrayLike):
+            values (single, ArrayLike):
                 Single value or 2D ArrayLike of normalized values.
 
         Returns:
-            denormalized (numpy.ndarray):
-                2D array of denormalized values.
+            numpy.ndarray:
+                2D ``numpy.ndarray`` containing values from the original hyperparameter space.
         """
-        values = to_array(values, self.K)
+        values = self.to_array(values)
         self._within_search_space(values)
 
         return self._inverse_transform(values)
@@ -121,8 +90,8 @@ class BaseHyperParam(metaclass=ABCMeta):
                 Number of values to sample.
 
         Returns:
-            samples (numpy.ndarray):
-                2D array with of shape (n_samples, self.K)
+            numpy.ndarray:
+                2D ``numpy.ndarray`` with a shape (n_samples, self.K)
         """
 
     def transform(self, values):
@@ -141,23 +110,27 @@ class BaseHyperParam(metaclass=ABCMeta):
                 hyperparameter space.
 
         Args:
-            values (Union[object, List[object]]):
+            values (single, ArrayLike):
                 Single value or list of values to normalize.
 
         Returns:
-            normalized (numpy.ndarray):
-                2D array of shape(len(values), self.K)
+            numpy.ndarray:
+                2D ``numpy.ndarray`` of shape(len(values), self.K) containing the search space
+                values.
 
-        Examples:
+        Example:
+            The example below shows simple usage case where a ``IntHyperParam`` is being imported,
+            instantiated with a range from 1 to 4, and it's method ``transform`` is being called
+            three times with a single value, array of two valid values and 2D Array with
+            dimension 1.
+
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
             >>> ihp = IntHyperParam(min=1, max=4)
             >>> ihp.transform(1)
             array([[0.125]])
-
             >>> ihp.transform([1, 2])
             array([[0.125],
                    [0.375]])
-
             >>> ihp.transform([[1], [2]])
             array([[0.125],
                    [0.375]])
@@ -179,3 +152,49 @@ class BaseHyperParam(metaclass=ABCMeta):
         self._within_hyperparam_space(values)
 
         return self._transform(values)
+
+    def to_array(self, values):
+        """Validate values and convert them to ``numpy.array`` with dimension ``self.K``.
+
+        Perform a validation over ``values`` to ensure that it can be converted to a valid
+        hyperparameter space or search space. Then convert the given values to a ``numpy.array``
+        of dimension ``self.K``.
+
+        Args:
+            values (single, ArrayLike):
+                A sinlge value or ArrayLike values to be converted to ``numpy.array``.
+
+        Returns:
+            values (numpy.ndarray):
+                Values converted in to ``numpy.ndarray`` of shape ``(n, dimension)`` where ``n``
+                is the length of values.
+
+        Raises:
+            ValueError:
+                A ``ValueError`` is raised if any value from ``values`` is not within the
+                dimension.
+        """
+
+        if not isinstance(values, (list, np.ndarray)):
+            if self.K != 1:
+                raise ValueError('Value not in dimension.')
+
+            values = [[values]]
+
+        else:
+            if self.K != 1:
+                if not isinstance(values[0], (list, np.ndarray)):
+                    values = [values]
+            else:
+                if not isinstance(values[0], (list, np.ndarray)):
+                    values = [[value] for value in values]
+
+        if not all(len(value) == self.K for value in values):
+            raise ValueError('Values not in dimension.')
+
+        values = np.array(values)
+
+        if len(values.shape) > 2:
+            raise ValueError('Too many dimensions.')
+
+        return values

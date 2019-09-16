@@ -46,9 +46,7 @@ class TestBooleanHyperParam(TestCase):
         result = self.instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[True]])
-
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_array_equal(result, np.array([[True]]))
 
     def test__inverse_transform_multiple_values(self):
         """Test the method ``_inverse_transform`` to perform a denomalization over multiple values
@@ -77,9 +75,7 @@ class TestBooleanHyperParam(TestCase):
         result = self.instance._transform(values)
 
         # assert
-        expected_result = np.array([[1]])
-
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_array_equal(result, np.array([[1]]))
 
     def test__transform_multiple_values(self):
         """Test that the method ``_transform`` performs a normalization over ``boolean`` values and
@@ -93,9 +89,7 @@ class TestBooleanHyperParam(TestCase):
         result = self.instance._transform(values)
 
         # assert
-        expected_result = np.array([[1], [0]])
-
-        np.testing.assert_array_equal(result, expected_result)
+        np.testing.assert_array_equal(result, np.array([[1], [0]]))
 
     @patch('btb.tuning.hyperparams.boolean.np.random.random')
     def test_sample(self, mock_np_random):
@@ -111,6 +105,7 @@ class TestBooleanHyperParam(TestCase):
 
         # assert
         expected_result = np.array([[0], [0], [0], [1]])
-        mock_np_random.assert_called_once_with((n, self.instance.K))
-        self.assertEqual(len(result), n)
+
+        mock_np_random.assert_called_once_with((4, 1))
+        self.assertEqual(len(result), 4)
         np.testing.assert_array_equal(result, expected_result)
