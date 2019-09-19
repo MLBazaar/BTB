@@ -8,11 +8,11 @@ from btb.tuning.hyperparams.base import BaseHyperParam
 
 
 class BooleanHyperParam(BaseHyperParam):
-    """Boolean Hyperparameter Class.
+    """BooleanHyperParam class.
 
-    The boolean hyperparameter class it is responsible for the transformation of boolean values in
-    to normalized search space of [0, 1] and also providing samples of those or the inverse
-    transformation from search space to hyperparameter space.
+    The BooleanHyperParam class is responsible for the transformation of boolean values in
+    to normalized search space of :math:`[0, 1]`, providing the ability to sample values of those
+    and to inverse transform from the search space into the hyperparameter space.
 
     Hyperparameter space:
         ``{True, False}``
@@ -25,18 +25,18 @@ class BooleanHyperParam(BaseHyperParam):
             raise ValueError('Values: {} not within hyperparameter space.'.format(values))
 
     def _inverse_transform(self, values):
-        """Invert one or more values from search space {0, 1}.
+        """Invert one or more search space values.
 
-        Converts a ``numpy.ndarray`` with normalized values from the search space {0, 1} to the
-        original space of ``True`` and ``False`` by casting those values to ``boolean``.
+        Converts a ``numpy.ndarray`` with normalized values from the search space :math:`{0, 1}`
+        to the original space of ``True`` and ``False`` by casting those values to ``boolean``.
 
         Args:
             values (numpy.ndarray):
-                2D array of normalized values.
+                2D array with values from the search space.
 
         Returns:
             numpy.ndarray:
-                2D array of denormalized values.
+                2D ``numpy.ndarray`` containing values from the original hyperparameter space.
 
         Example:
             The example below shows simple usage case where a BooleanHyperParam is being created
@@ -53,18 +53,20 @@ class BooleanHyperParam(BaseHyperParam):
         return values.astype(bool)
 
     def _transform(self, values):
-        """Transform one or more boolean values.
+        """Transform one or more hyperparameter values.
 
         Converts a ``numpy.array`` with values from the original hyperparameter space into
         normalized values in the search space of {0, 1} by casting those values to ``int``.
 
         Args:
             values (numpy.ndarray):
-                2D array of values to be normalized.
+                2D array with values from the hyperparameter space to be converted into the
+                search space.
 
         Returns:
             numpy.ndarray:
-                2D array of shape(len(values), self.K).
+                2D ``numpy.ndarray`` of shape `(len(values), self.K)` containing the search space
+                values.
 
         Example:
             The example below shows simple usage case where a BooleanHyperParam is being created
@@ -80,7 +82,7 @@ class BooleanHyperParam(BaseHyperParam):
         return values.astype(int)
 
     def sample(self, n_samples):
-        """Generate sample values in the hyperparameter search space of {0, 1}.
+        """Generate sample values in the hyperparameter search space :math:`{0, 1}`.
 
         Args:
             n_samples (int):
@@ -88,8 +90,8 @@ class BooleanHyperParam(BaseHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D array with shape of (n_samples, self.K) with normalized values inside the
-                search space {0, 1}.
+                2D array with shape of `(n_samples, 1)` with normalized values inside the
+                search space :math:`{0, 1}`.
 
         Example:
             The example below shows simple usage case where a BooleanHyperParam is being created

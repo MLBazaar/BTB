@@ -10,10 +10,10 @@ from btb.tuning.hyperparams.base import BaseHyperParam
 
 
 class NumericalHyperParam(BaseHyperParam):
-    """Numerical Hyperparameter Class.
+    """NumericalHyperParam class.
 
-    The numerical hyperparameter class defines an abstraction to hyperparameters which ranges are
-    defined by a numerical value and can take any number between that range.
+    The NumericalHyperParam class defines an abstraction to hyperparameters which ranges are
+    defined by a numerical value and can take any number within that range.
     """
 
     K = 1
@@ -24,11 +24,11 @@ class NumericalHyperParam(BaseHyperParam):
 
 
 class FloatHyperParam(NumericalHyperParam):
-    """NumericalHyperParam of type ``float``.
+    """FloatHyperParam class.
 
-    The FloatHyperParam class represents a single hyperparameter within an range of ``float``
-    numbers, where ``min`` and ``max`` can take as value any float number, having ``min`` to
-    be smaller than ``max``.
+    The FloatHyperParam class represents a single hyperparameter within a range of ``float``
+    numbers, where ``min`` and ``max`` can take as value any float number within that range,
+    having ``min`` to be smaller than ``max``.
 
     Hyperparameter space:
         :math:`h_1, h_2,... h_n` where :math:`h_i = i * (max - min) + min`
@@ -36,27 +36,23 @@ class FloatHyperParam(NumericalHyperParam):
     Search space:
         :math:`s_1, s_2,... s_n` where :math:`s_i = (i - min) / (max - min)`
 
+    Args:
+        min (float):
+            Float number to represent the minimum value that this hyperparameter can take,
+            by default is ``None`` which will take the system's minimum float value possible.
+
+        max (float):
+            Float number to represent the maximum value that this hyperparameter can take,
+            by default is ``None`` which will take the system's maximum float value possible.
+
+        include_min (bool):
+            Wheither or not to include the minimum value in the search space.
+
+        include_max (bool):
+            Wheither or not to include the maximum value in the search space.
     """
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True):
-        """Instantiation of FloatHyperParam.
-
-        Args:
-            min (float):
-                Float number to represent the minimum value that this hyperparameter can take,
-                by default is ``None`` which will take the system's minimum float value possible.
-
-            max (float):
-                Float number to represent the maximum value that this hyperparameter can take,
-                by default is ``None`` which will take the system's maximum float value possible.
-
-            include_min (bool):
-                Wheither or not to include the minimum value in the search space.
-
-            include_max (bool):
-                Wheither or not to include the maximum value in the search space.
-        """
-
         if min is None or min == -np.inf:
             min = sys.float_info.min
 
@@ -71,19 +67,20 @@ class FloatHyperParam(NumericalHyperParam):
         self.range = max - min
 
     def _inverse_transform(self, values):
-        """Invert one or more ``normalized`` values.
+        """Invert one or more search space values.
 
-        Inverse transorm one or more normalized values from the search space [0, 1]. This is
+        Converts a ``numpy.ndarray`` with normalized values from the search space :math:`s_1,
+        s_2,... s_n` to the hyperparameter space of :math:`h_1, h_2,... h_n`. This is
         being computed by multiplying the hyperparameter's range with the values to be denormalized
         and adding the ``self.min`` value to them.
 
         Args:
             values (numpy.ndarray):
-                2D array of normalized values.
+                2D array with values from the search space.
 
         Returns:
             numpy.ndarray:
-                2D array of denormalized values.
+                2D ``numpy.ndarray`` containing values from the original hyperparameter space.
 
         Example:
             The example below shows simple usage case where a FloatHyperParam is being created
@@ -101,20 +98,22 @@ class FloatHyperParam(NumericalHyperParam):
         return values * self.range + self.min
 
     def _transform(self, values):
-        """Transform one or more ``float`` values.
+        """Transform one or more hyperparameter values.
 
-        Convert one or more ``float`` values from the original hyperparameter space to the
-        normalized search space [0, 1). This is being computed by substracting the ``self.min``
-        value that the hyperparameter can take from the values to be trasnformed and dividing them
-        by the ``self.range`` of the hyperparameter.
+        Converts a ``numpy.ndarray`` with ``float`` values from the original hyperparameter space
+        :math:`h_1, h_2,... h_n` into the normalized search space :math:`s_1, s_2,... s_n`.
+        This is being computed by substracting the ``self.min`` value from the values to be
+        trasnformed and dividing them by the ``self.range`` of the hyperparameter.
 
         Args:
             values (numpy.ndarray):
-                2D array with values to be normalized.
+                2D array with values from the hyperparameter space to be converted into the
+                search space.
 
         Returns:
             numpy.ndarray:
-                2D array of shape(len(values), self.K).
+                2D ``numpy.ndarray`` of shape `(len(values), 1)` containing the search space
+                values.
 
         Example:
             The example below shows simple usage case where a FloatHyperParam is being created
@@ -132,7 +131,7 @@ class FloatHyperParam(NumericalHyperParam):
         return (values - self.min) / self.range
 
     def sample(self, n_samples):
-        """Generate sample values in the hyperparameter search space of [0, 1).
+        """Generate sample values in the hyperparameter search space :math:`{0, 1}`.
 
         Args:
             n_samples (int):
@@ -140,8 +139,8 @@ class FloatHyperParam(NumericalHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D array with shape of (n_samples, self.K) with normalized values inside the
-                search space [0, 1).
+                2D array with shape of `(n_samples, 1)` with normalized values inside the
+                search space :math:`{0, 1}`.
 
         Example:
             The example below shows simple usage case where a FloatHyperParam is being created
@@ -158,10 +157,10 @@ class FloatHyperParam(NumericalHyperParam):
 
 
 class IntHyperParam(NumericalHyperParam):
-    """NumericalHyperParam of type ``int``.
+    """IntHyperParam class.
 
     The IntHyperParam class represents a single hyperparameter within an range of ``int``
-    numbers, where ``min`` and ``max`` can take as value any int number to compose that range
+    numbers, where ``min`` and ``max`` can take as value any ``int`` number that compose this range
     having ``min`` to be smaller than ``max``.
 
     Hyperparameter space:
@@ -170,29 +169,28 @@ class IntHyperParam(NumericalHyperParam):
     Search space:
         :math:`s_1, s_2,... s_n` where :math:`s_i = \\frac{interval}{2} + (i - 1) * interval`
 
+    Args:
+        min (int):
+            Integer number to represent the minimum value that this hyperparameter can take,
+            by default is ``None`` which will take the system's minimum int value possible.
+
+        max (int):
+            Integer number to represent the maximum value that this hyperparameter can take,
+            by default is ``None`` which will take the system's maximum int value possible.
+
+        step (int):
+            Increase amount to take for each sample. Defaults to 1.
+
+        include_min (bool):
+            Wheither or not to include the minimum value in the search space.
+
+        include_max (bool):
+            Wheither or not to include the maximum value in the search space.
     """
 
     K = 1
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True, step=1):
-        """Instantiation of IntHyperParam.
-
-        Args:
-            min (int):
-                Integer number to represent the minimum value that this hyperparameter can take,
-                by default is ``None`` which will take the system's minimum int value possible.
-
-            max (int):
-                Integer number to represent the maximum value that this hyperparameter can take,
-                by default is ``None`` which will take the system's maximum int value possible.
-
-            include_min (bool):
-                Wheither or not to include the minimum value in the search space.
-
-            include_max (bool):
-                Wheither or not to include the maximum value in the search space.
-        """
-
         if min is None:
             min = -(sys.maxsize / 2)
 
@@ -215,20 +213,21 @@ class IntHyperParam(NumericalHyperParam):
         self.interval = self.step / (self.max - self.min + self.step)
 
     def _inverse_transform(self, values):
-        """Invert one or more ``normalized`` values.
+        """Invert one or more search space values.
 
-        Inverse transorm one or more normalized values from the search space [0, 1). This is
+        Converts a ``numpy.ndarray`` with normalized values from the search space :math:`s_1,
+        s_2,... s_n` to the hyperparameter space of :math:`h_1, h_2,... h_n`. This is
         being computed by divinding the hyperparameter's interval with the values to be inverted
         and adding the ``self.min`` value to them and resting the 0.5 that has been added during
         the transformation.
 
         Args:
             values (numpy.ndarray):
-                2D array of normalized values.
+                2D array with values from the search space.
 
         Returns:
             numpy.ndarray:
-                2D array of denormalized values.
+                2D ``numpy.ndarray`` containing values from the original hyperparameter space.
 
         Example:
             The example below shows simple usage case where an IntHyperParam is being created
@@ -252,20 +251,22 @@ class IntHyperParam(NumericalHyperParam):
         return restricted.astype(int)
 
     def _transform(self, values):
-        """Transform one or more ``int`` values.
+        """Transform one or more hyperparameter values.
 
-        Convert one or more ``int`` values from the original hyperparameter space to the
-        normalized search space [0, 1). This is being computed by substracting the ``min`` value
-        that the hyperparameter can take from the values to be trasnformed and adding them 0.5,
-        then multiply by the interval.
+        Converts a ``numpy.ndarray`` with ``int`` values from the original hyperparameter space
+        :math:`h_1, h_2,... h_n` into the normalized search space :math:`s_1, s_2,... s_n`.
+        This is being computed by substracting the ``min`` value that the hyperparameter can take
+        from the values to be trasnformed and adding them 0.5, then multiply by the interval.
 
         Args:
             values (numpy.ndarray):
-                2D array of values to be normalized.
+                2D array with values from the hyperparameter space to be converted into the
+                search space.
 
         Returns:
             numpy.ndarray:
-                2D array of shape(len(values), self.K).
+                2D ``numpy.ndarray`` of shape `(len(values), 1)` containing the search space
+                values.
 
         Example:
             The example below shows simple usage case where an IntHyperParam is being created
@@ -291,8 +292,8 @@ class IntHyperParam(NumericalHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D array with shape of (n_samples, self.K) with normalized values inside the
-                search space [0, 1).
+                2D array with shape of `(n_samples, 1)` with normalized values inside the
+                search space :math:`{0, 1}`.
 
         Example:
             The example below shows simple usage case where a IntHyperParam is being created
