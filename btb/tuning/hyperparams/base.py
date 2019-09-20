@@ -20,11 +20,11 @@ class BaseHyperParam(metaclass=ABCMeta):
     """
 
     def _to_array(self, values):
-        """Validate values and convert them to ``numpy.array`` with dimension ``self.K``.
+        """Validate values and convert them to ``numpy.array`` with ``self.K`` dimension/s.
 
         Perform a validation over ``values`` to ensure that it can be converted to a valid
         hyperparameter space or search space, then convert the given values to a ``numpy.array``
-        of dimension ``self.K``.
+        of ``self.K`` dimension/s.
 
         Args:
             values (single value or array-like):
@@ -32,18 +32,20 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Returns:
             numpy.ndarray:
-                Values converted into ``numpy.ndarray`` of shape ``(n, dimension)`` where ``n``
-                is the length of values and dimension is ``self.K``.
+                Values converted into ``numpy.ndarray`` with shape ``(n, dimensions)`` where
+                ``n`` is the length of values and ``dimensions`` is ``self.K``.
 
         Raises:
             ValueError:
                 A ``ValueError`` is raised if any value from ``values`` is not represented in the
-                dimension ``self.K`` or the shape has more than two dimensions.
+                ``self.K`` dimension/s or the shape has more than two dimensions.
         """
 
         if self.K > 1:
             if not isinstance(values, (list, np.ndarray)):
-                raise ValueError('Value not valid for dimension {}.'.format(self.K))
+                raise ValueError(
+                    'Value: {} is not valid for {} dimensions.'.format(values, self.K)
+                )
 
             elif not isinstance(values[0], (list, np.ndarray)):
                 values = [values]
@@ -60,7 +62,7 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         if not all(len(value) == self.K for value in values):
             raise ValueError(
-                'All the values must be of dimension {} .'.format(self.K)
+                'All the values must be {} dimension/s.'.format(self.K)
             )
 
         values = np.array(values)
@@ -175,7 +177,7 @@ class BaseHyperParam(metaclass=ABCMeta):
     def transform(self, values):
         """Transform one or more hyperparameter values.
 
-        Validates that the input values are within the accepted dimension and that they are within
+        Validates that the input values are within the accepted dimensions and that they are within
         the hyperparameter space. Then transform one or more hyperparameter values from the
         original hyperparameter space into the normalized search space :math:`[0, 1]^K`.
         The accepted value formats are:
@@ -185,7 +187,7 @@ class BaseHyperParam(metaclass=ABCMeta):
             - List:
                 A list composed by values from the original hyperparameter space.
             - 2D array-like:
-                Two dimension array-like object that contains values from the original
+                Two dimensions array-like object that contains values from the original
                 hyperparameter space.
 
         Args:

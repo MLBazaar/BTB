@@ -21,11 +21,6 @@ class CategoricalHyperParam(BaseHyperParam):
     Search Space:
         :math:`\{ 0, 1 \}^K` where `K` is the number of categories.
 
-    Attributes:
-        K (int):
-            Number of dimensions that this hyperparameter uses to be represented in the search
-            space.
-
     Args:
         choices (list):
             List of values that the hyperparameter can be.
