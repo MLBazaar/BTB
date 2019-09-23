@@ -88,8 +88,8 @@ install-develop: clean-build clean-pyc ## install the package in editable mode a
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 btb
-	isort -c --recursive btb
+	flake8 btb tests
+	isort -c --recursive btb tests
 
 .PHONY: fix-lint
 fix-lint: ## fix lint issues using autoflake, autopep8, and isort

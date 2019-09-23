@@ -42,7 +42,7 @@ extensions = [
 autodoc_default_options = {
     'autosummary': True,
 }
-autodoc_default_flags = ['members', 'inherited-members']
+autodoc_default_flags = ['members', 'inherited-members', 'private-members']
 
 ipython_execlines = ["import pandas as pd", "pd.set_option('display.width', 1000000)"]
 
