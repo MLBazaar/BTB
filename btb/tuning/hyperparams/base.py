@@ -110,10 +110,12 @@ class BaseHyperParam(metaclass=ABCMeta):
 
     @abstractmethod
     def _inverse_transform(self, values):
+        """Method to be implemented by child classes."""
         pass
 
     @abstractmethod
     def _transform(self, values):
+        """Method to be implemented by child classes."""
         pass
 
     def inverse_transform(self, values):

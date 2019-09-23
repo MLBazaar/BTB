@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the boolean hyperparameters are defined."""
+"""Package where the BooleanHyperParam class is defined."""
 
 import numpy as np
 
@@ -53,10 +53,11 @@ class BooleanHyperParam(BaseHyperParam):
         return values.astype(bool)
 
     def _transform(self, values):
-        """Transform one or more hyperparameter values.
+        r"""Transform one or more hyperparameter values.
 
         Converts a ``numpy.array`` with values from the original hyperparameter space into
-        normalized values in the search space of {0, 1} by casting those values to ``int``.
+        normalized values in the search space of :math:`\{0, 1\}` by casting those values to
+        ``int``.
 
         Args:
             values (numpy.ndarray):
@@ -65,7 +66,7 @@ class BooleanHyperParam(BaseHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D ``numpy.ndarray`` of shape `(len(values), self.K)` containing the search space
+                2D ``numpy.ndarray`` of shape ``(len(values), 1)`` containing the search space
                 values.
 
         Example:
@@ -90,7 +91,7 @@ class BooleanHyperParam(BaseHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D array with shape of `(n_samples, 1)` with normalized values inside the
+                2D array with shape of ``(n_samples, 1)`` with normalized values inside the
                 search space :math:`{0, 1}`.
 
         Example:

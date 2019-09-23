@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the categorical hyperparameters are defined."""
+"""Package where the CategoricalHyperParamClass is defined."""
 
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
@@ -85,9 +85,9 @@ class CategoricalHyperParam(BaseHyperParam):
     def _transform(self, values):
         """Transform one or more categorical values.
 
-        Encodes one or more categorical values in to the normalized search space of ``[0, 1]^K``
-        by using ``sklearn.preprocessing.OneHotEncoder`` that has been fitted during the
-        instantiation.
+        Encodes one or more categorical values in to the normalized search space of
+        :math:`[0, 1]^K` by using ``sklearn.preprocessing.OneHotEncoder`` that has been
+        fitted during the instantiation.
 
         Args:
             values (numpy.ndarray):

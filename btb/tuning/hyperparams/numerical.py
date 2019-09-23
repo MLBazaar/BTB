@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the numerical hyperparameters are defined."""
+"""Package where the NumericalHyperParam class and it's childs are defined."""
 
 import sys
 
