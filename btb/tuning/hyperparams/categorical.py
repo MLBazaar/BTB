@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the categorical hyperparameters are defined."""
+"""Package where the CategoricalHyperParamClass is defined."""
 
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
@@ -9,30 +9,29 @@ from btb.tuning.hyperparams.base import BaseHyperParam
 
 
 class CategoricalHyperParam(BaseHyperParam):
-    """Categorical Hyperparameter Class.
+    r"""CategoricalHyperParam Class.
 
-    The categorical hyperparameter class it is responsible for the transform of categorical values
-    in to normalized search space of [0, 1]^K and provides the inverse transform from search space
-    [0, 1]^K to hyperparameter space. Also provides a method that generates samples of those.
+    The CategoricalHyperParam class is responsible for the transform of categorical values
+    in to normalized search space and provides the inverse transform from search space to
+    hyperparameter space. Also provides a method that generates samples of those.
 
     Hyperparameter space:
-        ``{c1...cK}`` where K is the number of categories
+        :math:`h_1, h_2,... h_K` where `K` is the number of categories.
 
     Search Space:
-        ``{0, 1}^K``
-
-    Attributes:
-        K (int):
-            Number of dimensions that this hyperparameter uses to be represented in the search
-            space.
+        :math:`\{ 0, 1 \}^K` where `K` is the number of categories.
 
     Args:
         choices (list):
-            choices (List[object]):
-                List of values that the hyperparameter can be.
+            List of values that the hyperparameter can be.
     """
 
     def __init__(self, choices):
+        """Instantiation of CategoricalHyperParam.
+
+        Creates an instance with a list of ``choices`` and fit an instance of
+        ``sklearn.preprocessing.OneHotEncoder`` with those values.
+        """
         self.choices = choices
         self.K = len(choices)
         self._encoder = OneHotEncoder(sparse=False)
@@ -51,18 +50,18 @@ class CategoricalHyperParam(BaseHyperParam):
             )
 
     def _inverse_transform(self, values):
-        """Invert one or more values from search space [0, 1]^K.
+        """Invert one or more values.
 
-        Converts a numpy.ndarray with normalized values from the search space [0, 1]^K to the
-        original space of ``self.choices`` that this hyperparameter has been instantiated with.
+        Converts a ``numpy.ndarray`` with normalized values from the search space to the original
+        hyperparameter space of ``self.choices``.
 
         Args:
             values (numpy.ndarray):
-                2D array of normalized values.
+                2D array with values from the search space.
 
         Returns:
             numpy.ndarray:
-                2D array with denormalized values.
+                2D ``numpy.ndarray`` containing values from the original hyperparameter space.
 
         Example:
             The example below shows simple usage case where a CategoricalHyperParam is being
@@ -86,17 +85,19 @@ class CategoricalHyperParam(BaseHyperParam):
     def _transform(self, values):
         """Transform one or more categorical values.
 
-        Encodes one or more categorical values in to the normalized search space of [0, 1]^k
-        by using ``sklearn.preprocessing.OneHotEncoder`` that has been fitted during the
-        initialization.
+        Encodes one or more categorical values in to the normalized search space of
+        :math:`[0, 1]^K` by using ``sklearn.preprocessing.OneHotEncoder`` that has been
+        fitted during the instantiation.
 
         Args:
             values (numpy.ndarray):
-                2D array of normalized values.
+                2D array with values from the hyperparameter space to be converted into the
+                search space.
 
         Returns:
             numpy.ndarray:
-                2D array of shape(len(values), self.K) with normalized values.
+                2D ``numpy.ndarray`` of shape `(len(values), self.K)` containing the search space
+                values.
 
         Example:
             The example below shows simple usage case where a CategoricalHyperParam is being
@@ -114,7 +115,7 @@ class CategoricalHyperParam(BaseHyperParam):
         return self._encoder.transform(values.reshape(-1, 1)).astype(int)
 
     def sample(self, n_samples):
-        """Generate sample values in the hyperparameter search space of [0, 1]^k.
+        """Generate sample values in the hyperparameter search space of ``[0, 1]^K``.
 
         Args:
             n_samples (int):
@@ -122,8 +123,8 @@ class CategoricalHyperParam(BaseHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D array with shape of (n_samples, self.K) with normalized values inside the search
-                space [0, 1]^k.
+                2D array with shape of `(n_samples, self.K)` with normalized values inside the
+                search space :math:`[0, 1]^K`.
 
         Example:
             The example below shows simple usage case where a CategoricalHyperParam is being

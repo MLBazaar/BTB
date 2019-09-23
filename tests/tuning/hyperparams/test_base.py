@@ -70,18 +70,18 @@ class TestBaseHyperParam(TestCase):
         mock__within_range.assert_called_once_with(5, min=0, max=10)
 
     @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_search_space')
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam.to_array')
-    def test_inverse_transform(self, mock_to_array, mock__within_search_space):
+    @patch('btb.tuning.hyperparams.base.BaseHyperParam._to_array')
+    def test_inverse_transform(self, mock__to_array, mock__within_search_space):
         # setup
         self.instance._inverse_transform = MagicMock(return_value=3)
-        mock_to_array.return_value = 2
+        mock__to_array.return_value = 2
         values = 1
 
         # run
         result = self.instance.inverse_transform(values)
 
         # assert
-        mock_to_array.assert_called_once_with(1)
+        mock__to_array.assert_called_once_with(1)
         mock__within_search_space.assert_called_once_with(2)
         self.instance._inverse_transform.assert_called_once_with(2)
 
@@ -122,62 +122,62 @@ class TestBaseHyperParam(TestCase):
         self.instance._transform.assert_called_once_with(np.array([[1]]))
         self.assertEqual(result, 2)
 
-    def test_to_array_list_values_valid_dim(self):
+    def test__to_array_list_values_valid_dim(self):
         # setup
         values = [1, 2]
 
         # run
-        result = self.instance.to_array(values)
+        result = self.instance._to_array(values)
 
         # assert
         expected_result = np.array([[1], [2]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    def test_to_array_list_values_lt_dimension(self):
+    def test__to_array_list_values_lt_dimension(self):
         # setup
         values = [1]
         self.instance.K = 2
 
         # run
         with self.assertRaises(ValueError):
-            self.instance.to_array(values)
+            self.instance._to_array(values)
 
-    def test_to_array_list_values_gt_dimension(self):
+    def test__to_array_list_values_gt_dimension(self):
         # setup
         values = [1, 2, 3]
         self.instance.K = 2
 
         # run
         with self.assertRaises(ValueError):
-            self.instance.to_array(values)
+            self.instance._to_array(values)
 
-    def test_to_array_list_values_eq_dimension(self):
+    def test__to_array_list_values_eq_dimension(self):
         # setup
         values = [1, 2, 3]
         self.instance.K = 3
 
         # run
-        result = self.instance.to_array(values)
+        result = self.instance._to_array(values)
 
         # assert
         expected_result = np.array([[1, 2, 3]])
         np.testing.assert_array_equal(result, expected_result)
 
-    def test_to_array_invalid_values_shape(self):
+    def test__to_array_invalid_values_shape(self):
         # setup
         values = [[[1]]]
         self.instance.K = 1
 
         # run
         with self.assertRaises(ValueError):
-            self.instance.to_array(values)
+            self.instance._to_array(values)
 
-    def test_to_array_invalid_values_dimension(self):
+    def test__to_array_invalid_values_dimension(self):
         # setup
         values = [[1, 2], [1, 2, 3]]
         self.instance.K = 2
 
         # run
         with self.assertRaises(ValueError):
-            self.instance.to_array(values)
+            self.instance._to_array(values)
