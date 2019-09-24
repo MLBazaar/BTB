@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock, call, patch
 
 import numpy as np
 import pandas as pd
@@ -33,6 +33,19 @@ class TestTunable(TestCase):
         }
 
         self.instance = Tunable(hyperparams, names=['bhp', 'chp', 'ihp'])
+
+    @patch('btb.tuning.tunable.list')
+    def test___init__not_given_names(self, list_mock):
+        """Test the init method without giving names to it."""
+        # setup
+        list_mock.return_value = ['a', 'b']
+
+        # run
+        self.instance = Tunable({'a': 1, 'b': 2})
+
+        # assert
+        list_mock.assert_called_once_with({'a': 1, 'b': 2})
+        assert self.instance.names == ['a', 'b']
 
     def test___init__(self):
         """Test that the names are being generated correctly."""
@@ -197,6 +210,27 @@ class TestTunable(TestCase):
         self.ihp.transform.return_value = [[1]]
 
         values = [True, 'dog', 2]
+
+        # run
+        result = self.instance.transform(values)
+
+        # assert
+        self.bhp.transform.assert_called_once_with(True)
+        self.chp.transform.assert_called_once_with('dog')
+        self.ihp.transform.assert_called_once_with(2)
+
+        np.testing.assert_array_equal(result, np.array([[1, 0, 1]]))
+
+    def test_transform_pd_df(self):
+        """Test that the method transform performs a transformation over a ``pandas.DataFrame``
+        with a single combination of hyperparameter valid values.
+        """
+        # setup
+        self.bhp.transform.return_value = [[1]]
+        self.chp.transform.return_value = [[0]]
+        self.ihp.transform.return_value = [[1]]
+
+        values = pd.DataFrame([[True, 'dog', 2]], columns=['bhp', 'chp', 'ihp'])
 
         # run
         result = self.instance.transform(values)
