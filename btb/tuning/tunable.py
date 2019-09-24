@@ -9,12 +9,11 @@ import pandas as pd
 class Tunable:
     """Tunable class.
 
-    The Tunable class contains a collection of hyperparameters and metadata related to them, is
+    The Tunable class contains a collection of hyperparameters and metadata related to them. Is
     able to control this collection and work with the hyperparameters defined as a bulk.
     This class has the same public methods as ``BaseHyperParam``. Keep in mind that a certain
     order should be followed during the usage of this class, which is defined by ``self.names``.
-    This is the expected order of hyperparameter values that are expected to be recived by the
-    methods.
+    This is the expected order to recive the values by the ``inverse_transform`` method.
 
     Attributes:
         hyperparams:
@@ -30,9 +29,8 @@ class Tunable:
             hyperparams (dict):
                 Dictionary object that contains the name and the hyperparameter asociated to it.
             names (list):
-                List of names to be used as order during inverse_transform. If this value is
-                ``None``, the default order from the dictionary will be used. Be aware that
-                ``self.names`` gives the correct order for the transformed data.
+                List of names to be used as order during ``inverse_transform``. If this value is
+                ``None``, the default order from the dictionary will be used.
         """
 
         self.hyperparams = hyperparams
@@ -46,21 +44,21 @@ class Tunable:
         """Transform one or more hyperparameter value combinations.
 
         Transform one or more hyperparameter value combinations from the original hyperparameter
-        space to the normalized searc space.
+        space to the normalized search space.
 
         Args:
             values (pandas.DataFrame, pandas.Series, dict, list(dict), 2D ArrayLike):
-                Values of shape (n, len(self.hyperparameters)).
+                Values of shape ``(n, len(self.hyperparameters))``.
 
         Returns:
             numpy.ndarray:
-                2D array of shape (len(values), K)
+                2D array of shape ``(len(values), K)`` where ``K`` is the sum of the dimensions
+                of all hyperparameters that compose this tunable.
 
         Example:
             The example below shows a simple usage of a Tunable class which will transform a valid
             data from a 2D list and a ``numpy.ndarray`` is being returned.
 
-            >>> from btb.tuning.tunable import Tunable
             >>> from btb.tuning.hyperparams.boolean import BooleanHyperParam
             >>> from btb.tuning.hyperparams.categorical import CategoricalHyperParam
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
@@ -84,12 +82,16 @@ class Tunable:
         """
         if isinstance(values, dict):
             values = pd.DataFrame([values])
+
         elif isinstance(values, list) and isinstance(values[0], dict):
             values = pd.DataFrame(values, columns=self.names)
+
         elif isinstance(values, list) and not isinstance(values[0], list):
             values = pd.DataFrame([values], columns=self.names)
+
         elif isinstance(values, pd.Series):
             values = values.to_frame().T
+
         elif not isinstance(values, pd.DataFrame):
             values = pd.DataFrame(values, columns=self.names)
 
@@ -105,21 +107,21 @@ class Tunable:
     def inverse_transform(self, values):
         """Inverse transform one or more hyperparameter value combinations.
 
-        Transform one or more hyperparameter values from the normalized search space [0, 1]^K to
-        the original hyperparameter space.
+        Transform one or more hyperparameter values from the normalized search space
+        :math:`[0, 1]^K` to the original hyperparameter space.
 
         Args:
             values (ArrayLike):
-                2D array of normalized values with shape (n, K).
+                2D array of normalized values with shape ``(n, K)`` where ``K`` is the sum of the
+                dimensions of all hyperparameters that compose this tunable.
 
         Returns:
             pandas.DataFrame
 
         Example:
             The example below shows a simple usage of a Tunable class which will inverse transform
-            a valid data from a 2D list and a ``pandas.DataFrame`` is being returned.
+            a valid data from a 2D list and a ``pandas.DataFrame`` will be returned.
 
-            >>> from btb.tuning.tunable import Tunable
             >>> from btb.tuning.hyperparams.boolean import BooleanHyperParam
             >>> from btb.tuning.hyperparams.categorical import CategoricalHyperParam
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
@@ -154,7 +156,7 @@ class Tunable:
                 transformed.append(hyperparam.inverse_transform(item))
                 value = value[hyperparam.K:]
 
-            transformed = np.array(transformed, dtype=object)  # perserve the original dtypes
+            transformed = np.array(transformed, dtype=object)
             inverse_transform.append(np.concatenate(transformed, axis=1))
 
         return pd.DataFrame(np.concatenate(inverse_transform), columns=self.names)
@@ -168,13 +170,13 @@ class Tunable:
 
         Returns:
             numpy.ndarray:
-                2D array with shape of (n_samples, sum(hyperparams.K)).
+                2D array with shape of ``(n_samples, K))`` where ``K`` is the sum of the dimensions
+                of all hyperparameters that compose this tunable.
 
         Example:
             The example below shows a simple usage of a Tunable class which will generate 2
             samples by calling it's sample method. This will return a ``numpy.ndarray``.
 
-            >>> from btb.tuning.tunable import Tunable
             >>> from btb.tuning.hyperparams.boolean import BooleanHyperParam
             >>> from btb.tuning.hyperparams.categorical import CategoricalHyperParam
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
@@ -199,12 +201,3 @@ class Tunable:
             samples.append(items)
 
         return np.concatenate(samples, axis=1)
-
-    def to_dict(self):
-        """Get a dict representation of this Tunable."""
-        pass
-
-    @classmethod
-    def from_dict(cls, spec_dict):
-        """Load a Tunable from a dict representation."""
-        pass
