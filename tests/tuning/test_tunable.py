@@ -37,6 +37,8 @@ class TestTunable(TestCase):
     @patch('btb.tuning.tunable.list')
     def test___init__not_given_names(self, list_mock):
         """Test the init method without giving names to it."""
+
+        # A mock for list() is being used as python 3.5 does not maintain the order.
         # setup
         list_mock.return_value = ['a', 'b']
 
@@ -47,13 +49,14 @@ class TestTunable(TestCase):
         list_mock.assert_called_once_with({'a': 1, 'b': 2})
         assert self.instance.names == ['a', 'b']
 
-    def test___init__(self):
+    def test___init__with_given_names(self):
         """Test that the names are being generated correctly."""
 
-        # assert
-        expected_names = ['bhp', 'chp', 'ihp']
+        # run
+        instance = Tunable({}, names=['bhp', 'chp', 'ihp'])
 
-        assert all(name in self.instance.names for name in expected_names)
+        # assert
+        assert instance.names == ['bhp', 'chp', 'ihp']
 
     def test_transform_valid_dict(self):
         """Test transform method with a dictionary that has all the hyperparameters."""
@@ -72,14 +75,13 @@ class TestTunable(TestCase):
         result = self.instance.transform(values_dict)
 
         # assert
-
         self.bhp.transform.assert_called_once_with(True)
         self.chp.transform.assert_called_once_with('cat')
         self.ihp.transform.assert_called_once_with(1)
 
         np.testing.assert_array_equal(result, np.array([[1, 0, 1]]))
 
-    def test_transform_invalid_dict(self):
+    def test_transform_empty_dict(self):
         """Test transform method with a dictionary that has a missing hyperparameters."""
         # run / assert
         with self.assertRaises(KeyError):
@@ -124,8 +126,9 @@ class TestTunable(TestCase):
 
         # setup
         self.bhp.transform.return_value = [[1], [0]]
-        # Here we create a CHP so we can raise a value error as there will be a NaN inside the
-        # pandas.DataFrame created inside that will use this data.
+
+        # Here we create a CHP so we can raise an value error as there will be a NaN inside the
+        # pandas.DataFrame.
         self.chp = CategoricalHyperParam(['cat', 'dog'])
         self.ihp.transform.return_value = [[1], [1]]
 
@@ -139,13 +142,13 @@ class TestTunable(TestCase):
             self.instance.transform(values_list_dict)
 
     def test_transform_empty_list(self):
-        """Test transform method with a empty list."""
+        """Test transform method with an empty list."""
         # run / assert
         with self.assertRaises(IndexError):
-            self.instance.transform([])
+            self.instance.transform(list())
 
     def test_transform_valid_pandas_series(self):
-        """Test transform method over a valid pandas series object."""
+        """Test transform method over a valid ``pandas.Series`` object."""
         # setup
         self.bhp.transform.return_value = [[1]]
         self.chp.transform.return_value = [[0]]
@@ -164,7 +167,7 @@ class TestTunable(TestCase):
         np.testing.assert_array_equal(result, np.array([[1, 0, 1]]))
 
     def test_transform_invalid_pandas_series(self):
-        """Test transform method over a pandas series object without index."""
+        """Test transform method over a ``pandas.Series`` object that does not have index."""
         # setup
         values = pd.Series([False, 'cat', 1])
 
@@ -244,14 +247,14 @@ class TestTunable(TestCase):
 
     def test_transform_simple_invalid_list(self):
         """Test that the method transform does not transform a list with a single combination
-        of hyperparameter invalid values.
+        of invalid hyperparameter values.
         """
-        # run
+        # run / assert
         with self.assertRaises(TypeError):
             self.instance.transform([[True], 1, 2])
 
     def test_inverse_transform_valid_data(self):
-        """Test the inverse transform method is calling the hyperparameters."""
+        """Test that the inverse transform method is calling the hyperparameters."""
         # setup
         self.bhp.K = 1
         self.chp.K = 1
@@ -282,7 +285,7 @@ class TestTunable(TestCase):
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_inverse_transform_invalid_data(self):
-        """Test the inverse transform method is calling the hyperparameters."""
+        """Test that the a ``TypeError`` is being raised when calling with the invalid data."""
         # setup
         values = [1, 0, 1]
 
@@ -291,18 +294,19 @@ class TestTunable(TestCase):
             self.instance.inverse_transform(values)
 
     def test_sample(self):
-        """Test that the method sample generates data from all the ``hyperparams``"""
+        """Test that the method sample generates data from all the ``hyperparams``."""
 
         # setup
-        self.bhp.sample.return_value = [[1]]
-        self.chp.sample.return_value = [[1, 1]]
-        self.ihp.sample.return_value = [[1]]
+        # Values have been changed to ensure that each one of them is being called.
+        self.bhp.sample.return_value = [[True]]
+        self.chp.sample.return_value = [['dog']]
+        self.ihp.sample.return_value = [[4]]
 
         # run
         result = self.instance.sample(1)
 
         # assert
-        expected_result = [[1, 1, 1, 1]]
+        expected_result = [[True, 'dog', 4]]
 
         self.bhp.sample.assert_called_once_with(1)
         self.chp.sample.assert_called_once_with(1)
