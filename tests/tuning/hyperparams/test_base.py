@@ -48,13 +48,13 @@ class TestBaseHyperParam(TestCase):
     @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_range')
     def test__within_search_space(self, mock__within_range):
         # setup
-        values = 15
+        values = np.array(15)
 
         # run
         self.instance._within_search_space(values)
 
         # assert
-        mock__within_range.assert_called_once_with(15, min=0, max=1)
+        mock__within_range.assert_called_once_with(np.array(15), min=0, max=1)
 
     @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_range')
     def test__within_hyperparam_space(self, mock__within_range):
