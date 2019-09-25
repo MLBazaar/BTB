@@ -43,7 +43,7 @@ class Tunable:
         space to the normalized search space.
 
         Args:
-            values (pandas.DataFrame, pandas.Series, dict, list(dict), 2D ArrayLike):
+            values (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
                 Values of shape ``(n, len(self.hyperparameters))``.
 
         Returns:
@@ -107,7 +107,7 @@ class Tunable:
         :math:`[0, 1]^K` to the original hyperparameter space.
 
         Args:
-            values (ArrayLike):
+            values (array-like):
                 2D array of normalized values with shape ``(n, K)`` where ``K`` is the sum of
                 dimensions from each ``hyperparameter`` that composes this ``tunable``.
 
