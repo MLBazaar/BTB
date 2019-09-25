@@ -29,10 +29,6 @@ class Tunable:
     """
 
     def __init__(self, hyperparams, names=None):
-        """Creates an instance of a Tunable class.
-
-        """
-
         self.hyperparams = hyperparams
 
         if names is None:
@@ -52,8 +48,8 @@ class Tunable:
 
         Returns:
             numpy.ndarray:
-                2D array of shape ``(len(values), K)`` where ``K`` is the sum of dimensions that
-                are defined in each ``hyperparameter`` that composes this ``tunable``.
+                2D array of shape ``(len(values), K)`` where ``K`` is the sum of dimensions from
+                each ``hyperparameter`` that composes this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will transform a valid
@@ -113,8 +109,7 @@ class Tunable:
         Args:
             values (ArrayLike):
                 2D array of normalized values with shape ``(n, K)`` where ``K`` is the sum of
-                dimensions that are defined in each ``hyperparameter`` that composes this
-                ``tunable``.
+                dimensions from each ``hyperparameter`` that composes this ``tunable``.
 
         Returns:
             pandas.DataFrame
@@ -171,8 +166,8 @@ class Tunable:
 
         Returns:
             numpy.ndarray:
-                2D array with shape of ``(n_samples, K))`` where ``K``  is the sum of dimensions
-                that are defined in each ``hyperparameter`` that composes this ``tunable``.
+                2D array with shape of ``(n_samples, K))`` where ``K``  is the sum of
+                dimensions from each ``hyperparameter`` that composes this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will generate 2
