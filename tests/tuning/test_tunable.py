@@ -298,17 +298,17 @@ class TestTunable(TestCase):
 
         # setup
         # Values have been changed to ensure that each one of them is being called.
-        self.bhp.sample.return_value = [[True]]
-        self.chp.sample.return_value = [['dog']]
-        self.ihp.sample.return_value = [[4]]
+        self.bhp.sample.return_value = [['a']]
+        self.chp.sample.return_value = [['b']]
+        self.ihp.sample.return_value = [['c']]
 
         # run
         result = self.instance.sample(1)
 
         # assert
-        expected_result = [[True, 'dog', 4]]
+        expected_result = np.array([['a', 'b', 'c']])
 
+        assert set(result.flat) == set(expected_result.flat)
         self.bhp.sample.assert_called_once_with(1)
         self.chp.sample.assert_called_once_with(1)
         self.ihp.sample.assert_called_once_with(1)
-        assert (result == expected_result).all()
