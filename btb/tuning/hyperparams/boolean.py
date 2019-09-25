@@ -21,9 +21,9 @@ class BooleanHyperParam(BaseHyperParam):
     K = 1
 
     def _within_hyperparam_space(self, values):
-        # values is expected to be np.ndarray(n, 1) [[False], [True]]
-        if not all(isinstance(value[0], bool) for value in values):
-            if values.dtype is not np.dtype('bool'):
+        if values.dtype is not np.dtype('bool'):
+            # values is expected to be np.ndarray(n, 1) [[False], [True]]
+            if not all(isinstance(value[0], bool) for value in values):
                 raise ValueError('Values: {} not within hyperparameter space.'.format(values))
 
     def _inverse_transform(self, values):
