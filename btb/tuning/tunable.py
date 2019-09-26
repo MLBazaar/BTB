@@ -9,9 +9,8 @@ import pandas as pd
 class Tunable:
     """Tunable class.
 
-    This class is able to control a collection of ``hyperparameters`` and work with them as a
-    bulk. The class can ``transform``, ``inverse_transform`` and ``sample`` combinations of values
-    for the ``hyperparameters`` that compose the instance.
+    The Tunable class represents a collection of ``hyperparameters`` that need to be tuned as a
+    whole, at once.
 
     Attributes:
         hyperparams:
@@ -93,9 +92,9 @@ class Tunable:
         return np.concatenate(transformed, axis=1)
 
     def inverse_transform(self, values):
-        """Inverse transform one or more value combinations.
+        """Invert one or more value combinations.
 
-        Inverse transform one or more hyperparameter value combinations from the normalized search
+        Invert one or more hyperparameter value combinations from the normalized search
         space :math:`[0, 1]^K` to the original hyperparameter space.
 
         Args:
@@ -149,7 +148,7 @@ class Tunable:
         return pd.DataFrame(np.concatenate(inverse_transform), columns=self.names)
 
     def sample(self, n_samples):
-        """Generate sample values for this hyperparameters.
+        """Sample values in the hyperparameters spaces for this tunable.
 
         Args:
             n_samlpes (int):
