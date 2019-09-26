@@ -9,9 +9,9 @@ import pandas as pd
 class Tunable:
     """Tunable class.
 
-    The Tunable class contains a collection of hyperparameters and metadata related to them. Is
-    able to control this collection and work with the hyperparameters defined as a bulk.
-    This class has the same public methods as ``BaseHyperParam``.
+    This class is able to control a collection of ``hyperparameters`` and work with them as a
+    bulk. The class can ``transform``, ``inverse_transform`` and ``sample`` combinations of values
+    for the ``hyperparameters`` that compose the instance.
 
     Attributes:
         hyperparams:
@@ -23,24 +23,17 @@ class Tunable:
     Args:
         hyperparams (dict):
             Dictionary object that contains the name and the hyperparameter asociated to it.
-        names (list):
-            List of names to be used as order during ``inverse_transform``. If this value is
-            ``None``, the default order from the dictionary will be used.
     """
 
-    def __init__(self, hyperparams, names=None):
+    def __init__(self, hyperparams):
         self.hyperparams = hyperparams
-
-        if names is None:
-            names = list(hyperparams)
-
-        self.names = names
+        self.names = list(hyperparams)
 
     def transform(self, values):
-        """Transform one or more hyperparameter value combinations.
+        """Transform one or more value combinations.
 
-        Transform one or more hyperparameter value combinations from the original hyperparameter
-        space to the normalized search space.
+        Transform one or more value combinations from the original hyperparameters spaces to the
+        normalized search space.
 
         Args:
             values (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
@@ -49,7 +42,7 @@ class Tunable:
         Returns:
             numpy.ndarray:
                 2D array of shape ``(len(values), K)`` where ``K`` is the sum of dimensions from
-                each ``hyperparameter`` that composes this ``tunable``.
+                all the ``hyperparameters`` that compose this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will transform a valid
@@ -66,8 +59,7 @@ class Tunable:
             ...     'bhp': bhp,
             ...     'ihp': ihp
             ... }
-            >>> names = ['chp', 'bhp', 'ihp']
-            >>> tunable = Tunable(hyperparams, names=names)
+            >>> tunable = Tunable(hyperparams)
             >>> values = [
             ...     ['cat', False, 10],
             ...     ['dog', True, 1],
@@ -101,15 +93,15 @@ class Tunable:
         return np.concatenate(transformed, axis=1)
 
     def inverse_transform(self, values):
-        """Inverse transform one or more hyperparameter value combinations.
+        """Inverse transform one or more value combinations.
 
-        Transform one or more hyperparameter values from the normalized search space
-        :math:`[0, 1]^K` to the original hyperparameter space.
+        Inverse transform one or more hyperparameter value combinations from the normalized search
+        space :math:`[0, 1]^K` to the original hyperparameter space.
 
         Args:
             values (array-like):
                 2D array of normalized values with shape ``(n, K)`` where ``K`` is the sum of
-                dimensions from each ``hyperparameter`` that composes this ``tunable``.
+                dimensions from all the ``hyperparameters`` that compose this ``tunable``.
 
         Returns:
             pandas.DataFrame
@@ -129,8 +121,7 @@ class Tunable:
             ...     'bhp': bhp,
             ...     'ihp': ihp
             ... }
-            >>> names = ['chp', 'bhp', 'ihp']
-            >>> tunable = Tunable(hyperparams, names=names)
+            >>> tunable = Tunable(hyperparams)
             >>> values = [
             ...     [1, 0, 0, 0.95],
             ...     [0, 1, 1, 0.05]
@@ -166,8 +157,8 @@ class Tunable:
 
         Returns:
             numpy.ndarray:
-                2D array with shape of ``(n_samples, K))`` where ``K``  is the sum of
-                dimensions from each ``hyperparameter`` that composes this ``tunable``.
+                2D array with shape of ``(n_samples, K)`` where ``K``  is the sum of
+                dimensions from all the ``hyperparameters`` that compose this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will generate 2
@@ -184,8 +175,7 @@ class Tunable:
             ...     'bhp': bhp,
             ...     'ihp': ihp
             ... }
-            >>> names = ['chp', 'bhp', 'ihp']
-            >>> tunable = Tunable(hyperparams, names=names)
+            >>> tunable = Tunable(hyperparams)
             >>> tunable.sample(2)
             array([[0.  , 1.  , 0.  , 0.45],
                    [1.  , 0.  , 1.  , 0.95]])

@@ -20,11 +20,14 @@ def assert_called_with_np_array(mock_calls, real_calls):
 class TestTunable(TestCase):
     """Unit test for the class ``Tunable``."""
 
-    def setUp(self):
+    @patch('btb.tuning.tunable.list')
+    def setUp(self, list_mock):
         """Instantiate the ``Tunable`` and it's ``Hyperparameters`` that we will be using."""
         self.bhp = MagicMock()
         self.chp = MagicMock()
         self.ihp = MagicMock()
+
+        list_mock.return_value = ['bhp', 'chp', 'ihp']
 
         hyperparams = {
             'bhp': self.bhp,
@@ -32,31 +35,12 @@ class TestTunable(TestCase):
             'ihp': self.ihp,
         }
 
-        self.instance = Tunable(hyperparams, names=['bhp', 'chp', 'ihp'])
-
-    @patch('btb.tuning.tunable.list')
-    def test___init__not_given_names(self, list_mock):
-        """Test the init method without giving names to it."""
-
-        # A mock for list() is being used as python 3.5 does not maintain the order.
-        # setup
-        list_mock.return_value = ['a', 'b']
-
-        # run
-        self.instance = Tunable({'a': 1, 'b': 2})
-
-        # assert
-        list_mock.assert_called_once_with({'a': 1, 'b': 2})
-        assert self.instance.names == ['a', 'b']
+        self.instance = Tunable(hyperparams)
 
     def test___init__with_given_names(self):
         """Test that the names are being generated correctly."""
-
-        # run
-        instance = Tunable({}, names=['bhp', 'chp', 'ihp'])
-
         # assert
-        assert instance.names == ['bhp', 'chp', 'ihp']
+        assert self.instance.names == ['bhp', 'chp', 'ihp']
 
     def test_transform_valid_dict(self):
         """Test transform method with a dictionary that has all the hyperparameters."""
