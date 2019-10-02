@@ -4,6 +4,9 @@
 
 from abc import abstractmethod
 
+from btb.tuning.acquisition import BaseAcquisitionFunction
+from btb.tuning.metamodels import BaseMetaModel
+
 
 class BaseTuner:
     """BaseTuner class.
@@ -60,3 +63,23 @@ class BaseTuner:
             hyperparameters = hyperparameters[0]
 
         return hyperparameters
+
+
+class BaseMetaModelTuner(BaseMetaModel, BaseAcquisitionFunction, BaseTuner):
+    def __init__(self, tunable, maximize=True):
+        super().__init__(tunable)
+        self.maximize = maximize
+        self.X = list()
+        self.y = list()
+
+    def record(self, configs, scores):
+        configs = configs if isinstance(configs, list) else [configs]
+        scores = scores if isinstance(scores, list) else [scores]
+
+        if len(configs) != len(scores):
+            raise ValueError('Each configuration must contain a single score for it.')
+
+        configs = self.tunable.transform(configs)
+        self.X.extend(configs)
+        self.y.extend(scores)
+        self._fit(self.X, self.y)  # Refit metamodel
