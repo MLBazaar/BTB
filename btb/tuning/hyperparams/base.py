@@ -106,7 +106,7 @@ class BaseHyperParam(metaclass=ABCMeta):
             values (numpy.ndarray):
                 2D array of values that will be validated.
         """
-        self._within_range(values, min=0, max=1)
+        self._within_range(values.astype(np.float), min=0, max=1)
 
     @abstractmethod
     def _inverse_transform(self, values):

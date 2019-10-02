@@ -23,12 +23,10 @@ except IOError:
 
 
 install_requires = [
-    'enum34>=1.1.6; python_version=="2.7"',
-    'more-itertools<6; python_version=="2.7"',  # some upstream bug
-    'numpy>=1.14.2',
-    'scikit-learn>=0.19.1',
-    'scipy>=1.0.1',
-    'six>=1.0',
+    'numpy>=1.14.0,<1.18.0',
+    'scikit-learn>=0.20.0,<0.22.0',
+    'scipy>=1.0.1,<1.4.0',
+    'pandas>=0.21.0,<0.26.0'
 ]
 
 
