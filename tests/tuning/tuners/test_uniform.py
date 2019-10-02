@@ -14,8 +14,6 @@ class TestUniformTuner(TestCase):
 
     def test___init__(self):
         assert isinstance(self.instance.tunable, MagicMock)
-        assert isinstance(self.instance.X, list)
-        assert isinstance(self.instance.y, list)
 
     def test__propose(self):
         # setup

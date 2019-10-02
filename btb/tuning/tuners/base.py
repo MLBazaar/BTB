@@ -13,10 +13,6 @@ class BaseTuner:
     Attributes:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
-        X (list):
-            List of configurations / trials recorded.
-        y (list):
-            Scored results of each configuration in ``X``.
     Args:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
@@ -24,8 +20,6 @@ class BaseTuner:
 
     def __init__(self, tunable):
         self.tunable = tunable
-        self.X = list()
-        self.y = list()
 
     @abstractmethod
     def _propose(self, num_proposals):

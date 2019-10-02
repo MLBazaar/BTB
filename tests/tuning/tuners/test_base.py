@@ -20,8 +20,6 @@ class TestBaseTuner(TestCase):
 
     def test___init__(self):
         assert isinstance(self.instance.tunable, MagicMock)
-        assert isinstance(self.instance.X, list)
-        assert isinstance(self.instance.y, list)
 
     def test_propose_one_value(self):
         """Test that propose method calls it's child implemented method."""
