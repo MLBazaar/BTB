@@ -4,6 +4,8 @@
 
 from abc import abstractmethod
 
+import numpy as np
+
 
 class BaseTuner:
     """BaseTuner class.
@@ -20,6 +22,29 @@ class BaseTuner:
 
     def __init__(self, tunable):
         self.tunable = tunable
+        self.trials = list()
+        self.results = list()
+
+    def _sample(self, num_proposals, allow_duplicates):
+        if allow_duplicates:
+            return self.tunable.sample(num_proposals)
+        else:
+            valid = list()
+            trials_list = list()
+            trials_list.extend(map(tuple, self.trials))
+
+            if len(self.trials) == self.tunable.SC:
+                raise ValueError(
+                    'All of the possible trials where recorded. Use allow_duplicates=True to keep'
+                    'generating trials.'
+                )
+
+            while len(valid) != num_proposals or len(valid) == self.tunable.SC:
+                proposed = self.tunable.sample(num_proposals)
+                proposed = list(map(tuple, proposed))
+                valid.append(set(proposed) - set(trials_list))
+
+            return np.asarray(valid)
 
     @abstractmethod
     def _propose(self, num_proposals):
@@ -37,7 +62,7 @@ class BaseTuner:
         """
         pass
 
-    def propose(self, num_proposals=1):
+    def propose(self, num_proposals=1, allow_duplicates=False):
         """Propose (one or more) new hyperparameter configurations.
 
         Call the implemented ``_propose`` method and convert the returned data in to hyperparameter
@@ -60,3 +85,16 @@ class BaseTuner:
             hyperparameters = hyperparameters[0]
 
         return hyperparameters
+
+    def record(self, trials, results):
+        """
+        """
+
+        trials = self.tunable.transform(trials)
+        results = results if isinstance(results, (list, np.ndarray)) else [results]
+
+        if len(trials) != len(results):
+            raise ValueError('The amount of trials must be equal to the amount of results.')
+
+        self.results.extend(results)
+        self.trials.extend(trials)
