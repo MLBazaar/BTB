@@ -33,7 +33,7 @@ class CategoricalHyperParam(BaseHyperParam):
         ``sklearn.preprocessing.OneHotEncoder`` with those values.
         """
         self.choices = choices
-        self.K = len(choices)
+        self.K = self.SC = len(choices)
         self._encoder = OneHotEncoder(sparse=False)
         self._encoder.fit(np.array(choices).reshape(-1, 1))
 

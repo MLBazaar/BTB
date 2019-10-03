@@ -52,6 +52,8 @@ class FloatHyperParam(NumericalHyperParam):
             Wheither or not to include the maximum value in the search space.
     """
 
+    SC = np.inf
+
     def __init__(self, min=None, max=None, include_min=True, include_max=True):
         if min is None or min == -np.inf:
             min = sys.float_info.min
@@ -204,6 +206,7 @@ class IntHyperParam(NumericalHyperParam):
         self.max = int(max) if include_max else int(max) - 1
         self.step = step
         self.range = ((self.max - self.min) / step) + 1
+        self.SC = self.max - self.min
 
         if self.range % self.step:
             raise ValueError(

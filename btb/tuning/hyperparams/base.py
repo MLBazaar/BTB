@@ -17,6 +17,8 @@ class BaseHyperParam(metaclass=ABCMeta):
         K (int):
             Number of dimensions that the hyperparameter uses to be represented in the search
             space.
+        SC (int, np.inf):
+            Number of search combinations possible.
     """
 
     def _to_array(self, values):
