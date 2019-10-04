@@ -32,11 +32,10 @@ class Tunable:
         self.names = list(hyperparams)
         self.K = 0
         self.SC = 1
-        for hyperparam in hyperparams:
+
+        for hyperparam in hyperparams.values():
             self.K = self.K + hyperparam.K
             self.SC = self.SC * hyperparam.SC
-
-        self.SC = np.prod([hyperparam.SC for hyperparam in hyperparams.values()])
 
     def transform(self, values):
         """Transform one or more value combinations.
