@@ -4,5 +4,4 @@
 
 from btb.tuning.tuners.uniform import UniformTuner
 
-
 __all__ = ('UniformTuner', )
