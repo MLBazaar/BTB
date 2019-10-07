@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseTuner class is defined."""
+"""Package where the BaseTuner class and BaseModelTuner are defined."""
 
 from abc import abstractmethod
 
 import numpy as np
+
+from btb.tuning.acquisition import BaseAcquisitionFunction
+from btb.tuning.metamodels import BaseMetaModel
 
 
 class BaseTuner:
@@ -239,3 +242,52 @@ class BaseTuner:
 
         self.trials = np.append(self.trials, trials, axis=0)
         self.scores = np.append(self.scores, scores)
+
+
+class BaseMetaModelTuner(BaseMetaModel, BaseAcquisitionFunction, BaseTuner):
+    def __init__(self, tunable, maximize=True):
+        super().__init__(tunable)
+        self.maximize = maximize
+
+    def record(self, trials, scores):
+        """Record one or more ``trials`` with the associated ``scores`` and re-fit the model.
+
+        Records one or more ``trials`` with the associated ``scores`` to it. The amount of trials
+        must be equal to the amount of scores recived and vice versa. Once recorded, the ``model``
+        is being fitted with ``self.trials`` and ``self.scores`` that contain any previous records
+        and the ones that where just recorded.
+
+        Args:
+            trials (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
+                Values of shape ``(n, len(self.tunable.hyperparameters))`` or dict with keys that
+                are ``self.tunable.names``.
+
+            scores (single value or array-like):
+                A single value or array-like of values representing the score achieved with the
+                trials.
+
+        Raises:
+            ValueError:
+                A ``ValueError`` exception is being produced if ``len(trials)`` is not equal to
+                ``len(scores)``.
+
+        Example:
+            The example below shows simple usage case where an ``UniformTuner`` is being imported,
+            instantiated with a ``tunable`` object and it's method record is being called two times
+            with valid trials and scores.
+
+            >>> from btb.tuning.tunable import Tunable
+            >>> from btb.tuning.hyperparams import BooleanHyperParam
+            >>> from btb.tuning.hyperparams import CategoricalHyperParam
+            >>> from btb.tuning.tuners import UniformTuner
+            >>> bhp = BooleanHyperParam()
+            >>> chp = CategoricalHyperParam(['cat', 'dog'])
+            >>> tunable = Tunable({'bhp': bhp, 'chp': chp})
+            >>> tuner = UniformTuner(tunable)
+            >>> tuner.record({'bhp': True, 'chp': 'cat'}, 0.8)
+            >>> trials = [{'bhp': False, 'chp': 'cat'}, {'bhp': True, 'chp': 'dog'}]
+            >>> scores = [0.8, 0.1]
+            >>> tuner.record(trials, scores)
+        """
+        super().record(trials, scores)
+        self._fit(self.trials, self.scores)

@@ -6,17 +6,19 @@ from btb.tuning.tuners.base import BaseMetaModelTuner
 
 class GaussianProcess(GaussianProcessMetaModel, NumpyArgMaxFunction, BaseMetaModelTuner):
 
-    def _propose(self, num_proposals):
-        if num_proposals == 1:
-            return self.tunable.sample(1)
+    def _propose(self, num_proposals, allow_duplicates):
 
-        best_candidates = list()
+        num_samples = num_proposals * 1000
 
-        for x in range(num_proposals):
-            candidates = self.tunable.sample(num_proposals)
-            predicted = self._predict(candidates)
-            index = self._acquire(predicted)
+        if allow_duplicates:
+            proposed = self._sample(num_samples, allow_duplicates)
 
-            best_candidates.append(candidates[index])
+        elif self.tunable.SC > num_proposals:
+            proposed = self._sample(num_samples, allow_duplicates)
 
-        return best_candidates
+        else:
+            proposed = self._sample(self.tunable.SC, allow_duplicates)
+
+        predicted = self._predict(proposed)
+        index = self._acquire(predicted, num_proposals)
+        return proposed[index]

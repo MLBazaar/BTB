@@ -19,9 +19,13 @@ class GaussianProcessMetaModel(BaseMetaModel):
         """Create an instance of a GaussianProcessRegressor from sklearn."""
         return GaussianProcessRegressor(normalize_y=True)
 
-    def _fit(self, params, scores):
-        self._model.fit(params, scores)
+    def _fit(self, trials, scores):
+
+        if not self.maximize:
+            scores = [-score for score in scores]
+
+        self._model = self._init_model()
+        self._model.fit(trials, scores)
 
     def _predict(self, candidates):
-        y, stdev = self._model.predict(candidates, return_std=True)
-        return np.array(list(zip(y, stdev)))
+        return np.array(self._model.predict(candidates))

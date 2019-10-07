@@ -9,7 +9,4 @@ from btb.tuning.acquisition.base import BaseAcquisitionFunction
 class NumpyArgMaxFunction(BaseAcquisitionFunction):
 
     def _acquire(self, candidates, num_candidates=1):
-        if num_candidates != 1:
-            raise ValueError('Not implemented for more than one candidate')
-
-        return np.argmax(candidates[:, 0])
+        return list(reversed(np.argsort(candidates)))[:num_candidates]
