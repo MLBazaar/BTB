@@ -19,6 +19,7 @@ class BooleanHyperParam(BaseHyperParam):
     """
 
     K = 1
+    SC = 2
 
     def _within_hyperparam_space(self, values):
         if values.dtype is not np.dtype('bool'):

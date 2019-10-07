@@ -18,6 +18,9 @@ class Tunable:
         names:
             List of names that the hyperparameters have and act as an ordering during the usage
             of ``inverse_transform`` method.
+        SC:
+            Int or ``np.inf`` amount that indicates the number of combinations possible for this
+            tunable.
 
     Args:
         hyperparams (dict):
@@ -27,6 +30,12 @@ class Tunable:
     def __init__(self, hyperparams):
         self.hyperparams = hyperparams
         self.names = list(hyperparams)
+        self.K = 0
+        self.SC = 1
+
+        for hyperparam in hyperparams.values():
+            self.K = self.K + hyperparam.K
+            self.SC = self.SC * hyperparam.SC
 
     def transform(self, values):
         """Transform one or more value combinations.
