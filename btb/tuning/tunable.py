@@ -46,8 +46,8 @@ class Tunable:
 
         Returns:
             numpy.ndarray:
-                2D array of shape ``(len(values), K)`` where ``K`` is the sum of dimensions from
-                all the ``HyperParams`` that compose this ``tunable``.
+                2D array of shape ``(len(values), dimensions)`` where ``dimensions`` is the sum of
+                dimensions from all the ``HyperParams`` that compose this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will transform a valid
@@ -105,8 +105,9 @@ class Tunable:
 
         Args:
             values (array-like):
-                2D array of normalized values with shape ``(n, K)`` where ``K`` is the sum of
-                dimensions from all the ``HyperParams`` that compose this ``tunable``.
+                2D array of normalized values with shape ``(n, dimensions)`` where ``dimensions``
+                is the sum of dimensions from all the ``HyperParams`` that compose this
+                ``tunable``.
 
         Returns:
             pandas.DataFrame
@@ -144,9 +145,9 @@ class Tunable:
 
             for name in self.names:
                 hyperparam = self.hyperparams[name]
-                item = value[:hyperparam.K]
+                item = value[:hyperparam.dimensions]
                 transformed.append(hyperparam.inverse_transform(item))
-                value = value[hyperparam.K:]
+                value = value[hyperparam.dimensions:]
 
             transformed = np.array(transformed, dtype=object)
             inverse_transform.append(np.concatenate(transformed, axis=1))
@@ -162,8 +163,8 @@ class Tunable:
 
         Returns:
             numpy.ndarray:
-                2D array with shape of ``(n_samples, K)`` where ``K``  is the sum of
-                dimensions from all the ``HyperParams`` that compose this ``tunable``.
+                2D array with shape of ``(n_samples, dimensions)`` where ``dimensions``  is the
+                sum of dimensions from all the ``HyperParams`` that compose this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will generate 2
