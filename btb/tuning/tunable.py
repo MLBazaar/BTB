@@ -9,16 +9,13 @@ import pandas as pd
 class Tunable:
     """Tunable class.
 
-    The Tunable class represents a collection of ``hyperparameters`` that need to be tuned as a
+    The Tunable class represents a collection of ``HyperParams`` that need to be tuned as a
     whole, at once.
 
     Attributes:
         hyperparams:
-            Dict of hyperparameters.
-        names:
-            List of names that the hyperparameters have and act as an ordering during the usage
-            of ``inverse_transform`` method.
-        SC:
+            Dict of HyperParams.
+        cardinality:
             Int or ``np.inf`` amount that indicates the number of combinations possible for this
             tunable.
 
@@ -31,26 +28,26 @@ class Tunable:
         self.hyperparams = hyperparams
         self.names = list(hyperparams)
         self.K = 0
-        self.SC = 1
+        self.cardinality = 1
 
         for hyperparam in hyperparams.values():
             self.K = self.K + hyperparam.K
-            self.SC = self.SC * hyperparam.SC
+            self.cardinality = self.cardinality * hyperparam.cardinality
 
     def transform(self, values):
-        """Transform one or more value combinations.
+        """Transform one or more hyperparameter configurations.
 
-        Transform one or more value combinations from the original hyperparameters spaces to the
-        normalized search space.
+        Transform one or more hyperparameter configurations from the original hyperparameter
+        space to the normalized search space.
 
         Args:
             values (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
-                Values of shape ``(n, len(self.hyperparameters))``.
+                Values of shape ``(n, len(self.hyperparams))``.
 
         Returns:
             numpy.ndarray:
                 2D array of shape ``(len(values), K)`` where ``K`` is the sum of dimensions from
-                all the ``hyperparameters`` that compose this ``tunable``.
+                all the ``HyperParams`` that compose this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will transform a valid
@@ -101,15 +98,15 @@ class Tunable:
         return np.concatenate(transformed, axis=1)
 
     def inverse_transform(self, values):
-        """Invert one or more value combinations.
+        """Invert one or more hyperparameter configurations.
 
-        Invert one or more hyperparameter value combinations from the normalized search
+        Invert one or more hyperparameter configurations from the normalized search
         space :math:`[0, 1]^K` to the original hyperparameter space.
 
         Args:
             values (array-like):
                 2D array of normalized values with shape ``(n, K)`` where ``K`` is the sum of
-                dimensions from all the ``hyperparameters`` that compose this ``tunable``.
+                dimensions from all the ``HyperParams`` that compose this ``tunable``.
 
         Returns:
             pandas.DataFrame
@@ -157,7 +154,7 @@ class Tunable:
         return pd.DataFrame(np.concatenate(inverse_transform), columns=self.names)
 
     def sample(self, n_samples):
-        """Sample values in the hyperparameters spaces for this tunable.
+        """Sample values in the hyperparameters space for this tunable.
 
         Args:
             n_samlpes (int):
@@ -166,7 +163,7 @@ class Tunable:
         Returns:
             numpy.ndarray:
                 2D array with shape of ``(n_samples, K)`` where ``K``  is the sum of
-                dimensions from all the ``hyperparameters`` that compose this ``tunable``.
+                dimensions from all the ``HyperParams`` that compose this ``tunable``.
 
         Example:
             The example below shows a simple usage of a Tunable class which will generate 2
