@@ -243,7 +243,7 @@ class TestBaseHyperParam(TestCase):
 
     @patch('btb.tuning.hyperparams.base.np.isscalar')
     @patch('btb.tuning.hyperparams.base.np.array')
-    def test__to_array_values_shape_one_dimensions_two(self, mock_np_array, mock_np_isscalar):
+    def test__to_array_values_not_scalar_dimensions_two(self, mock_np_array, mock_np_isscalar):
 
         # setup
         instance = MagicMock()

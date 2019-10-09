@@ -16,8 +16,8 @@ class BaseTuner:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         trials (numpy.ndarray):
-            A ``numpy.ndarray`` with shape ``(n, self.tunable.K)`` where ``n`` is the number of
-            trials recorded.
+            A ``numpy.ndarray`` with shape ``(n, self.tunable.dimensions)`` where ``n`` is the
+            number of trials recorded.
         scores (numpy.ndarray):
             A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of scores recorded.
 
@@ -28,11 +28,11 @@ class BaseTuner:
 
     def __init__(self, tunable):
         self.tunable = tunable
-        self.trials = np.empty((0, self.tunable.K), dtype=np.float)
+        self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float)
         self.scores = np.empty((0, 1), dtype=np.float)
 
     def _check_proposals(self, num_proposals):
-        """Validate ``num_proposals`` with ``self.tunable.SC`` and ``self.trials``.
+        """Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.
 
         Raises:
             ValueError:
@@ -47,27 +47,27 @@ class BaseTuner:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
         """
-        if num_proposals > self.tunable.SC:
+        if num_proposals > self.tunable.cardinality:
             raise ValueError(
                 'The number of proposals requested is bigger than the combinations: {} of the'
                 '``tunable``. Use ``allow_duplicates=True``, if you would like to generate that'
-                'amount of combinations.'.format(self.tunable.SC)
+                'amount of combinations.'.format(self.tunable.cardinality)
             )
 
         trials_set = set(list(map(tuple, self.trials)))
 
-        if len(trials_set) == self.tunable.SC:
+        if len(trials_set) == self.tunable.cardinality:
             raise ValueError(
                 'All of the possible combinations where recorded. Use ``allow_duplicates=True``'
                 'to keep generating combinations.'
             )
 
-        if len(trials_set) + num_proposals > self.tunable.SC:
+        if len(trials_set) + num_proposals > self.tunable.cardinality:
             raise ValueError(
                 'The maximum amount of new proposed combinations will exceed the amount of'
                 'possible combinations, either use ``num_proposals={}`` to generate the remaining'
                 'combinations or ``allow_duplicates=True`` to keep generating more'
-                'combinations.'.format(self.tunable.SC - len(trials_set))
+                'combinations.'.format(self.tunable.cardinality - len(trials_set))
             )
 
     def _sample(self, num_proposals, allow_duplicates):
@@ -85,7 +85,7 @@ class BaseTuner:
 
         Returns:
             numpy.ndarray:
-                A ``numpy.ndarray`` with shape ``(num_proposals, self.tunable.K)``.
+                A ``numpy.ndarray`` with shape ``(num_proposals, self.tunable.dimensions)``.
         """
         if allow_duplicates:
             return self.tunable.sample(num_proposals)
@@ -128,7 +128,7 @@ class BaseTuner:
 
         Validate that the amount of proposals requested is valid when ``allow_duplicates`` is
         ``False`` and raise an exception in case there is any missmatch between ``num_proposals``,
-        ``self.trials`` and ``self.tunable.SC``.
+        ``self.trials`` and ``self.tunable.cardinality``.
         Call the implemented ``_propose`` method and convert the returned data in to hyperparameter
         space values.
 
