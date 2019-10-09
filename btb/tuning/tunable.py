@@ -27,11 +27,11 @@ class Tunable:
     def __init__(self, hyperparams):
         self.hyperparams = hyperparams
         self.names = list(hyperparams)
-        self.K = 0
+        self.dimensions = 0
         self.cardinality = 1
 
         for hyperparam in hyperparams.values():
-            self.K = self.K + hyperparam.K
+            self.dimensions = self.dimensions + hyperparam.dimensions
             self.cardinality = self.cardinality * hyperparam.cardinality
 
     def transform(self, values):

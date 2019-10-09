@@ -10,174 +10,273 @@ from btb.tuning.hyperparams.base import BaseHyperParam
 
 class TestBaseHyperParam(TestCase):
 
-    class TestHyperParam(BaseHyperParam):
-
-        K = 1
-
-        def _inverse_transform(self, values):
-            pass
-
-        def _transform(self, values):
-            pass
-
-        def sample(self, values):
-            pass
-
-    def setUp(self):
-        self.instance = self.TestHyperParam()
-
-    def test__within_range_valid(self):
+    def test__within_range_valid_range(self):
         # setup
+        instance = MagicMock()
         values = np.array([[1], [2]])
         _min = 0
         _max = 10
 
         # run / assert
-        self.instance._within_range(values, min=_min, max=_max)
+        BaseHyperParam._within_range(instance, values, min=_min, max=_max)
 
-    def test__within_range_invalid(self):
+    def test__within_range_invalid_range(self):
         # setup
+        instance = MagicMock()
         values = np.array([[1], [2]])
         _min = 0
         _max = 1
 
         # run / assert
         with self.assertRaises(ValueError):
-            self.instance._within_range(values, min=_min, max=_max)
+            BaseHyperParam._within_range(instance, values, min=_min, max=_max)
 
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_range')
-    def test__within_search_space(self, mock__within_range):
+    def test__within_search_space(self):
         # setup
+        instance = MagicMock()
         values = np.array(15)
 
         # run
-        self.instance._within_search_space(values)
+        BaseHyperParam._within_search_space(instance, values)
 
         # assert
-        mock__within_range.assert_called_once_with(np.array(15), min=0, max=1)
+        instance._within_range.assert_called_once_with(np.array(15), min=0, max=1)
 
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_range')
-    def test__within_hyperparam_space(self, mock__within_range):
+    def test__within_hyperparam_space(self):
         # setup
-        self.instance.min = 0
-        self.instance.max = 10
+        instance = MagicMock()
+        instance.min = 0
+        instance.max = 10
         values = 5
 
         # run
-        self.instance._within_hyperparam_space(values)
+        BaseHyperParam._within_hyperparam_space(instance, values)
 
         # assert
-        mock__within_range.assert_called_once_with(5, min=0, max=10)
+        instance._within_range.assert_called_once_with(5, min=0, max=10)
 
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_search_space')
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._to_array')
-    def test_inverse_transform(self, mock__to_array, mock__within_search_space):
+    def test_inverse_transform(self):
         # setup
-        self.instance._inverse_transform = MagicMock(return_value=3)
-        mock__to_array.return_value = 2
+        instance = MagicMock()
+        instance._inverse_transform = MagicMock(return_value=3)
+        instance._to_array.return_value = 2
         values = 1
 
         # run
-        result = self.instance.inverse_transform(values)
+        result = BaseHyperParam.inverse_transform(instance, values)
 
         # assert
-        mock__to_array.assert_called_once_with(1)
-        mock__within_search_space.assert_called_once_with(2)
-        self.instance._inverse_transform.assert_called_once_with(2)
+        instance._to_array.assert_called_once_with(1)
+        instance._within_search_space.assert_called_once_with(2)
+        instance._inverse_transform.assert_called_once_with(2)
 
-        self.assertEqual(result, 3)
+        assert result == 3
 
     @patch('btb.tuning.hyperparams.base.np.asarray')
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._transform')
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_hyperparam_space')
-    def test_transform_values_not_ndarray(self, mock__within_hyperparam_space,
-                                          mock__transform, mock_np_asarray):
+    def test_transform_values_not_ndarray(self, mock_np_asarray):
         # setup
-        self.instance._transform = MagicMock(return_value=2)
-        values = 1
+        instance = MagicMock()
+        instance._transform.return_value = 2
         mock_np_asarray.return_value = np.array([[1]])
+        values = 1
 
         # run
-        result = self.instance.transform(values)
+        result = BaseHyperParam.transform(instance, values)
 
         # assert
         mock_np_asarray.asser_called_once_with(1)
-        mock__within_hyperparam_space.assert_called_once_with(np.array([[1]]))
-        self.instance._transform.assert_called_once_with(np.array([[1]]))
+        instance._within_hyperparam_space.assert_called_once_with(np.array([[1]]))
+        instance._transform.assert_called_once_with(np.array([[1]]))
         self.assertEqual(result, 2)
 
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._transform')
-    @patch('btb.tuning.hyperparams.base.BaseHyperParam._within_hyperparam_space')
-    def test_transform_values_list(self, mock__within_hyperparam_space, mock__transform):
+    def test_transform_values_list(self):
         # setup
-        self.instance = self.TestHyperParam()
-        self.instance._transform = MagicMock(return_value=2)
+        instance = MagicMock()
+        instance._transform.return_value = 2
         values = np.array([[1]])
 
         # run
-        result = self.instance.transform(values)
+        result = BaseHyperParam.transform(instance, values)
 
         # assert
-        mock__within_hyperparam_space.assert_called_once_with(np.array([[1]]))
-        self.instance._transform.assert_called_once_with(np.array([[1]]))
-        self.assertEqual(result, 2)
+        instance._within_hyperparam_space.assert_called_once_with(np.array([[1]]))
+        instance._transform.assert_called_once_with(np.array([[1]]))
+        assert result == 2
 
-    def test__to_array_list_values_valid_dim(self):
+    def test__to_array_scalar_value_dimension_one(self):
         # setup
-        values = [1, 2]
+        instance = MagicMock()
+        instance.dimensions = 1
+        values = 1
 
         # run
-        result = self.instance._to_array(values)
+        result = BaseHyperParam._to_array(instance, values)
 
         # assert
-        expected_result = np.array([[1], [2]])
+        np.testing.assert_array_equal(result, np.array([[1]]))
 
-        np.testing.assert_array_equal(result, expected_result)
-
-    def test__to_array_list_values_lt_dimension(self):
+    def test__to_array_scalar_value_dimensions_gt_one(self):
         # setup
+        instance = MagicMock()
+        instance.dimensions = 2
+
+        values = 1
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
+
+    def test__to_array_list_values_of_scalar_values_dimensions_one(self):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 1
+        values = [1, 2, 3]
+
+        # run
+        result = BaseHyperParam._to_array(instance, values)
+
+        # assert
+        np.testing.assert_array_equal(result, np.array([[1], [2], [3]]))
+
+    def test__to_array_list_values_of_scalar_values_dimensions_gt_one(self):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 2
+        values = [1, 2, 3]
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
+
+    def test__to_array_list_values_of_list_values_dimensions_one(self):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 1
+        values = [[1], [2], [3]]
+
+        # run
+        result = BaseHyperParam._to_array(instance, values)
+
+        # assert
+        np.testing.assert_array_equal(result, np.array([[1], [2], [3]]))
+
+    def test__to_array_list_values_of_list_values_dimensions_two(self):
+
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 2
+        values = [[1], [2], [3]]
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
+
+    def test__to_array_list_values_of_list_values_one_scalar(self):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 1
+        values = [[1], 2, [3]]
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
+
+    def test__to_array_values_shape_gt_two(self):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 1
+        values = [[[1], [3]]]
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
+
+    @patch('btb.tuning.hyperparams.base.np.array')
+    def test__to_array_len_shape_is_one(self, mock_np_array):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 1
         values = [1]
-        self.instance.K = 2
+        array = MagicMock()
+        array.shape.__len__.return_value = 1
+
+        mock_np_array.return_value = array
 
         # run
-        with self.assertRaises(ValueError):
-            self.instance._to_array(values)
-
-    def test__to_array_list_values_gt_dimension(self):
-        # setup
-        values = [1, 2, 3]
-        self.instance.K = 2
-
-        # run
-        with self.assertRaises(ValueError):
-            self.instance._to_array(values)
-
-    def test__to_array_list_values_eq_dimension(self):
-        # setup
-        values = [1, 2, 3]
-        self.instance.K = 3
-
-        # run
-        result = self.instance._to_array(values)
+        BaseHyperParam._to_array(instance, values)
 
         # assert
-        expected_result = np.array([[1, 2, 3]])
-        np.testing.assert_array_equal(result, expected_result)
+        array.reshape.assert_called_once_with(-1, 1)
 
-    def test__to_array_invalid_values_shape(self):
+    @patch('btb.tuning.hyperparams.base.np.array')
+    def test__to_array_more_than_one_column_for_dimensions_one(self, mock_np_array):
         # setup
-        values = [[[1]]]
-        self.instance.K = 1
+        instance = MagicMock()
+        instance.dimensions = 1
+        values = [1]
+        array = MagicMock()
+        array.shape.__len__.return_value = 2
+        array.shape = [2, 3]
+
+        mock_np_array.return_value = array
 
         # run
         with self.assertRaises(ValueError):
-            self.instance._to_array(values)
+            BaseHyperParam._to_array(instance, values)
 
-    def test__to_array_invalid_values_dimension(self):
+    @patch('btb.tuning.hyperparams.base.np.array')
+    def test__to_array_values_shape_one_dimensions_two(self, mock_np_array):
+
         # setup
-        values = [[1, 2], [1, 2, 3]]
-        self.instance.K = 2
+        instance = MagicMock()
+        instance.dimensions = 2
+        values = [1]
+        array = MagicMock()
+        array.__len__.return_value = 3
+        array.shape.__len__.return_value = 1
+
+        mock_np_array.return_value = array
 
         # run
         with self.assertRaises(ValueError):
-            self.instance._to_array(values)
+            BaseHyperParam._to_array(instance, values)
+
+    @patch('btb.tuning.hyperparams.base.np.isscalar')
+    @patch('btb.tuning.hyperparams.base.np.array')
+    def test__to_array_values_shape_one_dimensions_two(self, mock_np_array, mock_np_isscalar):
+
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 2
+        mock_np_isscalar.return_value = False
+        values = [1]
+        array = MagicMock()
+        array.__len__.return_value = 2
+        array.shape.__len__.return_value = 1
+
+        mock_np_array.return_value = array
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
+
+    @patch('btb.tuning.hyperparams.base.np.isscalar')
+    @patch('btb.tuning.hyperparams.base.np.array')
+    def test__to_array_values_reshape_dimensions_two(self, mock_np_array, mock_np_isscalar):
+
+        # setup
+        mock_np_isscalar.side_effect = [False, True]
+
+        instance = MagicMock()
+        instance.dimensions = 2
+        mock_np_isscalar.return_value = False
+        values = [1]
+        array = MagicMock()
+        array.__len__.return_value = 2
+        array.shape.__len__.return_value = 1
+
+        mock_np_array.return_value = array
+
+        # run
+        BaseHyperParam._to_array(instance, values)
+        array.reshape.assert_called_once_with(1, -1)
