@@ -146,7 +146,7 @@ class TestCategoricalHyperParam(TestCase):
         # assert
         expected_results = np.array([[0, 0, 0, 1], [0, 1, 0, 0]])
 
-        mock_np_random.assert_called_once_with((n, self.instance.K))
+        mock_np_random.assert_called_once_with((n, self.instance.dimensions))
 
         np.testing.assert_array_equal(results, expected_results)
 

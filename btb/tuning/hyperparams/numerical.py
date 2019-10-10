@@ -16,7 +16,7 @@ class NumericalHyperParam(BaseHyperParam):
     defined by a numerical value and can take any number within that range.
     """
 
-    K = 1
+    dimensions = 1
 
     def _within_range(self, values, min=0, max=1):
         if (values < min).any() or (values > max).any():
@@ -52,7 +52,7 @@ class FloatHyperParam(NumericalHyperParam):
             Wheither or not to include the maximum value in the search space.
     """
 
-    SC = np.inf
+    cardinality = np.inf
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True):
         if min is None or min == -np.inf:
@@ -155,7 +155,7 @@ class FloatHyperParam(NumericalHyperParam):
             array([[0.52058728],
                    [0.00582452]])
         """
-        return np.random.random((n_samples, self.K))
+        return np.random.random((n_samples, self.dimensions))
 
 
 class IntHyperParam(NumericalHyperParam):
@@ -190,7 +190,7 @@ class IntHyperParam(NumericalHyperParam):
             Wheither or not to include the maximum value in the search space.
     """
 
-    K = 1
+    dimensions = 1
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True, step=1):
         if min is None:
@@ -205,7 +205,7 @@ class IntHyperParam(NumericalHyperParam):
         self.min = int(min) if include_min else int(min) + 1
         self.max = int(max) if include_max else int(max) - 1
         self.step = step
-        self.SC = ((self.max - self.min) / step) + 1
+        self.cardinality = ((self.max - self.min) / step) + 1
 
         if (self.max - self.min) % self.step:
             raise ValueError(
@@ -308,7 +308,7 @@ class IntHyperParam(NumericalHyperParam):
             array([[0.625],
                    [0.375]])
         """
-        sampled = np.random.random((n_samples, self.K))
+        sampled = np.random.random((n_samples, self.dimensions))
         inverted = self._inverse_transform(sampled)
 
         return self._transform(inverted)
