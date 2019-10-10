@@ -2,23 +2,33 @@
 
 """Package where the BaseMetaModel class is defined."""
 
+import numpy as np
+
 from abc import ABCMeta, abstractmethod
 
 
 class BaseMetaModel(metaclass=ABCMeta):
 
-    @abstractmethod
+    _MODEL_CLASS = None
+    _MODEL_KWARGS = None
+    _model_kwargs = None
+    _model = None
+
     def _init_model(self):
-        """Create an instance of a model."""
-        pass
+        """Create an instance of a self._MODEL_CLASS."""
+        model_kwargs = self._MODEL_KWARGS.copy() if self._MODEL_KWARGS else dict()
+        if self._model_kwargs:
+            model_kwargs.update(self._model_kwargs)
 
-    def __init__(self, *args, **kwargs):
-        """Enables cooperative multiple inheritance."""
-        super().__init__(*args, **kwargs)
-        self._model = self._init_model()
+        self._model = self._MODEL_CLASS(**model_kwargs)
 
-    @abstractmethod
-    def _fit(self, params, scores):
+    # def _init_meta_model(self):
+    #     if self._MODEL_KWARGS:
+    #         self._model_kwargs = self._MODEL_KWARGS.copy()
+    #     else:
+    #         self._model_kwargs = dict()
+
+    def _fit(self, trials, scores):
         """Process params and scores and fit internal meta-model.
 
         Args:
@@ -27,9 +37,9 @@ class BaseMetaModel(metaclass=ABCMeta):
             scores (array-like):
                 2D array-like with shape ``(n_trials, 1)``.
         """
-        pass
+        self._init_model()
+        self._model.fit(trials, scores)
 
-    @abstractmethod
     def _predict(self, candidates):
         """Predict performance for candidate params under this meta-model.
 
@@ -38,9 +48,9 @@ class BaseMetaModel(metaclass=ABCMeta):
 
         Args:
             candidates (array-like):
-                2D array-like with shape ``(n_cadidates, n_params)``.
+                2D array-like with shape ``(num_cadidates, num_params)``.
         Returns:
             predictions (array-like):
-                2D array-like with shape ``(n_candidates, n_outputs)``.
+                2D array-like with shape ``(num_candidates, num_outputs)``.
         """
-        pass
+        return np.array(self._model.predict(candidates))

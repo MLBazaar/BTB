@@ -29,11 +29,12 @@ class BaseTuner:
             Instance of a tunable class containing hyperparameters to be tuned.
     """
 
-    def __init__(self, tunable, **kwargs):
+    def __init__(self, tunable, maximize=True):
         self.tunable = tunable
         self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float)
+        self._trials_set = set()
         self.scores = np.empty((0, 1), dtype=np.float)
-        self._kwargs = kwargs
+        self.maximize = maximize
 
     def _check_proposals(self, num_proposals):
         """Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.
@@ -58,20 +59,19 @@ class BaseTuner:
                 'amount of combinations.'.format(self.tunable.cardinality)
             )
 
-        trials_set = set(list(map(tuple, self.trials)))
-
-        if len(trials_set) == self.tunable.cardinality:
+        tried = len(self._trials_set)
+        if tried == self.tunable.cardinality:
             raise ValueError(
                 'All of the possible combinations where recorded. Use ``allow_duplicates=True``'
                 'to keep generating combinations.'
             )
 
-        if len(trials_set) + num_proposals > self.tunable.cardinality:
+        if tried + num_proposals > self.tunable.cardinality:
             raise ValueError(
                 'The maximum amount of new proposed combinations will exceed the amount of'
                 'possible combinations, either use ``num_proposals={}`` to generate the remaining'
                 'combinations or ``allow_duplicates=True`` to keep generating more'
-                'combinations.'.format(self.tunable.cardinality - len(trials_set))
+                'combinations.'.format(self.tunable.cardinality - tried)
             )
 
     def _sample(self, num_proposals, allow_duplicates):
@@ -95,19 +95,15 @@ class BaseTuner:
             return self.tunable.sample(num_proposals)
 
         else:
-            valid_proposals = list()
-            trials_set = set(list(map(tuple, self.trials)))
+            valid_proposals = set()
 
             while len(valid_proposals) < num_proposals:
-                proposed = self.tunable.sample(num_proposals)
-                proposed = list(map(tuple, proposed))
+                proposals = self.tunable.sample(num_proposals)
+                proposals = set(map(tuple, proposals))
 
-                if len(valid_proposals) > 0:
-                    proposed = set(proposed) - set(valid_proposals)
+                valid_proposals.update(proposals - self._trials_set)
 
-                valid_proposals.extend(list(set(proposed) - trials_set))
-
-            return np.asarray(valid_proposals)[:num_proposals]
+            return np.asarray(list(valid_proposals))[:num_proposals]
 
     @abstractmethod
     def _propose(self, num_proposals, allow_duplicates):
@@ -242,13 +238,33 @@ class BaseTuner:
             raise ValueError('The amount of trials must be equal to the amount of scores.')
 
         self.trials = np.append(self.trials, trials, axis=0)
+        self._trials_set.update(map(tuple, trials))
         self.scores = np.append(self.scores, scores)
+        self._scores = self.scores if self.maximize else -self.scores
 
 
-class BaseMetaModelTuner(BaseMetaModel, BaseAcquisitionFunction, BaseTuner):
-    def __init__(self, tunable, maximize=True, **kwargs):
-        super().__init__(tunable, **kwargs)
-        self.maximize = maximize
+class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
+
+    def __init__(self, tunable, num_candidates=1000, min_trials=5):
+        self._num_candidates = num_candidates
+        self._min_trials = min_trials
+        BaseTuner.__init__(self, tunable)
+        BaseMetaModel.__init__(self)
+
+    def _propose(self, num_proposals, allow_duplicates):
+        if len(self._trials_set) < self._min_trials:
+            return self._sample(num_proposals, allow_duplicates)
+
+        num_samples = num_proposals * self._num_candidates
+        if not allow_duplicates:
+            remaining = self.tunable.cardinality - len(self._trials_set)
+            num_samples = min(remaining, num_samples)
+
+        proposals = self._sample(num_samples, allow_duplicates)
+        predicted = self._predict(proposals)
+        index = self._acquire(predicted, num_proposals)
+
+        return proposals[index]
 
     def record(self, trials, scores):
         """Record one or more ``trials`` with the associated ``scores`` and re-fit the model.
@@ -291,4 +307,5 @@ class BaseMetaModelTuner(BaseMetaModel, BaseAcquisitionFunction, BaseTuner):
             >>> tuner.record(trials, scores)
         """
         super().record(trials, scores)
-        self._fit(self.trials, self.scores)
+
+        self._fit(self.trials, self._scores)
