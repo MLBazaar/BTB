@@ -18,7 +18,8 @@ class BooleanHyperParam(BaseHyperParam):
         ``{True, False}``
     """
 
-    K = 1
+    dimensions = 1
+    cardinality = 2
 
     def _within_hyperparam_space(self, values):
         if values.dtype is not np.dtype('bool'):
@@ -105,6 +106,6 @@ class BooleanHyperParam(BaseHyperParam):
             array([[1],
                    [1]])
         """
-        sampled = np.random.random((n_samples, self.K))
+        sampled = np.random.random((n_samples, self.dimensions))
 
         return np.round(sampled).astype(int)

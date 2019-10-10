@@ -10,65 +10,78 @@ import numpy as np
 class BaseHyperParam(metaclass=ABCMeta):
     """BaseHyperParam class.
 
-    BaseHyperParam class is abstract representation of a single hyperparameter that can
-    be tuned.
+    A BaseHyperParam is an abstract representation of a single parameter that can be tuned.
 
     Attributes:
-        K (int):
+        dimensions (int):
             Number of dimensions that the hyperparameter uses to be represented in the search
             space.
+        cardinality (int or np.inf):
+            Number of possible values for this hyperparameter.
     """
+    dimensions = 0
+    cardinality = 0
 
     def _to_array(self, values):
-        """Validate values and convert them to ``numpy.array`` with ``self.K`` dimension/s.
+        """Validate and convert ``values`` to a ``numpy.ndarray`` with the expected shape.
 
-        Perform a validation over ``values`` to ensure that it can be converted to a valid
-        hyperparameter space or search space, then convert the given values to a ``numpy.array``
-        of ``self.K`` dimension/s.
+        If ``self.dimensions`` is 1, only scalars, or lists of scalars or 1d arrays or
+        2d arrays with one column are accepted and are transformed to:
+            - scalar: 2d array with a single row and column.
+            - list of scalars: 2d array with the list of scalars as its single column.
+            - 1d array: 2d array with the given 1d array as its only column.
+            - 2d array: the same array is returned unmodified.
+
+        If ``self.dimensions`` is greater than one, only lists of scalars, or lists of lists
+        or 1d arrays or 2d arrays are accepted and are transformed to:
+            - list of scalars: 2d array with the list of scalars as its single row.
+            - 1d array: 2d array with the given 1d array as its only row.
+            - 2d array: the same array is returned unmodified.
 
         Args:
-            values (single value or array-like):
-                A sinlge value or array-like of values to be converted to ``numpy.array``.
+            values (scalar or array-like):
+                A single scalar value or array-like of values to be converted to ``numpy.array``.
 
         Returns:
             numpy.ndarray:
-                Values converted into ``numpy.ndarray`` with shape ``(n, dimensions)`` where
-                ``n`` is the length of values and ``dimensions`` is ``self.K``.
+                Values converted into ``numpy.ndarray`` with shape ``(, self.dimensions)``.
 
         Raises:
             ValueError:
-                A ``ValueError`` is raised if any value from ``values`` is not represented in the
-                ``self.K`` dimension/s or the shape has more than two dimensions.
+                If the given values cannot fit into the expected output shape.
         """
 
-        if self.K > 1:
-            if not isinstance(values, (list, np.ndarray)):
-                raise ValueError(
-                    'Value: {} is not valid for {} dimensions.'.format(values, self.K)
-                )
-
-            elif not isinstance(values[0], (list, np.ndarray)):
-                values = [values]
-
-        else:
-            if isinstance(values, (list, np.ndarray)):
-                values = [
-                    value if isinstance(value, (list, np.ndarray)) else [value]
-                    for value in values
-                ]
-
+        if np.isscalar(values):
+            if self.dimensions == 1:
+                return np.array([[values]])
             else:
-                values = [[values]]
+                raise ValueError('Only lists or numpy.ndarrays are supported for dimensions > 1')
 
-        if not all(len(value) == self.K for value in values):
-            raise ValueError(
-                'All the values must be {} dimension/s.'.format(self.K)
-            )
+        if isinstance(values, list):
+            if not all(np.isscalar(value) for value in values):
+                if not all(isinstance(value, list) for value in values):
+                    raise ValueError('Only list of lists are supported')
+                elif not all(len(value) == self.dimensions for value in values):
+                    raise ValueError('All sublists must have len == dimensions')
 
-        values = np.array(values)
+            values = np.array(values)
 
         if len(values.shape) > 2:
-            raise ValueError('Only shapes of 1 or 2 dimensions are supported.')
+            raise ValueError('Invalid shape: Too many dimensions')
+
+        if self.dimensions == 1:
+            if len(values.shape) == 1:
+                values = values.reshape(-1, 1)
+            elif values.shape[1] != 1:
+                raise ValueError('Invalid shape: Only 1 column is supported if dimensions == 1')
+
+        elif len(values.shape) == 1:
+            if len(values) != self.dimensions:
+                raise ValueError('Number of elements != number of dimensions')
+            elif not all(np.isscalar(value) for value in values):
+                raise ValueError('Numpy arrays must only contain scalars')
+
+            values = values.reshape(1, -1)
 
         return values
 
@@ -125,8 +138,8 @@ class BaseHyperParam(metaclass=ABCMeta):
         hyperparameter values.
 
         Args:
-            values (single value or array-like):
-                Single value or array-like of values to be converted into the hyperparameter space.
+            values (scalar or array-like):
+                Scalar or array-like of values to be converted into the hyperparameter space.
 
         Returns:
             numpy.ndarray:
@@ -135,7 +148,7 @@ class BaseHyperParam(metaclass=ABCMeta):
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
             instantiated with a range from 1 to 4, and it's method ``inverse_transform`` is being
-            called two times with a single value from the search space and an array of two valid
+            called two times with a single scalar from the search space and an array of two valid
             values from the search space.
 
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
@@ -161,7 +174,7 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Returns:
             numpy.ndarray:
-                2D ``numpy.ndarray`` with a shape `(n_samples, self.K)`.
+                2D ``numpy.ndarray`` with a shape `(n_samples, self.dimensions)`.
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
@@ -184,8 +197,8 @@ class BaseHyperParam(metaclass=ABCMeta):
         original hyperparameter space into the normalized search space :math:`[0, 1]^K`.
         The accepted value formats are:
 
-            - Single value:
-                A single value from the original hyperparameter space.
+            - Scalar:
+                A single scalar value from the original hyperparameter space.
             - List:
                 A list composed by values from the original hyperparameter space.
             - 2D array-like:
@@ -193,19 +206,20 @@ class BaseHyperParam(metaclass=ABCMeta):
                 hyperparameter space.
 
         Args:
-            values (single value, list or array-like):
-                Single value, list of values or array-like of values from the hyperparameter space
-                to be converted into the search space.
+            values (scalar, list or array-like):
+                Single scalar value, list of values or array-like of values from the
+                hyperparameter space to be converted into the search space.
 
         Returns:
             numpy.ndarray:
-                2D ``numpy.ndarray`` of shape `(len(values), self.K)` containing the search space
-                values.
+                2D ``numpy.ndarray`` of shape `(len(values), self.dimensions)` containing the
+                search space values.
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
             instantiated with a range from 1 to 4, and it's method ``transform`` is being called
-            three times with a single value, array of two valid values and 2D array of 1 dimension.
+            three times with a single scalar value, an array of two valid values and a 2D array
+            with 1 dimension.
 
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
             >>> ihp = IntHyperParam(min=1, max=4)

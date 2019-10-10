@@ -33,7 +33,8 @@ class CategoricalHyperParam(BaseHyperParam):
         ``sklearn.preprocessing.OneHotEncoder`` with those values.
         """
         self.choices = choices
-        self.K = len(choices)
+        self.dimensions = len(choices)
+        self.cardinality = self.dimensions
         self._encoder = OneHotEncoder(sparse=False)
         self._encoder.fit(np.array(choices).reshape(-1, 1))
 
@@ -96,8 +97,8 @@ class CategoricalHyperParam(BaseHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D ``numpy.ndarray`` of shape `(len(values), self.K)` containing the search space
-                values.
+                2D ``numpy.ndarray`` of shape `(len(values), self.dimensions)` containing the
+                search space values.
 
         Example:
             The example below shows simple usage case where a CategoricalHyperParam is being
@@ -123,8 +124,8 @@ class CategoricalHyperParam(BaseHyperParam):
 
         Returns:
             numpy.ndarray:
-                2D array with shape of `(n_samples, self.K)` with normalized values inside the
-                search space :math:`[0, 1]^K`.
+                2D array with shape of `(n_samples, self.dimensions)` with normalized values
+                inside the search space :math:`[0, 1]^K`.
 
         Example:
             The example below shows simple usage case where a CategoricalHyperParam is being
@@ -137,7 +138,7 @@ class CategoricalHyperParam(BaseHyperParam):
             array([[1, 0, 0],
                    [0, 1, 0]])
         """
-        randomized_values = np.random.random((n_samples, self.K))
+        randomized_values = np.random.random((n_samples, self.dimensions))
         indexes = np.argmax(randomized_values, axis=1)
 
         sampled = [self.choices[index] for index in indexes]

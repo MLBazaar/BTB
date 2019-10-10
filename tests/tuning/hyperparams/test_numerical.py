@@ -251,7 +251,9 @@ class TestFloatHyperParam(TestCase):
 
     @patch('btb.tuning.hyperparams.numerical.np.random.random')
     def test_sample(self, mock_np_random):
-        """Test that the method ``sample`` is being called with `n_samples and `self.K`."""
+        """Test that the method ``sample`` is being called with `n_samples and
+        `self.dimensions`.
+        """
         # setup
         mock_np_random.return_value = np.array([[0.1], [0.2]])
         instance = FloatHyperParam()
@@ -263,7 +265,7 @@ class TestFloatHyperParam(TestCase):
         # assert
         expected_result = np.array([[0.1], [0.2]])
 
-        mock_np_random.assert_called_once_with((n_samples, instance.K))
+        mock_np_random.assert_called_once_with((n_samples, instance.dimensions))
         np.testing.assert_array_equal(result, expected_result)
 
 
@@ -565,7 +567,7 @@ class TestIntHyperParam(TestCase):
         result = instance.sample(n_samples)
 
         # assert
-        mock_np_random.assert_called_once_with((n_samples, instance.K))
+        mock_np_random.assert_called_once_with((n_samples, instance.dimensions))
         mock__inverse_transform.assert_called_once_with(mock_np_random.return_value)
         mock__transform.assert_called_once_with(mock__inverse_transform.return_value)
         self.assertEqual(result, mock__transform.return_value)
