@@ -17,7 +17,11 @@ class GaussianProcessMetaModel(BaseMetaModel):
 
     def _init_model(self):
         """Create an instance of a GaussianProcessRegressor from sklearn."""
-        return GaussianProcessRegressor(normalize_y=True)
+        gp_kwargs = self._get_kwargs(GaussianProcessRegressor)
+        if gp_kwargs.get('normalize_y') is None:
+            gp_kwargs['normalize_y'] = True
+
+        return GaussianProcessRegressor(**gp_kwargs)
 
     def _fit(self, trials, scores):
 
@@ -28,4 +32,9 @@ class GaussianProcessMetaModel(BaseMetaModel):
         self._model.fit(trials, scores)
 
     def _predict(self, candidates):
+
+        if self.STD:
+            y, std = self._model.predict(candidates, return_std=True)
+            return np.array(list(zip(y, std)))
+
         return np.array(self._model.predict(candidates))

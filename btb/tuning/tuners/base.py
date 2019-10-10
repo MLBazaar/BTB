@@ -29,10 +29,11 @@ class BaseTuner:
             Instance of a tunable class containing hyperparameters to be tuned.
     """
 
-    def __init__(self, tunable):
+    def __init__(self, tunable, **kwargs):
         self.tunable = tunable
         self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float)
         self.scores = np.empty((0, 1), dtype=np.float)
+        self._kwargs = kwargs
 
     def _check_proposals(self, num_proposals):
         """Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.
@@ -245,8 +246,8 @@ class BaseTuner:
 
 
 class BaseMetaModelTuner(BaseMetaModel, BaseAcquisitionFunction, BaseTuner):
-    def __init__(self, tunable, maximize=True):
-        super().__init__(tunable)
+    def __init__(self, tunable, maximize=True, **kwargs):
+        super().__init__(tunable, **kwargs)
         self.maximize = maximize
 
     def record(self, trials, scores):
