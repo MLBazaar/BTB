@@ -2,9 +2,9 @@
 
 """Package where the BaseMetaModel class is defined."""
 
-import numpy as np
+from abc import ABCMeta
 
-from abc import ABCMeta, abstractmethod
+import numpy as np
 
 
 class BaseMetaModel(metaclass=ABCMeta):
@@ -21,12 +21,6 @@ class BaseMetaModel(metaclass=ABCMeta):
             model_kwargs.update(self._model_kwargs)
 
         self._model = self._MODEL_CLASS(**model_kwargs)
-
-    # def _init_meta_model(self):
-    #     if self._MODEL_KWARGS:
-    #         self._model_kwargs = self._MODEL_KWARGS.copy()
-    #     else:
-    #         self._model_kwargs = dict()
 
     def _fit(self, trials, scores):
         """Process params and scores and fit internal meta-model.

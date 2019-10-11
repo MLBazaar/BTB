@@ -3,8 +3,8 @@
 """Package where the GausianProcessMetaModel class is defined."""
 
 import numpy as np
-from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.gaussian_process import GaussianProcessRegressor
 
 from btb.tuning.metamodels.base import BaseMetaModel
 

@@ -123,7 +123,7 @@ class BaseTuner:
         """
         pass
 
-    def propose(self, num_proposals=1, allow_duplicates=False):
+    def propose(self, num_proposals=1, allow_duplicates=False, return_scores=False):
         """Propose (one or more) new hyperparameter configurations.
 
         Validate that the amount of proposals requested is valid when ``allow_duplicates`` is
@@ -183,12 +183,23 @@ class BaseTuner:
         if not allow_duplicates:
             self._check_proposals(num_proposals)
 
-        proposed = self._propose(num_proposals, allow_duplicates)
+        proposed = self._propose(num_proposals, allow_duplicates, return_scores)
+        if return_scores:
+            if isinstance(proposed, tuple):
+                proposed, scores = proposed
+            else:
+                scores = np.array([np.nan] * len(proposed))
+
         hyperparameters = self.tunable.inverse_transform(proposed)
         hyperparameters = hyperparameters.to_dict(orient='records')
 
         if num_proposals == 1:
             hyperparameters = hyperparameters[0]
+            if return_scores:
+                scores = scores[0]
+
+        if return_scores:
+            return hyperparameters, scores
 
         return hyperparameters
 
@@ -245,13 +256,14 @@ class BaseTuner:
 
 class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
 
-    def __init__(self, tunable, num_candidates=1000, min_trials=5):
+    def __init__(self, tunable, num_candidates=1000, min_trials=2, scale=10):
         self._num_candidates = num_candidates
         self._min_trials = min_trials
+        self._scale = scale
         BaseTuner.__init__(self, tunable)
         BaseMetaModel.__init__(self)
 
-    def _propose(self, num_proposals, allow_duplicates):
+    def _propose(self, num_proposals, allow_duplicates, return_scores=False):
         if len(self._trials_set) < self._min_trials:
             return self._sample(num_proposals, allow_duplicates)
 
@@ -261,8 +273,11 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
             num_samples = min(remaining, num_samples)
 
         proposals = self._sample(num_samples, allow_duplicates)
-        predicted = self._predict(proposals)
+        predicted = self._predict(proposals * self._scale)
         index = self._acquire(predicted, num_proposals)
+
+        if return_scores:
+            return proposals[index], predicted[index, 0]
 
         return proposals[index]
 
@@ -307,5 +322,4 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
             >>> tuner.record(trials, scores)
         """
         super().record(trials, scores)
-
-        self._fit(self.trials, self._scores)
+        self._fit(self.trials * self._scale, self._scores)
