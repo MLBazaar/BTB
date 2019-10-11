@@ -27,6 +27,9 @@ class BaseTuner:
     Args:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
+        maximize (bool):
+            If ``True`` the model will understand that the score bigger is better, if ``False``
+            the smaller is better.
     """
 
     def __init__(self, tunable, maximize=True):
@@ -245,6 +248,35 @@ class BaseTuner:
 
 
 class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
+    """BaseMetaModelTuner class.
+
+    BaseMetaModelTuner class is the abstract representation of a tuner that is based
+    on a model and an ``AcquisitionFunction``. This model will be try to `predict`
+    the score that will be obtained with the proposed parameters by being trained
+    over the ``self.trials`` and ``self.scores`` recorded by the user.
+
+    Attributes:
+        tunable (btb.tuning.tunable.Tunable):
+            Instance of a tunable class containing hyperparameters to be tuned.
+        trials (numpy.ndarray):
+            A ``numpy.ndarray`` with shape ``(n, self.tunable.dimensions)`` where ``n`` is the
+            number of trials recorded.
+        scores (numpy.ndarray):
+            A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of scores recorded.
+
+    Args:
+        tunable (btb.tuning.tunable.Tunable):
+            Instance of a tunable class containing hyperparameters to be tuned.
+        maximize (bool):
+            If ``True`` the model will understand that the score bigger is better, if ``False``
+            the smaller is better.
+        min_trials (int):
+            Number of recorded ``trials`` needed to perform a fitting over the model.
+            Defaults to 2.
+        scale (int):
+            Scaling to be performed over the ``self.trials`` and ``predictions`` generated.
+            Defaults to 10.
+    """
 
     def __init__(self, tunable, num_candidates=1000, min_trials=2, scale=10):
         self._num_candidates = num_candidates
@@ -273,8 +305,8 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
 
         Records one or more ``trials`` with the associated ``scores`` to it. The amount of trials
         must be equal to the amount of scores recived and vice versa. Once recorded, the ``model``
-        is being fitted with ``self.trials`` and ``self.scores`` that contain any previous records
-        and the ones that where just recorded.
+        is being fitted with ``self.trials`` scaled by ``self._scale`` and ``self.scores`` that
+        contain any previous records and the ones that where just recorded.
 
         Args:
             trials (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
