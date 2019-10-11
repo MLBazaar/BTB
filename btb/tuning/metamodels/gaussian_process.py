@@ -3,7 +3,6 @@
 """Package where the GausianProcessMetaModel class is defined."""
 
 import numpy as np
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
 
 from btb.tuning.metamodels.base import BaseMetaModel
@@ -23,12 +22,3 @@ class GaussianProcessMetaModel(BaseMetaModel):
     def _predict(self, candidates):
         predictions = self._model.predict(candidates, return_std=True)
         return np.column_stack(predictions)
-
-
-class RandomForestMetaModel(BaseMetaModel):
-    _MODEL_CLASS = RandomForestRegressor
-    _MODEL_KWARGS = {'n_estimators': 100}
-
-    def _predict(self, candidates):
-        predictions = self._model.predict(candidates)
-        return np.column_stack([predictions, np.zeros(len(predictions))])
