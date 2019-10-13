@@ -28,8 +28,8 @@ class BaseTuner:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         maximize (bool):
-            If ``True`` the model will understand that the score bigger is better, if ``False``
-            the smaller is better.
+            If ``True`` the scores are interpreted as bigger is better, if ``False`` the smaller
+            is better.
     """
 
     def __init__(self, tunable, maximize=True):
@@ -46,11 +46,9 @@ class BaseTuner:
             ValueError:
                 A ``ValueError`` exception is being produced if the amount of requested proposals
                 is bigger than the possible combinations and ``allow_duplicates`` is ``False``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
@@ -131,7 +129,7 @@ class BaseTuner:
 
         Validate that the amount of proposals requested is valid when ``allow_duplicates`` is
         ``False`` and raise an exception in case there is any missmatch between ``num_proposals``,
-        ``self.trials`` and ``self.tunable.cardinality``.
+        unique ``self.trials`` and ``self.tunable.cardinality``.
         Call the implemented ``_propose`` method and convert the returned data in to hyperparameter
         space values.
 
@@ -152,11 +150,9 @@ class BaseTuner:
             ValueError:
                 A ``ValueError`` exception is being produced if the amount of requested proposals
                 is bigger than the possible combinations and ``allow_duplicates`` is ``False``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.

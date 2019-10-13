@@ -1,14 +1,16 @@
+# -*- coding: utf-8 -*-
 
+"""Package where the tuners based on GaussianProcessMetaModel are defined."""
+
+from btb.tuning.acquisition.expected_improvement import ExpectedImprovementFunction
 from btb.tuning.acquisition.numpyargmax import NumpyArgMaxFunction
 from btb.tuning.metamodels.gaussian_process import GaussianProcessMetaModel
 from btb.tuning.tuners.base import BaseMetaModelTuner
 
 
-class GaussianProcessTuner(GaussianProcessMetaModel, NumpyArgMaxFunction, BaseMetaModelTuner):
+class GPTuner(GaussianProcessMetaModel, NumpyArgMaxFunction, BaseMetaModelTuner):
     pass
 
 
-class GaussianProcessAlphaTuner(GaussianProcessMetaModel, NumpyArgMaxFunction, BaseMetaModelTuner):
-    def __init__(self, tunable, alpha=0.1, num_candidates=1000):
-        super().__init__(tunable, num_candidates)
-        self._model_kwargs = {'alpha': alpha}
+class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementFunction, BaseMetaModelTuner):
+    pass
