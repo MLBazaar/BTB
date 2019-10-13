@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from btb.tuning.tuners.gaussian_process import GaussianProcessTuner
+from btb.tuning.tuners.gaussian_process import GPTuner
 
 
 class TestGaussianProcessTuner(TestCase):
@@ -16,7 +16,7 @@ class TestGaussianProcessTuner(TestCase):
         instance = MagicMock()
 
         # run
-        instance = GaussianProcessTuner(MagicMock())
+        instance = GPTuner(MagicMock())
 
         # assert
         assert instance._MODEL_CLASS == GaussianProcessRegressor
