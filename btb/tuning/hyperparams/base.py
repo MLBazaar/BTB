@@ -155,8 +155,8 @@ class BaseHyperParam(metaclass=ABCMeta):
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
             instantiated with a range from 1 to 4, and it's method ``inverse_transform`` is being
-            called two times with a single scalar from the search space and an array of two valid
-            values from the search space.
+            called two times with a scalar from the search space and an array of two valid values
+            from the search space.
 
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
             >>> ihp = IntHyperParam(min=1, max=4)
