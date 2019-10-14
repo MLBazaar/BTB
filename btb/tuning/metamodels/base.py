@@ -8,6 +8,24 @@ import numpy as np
 
 
 class BaseMetaModel(metaclass=ABCMeta):
+    """BaseMetaModel class.
+
+    BaseMetaModel class is an abstract representation of a ``MetaModel`` that after being
+    fitted can predict the score that is being expected to be obtained with the hyperparameter
+    configuration proposed.
+
+    Attributes:
+        _MODEL_CLASS (type):
+            Class to be instantiated and to be fited and used to generate predictions. This
+            attribute must be overriden by the child class in order to create an actual model.
+        _MODEL_KWARGS (dict):
+            Dictionary with the default ``kwargs`` to be given for the ``self._MODEL_CLASS``.
+        _model_kwargs (dict):
+            A dictionary that is used during instantiation of the ``BaseMetaModelTuner`` in
+            order to be able to give or set arguments for the model.
+        _model (object):
+            Instance of ``self._MODEL_CLASS``, defaults to ``None``.
+    """
 
     _MODEL_CLASS = None
     _MODEL_KWARGS = None
@@ -15,7 +33,11 @@ class BaseMetaModel(metaclass=ABCMeta):
     _model = None
 
     def _init_model(self):
-        """Create an instance of a self._MODEL_CLASS."""
+        """Create an instance of a ``self._MODEL_CLASS``.
+
+        Generate ``self._model`` by using the corresponding ``kwargs`` for
+        ``self._MODEL_CLASS`` provided by the user and ``self._MODEL_KWARGS``.
+        """
         model_kwargs = self._MODEL_KWARGS.copy() if self._MODEL_KWARGS else dict()
         if self._model_kwargs:
             model_kwargs.update(self._model_kwargs)
@@ -23,22 +45,26 @@ class BaseMetaModel(metaclass=ABCMeta):
         self._model = self._MODEL_CLASS(**model_kwargs)
 
     def _fit(self, trials, scores):
-        """Process params and scores and fit internal meta-model.
+        """Fit the internal meta-model.
+
+        Create a new instance of ``self._META_CLASS`` and fit it over ``trials`` and ``scores``.
 
         Args:
             params (array-like):
-                2D array-like with shape ``(n_trials, n_params)``.
+                2D array-like with shape ``(len(trials), n_params)``.
             scores (array-like):
-                2D array-like with shape ``(n_trials, 1)``.
+                Array-like with shape ``(len(trials), 1)``.
         """
         self._init_model()
         self._model.fit(trials, scores)
 
     def _predict(self, candidates):
-        """Predict performance for candidate params under this meta-model.
+        """Predict performance for given candidates.
 
-        Depending on the meta-model, the predictions could be point predictions or could also
-        include a standard deviation at that point (like with a Gaussian Process meta-model).
+        Predict the performance for the given candidates using the ``self._META_CLASS`` instance
+        and it's method ``predict``. Depending on the meta-model, the predictions could be point
+        predictions or could also include a standard deviation at that point (like with a
+        Gaussian Process meta-model).
 
         Args:
             candidates (array-like):

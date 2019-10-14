@@ -11,13 +11,22 @@ from btb.tuning.metamodels.base import BaseMetaModel
 class GaussianProcessMetaModel(BaseMetaModel):
     """GaussianProcessMetaModel class.
 
-    Create an instance of ``GaussianProcessRegressor`` from the ``sklearn.gaussian_process``
-    package.
+    This class is responsible to create a ``GaussianProcessRegressor`` from the
+    ``sklearn.gaussian_process`` package.
+
+    Attributes:
+        _MODEL_KWARGS (dict):
+            Dictionary with the default ``kwargs`` for the ``GaussianProcessRegressor``
+            instantiation.
+        _MODEL_CLASS (type):
+            Class to be instantiated and used for the ``self._model`` instantiation. In
+            this case ``sklearn.gaussian_process.GaussainProcessRegressor``
     """
+    _MODEL_CLASS = GaussianProcessRegressor
+
     _MODEL_KWARGS = {
         'normalize_y': True
     }
-    _MODEL_CLASS = GaussianProcessRegressor
 
     def _predict(self, candidates):
         predictions = self._model.predict(candidates, return_std=True)

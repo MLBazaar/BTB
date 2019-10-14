@@ -409,6 +409,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance.trials = np.array([2])
         instance._scale = 10
         instance._scores = 1
+        instance._min_trials = 1
 
         # run
         BaseMetaModelTuner.record(instance, 1, 1)

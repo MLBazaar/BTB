@@ -5,10 +5,10 @@ from unittest.mock import MagicMock
 
 import numpy as np
 
-from btb.tuning.acquisition.numpyargmax import NumpyArgMaxFunction
+from btb.tuning.acquisition.numpyargsort import NumpyArgSortFunction
 
 
-class TestNumpyArgMaxFunction(TestCase):
+class TestNumpyArgSortFunction(TestCase):
 
     def test__acquire(self):
         # setup
@@ -16,7 +16,7 @@ class TestNumpyArgMaxFunction(TestCase):
         candidates = np.array([[1, 2]])
 
         # assert
-        result = NumpyArgMaxFunction._acquire(instance, candidates)
+        result = NumpyArgSortFunction._acquire(instance, candidates)
 
         # assert
         np.testing.assert_array_equal(result, np.array([0]))
@@ -27,7 +27,7 @@ class TestNumpyArgMaxFunction(TestCase):
         candidates = np.array([[1, 1], [2, 2], [3, 3], [4, 4]])
 
         # assert
-        result = NumpyArgMaxFunction._acquire(instance, candidates, num_candidates=2)
+        result = NumpyArgSortFunction._acquire(instance, candidates, num_candidates=2)
 
         # assert
         np.testing.assert_array_equal(result, np.array([3, 2]))
@@ -38,7 +38,7 @@ class TestNumpyArgMaxFunction(TestCase):
         candidates = np.array([1, 2, 3])
 
         # assert
-        result = NumpyArgMaxFunction._acquire(instance, candidates, num_candidates=1)
+        result = NumpyArgSortFunction._acquire(instance, candidates, num_candidates=1)
 
         # assert
         np.testing.assert_array_equal(result, np.array([2]))

@@ -125,7 +125,7 @@ class BaseTuner:
         pass
 
     def propose(self, num_proposals=1, allow_duplicates=False):
-        """Propose (one or more) new hyperparameter configurations.
+        """Propose one or more new hyperparameter configurations.
 
         Validate that the amount of proposals requested is valid when ``allow_duplicates`` is
         ``False`` and raise an exception in case there is any missmatch between ``num_proposals``,
@@ -195,7 +195,7 @@ class BaseTuner:
     def record(self, trials, scores):
         """Record one or more ``trials`` with the associated ``scores``.
 
-        Records one or more ``trials`` with the associated ``scores`` to it. The amount of trials
+        ``Trials`` are recorded with their associated ``scores``. The amount of trials
         must be equal to the amount of scores recived and vice versa.
 
         Args:
@@ -247,8 +247,8 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
     """BaseMetaModelTuner class.
 
     BaseMetaModelTuner class is the abstract representation of a tuner that is based
-    on a model and an ``AcquisitionFunction``. This model will be try to `predict`
-    the score that will be obtained with the proposed parameters by being trained
+    on a model and an ``AcquisitionFunction``. This model will try to `predict` the
+    score that will be obtained with the proposed parameters by being trained
     over the ``self.trials`` and ``self.scores`` recorded by the user.
 
     Attributes:
@@ -299,7 +299,7 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
     def record(self, trials, scores):
         """Record one or more ``trials`` with the associated ``scores`` and re-fit the model.
 
-        Records one or more ``trials`` with the associated ``scores`` to it. The amount of trials
+        ``Trials`` are recorded with the associated ``scores`` to them. The amount of trials
         must be equal to the amount of scores recived and vice versa. Once recorded, the ``model``
         is being fitted with ``self.trials`` scaled by ``self._scale`` and ``self.scores`` that
         contain any previous records and the ones that where just recorded.
@@ -337,4 +337,5 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
             >>> tuner.record(trials, scores)
         """
         super().record(trials, scores)
-        self._fit(self.trials * self._scale, self._scores)
+        if len(self.trials) >= self._min_trials:
+            self._fit(self.trials * self._scale, self._scores)

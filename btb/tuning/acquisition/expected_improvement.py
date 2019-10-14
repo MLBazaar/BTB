@@ -5,10 +5,10 @@
 import numpy as np
 from scipy.stats import norm
 
-from btb.tuning.acquisition.numpyargmax import NumpyArgMaxFunction
+from btb.tuning.acquisition.numpyargsort import NumpyArgSortFunction
 
 
-class ExpectedImprovementFunction(NumpyArgMaxFunction):
+class ExpectedImprovementFunction(NumpyArgSortFunction):
 
     def _acquire(self, candidates, num_candidates=1):
         Phi = norm.cdf
