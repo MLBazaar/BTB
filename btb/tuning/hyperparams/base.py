@@ -27,15 +27,22 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         If ``self.dimensions`` is 1, only scalars, or lists of scalars or 1d arrays or
         2d arrays with one column are accepted and are transformed to:
+
             - scalar: 2d array with a single row and column.
+
             - list of scalars: 2d array with the list of scalars as its single column.
+
             - 1d array: 2d array with the given 1d array as its only column.
+
             - 2d array: the same array is returned unmodified.
 
         If ``self.dimensions`` is greater than one, only lists of scalars, or lists of lists
         or 1d arrays or 2d arrays are accepted and are transformed to:
+
             - list of scalars: 2d array with the list of scalars as its single row.
+
             - 1d array: 2d array with the given 1d array as its only row.
+
             - 2d array: the same array is returned unmodified.
 
         Args:
