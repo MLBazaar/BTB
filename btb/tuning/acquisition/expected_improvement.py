@@ -21,5 +21,4 @@ class ExpectedImprovementFunction(NumpyArgMaxFunction):
 
         ei = sigma * (z * Phi(z) + N(z))
 
-        ei = np.column_stack((ei, np.zeros(len(ei))))
-        return super()._acquire(candidates, num_candidates)
+        return super()._acquire(ei, num_candidates)

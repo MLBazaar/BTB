@@ -31,3 +31,14 @@ class TestNumpyArgMaxFunction(TestCase):
 
         # assert
         np.testing.assert_array_equal(result, np.array([3, 2]))
+
+    def test__acquire_candidates_shape_one(self):
+        # setup
+        instance = MagicMock()
+        candidates = np.array([1, 2, 3])
+
+        # assert
+        result = NumpyArgMaxFunction._acquire(instance, candidates, num_candidates=1)
+
+        # assert
+        np.testing.assert_array_equal(result, np.array([2]))

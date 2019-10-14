@@ -9,6 +9,6 @@ from btb.tuning.acquisition.base import BaseAcquisitionFunction
 class NumpyArgMaxFunction(BaseAcquisitionFunction):
 
     def _acquire(self, candidates, num_candidates=1):
-        scores = candidates[:, 0]
+        scores = candidates if len(candidates.shape) == 1 else candidates[:, 0]
         sorted_scores = list(reversed(np.argsort(scores)))
         return sorted_scores[:num_candidates]
