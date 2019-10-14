@@ -201,6 +201,37 @@ Once this is done, run of the following commands:
 
     make release-major
 
+Release Candidates
+~~~~~~~~~~~~~~~~~~
+
+Sometimes it is necessary or convenient to upload a release candidate to PyPi as a pre-release,
+in order to make some of the new features available for testing on other projects before they
+are included in an actual full-blown release.
+
+In order to perform such an action, you can execute::
+
+    make release-candidate
+
+This will perform the following actions:
+
+1. Build and upload the current version to PyPi as a pre-release, with the format ``X.Y.Z.devN``
+
+2. Bump the current version to the next release candidate, ``X.Y.Z.dev(N+1)``
+
+After this is done, the new pre-release can be installed by including the ``dev`` section in the
+dependency specification, either in ``setup.py``::
+
+    install_requires = [
+        ...
+        'btb>=X.Y.Z.dev',
+        ...
+    ]
+
+or in command line::
+
+    pip install 'btb>=X.Y.Z.dev'
+
+
 .. _GitHub issues page: https://github.com/HDI-Project/BTB/issues
 .. _Travis Build Status page: https://travis-ci.org/HDI-Project/BTB/pull_requests
 .. _Google docstrings style: https://google.github.io/styleguide/pyguide.html?showone=Comments#Comments

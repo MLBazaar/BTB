@@ -55,7 +55,7 @@ development_requires = [
     'sphinx_rtd_theme>=0.2.4',
 
     # style check
-    'flake8>=3.5.0',
+    'flake8>=3.7.7',
     'isort>=4.3.4',
 
     # fix style issues
@@ -103,6 +103,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.0-dev',
+    version='0.3.0.dev0',
     zip_safe=False,
 )

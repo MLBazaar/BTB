@@ -49,8 +49,8 @@ clean-pyc: ## remove Python file artifacts
 
 .PHONY: clean-docs
 clean-docs: ## remove previously built docs
-	rm -f docs/modules.rst
-	$(MAKE) -C docs clean
+	rm -f docs/api/*.rst
+	-$(MAKE) -C docs clean 2>/dev/null  # this fails if sphinx is not yet installed
 
 .PHONY: clean-coverage
 clean-coverage: ## remove coverage artifacts
