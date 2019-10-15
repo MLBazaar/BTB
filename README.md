@@ -103,7 +103,7 @@ To instantiate a ``Tuner`` all we need is a ``Tunable`` class with a collection 
 ``hyperparameters``.
 
 ``` python
->>> from btb.tuning.tunable import Tunable
+>>> from btb.tuning import Tunable
 >>> from btb.tuning.tuners import GPTuner
 >>> from btb.tuning.hyperparams import IntHyperParam
 >>> hyperparams = {
