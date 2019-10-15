@@ -223,13 +223,13 @@ dependency specification, either in ``setup.py``::
 
     install_requires = [
         ...
-        'btb>=X.Y.Z.dev',
+        'baytune>=X.Y.Z.dev',
         ...
     ]
 
 or in command line::
 
-    pip install 'btb>=X.Y.Z.dev'
+    pip install 'baytune>=X.Y.Z.dev'
 
 
 .. _GitHub issues page: https://github.com/HDI-Project/BTB/issues
