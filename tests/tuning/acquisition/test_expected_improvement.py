@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
 
 import numpy as np
 
@@ -10,24 +9,32 @@ from btb.tuning.acquisition.expected_improvement import ExpectedImprovementAcqui
 
 class TestExpectedImprovementAcquisition(TestCase):
 
-    @patch('btb.tuning.acquisition.expected_improvement.super')
-    @patch('btb.tuning.acquisition.expected_improvement.norm')
-    def test__acquire(self, mock_norm, mock_super):
-        # setup
-        instance = MagicMock()
-        instance._scores = np.array([1, 2])
-        instance.maximize = True
-        candidates = np.array([3, 4])
-        mock_super.return_value._acquire.return_value = np.array([0])
-        mock_norm.cdf.return_value = 1
-        mock_norm.pdf.return_value = 1
+    def test__acquire(self):
+        # run
+        instance = ExpectedImprovementAcquisition()
+        instance._scores = np.array([0.5, 0.6, 0.7])
+
+        predictions = np.array([
+            [0.8, 1],
+            [0.9, 2]
+        ])
+        best = instance._acquire(predictions)
 
         # assert
-        result = ExpectedImprovementAcquisition._acquire(instance, candidates)
+        assert best == [1]
+
+    def test__acquire_n_candidates(self):
+        # run
+        instance = ExpectedImprovementAcquisition()
+        instance._scores = np.array([0.5, 0.9, 0.7, 0.8])
+
+        predictions = np.array([
+            [0.1, 1],
+            [0.9, 9],
+            [0.7, 3],
+            [0.75, 4]
+        ])
+        best = instance._acquire(predictions, 2)
 
         # assert
-        mock_norm.cdf.assert_called_once_with(0.25)
-        mock_norm.pdf.assert_called_once_with(0.25)
-        mock_super.return_value._acquire.assert_called_once_with(np.array([5]), 1)
-
-        np.testing.assert_array_equal(result, np.array([0]))
+        assert best == [1, 3]
