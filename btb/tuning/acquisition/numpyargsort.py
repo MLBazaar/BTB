@@ -11,5 +11,6 @@ class NumpyArgSortFunction(BaseAcquisitionFunction):
 
     def _acquire(self, candidates, num_candidates=1):
         scores = candidates if len(candidates.shape) == 1 else candidates[:, 0]
-        sorted_scores = list(reversed(np.argsort(scores)))
+        sorted_scores = np.argsort(scores)
+        sorted_scores = list(reversed(sorted_scores)) if self.maximize else list(sorted_scores)
         return sorted_scores[:num_candidates]
