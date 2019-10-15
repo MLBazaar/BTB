@@ -3,66 +3,25 @@
 <i>An open source project from Data to AI Lab at MIT.</i>
 </p>
 
+![](https://raw.githubusercontent.com/HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png)
+
+A simple, extensible backend for developing auto-tuning systems.
+
 [![PyPi Shield](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
 [![Travis CI Shield](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
 [![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
 
-<br />
 
-![](https://raw.githubusercontent.com/HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png)
-
-<br />
-
-- License: MIT
-- Documentation: https://hdi-project.github.io/BTB
-- Homepage: https://github.com/hdi-project/BTB
+* Free software: MIT license
+* Documentation: https://HDI-Project.github.io/BTB
+* Homepage: https://github.com/HDI-Project/BTB
 
 # Overview
 
-**BTB** is a Python library that allows a simple, extensible backend for developing auto-tuning
-systems such as AutoML systems.
+Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
 
-**BTB** can be used in any `objective function` which has as an input `n` number of parameters
-that can change their value in order to obtain a different score. In machine learning, this also
-applies to the `hyperparameters` that the models are used during instantiation.
-
-# Concepts
-
-Before diving into the software usage, we briefly explain some concepts and terminology.
-
-## Hyperparameters
-
-Hyperparameters  are variables that affect an `objective function`. We can find the following
-types of hyperparameters in **BTB**:
-
-- Numerical Hyperparameters: These hyperparameters consist of a single value which has to be a
-number within a defined range.
-- Boolean Hyperparameters: These hyperparameters consist of a single value which can be either
-`True` or `False`.
-- Categorical Hyperparameters: These hyperparameters consist of a single value which has to be
-taken from a list of valid choices.
-
-## Tunable
-
-Tunable is designed to work with a collection of hyperparameters that need to be tuned as a
-whole, at once.
-
-## Tuners
-
-Tuners are specifically designed to speed up the process of selecting the optimal `hyperparameter`
-values for a specific `objective function`. This class works with a `tunable` object in order
-to generate new proposals and learn from them, saving fitting time by predicting the score for
-the proposed configurations and applying an `AcquisitionFunction` over those predictions.
-
-## Selector
-
-Selectors apply multiple strategies to decide which `tuner` train and test next based on how well
-they have been performing in the previous test runs. This is an application of what is called
-the Multi-armed Bandit Problem.
-
-The process works by letting know the selector which `tuners` have been already tested
-and which scores they have obtained, and letting it decide which `tuner` to test next.
+*BTB is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).*
 
 # Install
 
@@ -120,119 +79,79 @@ for development.
 Please head to the [Contributing Guide](https://HDI-Project.github.io/BTB/contributing.html#get-started)
 for more details about this process.
 
-
 # Quickstart
-
-In this short series of tutorials we will guide you through a series of steps that will
-help you getting started using **BTB** for tuning your models or `functions`.
-
-## Objective function
-
-Here we will define a simple objective function to use thro this example, it's a well known
-[rosenbrock function](https://en.wikipedia.org/wiki/Rosenbrock_function).
-
-```python
-def rosenbrock(x, y, a=1, b=100):
-    return -1 * ((a - x)**2 + b * (y - x**2)**2)
-```
-
-This function takes as input two `hyperparameters` which are `x` and `y`. This is a maximization
-function where bigger is better and the global optimum is at `x=a` and `y=a**2`.
-
-## Hyperparameters
-
-For our objective function, we will create two `IntHyperParameter` with `min=-10` being this the
-minimum value that we would like to take, and `max=10` being this the maximum value that we would
-like to obtain during the proposals.
-
-Creating a hyperparameter is a simple as importing it's class from `btb.tuning.hyperparams` and
-call it with the desired arguments.
-
-**Bear in mind**  that the `BooleanHyperParam` doesn't require any arguments, while
-`CategoricalHyperParam` requieres of a `list` with the possible choices. The numerical
-hyperparameters can take optionally `min` and `max` to establish their range. For more information
-head over the [hyperparameter's api documentation site](https://HDI-Project.github.io/BTB/api/btb.tuning.hyperparams.html)!
-
-```python
-from btb.tuning.hyperparams import IntHyperParam
-
-xihp = IntHyperParam(min=-10, max=10)
-yihp = IntHyperParam(min=-10, max=10)
-```
-
-## Tunable
-
-In order to create a `Tunable` object, first you have to import the class from `btb.tuning.tunable`
-and then create a dictionary that contains the name of the variable and the instance of the
-`hyperparameter`. In this case we will create a simple dictionary containing the two instances
-that we created before, and the `x` and `y` as keys.
-
-```python
-from btb.tuning.tunable import Tunable
-
-hyperparameters = {
-    'x': xihp,
-    'y': yihp
-}
-
-tunable = Tunable(hyperparameters)
-```
 
 ## Tuners
 
-Once we have our `tunable` we it's time to create a tuner in order to be able to work with this
-object. For this example we will use `UniformTuner`. To import it, simply import it from
-`btb.tuning.tuners`:
+Tuners are specifically designed to speed up the process of selecting the
+optimal hyper parameter values for a specific machine learning algorithm.
 
-```python
-from btb.tuning.tuners import UniformTuner
+`btb.tuning.tuners` defines Tuners: classes with a fit/predict/propose interface for
+suggesting sets of hyperparameters.
 
-tuner = UniformTuner(tunable)
+This is done by following a Bayesian Optimization approach and iteratively:
+
+- letting the tuner propose new sets of hyper parameter
+- fitting and scoring the model with the proposed hyper parameters
+- passing the score obtained back to the tuner
+
+At each iteration the tuner will use the information already obtained to propose
+the set of hyper parameters that it considers that have the highest probability
+to obtain the best results.
+
+To instantiate a ``Tuner`` all we need is a ``Tunable`` class with a collection of
+``hyperparameters``.
+
+``` python
+>>> from btb.tuning import Tunable
+>>> from btb.tuning.tuners import GPTuner
+>>> from btb.tuning.hyperparams import IntHyperParam
+>>> hyperparams = {
+...     'n_estimators': IntHyperParam(min=10, max=500),
+...     'max_depth': IntHyperParam(min=10, max=500),
+... }
+>>> tunable = Tunable(hyperparams)
+>>> tuner = GPTuner(tunable)
 ```
 
-## Propose and record
+Then we perform the following three steps in a loop.
 
-Once we have our `tuner` we can start generating proposals by simply calling it's method `propose`:
+1. Let the Tuner propose a new set of parameters:
 
-```python
-proposed = tuner.propose()
-```
+    ``` python
+    >>> parameters = tuner.propose()
+    >>> parameters
+    {'n_estimators': 297, 'max_depth': 3}
+    ```
 
-If we check what's inside `proposed` we will see that some random values between `-10` and `10`
-where generated for `x` and `y` and are returned as a `dict` in order to be able to use them
-as `kwargs`.
+2. Fit and score a new model using these parameters:
 
-```python
-proposed
+    ``` python
+    >>> model = RandomForestClassifier(**parameters)
+    >>> model.fit(X_train, y_train)
+    RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+                max_depth=3, max_features='auto', max_leaf_nodes=None,
+                min_impurity_decrease=0.0, min_impurity_split=None,
+                min_samples_leaf=1, min_samples_split=2,
+                min_weight_fraction_leaf=0.0, n_estimators=297, n_jobs=1,
+                oob_score=False, random_state=None, verbose=0,
+                warm_start=False)
+    >>> score = model.score(X_test, y_test)
+    >>> score
+    0.77
+    ```
 
-{'x': 2, 'y': 5}
-```
+3. Pass the used parameters and the score obtained back to the tuner:
 
-Now we can use this dictionary to generate a `score` using our objective function:
+    ``` python
+    tuner.record(parameters, score)
+    ```
 
-```python
-score = rosenbrock(**proposed)
-```
+At each iteration, the ``Tuner`` will use the information about the previous tests
+to evaluate and propose the set of parameter values that have the highest probability
+of obtaining the highest score.
 
-After obtaining a `score` we can record the `proposed` parameters with the `score` for them.
-
-```python
-tuner.record(proposed, score)
-```
-
-This will record the trial, and unless we use `allow_duplicates=True` when calling the `propose`
-method of the `tuner` only new configurations will be generated.
-
-## Selectors
-
-Selectors apply multiple strategies to decide which models or families of models to
-train and test next based on how well thay have been performing in the previous test runs.
-This is an application of what is called the Multi-armed Bandit Problem.
-
-`btb.selection` defines Selectors: classes for choosing from a set of discrete options with multi-armed bandits.
-
-The process works by letting know the selector which models have been already tested
-and which scores they have obtained, and letting it decide which model to test next.
+### Selectors
 
 The selectors are intended to be used in combination with tuners in order to find
 out and decide which model seems to get the best results once it is properly fine tuned.
@@ -243,21 +162,26 @@ we want to try out, as well as the ``Selector`` instance.
 ```python
 >>> from sklearn.ensemble import RandomForestClassifier
 >>> from sklearn.svm import SVC
+>>> from btb.selection import UCB1
+>>> from btb.tuning.hyperparams import FloatHyperParam
 >>> models = {
 ...     'RF': RandomForestClassifier,
 ...     'SVC': SVC
 ... }
->>> from btb.selection import UCB1
 >>> selector = UCB1(['RF', 'SVC'])
+>>> rf_hyperparams = {
+...     'n_estimators': IntHyperParam(min=10, max=500),
+...     'max_depth': IntHyperParam(min=3, max=20)
+... }
+>>> rf_tunable = Tunable(rf_hyperparams)
+>>> svc_hyperparams = {
+...     'c': FloatHyperParam(min=0.01, max=10.0),
+...     'gamma': FloatHyperParam(0.000000001, 0.0000001)
+... }
+>>> svc_tunable = Tunable(svc_hyperparams)
 >>> tuners = {
-...     'RF': GP([
-...         ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
-...         ('max_depth', HyperParameter(ParamTypes.INT, [3, 20]))
-...     ]),
-...     'SVC': GP([
-...         ('c', HyperParameter(ParamTypes.FLOAT_EXP, [0.01, 10.0])),
-...         ('gamma', HyperParameter(ParamTypes.FLOAT, [0.000000001, 0.0000001]))
-...     ])
+...     'RF': GPTuner(rf_tunable),
+...     'SVC': GPTuner(svc_tunable)
 ... }
 ```
 
@@ -266,7 +190,7 @@ Then we perform the following steps in a loop.
 1. Pass all the obtained scores to the selector and let it decide which model to test.
 
     ``` python
-    >>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVC': tuners['SVC'].y})
+    >>> next_choice = selector.select({'RF': tuners['RF'].scores, 'SVC': tuners['SVC'].scores})
     >>> next_choice
     'RF'
     ```
@@ -294,7 +218,7 @@ Then we perform the following steps in a loop.
     >>> score = model.score(X_test, y_test)
     >>> score
     0.89
-    >>> tuners[next_choice].add(parameters, score)
+    >>> tuners[next_choice].record(parameters, score)
     ```
 
 ## What's next?
@@ -307,9 +231,7 @@ If you use BTB, please consider citing the following work:
 
 - Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
 
-BibTeX entry:
-
-```bibtex
+``` bibtex
   @MastersThesis{Laura:2018,
     title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
     author = "Laura Gustafson",
@@ -321,9 +243,3 @@ BibTeX entry:
     school = "Massachusetts Institute of Technology",
   }
 ```
-
-# Related Projects
-
-* **ATM**: https://github.com/HDI-Project/ATM
-* **AutoBazaar**: https://github.com/HDI-Project/AutoBazaar
-* **mit-d3m-ta2**: https://github.com/HDI-Project/mit-d3m-ta2
