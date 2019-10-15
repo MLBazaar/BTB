@@ -5,10 +5,10 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 
-from btb.tuning.acquisition.expected_improvement import ExpectedImprovementFunction
+from btb.tuning.acquisition.expected_improvement import ExpectedImprovementAcquisition
 
 
-class TestExpectedImprovementFunction(TestCase):
+class TestExpectedImprovementAcquisition(TestCase):
 
     @patch('btb.tuning.acquisition.expected_improvement.super')
     @patch('btb.tuning.acquisition.expected_improvement.norm')
@@ -23,7 +23,7 @@ class TestExpectedImprovementFunction(TestCase):
         mock_norm.pdf.return_value = 1
 
         # assert
-        result = ExpectedImprovementFunction._acquire(instance, candidates)
+        result = ExpectedImprovementAcquisition._acquire(instance, candidates)
 
         # assert
         mock_norm.cdf.assert_called_once_with(0.25)
