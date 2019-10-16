@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the ExpectedImprovementFunction class is defined."""
+"""Package where the ExpectedImprovementAcquisition class is defined."""
 
 import numpy as np
 from scipy.stats import norm
 
-from btb.tuning.acquisition.numpyargsort import NumpyArgSortFunction
+from btb.tuning.acquisition.argsort import ArgSortAcquisition
 
 
-class ExpectedImprovementFunction(NumpyArgSortFunction):
+class ExpectedImprovementAcquisition(ArgSortAcquisition):
 
     def _acquire(self, candidates, num_candidates=1):
         Phi = norm.cdf
         N = norm.pdf
 
         mu, sigma = candidates.T
-        y_best = np.max(self._scores) if self.maximize else np.min(self._scores)
+        y_best = np.max(self._scores)
 
         z = (mu - y_best) / sigma
 

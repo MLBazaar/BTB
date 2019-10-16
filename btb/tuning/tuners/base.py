@@ -6,8 +6,8 @@ from abc import abstractmethod
 
 import numpy as np
 
-from btb.tuning.acquisition import BaseAcquisitionFunction
-from btb.tuning.metamodels import BaseMetaModel
+from btb.tuning.acquisition.base import BaseAcquisitionFunction
+from btb.tuning.metamodels.base import BaseMetaModel
 
 
 class BaseTuner:
