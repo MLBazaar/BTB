@@ -7,6 +7,10 @@ from abc import ABCMeta, abstractmethod
 
 class BaseAcquisitionFunction(metaclass=ABCMeta):
 
+    def __init_acquisition__(self):
+        """Define the requiered initiation that the acquisition may requiere."""
+        pass
+
     @abstractmethod
     def _acquire(self, candidates, num_candidates):
         """Decide which candidates to return as proposals.

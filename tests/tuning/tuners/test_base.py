@@ -11,7 +11,7 @@ from btb.tuning.tuners.base import BaseMetaModelTuner, BaseTuner
 class TestBaseTuner(TestCase):
     """Test BaseTuner class."""
 
-    def test___init__(self):
+    def test___init__defaults(self):
         # setup
         tunable = MagicMock()
         tunable.dimensions = 2
@@ -26,10 +26,28 @@ class TestBaseTuner(TestCase):
         assert isinstance(instance._trials_set, set)
         assert isinstance(instance.maximize, bool)
 
+        assert instance.maximize
         assert instance.trials.shape == (0, 2)
         assert instance.scores.shape == (0, 1)
         assert instance.trials.dtype == np.float
         assert instance.scores.dtype == np.float
+
+    def test___init__maximize_false(self):
+        # setup
+        tunable = MagicMock()
+        tunable.dimensions = 2
+
+        # run
+        instance = BaseTuner(tunable, False)
+
+        # assert
+        assert isinstance(instance.tunable, MagicMock)
+        assert isinstance(instance.trials, np.ndarray)
+        assert isinstance(instance.scores, np.ndarray)
+        assert isinstance(instance._trials_set, set)
+        assert isinstance(instance.maximize, bool)
+
+        assert not instance.maximize
 
     def test__check_proposals_proposals_gt_cardinality(self):
         """Test that ``ValueError`` is being raised if ``proposals`` is greater than
@@ -215,7 +233,7 @@ class TestBaseTuner(TestCase):
         instance.tunable.transform.return_value = np.array([[1, 0]])
         instance.trials = np.empty((0, 2), dtype=np.float)
         instance._trials_set = set()
-        instance._scores = None
+        instance.normalized_scores = None
         instance.maximize = True
         instance.scores = np.empty((0, 1), dtype=np.float)
 
@@ -228,7 +246,7 @@ class TestBaseTuner(TestCase):
         np.testing.assert_array_equal(instance.trials, np.array([[1, 0]]))
         assert instance._trials_set == set({(1, 0)})
         np.testing.assert_array_equal(instance.scores, np.array([0.1]))
-        np.testing.assert_array_equal(instance._scores, np.array([0.1]))
+        np.testing.assert_array_equal(instance.normalized_scores, np.array([0.1]))
 
     def test_record_list_maximize_false(self):
         """Test that the method record updates the ``trials``  and ``scores``."""
@@ -238,7 +256,7 @@ class TestBaseTuner(TestCase):
         instance.tunable.transform.return_value = np.array([[1, 0]])
         instance.trials = np.empty((0, 2), dtype=np.float)
         instance._trials_set = set()
-        instance._scores = None
+        instance.normalized_scores = None
         instance.maximize = False
         instance.scores = np.empty((0, 1), dtype=np.float)
 
@@ -251,7 +269,7 @@ class TestBaseTuner(TestCase):
         np.testing.assert_array_equal(instance.trials, np.array([[1, 0]]))
         assert instance._trials_set == set({(1, 0)})
         np.testing.assert_array_equal(instance.scores, np.array([0.1]))
-        np.testing.assert_array_equal(instance._scores, np.array([-0.1]))
+        np.testing.assert_array_equal(instance.normalized_scores, np.array([-0.1]))
 
     def test_record_scalar_values(self):
         """Test that the method record performs an update to ``trials`` and ``scores`` when called
@@ -272,7 +290,7 @@ class TestBaseTuner(TestCase):
         np.testing.assert_array_equal(instance.trials, np.array([[1, 0]]))
         assert instance._trials_set == set({(1, 0)})
         np.testing.assert_array_equal(instance.scores, np.array([0.1]))
-        np.testing.assert_array_equal(instance._scores, np.array([0.1]))
+        np.testing.assert_array_equal(instance.normalized_scores, np.array([0.1]))
 
     def test_record_raise_error(self):
         """Test that the method record raises a ``ValueError`` when ``len(trials)`` is different
@@ -290,13 +308,13 @@ class TestBaseTuner(TestCase):
 class TestBaseMetaModelTuner(TestCase):
     """Test BaseMetaModelTuner class."""
 
-    @patch('btb.tuning.tuners.base.BaseMetaModel.__init__')
-    @patch('btb.tuning.tuners.base.BaseTuner.__init__')
-    def test___init___default_values(self, mock_basetuner, mock_basemetamodel):
-
+    @patch('btb.tuning.tuners.base.super')
+    def test___init___default_values(self, mock_super):
         # setup
         tunable = MagicMock()
         instance = MagicMock()
+        instance.__init_metamodel__ = MagicMock()
+        instance.__init_acquisition__ = MagicMock()
 
         # run
         BaseMetaModelTuner.__init__(instance, tunable)
@@ -304,27 +322,27 @@ class TestBaseMetaModelTuner(TestCase):
         # assert
         assert instance._num_candidates == 1000
         assert instance._min_trials == 2
-        assert instance._scale == 10
-        mock_basetuner.assert_called_once_with(instance, tunable)
-        mock_basemetamodel.assert_called_once_with(instance)
+        instance.__init_metamodel__.assert_called_once_with()
+        instance.__init_acquisition__.assert_called_once_with()
 
-    @patch('btb.tuning.tuners.base.BaseMetaModel.__init__')
-    @patch('btb.tuning.tuners.base.BaseTuner.__init__')
-    def test___init___users_values(self, mock_basetuner, mock_basemetamodel):
+    @patch('btb.tuning.tuners.base.super')
+    def test___init___users_values(self, mock_super):
 
         # setup
         tunable = MagicMock()
         instance = MagicMock()
+        instance.__init_metamodel__ = MagicMock()
+        instance.__init_acquisition__ = MagicMock()
 
         # run
-        BaseMetaModelTuner.__init__(instance, tunable, num_candidates=5, min_trials=20, scale=100)
+        BaseMetaModelTuner.__init__(
+            instance, tunable, maximize=False, num_candidates=5, min_trials=20)
 
         # assert
         assert instance._num_candidates == 5
         assert instance._min_trials == 20
-        assert instance._scale == 100
-        mock_basetuner.assert_called_once_with(instance, tunable)
-        mock_basemetamodel.assert_called_once_with(instance)
+        instance.__init_metamodel__.assert_called_once_with()
+        instance.__init_acquisition__.assert_called_once_with()
 
     def test__propose_min_trials_gt__trials_set(self):
         # setup
@@ -345,7 +363,6 @@ class TestBaseMetaModelTuner(TestCase):
         instance = MagicMock()
         instance.tunable.cardinality = 3
         instance._min_trials = 0
-        instance._scale = 2
         instance._num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
@@ -357,7 +374,7 @@ class TestBaseMetaModelTuner(TestCase):
 
         # assert
         instance._sample.assert_called_once_with(10, True)
-        instance._predict.assert_called_once_with(np.array([2]))
+        instance._predict.assert_called_once_with(np.array([1]))
         assert result == 1
 
     def test__propose_min_trials_lt__trials_set_not_allow_duplicates(self):
@@ -365,7 +382,6 @@ class TestBaseMetaModelTuner(TestCase):
         instance = MagicMock()
         instance.tunable.cardinality = 3
         instance._min_trials = 0
-        instance._scale = 2
         instance._num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
@@ -377,7 +393,7 @@ class TestBaseMetaModelTuner(TestCase):
 
         # assert
         instance._sample.assert_called_once_with(2, False)
-        instance._predict.assert_called_once_with(np.array([2]))
+        instance._predict.assert_called_once_with(np.array([1]))
         instance._acquire.assert_called_once_with('predicted', 1)
         assert result == 1
 
@@ -386,7 +402,6 @@ class TestBaseMetaModelTuner(TestCase):
         instance = MagicMock()
         instance.tunable.cardinality = 3
         instance._min_trials = 0
-        instance._scale = 2
         instance._num_candidates = 0
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
@@ -398,7 +413,7 @@ class TestBaseMetaModelTuner(TestCase):
 
         # assert
         instance._sample.assert_called_once_with(0, False)
-        instance._predict.assert_called_once_with(np.array([2]))
+        instance._predict.assert_called_once_with(np.array([1]))
         instance._acquire.assert_called_once_with('predicted', 1)
         assert result == 1
 
@@ -407,8 +422,7 @@ class TestBaseMetaModelTuner(TestCase):
         # setup
         instance = MagicMock()
         instance.trials = np.array([2])
-        instance._scale = 10
-        instance._scores = 1
+        instance.normalized_scores = 1
         instance._min_trials = 1
 
         # run
@@ -416,4 +430,4 @@ class TestBaseMetaModelTuner(TestCase):
 
         # assert
         mock_super.return_value.record.assert_called_once_with(1, 1)
-        instance._fit.assert_called_once_with(np.array([20]), 1)
+        instance._fit.assert_called_once_with(np.array([2]), 1)

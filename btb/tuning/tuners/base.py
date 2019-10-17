@@ -240,7 +240,7 @@ class BaseTuner:
         self.trials = np.append(self.trials, trials, axis=0)
         self._trials_set.update(map(tuple, trials))
         self.scores = np.append(self.scores, scores)
-        self._scores = self.scores if self.maximize else -self.scores
+        self.normalized_scores = self.scores if self.maximize else -self.scores
 
 
 class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
@@ -263,23 +263,22 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
     Args:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
+        num_candidates (int):
+            Number of samples to generate and select the best of it for each proposal.
         maximize (bool):
             If ``True`` the model will understand that the score bigger is better, if ``False``
             the smaller is better.
         min_trials (int):
             Number of recorded ``trials`` needed to perform a fitting over the model.
             Defaults to 2.
-        scale (int):
-            Scaling to be performed over the ``self.trials`` and ``predictions`` generated.
-            Defaults to 10.
     """
 
-    def __init__(self, tunable, num_candidates=1000, min_trials=2, scale=10):
+    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2):
         self._num_candidates = num_candidates
         self._min_trials = min_trials
-        self._scale = scale
-        BaseTuner.__init__(self, tunable)
-        BaseMetaModel.__init__(self)
+        super().__init__(tunable, maximize)
+        self.__init_metamodel__()
+        self.__init_acquisition__()
 
     def _propose(self, num_proposals, allow_duplicates):
         if len(self._trials_set) < self._min_trials:
@@ -291,7 +290,7 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
             num_samples = min(remaining, num_samples)
 
         proposals = self._sample(num_samples, allow_duplicates)
-        predicted = self._predict(proposals * self._scale)
+        predicted = self._predict(proposals)
         index = self._acquire(predicted, num_proposals)
 
         return proposals[index]
@@ -301,8 +300,8 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
 
         ``Trials`` are recorded with the associated ``scores`` to them. The amount of trials
         must be equal to the amount of scores recived and vice versa. Once recorded, the ``model``
-        is being fitted with ``self.trials`` scaled by ``self._scale`` and ``self.scores`` that
-        contain any previous records and the ones that where just recorded.
+        is being fitted with ``self.trials`` and ``self.scores`` that contain any previous records
+        and the ones that where just recorded.
 
         Args:
             trials (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
@@ -338,4 +337,4 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
         """
         super().record(trials, scores)
         if len(self.trials) >= self._min_trials:
-            self._fit(self.trials * self._scale, self._scores)
+            self._fit(self.trials, self.normalized_scores)

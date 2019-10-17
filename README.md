@@ -190,7 +190,10 @@ Then we perform the following steps in a loop.
 1. Pass all the obtained scores to the selector and let it decide which model to test.
 
     ``` python
-    >>> next_choice = selector.select({'RF': tuners['RF'].scores, 'SVC': tuners['SVC'].scores})
+    >>> next_choice = selector.select({
+    ...     'RF': tuners['RF'].normalized_scores,
+    ...     'SVC': tuners['SVC'].normalized_scores
+    ... })
     >>> next_choice
     'RF'
     ```
