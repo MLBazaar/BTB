@@ -191,8 +191,8 @@ Then we perform the following steps in a loop.
 
     ``` python
     >>> next_choice = selector.select({
-    ...     'RF': tuners['RF'].normalized_scores,
-    ...     'SVC': tuners['SVC'].normalized_scores
+    ...     'RF': tuners['RF'].scores,
+    ...     'SVC': tuners['SVC'].scores
     ... })
     >>> next_choice
     'RF'

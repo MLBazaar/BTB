@@ -36,7 +36,7 @@ class BaseTuner:
         self.tunable = tunable
         self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float)
         self._trials_set = set()
-        self.scores = np.empty((0, 1), dtype=np.float)
+        self.raw_scores = np.empty((0, 1), dtype=np.float)
         self.maximize = maximize
 
     def _check_proposals(self, num_proposals):
@@ -239,8 +239,8 @@ class BaseTuner:
 
         self.trials = np.append(self.trials, trials, axis=0)
         self._trials_set.update(map(tuple, trials))
-        self.scores = np.append(self.scores, scores)
-        self.normalized_scores = self.scores if self.maximize else -self.scores
+        self.raw_scores = np.append(self.raw_scores, scores)
+        self.scores = self.raw_scores if self.maximize else -self.raw_scores
 
 
 class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
@@ -249,7 +249,7 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
     BaseMetaModelTuner class is the abstract representation of a tuner that is based
     on a model and an ``AcquisitionFunction``. This model will try to `predict` the
     score that will be obtained with the proposed parameters by being trained
-    over the ``self.trials`` and ``self.scores`` recorded by the user.
+    over the ``self.trials`` and ``self.raw_scores`` recorded by the user.
 
     Attributes:
         tunable (btb.tuning.tunable.Tunable):
@@ -273,12 +273,12 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
             Defaults to 2.
     """
 
-    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2):
+    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2, **kwargs):
         self._num_candidates = num_candidates
         self._min_trials = min_trials
         super().__init__(tunable, maximize)
-        self.__init_metamodel__()
-        self.__init_acquisition__()
+        self.__init_metamodel__(**kwargs)
+        self.__init_acquisition__(**kwargs)
 
     def _propose(self, num_proposals, allow_duplicates):
         if len(self._trials_set) < self._min_trials:
@@ -300,8 +300,8 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
 
         ``Trials`` are recorded with the associated ``scores`` to them. The amount of trials
         must be equal to the amount of scores recived and vice versa. Once recorded, the ``model``
-        is being fitted with ``self.trials`` and ``self.scores`` that contain any previous records
-        and the ones that where just recorded.
+        is being fitted with ``self.trials`` and ``self.raw_scores`` that contain any previous
+        records and the ones that where just recorded.
 
         Args:
             trials (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
@@ -337,4 +337,4 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
         """
         super().record(trials, scores)
         if len(self.trials) >= self._min_trials:
-            self._fit(self.trials, self.normalized_scores)
+            self._fit(self.trials, self.scores)

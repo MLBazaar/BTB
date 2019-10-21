@@ -22,15 +22,15 @@ class TestBaseTuner(TestCase):
         # assert
         assert isinstance(instance.tunable, MagicMock)
         assert isinstance(instance.trials, np.ndarray)
-        assert isinstance(instance.scores, np.ndarray)
+        assert isinstance(instance.raw_scores, np.ndarray)
         assert isinstance(instance._trials_set, set)
         assert isinstance(instance.maximize, bool)
 
         assert instance.maximize
         assert instance.trials.shape == (0, 2)
-        assert instance.scores.shape == (0, 1)
+        assert instance.raw_scores.shape == (0, 1)
         assert instance.trials.dtype == np.float
-        assert instance.scores.dtype == np.float
+        assert instance.raw_scores.dtype == np.float
 
     def test___init__maximize_false(self):
         # setup
@@ -43,7 +43,7 @@ class TestBaseTuner(TestCase):
         # assert
         assert isinstance(instance.tunable, MagicMock)
         assert isinstance(instance.trials, np.ndarray)
-        assert isinstance(instance.scores, np.ndarray)
+        assert isinstance(instance.raw_scores, np.ndarray)
         assert isinstance(instance._trials_set, set)
         assert isinstance(instance.maximize, bool)
 
@@ -233,9 +233,9 @@ class TestBaseTuner(TestCase):
         instance.tunable.transform.return_value = np.array([[1, 0]])
         instance.trials = np.empty((0, 2), dtype=np.float)
         instance._trials_set = set()
-        instance.normalized_scores = None
+        instance.scores = None
         instance.maximize = True
-        instance.scores = np.empty((0, 1), dtype=np.float)
+        instance.raw_scores = np.empty((0, 1), dtype=np.float)
 
         # run
         BaseTuner.record(instance, [1], [0.1])
@@ -245,8 +245,8 @@ class TestBaseTuner(TestCase):
 
         np.testing.assert_array_equal(instance.trials, np.array([[1, 0]]))
         assert instance._trials_set == set({(1, 0)})
+        np.testing.assert_array_equal(instance.raw_scores, np.array([0.1]))
         np.testing.assert_array_equal(instance.scores, np.array([0.1]))
-        np.testing.assert_array_equal(instance.normalized_scores, np.array([0.1]))
 
     def test_record_list_maximize_false(self):
         """Test that the method record updates the ``trials``  and ``scores``."""
@@ -256,9 +256,9 @@ class TestBaseTuner(TestCase):
         instance.tunable.transform.return_value = np.array([[1, 0]])
         instance.trials = np.empty((0, 2), dtype=np.float)
         instance._trials_set = set()
-        instance.normalized_scores = None
+        instance.scores = None
         instance.maximize = False
-        instance.scores = np.empty((0, 1), dtype=np.float)
+        instance.raw_scores = np.empty((0, 1), dtype=np.float)
 
         # run
         BaseTuner.record(instance, [1], [0.1])
@@ -268,8 +268,8 @@ class TestBaseTuner(TestCase):
 
         np.testing.assert_array_equal(instance.trials, np.array([[1, 0]]))
         assert instance._trials_set == set({(1, 0)})
-        np.testing.assert_array_equal(instance.scores, np.array([0.1]))
-        np.testing.assert_array_equal(instance.normalized_scores, np.array([-0.1]))
+        np.testing.assert_array_equal(instance.raw_scores, np.array([0.1]))
+        np.testing.assert_array_equal(instance.scores, np.array([-0.1]))
 
     def test_record_scalar_values(self):
         """Test that the method record performs an update to ``trials`` and ``scores`` when called
@@ -278,7 +278,7 @@ class TestBaseTuner(TestCase):
         # setup
         instance = MagicMock()
         instance.trials = np.empty((0, 2), dtype=np.float)
-        instance.scores = np.empty((0, 1), dtype=np.float)
+        instance.raw_scores = np.empty((0, 1), dtype=np.float)
         instance._trials_set = set()
         instance.tunable.transform.return_value = np.array([[1, 0]])
 
@@ -289,8 +289,8 @@ class TestBaseTuner(TestCase):
         instance.tunable.transform.assert_called_once_with(1)
         np.testing.assert_array_equal(instance.trials, np.array([[1, 0]]))
         assert instance._trials_set == set({(1, 0)})
+        np.testing.assert_array_equal(instance.raw_scores, np.array([0.1]))
         np.testing.assert_array_equal(instance.scores, np.array([0.1]))
-        np.testing.assert_array_equal(instance.normalized_scores, np.array([0.1]))
 
     def test_record_raise_error(self):
         """Test that the method record raises a ``ValueError`` when ``len(trials)`` is different
@@ -336,13 +336,19 @@ class TestBaseMetaModelTuner(TestCase):
 
         # run
         BaseMetaModelTuner.__init__(
-            instance, tunable, maximize=False, num_candidates=5, min_trials=20)
+            instance,
+            tunable,
+            maximize=False,
+            num_candidates=5,
+            min_trials=20,
+            test_kwarg='test'
+        )
 
         # assert
         assert instance._num_candidates == 5
         assert instance._min_trials == 20
-        instance.__init_metamodel__.assert_called_once_with()
-        instance.__init_acquisition__.assert_called_once_with()
+        instance.__init_metamodel__.assert_called_once_with(test_kwarg='test')
+        instance.__init_acquisition__.assert_called_once_with(test_kwarg='test')
 
     def test__propose_min_trials_gt__trials_set(self):
         # setup
@@ -422,7 +428,7 @@ class TestBaseMetaModelTuner(TestCase):
         # setup
         instance = MagicMock()
         instance.trials = np.array([2])
-        instance.normalized_scores = 1
+        instance.scores = 1
         instance._min_trials = 1
 
         # run

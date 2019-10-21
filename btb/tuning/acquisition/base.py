@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod
 
 class BaseAcquisitionFunction(metaclass=ABCMeta):
 
-    def __init_acquisition__(self):
+    def __init_acquisition__(self, **kwargs):
         """Define the requiered initiation that the acquisition may requiere."""
         pass
 

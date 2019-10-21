@@ -32,7 +32,7 @@ class BaseMetaModel(metaclass=ABCMeta):
     _model_kwargs = None
     _model = None
 
-    def __init_metamodel__(self):
+    def __init_metamodel__(self, **kwargs):
         """Define the requiered initiation that the model may requiere."""
         pass
 
