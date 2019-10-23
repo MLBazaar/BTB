@@ -15,7 +15,7 @@ class ExpectedImprovementAcquisition(ArgSortAcquisition):
         N = norm.pdf
 
         mu, sigma = candidates.T
-        y_best = np.max(self._scores)
+        y_best = np.max(self.scores)
 
         z = (mu - y_best) / sigma
 
