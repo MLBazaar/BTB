@@ -26,7 +26,7 @@ class TestExpectedImprovementAcquisition(TestCase):
     def test__acquire_n_candidates(self):
         # run
         instance = ExpectedImprovementAcquisition()
-        instance._scores = np.array([0.5, 0.9, 0.7, 0.8])
+        instance.scores = np.array([0.5, 0.9, 0.7, 0.8])
 
         predictions = np.array([
             [0.1, 1],
