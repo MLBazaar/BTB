@@ -12,7 +12,7 @@ class TestExpectedImprovementAcquisition(TestCase):
     def test__acquire(self):
         # run
         instance = ExpectedImprovementAcquisition()
-        instance._scores = np.array([0.5, 0.6, 0.7])
+        instance.scores = np.array([0.5, 0.6, 0.7])
 
         predictions = np.array([
             [0.8, 1],
