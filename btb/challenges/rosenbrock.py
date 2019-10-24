@@ -12,8 +12,8 @@ class Rosenbrock(Challenge):
         self.a = a
         self.b = b
 
-    @classmethod
-    def get_tunable(cls):
+    @staticmethod
+    def get_tunable():
         x = IntHyperParam(min=-50, max=50)
         y = IntHyperParam(min=-50, max=50)
 

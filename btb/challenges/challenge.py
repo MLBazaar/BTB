@@ -2,19 +2,18 @@
 
 """Package where the Challenge class is defined."""
 
-from abc import ABCMeta, abstractclassmethod, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractstaticmethod
 
 
 class Challenge(metaclass=ABCMeta):
     """Challenge class.
 
-    A Challenge is an abstract representation of a single ``challenge``. This class
-    is ment to be used for benchmark.
+    The Challenge class represents a single ``challenge`` that can be used for benchmark.
     """
 
-    @abstractclassmethod
+    @abstractstaticmethod
     def get_tunable(cls):
-        """Create the hyperparameters and return the tunable created with them.
+        """Create the ``hyperparameters`` and return the ``tunable`` created with them.
 
         Returns:
             ``btb.tuning.Tunable``:
@@ -24,5 +23,9 @@ class Challenge(metaclass=ABCMeta):
 
     @abstractmethod
     def score(self, *args, **kwargs):
-        """Return a score."""
+        """Perform scoring with given ``arguments``.
+
+        This method will score a result with a given configuration, then return the score obtained
+        for those ``arguments``.
+        """
         pass
