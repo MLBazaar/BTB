@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import numpy as np
-
 from btb.tuning.acquisition.base import BaseAcquisition
 
 
