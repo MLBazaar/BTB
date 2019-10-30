@@ -6,7 +6,7 @@ from abc import abstractmethod
 
 import numpy as np
 
-from btb.tuning.acquisition.base import BaseAcquisitionFunction
+from btb.tuning.acquisition.base import BaseAcquisition
 from btb.tuning.metamodels.base import BaseMetaModel
 
 
@@ -243,11 +243,11 @@ class BaseTuner:
         self.scores = self.raw_scores if self.maximize else -self.raw_scores
 
 
-class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
+class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
     """BaseMetaModelTuner class.
 
     BaseMetaModelTuner class is the abstract representation of a tuner that is based
-    on a model and an ``AcquisitionFunction``. This model will try to `predict` the
+    on a model and an ``Acquisition``. This model will try to `predict` the
     score that will be obtained with the proposed parameters by being trained
     over the ``self.trials`` and ``self.raw_scores`` recorded by the user.
 

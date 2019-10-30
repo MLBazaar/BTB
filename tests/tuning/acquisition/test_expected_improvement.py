@@ -21,7 +21,7 @@ class TestExpectedImprovementAcquisition(TestCase):
         best = instance._acquire(predictions)
 
         # assert
-        assert best == [1]
+        np.testing.assert_array_equal(best, np.array([1]))
 
     def test__acquire_n_candidates(self):
         # run
@@ -37,4 +37,4 @@ class TestExpectedImprovementAcquisition(TestCase):
         best = instance._acquire(predictions, 2)
 
         # assert
-        assert best == [1, 3]
+        np.testing.assert_array_equal(best, np.array([1, 3]))

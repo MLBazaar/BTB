@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseAcquisitionFunction class is defined."""
+"""Package where the BaseAcquisition class is defined."""
 
 from abc import ABCMeta, abstractmethod
 
 
-class BaseAcquisitionFunction(metaclass=ABCMeta):
+class BaseAcquisition(metaclass=ABCMeta):
 
     def __init_acquisition__(self, **kwargs):
         """Define the requiered initiation that the acquisition may requiere."""

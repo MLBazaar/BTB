@@ -73,6 +73,10 @@ clean: clean-build clean-pyc clean-test clean-coverage clean-docs ## remove all 
 install: clean-build clean-pyc ## install the package to the active Python's site-packages
 	pip install .
 
+.PHONY: install-examples
+install-examples: clean-build clean-pyc ## install the package and the requiered to run the examples
+	pip install .[examples]
+
 .PHONY: install-test
 install-test: clean-build clean-pyc ## install the package and test dependencies
 	pip install .[test]

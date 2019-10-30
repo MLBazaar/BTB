@@ -3,10 +3,10 @@
 """Package where the ArgSortAcquisition class is defined."""
 import numpy as np
 
-from btb.tuning.acquisition.base import BaseAcquisitionFunction
+from btb.tuning.acquisition.base import BaseAcquisition
 
 
-class ArgSortAcquisition(BaseAcquisitionFunction):
+class ArgSortAcquisition(BaseAcquisition):
     """ArgSortAcquisition class."""
 
     def _acquire(self, candidates, num_candidates=1):
