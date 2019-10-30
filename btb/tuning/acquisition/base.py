@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseAcquisition class is defined."""
-
 from abc import ABCMeta, abstractmethod
 
 
 class BaseAcquisition(metaclass=ABCMeta):
 
     def __init_acquisition__(self, **kwargs):
-        """Define the requiered initiation that the acquisition may requiere."""
         pass
 
     @abstractmethod
-    def _acquire(self, candidates, num_candidates):
+    def _acquire(self, candidates, num_candidates=1):
         """Decide which candidates to return as proposals.
 
         Apply a decision function to select the best candidates from

@@ -60,19 +60,19 @@ class BaseTuner:
                 'amount of combinations.'.format(self.tunable.cardinality)
             )
 
-        tried = len(self._trials_set)
-        if tried == self.tunable.cardinality:
+        num_tried = len(self._trials_set)
+        if num_tried == self.tunable.cardinality:
             raise ValueError(
                 'All of the possible combinations where recorded. Use ``allow_duplicates=True``'
                 'to keep generating combinations.'
             )
 
-        if tried + num_proposals > self.tunable.cardinality:
+        if num_tried + num_proposals > self.tunable.cardinality:
             raise ValueError(
                 'The maximum amount of new proposed combinations will exceed the amount of'
                 'possible combinations, either use ``num_proposals={}`` to generate the remaining'
                 'combinations or ``allow_duplicates=True`` to keep generating more'
-                'combinations.'.format(self.tunable.cardinality - tried)
+                'combinations.'.format(self.tunable.cardinality - num_tried)
             )
 
     def _sample(self, num_proposals, allow_duplicates):
