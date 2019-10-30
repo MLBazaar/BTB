@@ -54,7 +54,7 @@ source_suffix = ['.rst', '.md']
 master_doc = 'index'
 
 # General information about the project.
-project = 'Bayesian Tuning and Bandits'
+project = 'BTB'
 slug = 'btb'
 title = project + ' Documentation',
 copyright = '2018, MIT Data To AI Lab'

@@ -2,13 +2,13 @@
 
 """Package where the tuners based on GaussianProcessMetaModel are defined."""
 
-from btb.tuning.acquisition.argsort import ArgSortAcquisition
+from btb.tuning.acquisition.predicted_score import PredictedScoreAcquisition
 from btb.tuning.acquisition.expected_improvement import ExpectedImprovementAcquisition
 from btb.tuning.metamodels.gaussian_process import GaussianProcessMetaModel
 from btb.tuning.tuners.base import BaseMetaModelTuner
 
 
-class GPTuner(GaussianProcessMetaModel, ArgSortAcquisition, BaseMetaModelTuner):
+class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModelTuner):
     """GaussianProcess Tuner.
 
     This class uses a ``GaussianProcessRegressor`` model from the ``sklearn.gaussian_process``

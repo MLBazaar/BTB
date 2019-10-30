@@ -5,10 +5,10 @@
 import numpy as np
 from scipy.stats import norm
 
-from btb.tuning.acquisition.argsort import ArgSortAcquisition
+from btb.tuning.acquisition.base import BaseAcquisition
 
 
-class ExpectedImprovementAcquisition(ArgSortAcquisition):
+class ExpectedImprovementAcquisition(BaseAcquisition):
 
     def _acquire(self, candidates, num_candidates=1):
         Phi = norm.cdf
@@ -21,4 +21,4 @@ class ExpectedImprovementAcquisition(ArgSortAcquisition):
 
         ei = sigma * (z * Phi(z) + N(z))
 
-        return super()._acquire(ei, num_candidates)
+        return self._get_max_candidates(ei, num_candidates)

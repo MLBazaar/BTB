@@ -2,11 +2,18 @@
 
 from abc import ABCMeta, abstractmethod
 
+import numpy as np
+
 
 class BaseAcquisition(metaclass=ABCMeta):
 
     def __init_acquisition__(self, **kwargs):
         pass
+
+    @staticmethod
+    def _get_max_candidates(candidates, n):
+        sorted_candidates = list(reversed(np.argsort(candidates)))
+        return sorted_candidates[:n]
 
     @abstractmethod
     def _acquire(self, candidates, num_candidates=1):

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the GausianProcessMetaModel class is defined."""
-
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 
@@ -11,8 +9,8 @@ from btb.tuning.metamodels.base import BaseMetaModel
 class GaussianProcessMetaModel(BaseMetaModel):
     """GaussianProcessMetaModel class.
 
-    This class is responsible to create a ``GaussianProcessRegressor`` from the
-    ``sklearn.gaussian_process`` package.
+    This class represents a meta-model using an underlying ``GaussianProcessRegressor`` from
+    ``sklearn.gaussian_process``.
 
     Attributes:
         _MODEL_KWARGS (dict):
@@ -24,7 +22,7 @@ class GaussianProcessMetaModel(BaseMetaModel):
     """
     _MODEL_CLASS = GaussianProcessRegressor
 
-    _MODEL_KWARGS = {
+    _MODEL_KWARGS_DEFAULT = {
         'normalize_y': True
     }
 

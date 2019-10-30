@@ -16,7 +16,7 @@ class TestGaussianProcessMetaModel(TestCase):
         instance = GaussianProcessMetaModel()
 
         # assert
-        assert instance._MODEL_KWARGS == {'normalize_y': True}
+        assert instance._MODEL_KWARGS_DEFAULT == {'normalize_y': True}
         assert instance._MODEL_CLASS == GaussianProcessRegressor
 
     def test__predict(self):

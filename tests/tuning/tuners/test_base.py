@@ -331,6 +331,8 @@ class TestBaseMetaModelTuner(TestCase):
         # setup
         tunable = MagicMock()
         instance = MagicMock()
+        instance._metamodel_kwargs = {'a': 'test'}
+        instance._acquisition_kwargs = {'a': 'acquisition_test'}
         instance.__init_metamodel__ = MagicMock()
         instance.__init_acquisition__ = MagicMock()
 
@@ -341,14 +343,13 @@ class TestBaseMetaModelTuner(TestCase):
             maximize=False,
             num_candidates=5,
             min_trials=20,
-            test_kwarg='test'
         )
 
         # assert
         assert instance._num_candidates == 5
         assert instance._min_trials == 20
-        instance.__init_metamodel__.assert_called_once_with(test_kwarg='test')
-        instance.__init_acquisition__.assert_called_once_with(test_kwarg='test')
+        instance.__init_metamodel__.assert_called_once_with(a='test')
+        instance.__init_acquisition__.assert_called_once_with(a='acquisition_test')
 
     def test__propose_min_trials_gt__trials_set(self):
         # setup
