@@ -15,7 +15,9 @@ class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModel
     package, using a ``numpy.argmax`` function to return the better configurations predicted
     from the model.
     """
-    pass
+    def __init__(self, tunable, length_scale=1, **kwargs):
+        self._metamodel_kwargs = {'length_scale': length_scale}
+        super().__init__(tunable, **kwargs)
 
 
 class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMetaModelTuner):
@@ -25,4 +27,6 @@ class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMe
     package, using an ``ExpectedImprovement`` function to return the better configurations
     predicted from the model.
     """
-    pass
+    def __init__(self, tunable, length_scale=1, **kwargs):
+        self._metamodel_kwargs = {'length_scale': length_scale}
+        super().__init__(tunable, **kwargs)
