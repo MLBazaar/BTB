@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Top level of the module tuning."""
+"""Top level of the tuning module."""
 
 from btb.tuning.hyperparams.boolean import BooleanHyperParam
 from btb.tuning.hyperparams.categorical import CategoricalHyperParam

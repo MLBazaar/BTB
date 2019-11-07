@@ -74,7 +74,7 @@ install: clean-build clean-pyc ## install the package to the active Python's sit
 	pip install .
 
 .PHONY: install-examples
-install-examples: clean-build clean-pyc ## install the package and the requiered to run the examples
+install-examples: clean-build clean-pyc ## install the package and dependencies to run the examples
 	pip install .[examples]
 
 .PHONY: install-test
