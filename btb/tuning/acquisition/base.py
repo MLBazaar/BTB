@@ -12,9 +12,7 @@ class BaseAcquisition(metaclass=ABCMeta):
 
     @staticmethod
     def _get_max_candidates(candidates, n):
-        len_candidates = len(candidates) - 1
-
-        k = n if len_candidates > n else len_candidates  # kth element
+        k = min(n, len(candidates) - 1)  # kth element
         sorted_candidates = np.argpartition(-candidates, k)
 
         return sorted_candidates[:n]
