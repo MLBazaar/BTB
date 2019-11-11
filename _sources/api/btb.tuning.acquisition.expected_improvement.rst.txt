@@ -1,0 +1,7 @@
+btb.tuning.acquisition.expected\_improvement module
+===================================================
+
+.. automodule:: btb.tuning.acquisition.expected_improvement
+   :members:
+   :undoc-members:
+   :show-inheritance:

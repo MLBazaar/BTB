@@ -1,0 +1,7 @@
+btb.selection.recent module
+===========================
+
+.. automodule:: btb.selection.recent
+   :members:
+   :undoc-members:
+   :show-inheritance:

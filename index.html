@@ -8,10 +8,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview &mdash; BTB 0.2.6-dev documentation</title>
+  <title>Overview &mdash; BTB 0.3.0.dev0 documentation</title>
   
 
   
+  
+    <link rel="shortcut icon" href="_static/dai-logo-white.ico"/>
   
   
   
@@ -25,6 +27,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,6 +56,9 @@
           
 
           
+            
+            <img src="_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
           </a>
 
           
@@ -77,14 +83,16 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="readme.html#install-with-pip">Install with pip</a></li>
-<li class="toctree-l3"><a class="reference internal" href="readme.html#build-from-source">Build from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-using-pip">Install using Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-from-source">Install from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-for-development">Install for Development</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="readme.html#tuners">Tuners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#tuners">Tuners</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="readme.html#selectors">Selectors</a></li>
 </ul>
 </li>
@@ -92,10 +100,25 @@
 <li class="toctree-l2"><a class="reference internal" href="readme.html#citing-btb">Citing BTB</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tuners.html">Tuners</a></li>
-<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recommenders.html">Recommenders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a><ul class="simple">
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.html#module-btb.selection">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.html#module-btb.tuning">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.html#module-btb">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
@@ -111,13 +134,13 @@
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#release-workflow">Release Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#release-workflow">Release Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#release-candidates">Release Candidates</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="history.html#id1">0.2.5</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="history.html#bug-fixes">Bug Fixes</a></li>
@@ -203,7 +226,7 @@
         
             
             
-              <a href="https://github.com/HDI-Project/btb/blob/master/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -222,9 +245,9 @@
 <i>An open source project from Data to AI Lab at MIT.</i>
 </p><a class="reference external image-reference" href="https://raw.githubusercontent.com/HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png"><img alt="" src="https://raw.githubusercontent.com/HDI-Project/BTB/master/docs/_static/BTB-Icon-small.png" /></a>
 <p>A simple, extensible backend for developing auto-tuning systems.</p>
-<a class="reference external image-reference" href="https://pypi.python.org/pypi/baytune"><img alt="PyPi" src="https://img.shields.io/pypi/v/baytune.svg" /></a>
-<a class="reference external image-reference" href="https://travis-ci.org/HDI-Project/BTB"><img alt="Travis" src="https://travis-ci.org/HDI-Project/BTB.svg?branch=master" /></a>
-<a class="reference external image-reference" href="https://codecov.io/gh/HDI-Project/BTB"><img alt="CodeCov" src="https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://pypi.python.org/pypi/baytune"><img alt="PyPi Shield" src="https://img.shields.io/pypi/v/baytune.svg" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/HDI-Project/BTB"><img alt="Travis CI Shield" src="https://travis-ci.org/HDI-Project/BTB.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/HDI-Project/BTB"><img alt="Coverage Status" src="https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg" /></a>
 <a class="reference external image-reference" href="https://pepy.tech/project/baytune"><img alt="Downloads" src="https://pepy.tech/badge/baytune" /></a>
 <ul class="simple">
 <li><p>Free software: MIT license</p></li>
@@ -235,50 +258,94 @@
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <p>Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in <a class="reference external" href="https://github.com/HDI-Project/ATM">ATM</a> (an AutoML system that allows tuning of classifiers) and MIT’s system for the DARPA <a class="reference external" href="https://www.darpa.mil/program/data-driven-discovery-of-models">Data driven discovery of models program</a>.</p>
 <p><em>BTB is under active development. If you come across any issues, please report them `here &lt;https://github.com/HDI-Project/BTB/issues/new&gt;`_.</em></p>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="install-with-pip">
-<h3>Install with pip<a class="headerlink" href="#install-with-pip" title="Permalink to this headline">¶</a></h3>
-<p>The easiest way to install BTB is using <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">baytune</span>
+</div>
+<div class="section" id="install">
+<h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p><strong>BTB</strong> has been developed and tested on <a class="reference external" href="https://www.python.org/downloads">Python 3.5, 3.6 and 3.7</a></p>
+<p>Also, although it is not strictly required, the usage of a
+<a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> is highly recommended in order to avoid
+interfering with other software installed in the system where <strong>BTB</strong> is run.</p>
+<p>These are the minimum commands needed to create a virtualenv using python3.6 for <strong>BTB</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install virtualenv
+virtualenv -p <span class="k">$(</span>which python3.6<span class="k">)</span> btb-venv
+</pre></div>
+</div>
+<p>Afterwards, you have to execute this command to have the virtualenv activated:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> btb-venv/bin/activate
+</pre></div>
+</div>
+<p>Remember about executing it every time you start a new console to work on <strong>BTB</strong>!</p>
+</div>
+<div class="section" id="install-using-pip">
+<h2>Install using Pip<a class="headerlink" href="#install-using-pip" title="Permalink to this headline">¶</a></h2>
+<p>After creating the virtualenv and activating it, we recommend using
+<a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> in order to install <strong>BTB</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install btb
+</pre></div>
+</div>
+<p>This will pull and install the latest stable release from <a class="reference external" href="https://pypi.org/">PyPi</a>.</p>
+</div>
+<div class="section" id="install-from-source">
+<h2>Install from Source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h2>
+<p>With your virtualenv activated, you can clone the repository and install it from
+source by running <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> on the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:HDI-Project/BTB.git
+<span class="nb">cd</span> BTB
+git checkout stable
+make install
 </pre></div>
 </div>
 </div>
-<div class="section" id="build-from-source">
-<h3>Build from source<a class="headerlink" href="#build-from-source" title="Permalink to this headline">¶</a></h3>
-<p>You can also clone the repository and build it from source.</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="o">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">:</span><span class="n">HDI</span><span class="o">-</span><span class="n">Project</span><span class="o">/</span><span class="n">BTB</span><span class="p">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">BTB</span>
-<span class="n">make</span> <span class="n">install</span>
-</pre></div>
-</div>
+<div class="section" id="install-for-development">
+<h2>Install for Development<a class="headerlink" href="#install-for-development" title="Permalink to this headline">¶</a></h2>
+<p>If you want to contribute to the project, a few more steps are required to make the project ready
+for development.</p>
+<p>Please head to the <a class="reference external" href="https://HDI-Project.github.io/BTB/contributing.html#get-started">Contributing Guide</a>
+for more details about this process.</p>
 </div>
 </div>
 <div class="section" id="quickstart">
-<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="tuners">
-<h3>Tuners<a class="headerlink" href="#tuners" title="Permalink to this headline">¶</a></h3>
-<p>In order to use a tuner we will create a <code class="docutils literal notranslate"><span class="pre">Tuner</span></code> instance indicating which parameters
-we want to tune, their types and the range of values that we want to try.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="kn">import</span> <span class="n">GP</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb</span> <span class="kn">import</span> <span class="n">HyperParameter</span><span class="p">,</span> <span class="n">ParamTypes</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tunables</span> <span class="o">=</span> <span class="p">[</span>
-<span class="gp">... </span><span class="p">(</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">])),</span>
-<span class="gp">... </span><span class="p">(</span><span class="s1">&#39;max_depth&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">]))</span>
-<span class="gp">... </span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">GP</span><span class="p">(</span><span class="n">tunables</span><span class="p">)</span>
+<h2>Tuners<a class="headerlink" href="#tuners" title="Permalink to this headline">¶</a></h2>
+<p>Tuners are specifically designed to speed up the process of selecting the
+optimal hyper parameter values for a specific machine learning algorithm.</p>
+<p><code class="docutils literal notranslate"><span class="pre">btb.tuning.tuners</span></code> defines Tuners: classes with a fit/predict/propose interface for
+suggesting sets of hyperparameters.</p>
+<p>This is done by following a Bayesian Optimization approach and iteratively:</p>
+<ul class="simple">
+<li><p>letting the tuner propose new sets of hyper parameter</p></li>
+<li><p>fitting and scoring the model with the proposed hyper parameters</p></li>
+<li><p>passing the score obtained back to the tuner</p></li>
+</ul>
+<p>At each iteration the tuner will use the information already obtained to propose
+the set of hyper parameters that it considers that have the highest probability
+to obtain the best results.</p>
+<p>To instantiate a <code class="docutils literal notranslate"><span class="pre">Tuner</span></code> all we need is a <code class="docutils literal notranslate"><span class="pre">Tunable</span></code> class with a collection of
+<code class="docutils literal notranslate"><span class="pre">hyperparameters</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">GPTuner</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hyperparams</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">500</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">500</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">(</span><span class="n">hyperparams</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">GPTuner</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Then we perform the following three steps in a loop.</p>
 <ol class="arabic">
-<li><p>Let the Tuner propose a new set of parameters</p>
+<li><p>Let the Tuner propose a new set of parameters:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span>
 <span class="go">{&#39;n_estimators&#39;: 297, &#39;max_depth&#39;: 3}</span>
 </pre></div>
 </div>
 </li>
-<li><p>Fit and score a new model using these parameters</p>
+<li><p>Fit and score a new model using these parameters:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="go">RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,</span>
@@ -294,8 +361,8 @@ we want to tune, their types and the range of values that we want to try.</p>
 </pre></div>
 </div>
 </li>
-<li><p>Pass the used parameters and the score obtained back to the tuner</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuner</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+<li><p>Pass the used parameters and the score obtained back to the tuner:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -303,8 +370,6 @@ we want to tune, their types and the range of values that we want to try.</p>
 <p>At each iteration, the <code class="docutils literal notranslate"><span class="pre">Tuner</span></code> will use the information about the previous tests
 to evaluate and propose the set of parameter values that have the highest probability
 of obtaining the highest score.</p>
-<p>For more detailed examples, check scripts from the <code class="docutils literal notranslate"><span class="pre">examples</span></code> folder.</p>
-</div>
 <div class="section" id="selectors">
 <h3>Selectors<a class="headerlink" href="#selectors" title="Permalink to this headline">¶</a></h3>
 <p>The selectors are intended to be used in combination with tuners in order to find
@@ -313,28 +378,36 @@ out and decide which model seems to get the best results once it is properly fin
 we want to try out, as well as the <code class="docutils literal notranslate"><span class="pre">Selector</span></code> instance.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.selection</span> <span class="kn">import</span> <span class="n">UCB1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">FloatHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">SVC</span>
 <span class="gp">... </span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.selection</span> <span class="kn">import</span> <span class="n">UCB1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">selector</span> <span class="o">=</span> <span class="n">UCB1</span><span class="p">([</span><span class="s1">&#39;RF&#39;</span><span class="p">,</span> <span class="s1">&#39;SVC&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rf_hyperparams</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">500</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rf_tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">(</span><span class="n">rf_hyperparams</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">svc_hyperparams</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">FloatHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">10.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">FloatHyperParam</span><span class="p">(</span><span class="mf">0.000000001</span><span class="p">,</span> <span class="mf">0.0000001</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">svc_tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">(</span><span class="n">svc_hyperparams</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tuners</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">GP</span><span class="p">([</span>
-<span class="gp">... </span>        <span class="p">(</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">])),</span>
-<span class="gp">... </span>        <span class="p">(</span><span class="s1">&#39;max_depth&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">]))</span>
-<span class="gp">... </span>    <span class="p">]),</span>
-<span class="gp">... </span>    <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">GP</span><span class="p">([</span>
-<span class="gp">... </span>        <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">FLOAT_EXP</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">])),</span>
-<span class="gp">... </span>        <span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">(</span><span class="n">ParamTypes</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.000000001</span><span class="p">,</span> <span class="mf">0.0000001</span><span class="p">]))</span>
-<span class="gp">... </span>    <span class="p">])</span>
+<span class="gp">... </span>    <span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">GPTuner</span><span class="p">(</span><span class="n">rf_tunable</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">GPTuner</span><span class="p">(</span><span class="n">svc_tunable</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">}</span>
 </pre></div>
 </div>
 <p>Then we perform the following steps in a loop.</p>
 <ol class="arabic">
 <li><p>Pass all the obtained scores to the selector and let it decide which model to test.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">next_choice</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select</span><span class="p">({</span><span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">tuners</span><span class="p">[</span><span class="s1">&#39;RF&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">tuners</span><span class="p">[</span><span class="s1">&#39;SVC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">})</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">next_choice</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s1">&#39;RF&#39;</span><span class="p">:</span> <span class="n">tuners</span><span class="p">[</span><span class="s1">&#39;RF&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">scores</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;SVC&#39;</span><span class="p">:</span> <span class="n">tuners</span><span class="p">[</span><span class="s1">&#39;SVC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">scores</span>
+<span class="gp">... </span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">next_choice</span>
 <span class="go">&#39;RF&#39;</span>
 </pre></div>
@@ -360,7 +433,7 @@ we want to try out, as well as the <code class="docutils literal notranslate"><s
 <span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">score</span>
 <span class="go">0.89</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuners</span><span class="p">[</span><span class="n">next_choice</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuners</span><span class="p">[</span><span class="n">next_choice</span><span class="p">]</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -375,8 +448,9 @@ we want to try out, as well as the <code class="docutils literal notranslate"><s
 <div class="section" id="citing-btb">
 <h2>Citing BTB<a class="headerlink" href="#citing-btb" title="Permalink to this headline">¶</a></h2>
 <p>If you use BTB, please consider citing the following work:</p>
-<ul>
-<li><p>Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. <a class="reference external" href="https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf">(pdf)</a></p>
+<ul class="simple">
+<li><p>Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. <a class="reference external" href="https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf">(pdf)</a></p></li>
+</ul>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@MastersThesis</span><span class="p">{</span><span class="nl">Laura:2018</span><span class="p">,</span>
   <span class="na">title</span> <span class="p">=</span> <span class="s">&quot;Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML&quot;</span><span class="p">,</span>
   <span class="na">author</span> <span class="p">=</span> <span class="s">&quot;Laura Gustafson&quot;</span><span class="p">,</span>
@@ -389,8 +463,8 @@ we want to try out, as well as the <code class="docutils literal notranslate"><s
 <span class="p">}</span>
 </pre></div>
 </div>
-</li>
-</ul>
+<div class="toctree-wrapper compound">
+</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>

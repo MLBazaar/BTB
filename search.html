@@ -8,10 +8,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; BTB 0.2.6-dev documentation</title>
+  <title>Search &mdash; BTB 0.3.0.dev0 documentation</title>
   
 
   
+  
+    <link rel="shortcut icon" href="_static/dai-logo-white.ico"/>
   
   
   
@@ -25,6 +27,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/javascript" src="_static/searchtools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -53,6 +56,9 @@
           
 
           
+            
+            <img src="_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
           </a>
 
           
@@ -77,14 +83,16 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="readme.html#install-with-pip">Install with pip</a></li>
-<li class="toctree-l3"><a class="reference internal" href="readme.html#build-from-source">Build from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-using-pip">Install using Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-from-source">Install from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-for-development">Install for Development</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="readme.html#tuners">Tuners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#tuners">Tuners</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="readme.html#selectors">Selectors</a></li>
 </ul>
 </li>
@@ -92,10 +100,25 @@
 <li class="toctree-l2"><a class="reference internal" href="readme.html#citing-btb">Citing BTB</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tuners.html">Tuners</a></li>
-<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recommenders.html">Recommenders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a><ul class="simple">
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.selection.html#module-btb.selection">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.html#module-btb.tuning">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.html#module-btb">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
@@ -111,13 +134,13 @@
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#release-workflow">Release Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#release-workflow">Release Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#release-candidates">Release Candidates</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="history.html#id1">0.2.5</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="history.html#bug-fixes">Bug Fixes</a></li>
@@ -203,7 +226,7 @@
         
             
             
-              <a href="https://github.com/HDI-Project/btb/blob/master/docs/search" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/search" class="fa fa-github"> Edit on GitHub</a>
             
           
         

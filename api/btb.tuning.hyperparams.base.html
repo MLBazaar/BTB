@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.tuning.hyperparams.base module &mdash; BTB 0.3.0.dev0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="btb.tuning.hyperparams.boolean module" href="btb.tuning.hyperparams.boolean.html" />
+    <link rel="prev" title="btb.tuning.hyperparams package" href="btb.tuning.hyperparams.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BTB
+          
+
+          
+            
+            <img src="../_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-using-pip">Install using Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-from-source">Install from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-for-development">Install for Development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#tuners">Tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../readme.html#selectors">Selectors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#what-s-next">What’s next?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#citing-btb">Citing BTB</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html#module-btb.selection">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="btb.tuning.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#module-btb.tuning">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#release-workflow">Release Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#release-candidates">Release Candidates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id1">0.2.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id2">0.2.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#internal-improvements">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id3">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id4">0.2.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id5">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id6">0.2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id7">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id8">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id9">0.2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id10">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id11">0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-features">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id12">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id13">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id14">0.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id15">0.1.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="btb.html">btb package</a> &raquo;</li>
+        
+          <li><a href="btb.tuning.html">btb.tuning package</a> &raquo;</li>
+        
+          <li><a href="btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a> &raquo;</li>
+        
+      <li>btb.tuning.hyperparams.base module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/api/btb.tuning.hyperparams.base.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-btb.tuning.hyperparams.base">
+<span id="btb-tuning-hyperparams-base-module"></span><h1>btb.tuning.hyperparams.base module<a class="headerlink" href="#module-btb.tuning.hyperparams.base" title="Permalink to this headline">¶</a></h1>
+<p>Package where the BaseHyperParam class is defined.</p>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.base.BaseHyperParam" title="btb.tuning.hyperparams.base.BaseHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseHyperParam</span></code></a></p></td>
+<td><p>BaseHyperParam class.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="btb.tuning.hyperparams.base.BaseHyperParam">
+<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.base.</code><code class="sig-name descname">BaseHyperParam</code><a class="reference internal" href="../_modules/btb/tuning/hyperparams/base.html#BaseHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.base.BaseHyperParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>BaseHyperParam class.</p>
+<p>A BaseHyperParam is an abstract representation of a single parameter that can be tuned.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.base.BaseHyperParam.cardinality" title="btb.tuning.hyperparams.base.BaseHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.base.BaseHyperParam.dimensions" title="btb.tuning.hyperparams.base.BaseHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform" title="btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
+<td><p>Invert one or more search space values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.base.BaseHyperParam.sample" title="btb.tuning.hyperparams.base.BaseHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
+<td><p>Generate an array of <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> random samples in the search space.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.base.BaseHyperParam.transform" title="btb.tuning.hyperparams.base.BaseHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
+<td><p>Transform one or more hyperparameter values.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.base.BaseHyperParam.dimensions">
+<code class="sig-name descname">dimensions</code><a class="headerlink" href="#btb.tuning.hyperparams.base.BaseHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of dimensions that the hyperparameter uses to be represented in the search
+space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.base.BaseHyperParam.cardinality">
+<code class="sig-name descname">cardinality</code><a class="headerlink" href="#btb.tuning.hyperparams.base.BaseHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of possible values for this hyperparameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int or np.inf</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="sig-name descname">cardinality</code><em class="property"> = 0</em></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="sig-name descname">dimensions</code><em class="property"> = 0</em></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform">
+<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/base.html#BaseHyperParam.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert one or more search space values.</p>
+<p>Validates that the input values are within the search space and then transform them into
+hyperparameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
+called two times with a scalar from the search space and an array of two valid values
+from the search space.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
+<span class="go">array([[1]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
+<span class="go">array([[1],</span>
+<span class="go">       [2]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.base.BaseHyperParam.sample">
+<em class="property">abstract </em><code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">n_samples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/base.html#BaseHyperParam.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.base.BaseHyperParam.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an array of <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> random samples in the search space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_samples</strong> (<em>int</em>) – Number of values to sample.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> with a shape <cite>(n_samples, self.dimensions)</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">sample</span></code> is being called
+with a number of samples to be obtained. A <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> with values from the
+search space is being returned.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([[0.625],</span>
+<span class="go">       [0.375]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.base.BaseHyperParam.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/base.html#BaseHyperParam.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.base.BaseHyperParam.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform one or more hyperparameter values.</p>
+<p>Validates that the input values are within the accepted dimensions and that they are within
+the hyperparameter space. Then transform one or more hyperparameter values from the
+original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
+The accepted value formats are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
+hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
+hyperparameter space to be converted into the search space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
+search space values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
+three times with a single scalar value, an array of two valid values and a 2D array
+with 1 dimension.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([[0.125]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="btb.tuning.hyperparams.boolean.html" class="btn btn-neutral float-right" title="btb.tuning.hyperparams.boolean module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="btb.tuning.hyperparams.html" class="btn btn-neutral float-left" title="btb.tuning.hyperparams package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

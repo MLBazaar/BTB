@@ -1,0 +1,7 @@
+btb.tuning.acquisition.predicted\_score module
+==============================================
+
+.. automodule:: btb.tuning.acquisition.predicted_score
+   :members:
+   :undoc-members:
+   :show-inheritance:

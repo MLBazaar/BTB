@@ -1,0 +1,18 @@
+btb package
+===========
+
+Subpackages
+-----------
+
+.. toctree::
+
+   btb.selection
+   btb.tuning
+
+Module contents
+---------------
+
+.. automodule:: btb
+   :members:
+   :undoc-members:
+   :show-inheritance:

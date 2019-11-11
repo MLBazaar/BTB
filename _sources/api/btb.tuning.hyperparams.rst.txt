@@ -1,0 +1,20 @@
+btb.tuning.hyperparams package
+==============================
+
+Submodules
+----------
+
+.. toctree::
+
+   btb.tuning.hyperparams.base
+   btb.tuning.hyperparams.boolean
+   btb.tuning.hyperparams.categorical
+   btb.tuning.hyperparams.numerical
+
+Module contents
+---------------
+
+.. automodule:: btb.tuning.hyperparams
+   :members:
+   :undoc-members:
+   :show-inheritance:

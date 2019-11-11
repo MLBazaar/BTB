@@ -1,14 +1,16 @@
-.. mdinclude:: readme.rst
+.. include:: readme.rst
 
 .. toctree::
    :hidden:
    :maxdepth: 2
 
-   readme
-   tuners
-   selectors
-   recommenders
-   api_reference
+   Overview <readme>
+
+.. toctree::
+   :caption: Resources
+   :hidden:
+
+   API Reference <api/btb>
    contributing
    authors
    history
