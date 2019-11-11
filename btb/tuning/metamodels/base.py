@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseMetaModel class is defined."""
-
 from abc import ABCMeta
 
 import numpy as np
@@ -28,25 +26,28 @@ class BaseMetaModel(metaclass=ABCMeta):
     """
 
     _MODEL_CLASS = None
-    _MODEL_KWARGS = None
+    _MODEL_KWARGS_DEFAULT = None
     _model_kwargs = None
-    _model = None
+    _model_instance = None
 
     def __init_metamodel__(self, **kwargs):
-        """Define the requiered initiation that the model may requiere."""
         pass
 
     def _init_model(self):
         """Create an instance of a ``self._MODEL_CLASS``.
 
-        Generate ``self._model`` by using the corresponding ``kwargs`` for
-        ``self._MODEL_CLASS`` provided by the user and ``self._MODEL_KWARGS``.
+        Generate ``self._model_instance`` by using the corresponding ``kwargs`` for
+        ``self._MODEL_CLASS`` provided by the user and ``self._MODEL_KWARGS_DEFAULT``.
         """
-        model_kwargs = self._MODEL_KWARGS.copy() if self._MODEL_KWARGS else dict()
+        if self._MODEL_KWARGS_DEFAULT is not None:
+            model_kwargs = self._MODEL_KWARGS_DEFAULT
+        else:
+            model_kwargs = dict()
+
         if self._model_kwargs:
             model_kwargs.update(self._model_kwargs)
 
-        self._model = self._MODEL_CLASS(**model_kwargs)
+        self._model_instance = self._MODEL_CLASS(**model_kwargs)
 
     def _fit(self, trials, scores):
         """Fit the internal meta-model.
@@ -60,7 +61,7 @@ class BaseMetaModel(metaclass=ABCMeta):
                 Array-like with shape ``(len(trials), 1)``.
         """
         self._init_model()
-        self._model.fit(trials, scores)
+        self._model_instance.fit(trials, scores)
 
     def _predict(self, candidates):
         """Predict performance for given candidates.
@@ -77,4 +78,4 @@ class BaseMetaModel(metaclass=ABCMeta):
             predictions (array-like):
                 2D array-like with shape ``(num_candidates, num_outputs)``.
         """
-        return np.array(self._model.predict(candidates))
+        return np.array(self._model_instance.predict(candidates))

@@ -12,7 +12,7 @@ class TestExpectedImprovementAcquisition(TestCase):
     def test__acquire(self):
         # run
         instance = ExpectedImprovementAcquisition()
-        instance._scores = np.array([0.5, 0.6, 0.7])
+        instance.scores = np.array([0.5, 0.6, 0.7])
 
         predictions = np.array([
             [0.8, 1],
@@ -21,12 +21,12 @@ class TestExpectedImprovementAcquisition(TestCase):
         best = instance._acquire(predictions)
 
         # assert
-        assert best == [1]
+        np.testing.assert_array_equal(best, np.array([1]))
 
     def test__acquire_n_candidates(self):
         # run
         instance = ExpectedImprovementAcquisition()
-        instance._scores = np.array([0.5, 0.9, 0.7, 0.8])
+        instance.scores = np.array([0.5, 0.9, 0.7, 0.8])
 
         predictions = np.array([
             [0.1, 1],
@@ -37,4 +37,4 @@ class TestExpectedImprovementAcquisition(TestCase):
         best = instance._acquire(predictions, 2)
 
         # assert
-        assert best == [1, 3]
+        np.testing.assert_array_equal(best, np.array([1, 3]))

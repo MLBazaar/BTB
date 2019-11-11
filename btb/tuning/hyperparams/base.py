@@ -154,7 +154,7 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
-            instantiated with a range from 1 to 4, and it's method ``inverse_transform`` is being
+            instantiated with a range from 1 to 4, and its method ``inverse_transform`` is being
             called two times with a scalar from the search space and an array of two valid values
             from the search space.
 
@@ -185,7 +185,7 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
-            instantiated with a range from 1 to 4, and it's method ``sample`` is being called
+            instantiated with a range from 1 to 4, and its method ``sample`` is being called
             with a number of samples to be obtained. A ``numpy.ndarray`` with values from the
             search space is being returned.
 
@@ -224,7 +224,7 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
-            instantiated with a range from 1 to 4, and it's method ``transform`` is being called
+            instantiated with a range from 1 to 4, and its method ``transform`` is being called
             three times with a single scalar value, an array of two valid values and a 2D array
             with 1 dimension.
 

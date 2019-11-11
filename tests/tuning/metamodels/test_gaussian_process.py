@@ -16,17 +16,17 @@ class TestGaussianProcessMetaModel(TestCase):
         instance = GaussianProcessMetaModel()
 
         # assert
-        assert instance._MODEL_KWARGS == {'normalize_y': True}
+        assert instance._MODEL_KWARGS_DEFAULT == {'normalize_y': True}
         assert instance._MODEL_CLASS == GaussianProcessRegressor
 
     def test__predict(self):
         # setup
         instance = MagicMock()
-        instance._model.predict.return_value = [[1], [2]]
+        instance._model_instance.predict.return_value = [[1], [2]]
 
         # run
         result = GaussianProcessMetaModel._predict(instance, 1)
 
         # assert
-        instance._model.predict.assert_called_once_with(1, return_std=True)
+        instance._model_instance.predict.assert_called_once_with(1, return_std=True)
         np.testing.assert_array_equal(result, np.array([[1, 2]]))

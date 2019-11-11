@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseTuner class and BaseModelTuner are defined."""
+"""Package where the BaseTuner class and BaseMetaModelTuner are defined."""
 
 from abc import abstractmethod
 
 import numpy as np
 
-from btb.tuning.acquisition.base import BaseAcquisitionFunction
+from btb.tuning.acquisition.base import BaseAcquisition
 from btb.tuning.metamodels.base import BaseMetaModel
 
 
@@ -28,8 +28,8 @@ class BaseTuner:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         maximize (bool):
-            If ``True`` the scores are interpreted as bigger is better, if ``False`` the smaller
-            is better.
+            If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller
+            is better. Defaults to ``True``.
     """
 
     def __init__(self, tunable, maximize=True):
@@ -60,19 +60,19 @@ class BaseTuner:
                 'amount of combinations.'.format(self.tunable.cardinality)
             )
 
-        tried = len(self._trials_set)
-        if tried == self.tunable.cardinality:
+        num_tried = len(self._trials_set)
+        if num_tried == self.tunable.cardinality:
             raise ValueError(
                 'All of the possible combinations where recorded. Use ``allow_duplicates=True``'
                 'to keep generating combinations.'
             )
 
-        if tried + num_proposals > self.tunable.cardinality:
+        if num_tried + num_proposals > self.tunable.cardinality:
             raise ValueError(
                 'The maximum amount of new proposed combinations will exceed the amount of'
                 'possible combinations, either use ``num_proposals={}`` to generate the remaining'
                 'combinations or ``allow_duplicates=True`` to keep generating more'
-                'combinations.'.format(self.tunable.cardinality - tried)
+                'combinations.'.format(self.tunable.cardinality - num_tried)
             )
 
     def _sample(self, num_proposals, allow_duplicates):
@@ -124,26 +124,26 @@ class BaseTuner:
         """
         pass
 
-    def propose(self, num_proposals=1, allow_duplicates=False):
+    def propose(self, n=1, allow_duplicates=False):
         """Propose one or more new hyperparameter configurations.
 
         Validate that the amount of proposals requested is valid when ``allow_duplicates`` is
-        ``False`` and raise an exception in case there is any missmatch between ``num_proposals``,
+        ``False`` and raise an exception in case there is any missmatch between ``n``,
         unique ``self.trials`` and ``self.tunable.cardinality``.
         Call the implemented ``_propose`` method and convert the returned data in to hyperparameter
         space values.
 
         Args:
-            num_proposals (int):
-                Number of candidates to create.
+            n (int):
+                Number of candidates to create. Defaults to 1.
             allow_duplicates (bool):
                 If it's False, the tuner will propose trials that are not recorded. Otherwise
-                will generate trials that can be repeated.
+                will generate trials that can be repeated. Defaults to ``False``.
 
         Returns:
             dict or list:
-                If ``num_proposals`` is 1, a ``dict`` will be returned containing the
-                hyperparameter names and values. Otherwise, if ``num_proposals`` is bigger than 1,
+                If ``n`` is 1, a ``dict`` will be returned containing the
+                hyperparameter names and values. Otherwise, if ``n`` is bigger than 1,
                 a list of such dicts is returned.
 
         Raises:
@@ -180,14 +180,14 @@ class BaseTuner:
         """
 
         if not allow_duplicates:
-            self._check_proposals(num_proposals)
+            self._check_proposals(n)
 
-        proposed = self._propose(num_proposals, allow_duplicates)
+        proposed = self._propose(n, allow_duplicates)
 
         hyperparameters = self.tunable.inverse_transform(proposed)
         hyperparameters = hyperparameters.to_dict(orient='records')
 
-        if num_proposals == 1:
+        if n == 1:
             hyperparameters = hyperparameters[0]
 
         return hyperparameters
@@ -243,11 +243,11 @@ class BaseTuner:
         self.scores = self.raw_scores if self.maximize else -self.raw_scores
 
 
-class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
+class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
     """BaseMetaModelTuner class.
 
     BaseMetaModelTuner class is the abstract representation of a tuner that is based
-    on a model and an ``AcquisitionFunction``. This model will try to `predict` the
+    on a model and an ``Acquisition``. This model will try to `predict` the
     score that will be obtained with the proposed parameters by being trained
     over the ``self.trials`` and ``self.raw_scores`` recorded by the user.
 
@@ -264,21 +264,25 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisitionFunction):
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         num_candidates (int):
-            Number of samples to generate and select the best of it for each proposal.
+            Number of samples to generate and select the best of it for each proposal. Defaults to
+            1000.
         maximize (bool):
             If ``True`` the model will understand that the score bigger is better, if ``False``
-            the smaller is better.
+            the smaller is better. Defaults to ``True``.
         min_trials (int):
             Number of recorded ``trials`` needed to perform a fitting over the model.
             Defaults to 2.
     """
 
+    _metamodel_kwargs = None
+    _acquisition_kwargs = None
+
     def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2, **kwargs):
         self._num_candidates = num_candidates
         self._min_trials = min_trials
         super().__init__(tunable, maximize)
-        self.__init_metamodel__(**kwargs)
-        self.__init_acquisition__(**kwargs)
+        self.__init_metamodel__(**(self._metamodel_kwargs or dict()))
+        self.__init_acquisition__(**(self._acquisition_kwargs or dict()))
 
     def _propose(self, num_proposals, allow_duplicates):
         if len(self._trials_set) < self._min_trials:

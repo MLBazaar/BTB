@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the GausianProcessMetaModel class is defined."""
-
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF
 
 from btb.tuning.metamodels.base import BaseMetaModel
 
@@ -11,8 +10,8 @@ from btb.tuning.metamodels.base import BaseMetaModel
 class GaussianProcessMetaModel(BaseMetaModel):
     """GaussianProcessMetaModel class.
 
-    This class is responsible to create a ``GaussianProcessRegressor`` from the
-    ``sklearn.gaussian_process`` package.
+    This class represents a meta-model using an underlying ``GaussianProcessRegressor`` from
+    ``sklearn.gaussian_process``.
 
     Attributes:
         _MODEL_KWARGS (dict):
@@ -24,10 +23,13 @@ class GaussianProcessMetaModel(BaseMetaModel):
     """
     _MODEL_CLASS = GaussianProcessRegressor
 
-    _MODEL_KWARGS = {
+    _MODEL_KWARGS_DEFAULT = {
         'normalize_y': True
     }
 
+    def __init_metamodel__(self, length_scale=1):
+        self._MODEL_KWARGS_DEFAULT['kernel'] = RBF(length_scale=length_scale)
+
     def _predict(self, candidates):
-        predictions = self._model.predict(candidates, return_std=True)
+        predictions = self._model_instance.predict(candidates, return_std=True)
         return np.column_stack(predictions)

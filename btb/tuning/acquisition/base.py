@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseAcquisitionFunction class is defined."""
-
 from abc import ABCMeta, abstractmethod
 
+import numpy as np
 
-class BaseAcquisitionFunction(metaclass=ABCMeta):
+
+class BaseAcquisition(metaclass=ABCMeta):
 
     def __init_acquisition__(self, **kwargs):
-        """Define the requiered initiation that the acquisition may requiere."""
         pass
 
+    @staticmethod
+    def _get_max_candidates(candidates, n):
+        k = min(n, len(candidates) - 1)  # kth element
+        sorted_candidates = np.argpartition(-candidates, k)
+
+        return sorted_candidates[:n]
+
     @abstractmethod
-    def _acquire(self, candidates, num_candidates):
+    def _acquire(self, candidates, num_candidates=1):
         """Decide which candidates to return as proposals.
 
         Apply a decision function to select the best candidates from
