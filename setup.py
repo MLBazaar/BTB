@@ -30,6 +30,13 @@ install_requires = [
 ]
 
 
+examples_require = [
+    'jupyter>=1.0.0',
+    'tqdm>=4.36.1',
+    'matplotlib>=3.1.1',
+]
+
+
 tests_require = [
     'mock>=2.0.0',
     'pytest>=3.4.2',
@@ -55,7 +62,7 @@ development_requires = [
     'sphinx_rtd_theme>=0.2.4',
 
     # style check
-    'flake8>=3.5.0',
+    'flake8>=3.7.7',
     'isort>=4.3.4',
 
     # fix style issues
@@ -87,6 +94,7 @@ setup(
     ],
     description='Bayesian Tuning and Bandits',
     extras_require={
+        'examples': examples_require,
         'test': tests_require,
         'dev': development_requires + tests_require,
     },
@@ -103,6 +111,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.0-dev',
+    version='0.3.0.dev0',
     zip_safe=False,
 )

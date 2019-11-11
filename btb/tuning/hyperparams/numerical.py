@@ -205,7 +205,7 @@ class IntHyperParam(NumericalHyperParam):
         self.min = int(min) if include_min else int(min) + 1
         self.max = int(max) if include_max else int(max) - 1
         self.step = step
-        self.cardinality = ((self.max - self.min) / step) + 1
+        self.cardinality = ((self.max - self.min) // step) + 1
 
         if (self.max - self.min) % self.step:
             raise ValueError(

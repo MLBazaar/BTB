@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the BaseTuner class is defined."""
+"""Package where the BaseTuner class and BaseMetaModelTuner are defined."""
 
 from abc import abstractmethod
 
 import numpy as np
+
+from btb.tuning.acquisition.base import BaseAcquisition
+from btb.tuning.metamodels.base import BaseMetaModel
 
 
 class BaseTuner:
@@ -24,12 +27,17 @@ class BaseTuner:
     Args:
         tunable (btb.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
+        maximize (bool):
+            If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller
+            is better. Defaults to ``True``.
     """
 
-    def __init__(self, tunable):
+    def __init__(self, tunable, maximize=True):
         self.tunable = tunable
         self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float)
-        self.scores = np.empty((0, 1), dtype=np.float)
+        self._trials_set = set()
+        self.raw_scores = np.empty((0, 1), dtype=np.float)
+        self.maximize = maximize
 
     def _check_proposals(self, num_proposals):
         """Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.
@@ -38,11 +46,9 @@ class BaseTuner:
             ValueError:
                 A ``ValueError`` exception is being produced if the amount of requested proposals
                 is bigger than the possible combinations and ``allow_duplicates`` is ``False``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
@@ -54,20 +60,19 @@ class BaseTuner:
                 'amount of combinations.'.format(self.tunable.cardinality)
             )
 
-        trials_set = set(list(map(tuple, self.trials)))
-
-        if len(trials_set) == self.tunable.cardinality:
+        num_tried = len(self._trials_set)
+        if num_tried == self.tunable.cardinality:
             raise ValueError(
                 'All of the possible combinations where recorded. Use ``allow_duplicates=True``'
                 'to keep generating combinations.'
             )
 
-        if len(trials_set) + num_proposals > self.tunable.cardinality:
+        if num_tried + num_proposals > self.tunable.cardinality:
             raise ValueError(
                 'The maximum amount of new proposed combinations will exceed the amount of'
                 'possible combinations, either use ``num_proposals={}`` to generate the remaining'
                 'combinations or ``allow_duplicates=True`` to keep generating more'
-                'combinations.'.format(self.tunable.cardinality - len(trials_set))
+                'combinations.'.format(self.tunable.cardinality - num_tried)
             )
 
     def _sample(self, num_proposals, allow_duplicates):
@@ -91,19 +96,15 @@ class BaseTuner:
             return self.tunable.sample(num_proposals)
 
         else:
-            valid_proposals = list()
-            trials_set = set(list(map(tuple, self.trials)))
+            valid_proposals = set()
 
             while len(valid_proposals) < num_proposals:
-                proposed = self.tunable.sample(num_proposals)
-                proposed = list(map(tuple, proposed))
+                proposals = self.tunable.sample(num_proposals)
+                proposals = set(map(tuple, proposals))
 
-                if len(valid_proposals) > 0:
-                    proposed = set(proposed) - set(valid_proposals)
+                valid_proposals.update(proposals - self._trials_set)
 
-                valid_proposals.extend(list(set(proposed) - trials_set))
-
-            return np.asarray(valid_proposals)[:num_proposals]
+            return np.asarray(list(valid_proposals))[:num_proposals]
 
     @abstractmethod
     def _propose(self, num_proposals, allow_duplicates):
@@ -123,37 +124,35 @@ class BaseTuner:
         """
         pass
 
-    def propose(self, num_proposals=1, allow_duplicates=False):
-        """Propose (one or more) new hyperparameter configurations.
+    def propose(self, n=1, allow_duplicates=False):
+        """Propose one or more new hyperparameter configurations.
 
         Validate that the amount of proposals requested is valid when ``allow_duplicates`` is
-        ``False`` and raise an exception in case there is any missmatch between ``num_proposals``,
-        ``self.trials`` and ``self.tunable.cardinality``.
+        ``False`` and raise an exception in case there is any missmatch between ``n``,
+        unique ``self.trials`` and ``self.tunable.cardinality``.
         Call the implemented ``_propose`` method and convert the returned data in to hyperparameter
         space values.
 
         Args:
-            num_proposals (int):
-                Number of candidates to create.
+            n (int):
+                Number of candidates to create. Defaults to 1.
             allow_duplicates (bool):
                 If it's False, the tuner will propose trials that are not recorded. Otherwise
-                will generate trials that can be repeated.
+                will generate trials that can be repeated. Defaults to ``False``.
 
         Returns:
             dict or list:
-                If ``num_proposals`` is 1, a ``dict`` will be returned containing the
-                hyperparameter names and values. Otherwise, if ``num_proposals`` is bigger than 1,
+                If ``n`` is 1, a ``dict`` will be returned containing the
+                hyperparameter names and values. Otherwise, if ``n`` is bigger than 1,
                 a list of such dicts is returned.
 
         Raises:
             ValueError:
                 A ``ValueError`` exception is being produced if the amount of requested proposals
                 is bigger than the possible combinations and ``allow_duplicates`` is ``False``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
-
             ValueError:
                 A ``ValueError`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
@@ -181,13 +180,14 @@ class BaseTuner:
         """
 
         if not allow_duplicates:
-            self._check_proposals(num_proposals)
+            self._check_proposals(n)
 
-        proposed = self._propose(num_proposals, allow_duplicates)
+        proposed = self._propose(n, allow_duplicates)
+
         hyperparameters = self.tunable.inverse_transform(proposed)
         hyperparameters = hyperparameters.to_dict(orient='records')
 
-        if num_proposals == 1:
+        if n == 1:
             hyperparameters = hyperparameters[0]
 
         return hyperparameters
@@ -195,7 +195,7 @@ class BaseTuner:
     def record(self, trials, scores):
         """Record one or more ``trials`` with the associated ``scores``.
 
-        Records one or more ``trials`` with the associated ``scores`` to it. The amount of trials
+        ``Trials`` are recorded with their associated ``scores``. The amount of trials
         must be equal to the amount of scores recived and vice versa.
 
         Args:
@@ -238,4 +238,107 @@ class BaseTuner:
             raise ValueError('The amount of trials must be equal to the amount of scores.')
 
         self.trials = np.append(self.trials, trials, axis=0)
-        self.scores = np.append(self.scores, scores)
+        self._trials_set.update(map(tuple, trials))
+        self.raw_scores = np.append(self.raw_scores, scores)
+        self.scores = self.raw_scores if self.maximize else -self.raw_scores
+
+
+class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
+    """BaseMetaModelTuner class.
+
+    BaseMetaModelTuner class is the abstract representation of a tuner that is based
+    on a model and an ``Acquisition``. This model will try to `predict` the
+    score that will be obtained with the proposed parameters by being trained
+    over the ``self.trials`` and ``self.raw_scores`` recorded by the user.
+
+    Attributes:
+        tunable (btb.tuning.tunable.Tunable):
+            Instance of a tunable class containing hyperparameters to be tuned.
+        trials (numpy.ndarray):
+            A ``numpy.ndarray`` with shape ``(n, self.tunable.dimensions)`` where ``n`` is the
+            number of trials recorded.
+        scores (numpy.ndarray):
+            A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of scores recorded.
+
+    Args:
+        tunable (btb.tuning.tunable.Tunable):
+            Instance of a tunable class containing hyperparameters to be tuned.
+        num_candidates (int):
+            Number of samples to generate and select the best of it for each proposal. Defaults to
+            1000.
+        maximize (bool):
+            If ``True`` the model will understand that the score bigger is better, if ``False``
+            the smaller is better. Defaults to ``True``.
+        min_trials (int):
+            Number of recorded ``trials`` needed to perform a fitting over the model.
+            Defaults to 2.
+    """
+
+    _metamodel_kwargs = None
+    _acquisition_kwargs = None
+
+    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2, **kwargs):
+        self._num_candidates = num_candidates
+        self._min_trials = min_trials
+        super().__init__(tunable, maximize)
+        self.__init_metamodel__(**(self._metamodel_kwargs or dict()))
+        self.__init_acquisition__(**(self._acquisition_kwargs or dict()))
+
+    def _propose(self, num_proposals, allow_duplicates):
+        if len(self._trials_set) < self._min_trials:
+            return self._sample(num_proposals, allow_duplicates)
+
+        num_samples = num_proposals * self._num_candidates
+        if not allow_duplicates:
+            remaining = self.tunable.cardinality - len(self._trials_set)
+            num_samples = min(remaining, num_samples)
+
+        proposals = self._sample(num_samples, allow_duplicates)
+        predicted = self._predict(proposals)
+        index = self._acquire(predicted, num_proposals)
+
+        return proposals[index]
+
+    def record(self, trials, scores):
+        """Record one or more ``trials`` with the associated ``scores`` and re-fit the model.
+
+        ``Trials`` are recorded with the associated ``scores`` to them. The amount of trials
+        must be equal to the amount of scores recived and vice versa. Once recorded, the ``model``
+        is being fitted with ``self.trials`` and ``self.raw_scores`` that contain any previous
+        records and the ones that where just recorded.
+
+        Args:
+            trials (pandas.DataFrame, pandas.Series, dict, list(dict), 2D array-like):
+                Values of shape ``(n, len(self.tunable.hyperparameters))`` or dict with keys that
+                are ``self.tunable.names``.
+
+            scores (single value or array-like):
+                A single value or array-like of values representing the score achieved with the
+                trials.
+
+        Raises:
+            ValueError:
+                A ``ValueError`` exception is being produced if ``len(trials)`` is not equal to
+                ``len(scores)``.
+
+        Example:
+            The example below shows simple usage case where an ``UniformTuner`` is being imported,
+            instantiated with a ``tunable`` object and it's method record is being called two times
+            with valid trials and scores.
+
+            >>> from btb.tuning.tunable import Tunable
+            >>> from btb.tuning.hyperparams import BooleanHyperParam
+            >>> from btb.tuning.hyperparams import CategoricalHyperParam
+            >>> from btb.tuning.tuners import UniformTuner
+            >>> bhp = BooleanHyperParam()
+            >>> chp = CategoricalHyperParam(['cat', 'dog'])
+            >>> tunable = Tunable({'bhp': bhp, 'chp': chp})
+            >>> tuner = UniformTuner(tunable)
+            >>> tuner.record({'bhp': True, 'chp': 'cat'}, 0.8)
+            >>> trials = [{'bhp': False, 'chp': 'cat'}, {'bhp': True, 'chp': 'dog'}]
+            >>> scores = [0.8, 0.1]
+            >>> tuner.record(trials, scores)
+        """
+        super().record(trials, scores)
+        if len(self.trials) >= self._min_trials:
+            self._fit(self.trials, self.scores)

@@ -27,15 +27,22 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         If ``self.dimensions`` is 1, only scalars, or lists of scalars or 1d arrays or
         2d arrays with one column are accepted and are transformed to:
+
             - scalar: 2d array with a single row and column.
+
             - list of scalars: 2d array with the list of scalars as its single column.
+
             - 1d array: 2d array with the given 1d array as its only column.
+
             - 2d array: the same array is returned unmodified.
 
         If ``self.dimensions`` is greater than one, only lists of scalars, or lists of lists
         or 1d arrays or 2d arrays are accepted and are transformed to:
+
             - list of scalars: 2d array with the list of scalars as its single row.
+
             - 1d array: 2d array with the given 1d array as its only row.
+
             - 2d array: the same array is returned unmodified.
 
         Args:
@@ -147,9 +154,9 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
-            instantiated with a range from 1 to 4, and it's method ``inverse_transform`` is being
-            called two times with a single scalar from the search space and an array of two valid
-            values from the search space.
+            instantiated with a range from 1 to 4, and its method ``inverse_transform`` is being
+            called two times with a scalar from the search space and an array of two valid values
+            from the search space.
 
             >>> from btb.tuning.hyperparams.numerical import IntHyperParam
             >>> ihp = IntHyperParam(min=1, max=4)
@@ -178,7 +185,7 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
-            instantiated with a range from 1 to 4, and it's method ``sample`` is being called
+            instantiated with a range from 1 to 4, and its method ``sample`` is being called
             with a number of samples to be obtained. A ``numpy.ndarray`` with values from the
             search space is being returned.
 
@@ -217,7 +224,7 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         Example:
             The example below shows simple usage case where an ``IntHyperParam`` is being imported,
-            instantiated with a range from 1 to 4, and it's method ``transform`` is being called
+            instantiated with a range from 1 to 4, and its method ``transform`` is being called
             three times with a single scalar value, an array of two valid values and a 2D array
             with 1 dimension.
 

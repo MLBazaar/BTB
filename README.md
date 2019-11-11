@@ -7,15 +7,15 @@
 
 A simple, extensible backend for developing auto-tuning systems.
 
-[![PyPi](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
-[![Travis](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
-[![CodeCov](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
+[![PyPi Shield](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
+[![Travis CI Shield](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
+[![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
 
 
-- Free software: MIT license
-- Documentation: https://hdi-project.github.io/BTB
-- Homepage: https://github.com/hdi-project/BTB
+* Free software: MIT license
+* Documentation: https://HDI-Project.github.io/BTB
+* Homepage: https://github.com/HDI-Project/BTB
 
 # Overview
 
@@ -23,9 +23,11 @@ Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-
 
 *BTB is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).*
 
+# Install
+
 ## Requirements
 
-**BTB** has been developed and tested on [Python 3.5, 3.6 and 3.7](https://www.python.org/downloads/)
+**BTB** has been developed and tested on [Python 3.5, 3.6 and 3.7](https://www.python.org/downloads)
 
 Also, although it is not strictly required, the usage of a
 [virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
@@ -59,7 +61,7 @@ This will pull and install the latest stable release from [PyPi](https://pypi.or
 
 ## Install from Source
 
-Alternatively, with your virtualenv activated, you can clone the repository and install it from
+With your virtualenv activated, you can clone the repository and install it from
 source by running `make install` on the `stable` branch:
 
 ```bash
@@ -69,41 +71,52 @@ git checkout stable
 make install
 ```
 
-## Quickstart
+## Install for Development
+
+If you want to contribute to the project, a few more steps are required to make the project ready
+for development.
+
+Please head to the [Contributing Guide](https://HDI-Project.github.io/BTB/contributing.html#get-started)
+for more details about this process.
+
+# Quickstart
 
 ## Tuners
 
 Tuners are specifically designed to speed up the process of selecting the
 optimal hyper parameter values for a specific machine learning algorithm.
 
-`btb.tuning` defines Tuners: classes with a fit/predict/propose interface for suggesting sets of hyperparameters.
+`btb.tuning.tuners` defines Tuners: classes with a fit/predict/propose interface for
+suggesting sets of hyperparameters.
 
 This is done by following a Bayesian Optimization approach and iteratively:
 
-* letting the tuner propose new sets of hyper parameter
-* fitting and scoring the model with the proposed hyper parameters
-* passing the score obtained back to the tuner
+- letting the tuner propose new sets of hyper parameter
+- fitting and scoring the model with the proposed hyper parameters
+- passing the score obtained back to the tuner
 
 At each iteration the tuner will use the information already obtained to propose
 the set of hyper parameters that it considers that have the highest probability
 to obtain the best results.
 
-In order to use a tuner we will create a ``Tuner`` instance indicating which parameters
-we want to tune, their types and the range of values that we want to try.
+To instantiate a ``Tuner`` all we need is a ``Tunable`` class with a collection of
+``hyperparameters``.
 
 ``` python
->>> from btb.tuning import GP
->>> from btb import HyperParameter, ParamTypes
->>> tunables = [
-... ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
-... ('max_depth', HyperParameter(ParamTypes.INT, [3, 20]))
-... ]
->>> tuner = GP(tunables)
+>>> from btb.tuning import Tunable
+>>> from btb.tuning.tuners import GPTuner
+>>> from btb.tuning.hyperparams import IntHyperParam
+>>> hyperparams = {
+...     'n_estimators': IntHyperParam(min=10, max=500),
+...     'max_depth': IntHyperParam(min=10, max=500),
+... }
+>>> tunable = Tunable(hyperparams)
+>>> tuner = GPTuner(tunable)
 ```
 
 Then we perform the following three steps in a loop.
 
-1. Let the Tuner propose a new set of parameters
+1. Let the Tuner propose a new set of parameters:
 
     ``` python
     >>> parameters = tuner.propose()
@@ -111,7 +124,7 @@ Then we perform the following three steps in a loop.
     {'n_estimators': 297, 'max_depth': 3}
     ```
 
-2. Fit and score a new model using these parameters
+2. Fit and score a new model using these parameters:
 
     ``` python
     >>> model = RandomForestClassifier(**parameters)
@@ -128,30 +141,17 @@ Then we perform the following three steps in a loop.
     0.77
     ```
 
-3. Pass the used parameters and the score obtained back to the tuner
+3. Pass the used parameters and the score obtained back to the tuner:
 
     ``` python
-    tuner.add(parameters, score)
+    tuner.record(parameters, score)
     ```
 
-At each iteration, the `Tuner` will use the information about the previous tests
+At each iteration, the ``Tuner`` will use the information about the previous tests
 to evaluate and propose the set of parameter values that have the highest probability
 of obtaining the highest score.
 
-For more detailed examples, check scripts from the `examples` folder.
-
-
-
-## Selectors
-
-Selectors apply multiple strategies to decide which models or families of models to
-train and test next based on how well thay have been performing in the previous test runs.
-This is an application of what is called the Multi-armed Bandit Problem.
-
-`btb.selection` defines Selectors: classes for choosing from a set of discrete options with multi-armed bandits.
-
-The process works by letting know the selector which models have been already tested
-and which scores they have obtained, and letting it decide which model to test next.
+### Selectors
 
 The selectors are intended to be used in combination with tuners in order to find
 out and decide which model seems to get the best results once it is properly fine tuned.
@@ -162,21 +162,26 @@ we want to try out, as well as the ``Selector`` instance.
 ```python
 >>> from sklearn.ensemble import RandomForestClassifier
 >>> from sklearn.svm import SVC
+>>> from btb.selection import UCB1
+>>> from btb.tuning.hyperparams import FloatHyperParam
 >>> models = {
 ...     'RF': RandomForestClassifier,
 ...     'SVC': SVC
 ... }
->>> from btb.selection import UCB1
 >>> selector = UCB1(['RF', 'SVC'])
+>>> rf_hyperparams = {
+...     'n_estimators': IntHyperParam(min=10, max=500),
+...     'max_depth': IntHyperParam(min=3, max=20)
+... }
+>>> rf_tunable = Tunable(rf_hyperparams)
+>>> svc_hyperparams = {
+...     'c': FloatHyperParam(min=0.01, max=10.0),
+...     'gamma': FloatHyperParam(0.000000001, 0.0000001)
+... }
+>>> svc_tunable = Tunable(svc_hyperparams)
 >>> tuners = {
-...     'RF': GP([
-...         ('n_estimators', HyperParameter(ParamTypes.INT, [10, 500])),
-...         ('max_depth', HyperParameter(ParamTypes.INT, [3, 20]))
-...     ]),
-...     'SVC': GP([
-...         ('c', HyperParameter(ParamTypes.FLOAT_EXP, [0.01, 10.0])),
-...         ('gamma', HyperParameter(ParamTypes.FLOAT, [0.000000001, 0.0000001]))
-...     ])
+...     'RF': GPTuner(rf_tunable),
+...     'SVC': GPTuner(svc_tunable)
 ... }
 ```
 
@@ -185,7 +190,10 @@ Then we perform the following steps in a loop.
 1. Pass all the obtained scores to the selector and let it decide which model to test.
 
     ``` python
-    >>> next_choice = selector.select({'RF': tuners['RF'].y, 'SVC': tuners['SVC'].y})
+    >>> next_choice = selector.select({
+    ...     'RF': tuners['RF'].scores,
+    ...     'SVC': tuners['SVC'].scores
+    ... })
     >>> next_choice
     'RF'
     ```
@@ -213,9 +221,9 @@ Then we perform the following steps in a loop.
     >>> score = model.score(X_test, y_test)
     >>> score
     0.89
-    >>> tuners[next_choice].add(parameters, score)
+    >>> tuners[next_choice].record(parameters, score)
     ```
-    
+
 ## What's next?
 For more details about **BTB** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/BTB/)!
@@ -226,9 +234,7 @@ If you use BTB, please consider citing the following work:
 
 - Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
 
-BibTeX entry:
-
-```bibtex
+``` bibtex
   @MastersThesis{Laura:2018,
     title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
     author = "Laura Gustafson",
@@ -240,9 +246,3 @@ BibTeX entry:
     school = "Massachusetts Institute of Technology",
   }
 ```
-
-# Related Projects
-
-* **ATM**: https://github.com/HDI-Project/ATM
-* **AutoBazaar**: https://github.com/HDI-Project/AutoBazaar
-* **mit-d3m-ta2**: https://github.com/HDI-Project/mit-d3m-ta2

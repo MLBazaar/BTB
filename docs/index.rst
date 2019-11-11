@@ -1,4 +1,4 @@
-.. mdinclude:: readme.rst
+.. include:: readme.rst
 
 .. toctree::
    :hidden:
@@ -7,15 +7,10 @@
    Overview <readme>
 
 .. toctree::
-   :caption: Advanced Usage
+   :caption: Resources
    :hidden:
 
    API Reference <api/btb>
-
-.. toctree::
-   :caption: Development Notes
-   :hidden:
-
    contributing
    authors
    history
