@@ -4,9 +4,10 @@
 
 import pandas as pd
 
-from btb.challenges import Rosenbrock
+from btb.benchmark.challenges import Bohachevsky, Rosenbrock
 
 DEFAULT_CHALLENGES = [
+    Bohachevsky,
     Rosenbrock,
 ]
 
