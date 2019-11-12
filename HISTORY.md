@@ -1,5 +1,44 @@
 # History
 
+## 0.3.0 - 2019-11-11
+
+With this release we introduce an improved `BTB` that has a major reorganization of the project
+with emphasis on an easier way of interacting with `BTB` and an easy way of developing, testing and
+contributing new acquisition functions, metamodels, tuners  and hyperparameters.
+
+### New project structure
+
+The new major reorganization comes with the `btb.tuning` module. This module provides everything
+needed for the `tuning` process and comes with three new additions `Acquisition`, `Metamodel` and
+`Tunable`. Also there is an update to the `Hyperparamters` and `Tuners`. This changes are meant
+to help developers and contributors to easily develop, test and contribute new `Tuners`.
+
+### New API
+
+There is a slightly new way of using `BTB` as the new `Tunable` class is introduced, that is meant
+to be the only requiered object to instantiate a `Tuner`. This `Tunable` class represents a
+collection of `HyperParams` that need to be tuned as a whole, at once. Now, in order to create a
+`Tuner`, a `Tunable` instance must be created first with the `hyperparameters` of the
+`objective function`.
+
+### New Features
+
+* New `Hyperparameters` that allow an easier interaction for the final user.
+* New `Tunable` class that manages a collection of `Hyperparameters`.
+* New `Tuner` class that is a python mixin that requieres of `Acquisition` and `Metamodel` as
+parents. Also now works with a single `Tunable` object.
+* New `Acquisition` class, meant to implement an acquisition function to be inherit by a `Tuner`.
+* New `Metamodel` class, meant to implement everything that a certain `model` needs and be inherit
+by the `Tuner`.
+* Reorganization of the `selection` module to follow a similar `API` to `tuning`.
+
+### Resolved Issues
+
+* Issue #131: Reorganize the project structure.
+* Issue #133: Implement Tunable class to control a list of hyperparameters.
+* Issue #134: Implementation of Tuners for the new structure.
+* Issue #140: Reorganize selectors.
+
 ## 0.2.5
 
 ### Bug Fixes
