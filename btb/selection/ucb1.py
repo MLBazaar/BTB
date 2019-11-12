@@ -1,7 +1,8 @@
+import random
+
 import numpy as np
 
 from btb.selection.selector import Selector
-from btb.util import shuffle
 
 
 class UCB1(Selector):
@@ -14,6 +15,13 @@ class UCB1(Selector):
        Auer, Peter et al. "Finite-time Analysis of the Multiarmed Bandit Problem."
        Machine Learning 47 (2002): 235-256.
     """
+
+    def _shuffle(self, iterable):
+        iterable = list(iterable)
+        inds = list(range(len(iterable)))
+        random.shuffle(inds)
+        for i in inds:
+            yield iterable[i]
 
     def bandit(self, choice_rewards):
         """
@@ -37,4 +45,4 @@ class UCB1(Selector):
             error = np.sqrt(2.0 * np.log(total_pulls) / choice_pulls)
             return average_reward + error
 
-        return max(shuffle(choice_rewards), key=ucb1)
+        return max(self._shuffle(choice_rewards), key=ucb1)

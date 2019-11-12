@@ -1,28 +1,26 @@
 # Config file for automatic testing at travis-ci.org
+dist: trusty
 language: python
-dist: xenial
 python:
-  - 2.7
-  - 3.4
   - 3.5
   - 3.6
-  - 3.7
+
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: required
 
 # Command to install dependencies
 install: pip install -U tox-travis codecov
 
+after_success: codecov
+
 # Command to run tests
 script: tox
 
-after_success: codecov
-
 deploy:
 
-  # Automatically build and deploy documentation to GitHub Pages after every
-  # commit
-  # Follow the instructions at https://docs.travis-ci.com/user/deployment/pages/
-  # to setup a personal deployment token and then provide it as a secure
-  # environment variable at https://travis-ci.org/HDI-Project/btb/settings
   - provider: pages
     skip-cleanup: true
     github-token: "$GITHUB_TOKEN"
@@ -31,4 +29,4 @@ deploy:
     target-branch: gh-pages
     on:
       branch: master
-      python: 3.7
+      python: 3.6
