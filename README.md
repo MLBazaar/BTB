@@ -21,7 +21,7 @@ A simple, extensible backend for developing auto-tuning systems.
 
 Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
 
-*BTB is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).*
+**BTB** is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).
 
 # Install
 
@@ -91,9 +91,9 @@ suggesting sets of hyperparameters.
 
 This is done by following a Bayesian Optimization approach and iteratively:
 
-- letting the tuner propose new sets of hyper parameter
-- fitting and scoring the model with the proposed hyper parameters
-- passing the score obtained back to the tuner
+* letting the tuner propose new sets of hyper parameter
+* fitting and scoring the model with the proposed hyper parameters
+* passing the score obtained back to the tuner
 
 At each iteration the tuner will use the information already obtained to propose
 the set of hyper parameters that it considers that have the highest probability
