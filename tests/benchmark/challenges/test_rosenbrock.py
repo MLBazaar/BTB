@@ -3,7 +3,7 @@
 from unittest import TestCase
 from unittest.mock import call, patch
 
-from btb.challenges.rosenbrock import Rosenbrock
+from btb.benchmark.challenges.rosenbrock import Rosenbrock
 
 
 class TestRosenbrock(TestCase):
@@ -24,8 +24,8 @@ class TestRosenbrock(TestCase):
         assert rosenbrock.a == 2
         assert rosenbrock.b == 3
 
-    @patch('btb.challenges.rosenbrock.IntHyperParam')
-    @patch('btb.challenges.rosenbrock.Tunable')
+    @patch('btb.benchmark.challenges.rosenbrock.IntHyperParam')
+    @patch('btb.benchmark.challenges.rosenbrock.Tunable')
     def test_get_tunable(self, mock_tunable, mock_inthyperparam):
         # setup
         mock_inthyperparam.side_effect = [1, 2]
