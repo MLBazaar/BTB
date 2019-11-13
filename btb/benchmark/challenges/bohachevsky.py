@@ -8,7 +8,7 @@ from btb.tuning.hyperparams import IntHyperParam
 
 
 class Bohachevsky(Challenge):
-    """Bohachevsky minimization challenge."""
+    """Bohachevsky challenge."""
     def __init__(self):
         pass
 
@@ -20,4 +20,5 @@ class Bohachevsky(Challenge):
         return Tunable({'x': x, 'y': y})
 
     def score(self, x, y):
-        return -(x**2 + 2 * y**2 - 0.3 * np.cos(3 * np.pi * x) - 0.4 * np.cos(4 * np.pi * y) + 0.7)
+        z = np.cos(3 * np.pi * x)
+        return -1 * (x**2 + 2 * y**2 - 0.3 * z - 0.4 * np.cos(4 * np.pi * y) + 0.7)
