@@ -14,15 +14,23 @@ class TestRosenbrock(TestCase):
 
         # assert
         assert rosenbrock.a == 1
-        assert rosenbrock.b == 1
+        assert rosenbrock.b == 100
+        assert rosenbrock.min_x == -50
+        assert rosenbrock.max_x == 50
+        assert rosenbrock.min_y == -50
+        assert rosenbrock.max_y == 50
 
     def test___init__custom(self):
         # run
-        rosenbrock = Rosenbrock(a=2, b=3)
+        rosenbrock = Rosenbrock(a=2, b=3, min_x=4, max_x=5, min_y=6, max_y=7)
 
         # assert
         assert rosenbrock.a == 2
         assert rosenbrock.b == 3
+        assert rosenbrock.min_x == 4
+        assert rosenbrock.max_x == 5
+        assert rosenbrock.min_y == 6
+        assert rosenbrock.max_y == 7
 
     @patch('btb.benchmark.challenges.rosenbrock.IntHyperParam')
     @patch('btb.benchmark.challenges.rosenbrock.Tunable')
@@ -32,7 +40,23 @@ class TestRosenbrock(TestCase):
         mock_tunable.return_value = 'tunable'
 
         # run
-        result = Rosenbrock.get_tunable()
+        result = Rosenbrock().get_tunable()
+
+        # assert
+        assert result == 'tunable'
+        mock_inthyperparam.call_args_list == [call(min=-50, max=50), call(min=-50, max=50)]
+        mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
+
+    @patch('btb.benchmark.challenges.rosenbrock.IntHyperParam')
+    @patch('btb.benchmark.challenges.rosenbrock.Tunable')
+    def test_get_tunable_custom_min_max(self, mock_tunable, mock_inthyperparam):
+        # setup
+        mock_inthyperparam.side_effect = [1, 2]
+        mock_tunable.return_value = 'tunable'
+        instance = Rosenbrock(min_x=1, max_x=2, min_y=3, max_y=4)
+
+        # run
+        result = instance.get_tunable()
 
         # assert
         assert result == 'tunable'
@@ -45,5 +69,5 @@ class TestRosenbrock(TestCase):
         result_2 = Rosenbrock().score(1, 1)
 
         # assert
-        assert result == -1
+        assert result == 100
         assert result_2 == 0

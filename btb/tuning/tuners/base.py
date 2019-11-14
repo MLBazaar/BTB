@@ -256,8 +256,31 @@ class BaseTuner:
 
             * iterations (int):
                 Number of tuning iterations to perform.
+
+            * tuner_args (dict):
+                Dictionary that contains parameters to instantiate the ``Tuner`` with.
         """
-        def tuner_function(scoring_function, tunable, iterations):
+        def tuner_function(scoring_function, tunable, iterations, **tuner_args):
+            """Tuner Function.
+
+            This function instantiates a ``Tuner`` with the given arguments, then tunes this
+            instance as many times as ``iterations`` amount, then return the ``best_score`` found.
+
+            Args:
+                scoring_function (function):
+                  Python function used to score the given parameters.
+                tunable (btb.tuning.Tunable):
+                  A tunable object that contains the hyperparameters to be tuned.
+                iterations (int):
+                  Number of tuning iterations to perform.
+                tuner_args (dict):
+                  Dictionary that contains parameters to instantiate the ``Tuner`` with.
+
+            Returns:
+                float:
+                    Best score that has been found.
+            """
+            kwargs.update(tuner_args)
             tuner = cls(tunable, *args, **kwargs)
             best_score = -np.inf
 

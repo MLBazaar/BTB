@@ -51,8 +51,9 @@ def benchmark(tuner_function, challenges=DEFAULT_CHALLENGES, iterations=1000):
     for challenge_class in challenges:
         challenge = challenge_class()
         tunable = challenge.get_tunable()
+        tuner_params = challenge.get_tuner_params()
 
-        score = tuner_function(challenge.score, tunable, iterations)
+        score = tuner_function(challenge.score, tunable, iterations, **tuner_params)
 
         result = pd.Series({
             'score': score,

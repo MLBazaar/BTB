@@ -8,9 +8,23 @@ from btb.tuning.hyperparams import IntHyperParam
 
 
 class Bohachevsky(Challenge):
-    """Bohachevsky challenge."""
+    r"""Bohachevsky challenge.
+
+    The Bohachevsky functions are bowl shape functions. This function is usually evaluated on the
+    square :math:`xii \Epsilon [-100, 100]` square for all :math:`i = 1, 2`. For more information
+    please visit: https://www.sfu.ca/~ssurjano/boha.html
+
+    The function is defined by:
+        :math:`f(x, y) = x^2 + 2y^2 -0.3cos(3\pi x)-0.4cos(4\pi y)+0.7`
+
+    It has one local minimum at:
+        :math:`(x, y) = (0, 0)` where `f(x, y) = 0`.
+    """
     def __init__(self):
         pass
+
+    def get_tuner_params(self):
+        return {'maximize': False}
 
     @staticmethod
     def get_tunable():
