@@ -11,28 +11,39 @@ class Bohachevsky(Challenge):
     r"""Bohachevsky challenge.
 
     The Bohachevsky functions are bowl shape functions. This function is usually evaluated on the
-    square :math:`xii \Epsilon [-100, 100]` square for all :math:`i = 1, 2`. For more information
+    input domain :math:`x \epsilon [-100, 100], y \epsilon [-100, 100]`. For more information
     please visit: https://www.sfu.ca/~ssurjano/boha.html
 
     The function is defined by:
         :math:`f(x, y) = x^2 + 2y^2 -0.3cos(3\pi x)-0.4cos(4\pi y)+0.7`
 
     It has one local minimum at:
-        :math:`(x, y) = (0, 0)` where `f(x, y) = 0`.
+        :math:`(x, y) = (0, 0)` where :math:`f(x, y) = 0`.
+
+    Args:
+        min_x (int):
+            Minimum number that the hyperparameter can propouse for ``x``. Defaults to -100.
+        max_x (int):
+            Maximum number that the hyperparameter can propouse for ``x``. Defaults to 100.
+        min_y (int):
+            Minimum number that the hyperparameter can propouse for ``y``. Defaults to -100.
+        max_y (int):
+            Maximum number that the hyperparameter can propouse for ``y``. Defaults to 100.
     """
-    def __init__(self):
-        pass
+    def __init__(self, min_x=-100, max_x=100, min_y=-100, max_y=100):
+        self.min_x = min_x
+        self.max_x = max_x
+        self.min_y = min_y
+        self.max_y = max_y
+
+    def get_tunable(self):
+        x = IntHyperParam(min=self.min_x, max=self.max_x)
+        y = IntHyperParam(min=self.min_y, max=self.max_y)
+
+        return Tunable({'x': x, 'y': y})
 
     def get_tuner_params(self):
         return {'maximize': False}
 
-    @staticmethod
-    def get_tunable():
-        x = IntHyperParam(min=-100, max=100)
-        y = IntHyperParam(min=-100, max=100)
-
-        return Tunable({'x': x, 'y': y})
-
     def score(self, x, y):
-        z = np.cos(3 * np.pi * x)
-        return -1 * (x**2 + 2 * y**2 - 0.3 * z - 0.4 * np.cos(4 * np.pi * y) + 0.7)
+        return x**2 + 2 * y**2 - 0.3 * np.cos(3 * np.pi * x) - 0.4 * np.cos(4 * np.pi * y) + 0.7

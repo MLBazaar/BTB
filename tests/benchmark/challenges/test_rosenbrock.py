@@ -44,7 +44,7 @@ class TestRosenbrock(TestCase):
 
         # assert
         assert result == 'tunable'
-        mock_inthyperparam.call_args_list == [call(min=-50, max=50), call(min=-50, max=50)]
+        assert mock_inthyperparam.call_args_list == [call(min=-50, max=50), call(min=-50, max=50)]
         mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
 
     @patch('btb.benchmark.challenges.rosenbrock.IntHyperParam')
@@ -60,7 +60,7 @@ class TestRosenbrock(TestCase):
 
         # assert
         assert result == 'tunable'
-        mock_inthyperparam.call_args_list == [call(min=-50, max=50), call(min=-50, max=50)]
+        assert mock_inthyperparam.call_args_list == [call(min=1, max=2), call(min=3, max=4)]
         mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
 
     def test_score(self):

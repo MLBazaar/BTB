@@ -38,7 +38,6 @@ class Rosenbrock(Challenge):
         max_y (int):
             Maximum number that the hyperparameter can propouse for ``y``. Defaults to 50.
     """
-
     def __init__(self, a=1, b=100, min_x=-50, max_x=50, min_y=-50, max_y=50):
         self.a = a
         self.b = b
@@ -47,14 +46,14 @@ class Rosenbrock(Challenge):
         self.min_y = min_y
         self.max_y = max_y
 
-    def get_tuner_params(self):
-        return {'maximize': False}
-
     def get_tunable(self):
         x = IntHyperParam(min=self.min_x, max=self.max_x)
         y = IntHyperParam(min=self.min_y, max=self.max_y)
 
         return Tunable({'x': x, 'y': y})
+
+    def get_tuner_params(self):
+        return {'maximize': False}
 
     def score(self, x, y):
         return (self.a - x)**2 + self.b * (y - x**2)**2
