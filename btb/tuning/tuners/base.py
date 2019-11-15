@@ -122,7 +122,6 @@ class BaseTuner:
                 It returns ``numpy.ndarray`` with shape
                 ``(num_proposals, len(self.tunable.hyperparameters)``.
         """
-        pass
 
     def propose(self, n=1, allow_duplicates=False):
         """Propose one or more new hyperparameter configurations.

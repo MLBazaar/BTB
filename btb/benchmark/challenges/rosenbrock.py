@@ -13,8 +13,10 @@ class Rosenbrock(Challenge):
     algorithms.[1] It is also known as Rosenbrock's valley or Rosenbrock's banana function.
 
     The global minimum is inside a long, narrow, parabolic shaped flat valley. To find the valley
-    is trivial. To converge to the global minimum, however, is difficult. More information can be
-    found at: https://en.wikipedia.org/wiki/Rosenbrock_function
+    is trivial. To converge to the global minimum, however, is difficult.
+
+    Reference:
+        https://en.wikipedia.org/wiki/Rosenbrock_function
 
     The function is defined by:
         :math:`f(x, y) = (a - x)^2 + b(y - x ^2)^2`

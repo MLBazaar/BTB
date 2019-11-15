@@ -43,6 +43,8 @@ autodoc_default_options = {
     'autosummary': True,
 }
 
+autodoc_default_flags = ['members', 'inherited-members']
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

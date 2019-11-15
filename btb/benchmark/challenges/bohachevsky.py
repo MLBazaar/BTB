@@ -11,8 +11,10 @@ class Bohachevsky(Challenge):
     r"""Bohachevsky challenge.
 
     The Bohachevsky functions are bowl shape functions. This function is usually evaluated on the
-    input domain :math:`x \epsilon [-100, 100], y \epsilon [-100, 100]`. For more information
-    please visit: https://www.sfu.ca/~ssurjano/boha.html
+    input domain :math:`x \epsilon [-100, 100], y \epsilon [-100, 100]`.
+
+    Reference:
+        https://www.sfu.ca/~ssurjano/boha.html
 
     The function is defined by:
         :math:`f(x, y) = x^2 + 2y^2 -0.3cos(3\pi x)-0.4cos(4\pi y)+0.7`

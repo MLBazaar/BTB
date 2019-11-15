@@ -19,7 +19,6 @@ class Challenge(metaclass=ABCMeta):
             ``btb.tuning.Tunable``:
                 A ``Tunable`` instance to be used to tune the ``self.score`` method.
         """
-        pass
 
     def get_tuner_params(self):
         """Obtain the configuration needed for the ``Tuner`` to work with this challenge.
@@ -38,4 +37,3 @@ class Challenge(metaclass=ABCMeta):
         This method will score a result with a given configuration, then return the score obtained
         for those ``arguments``.
         """
-        pass
