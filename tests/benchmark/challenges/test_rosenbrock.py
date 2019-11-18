@@ -69,5 +69,5 @@ class TestRosenbrock(TestCase):
         result_2 = Rosenbrock().evaluate(1, 1)
 
         # assert
-        assert result == 100
+        assert result == -100
         assert result_2 == 0
