@@ -54,8 +54,5 @@ class Rosenbrock(Challenge):
 
         return Tunable({'x': x, 'y': y})
 
-    def get_tuner_params(self):
-        return {'maximize': False}
-
-    def score(self, x, y):
-        return (self.a - x)**2 + self.b * (y - x**2)**2
+    def evaluate(self, x, y):
+        return -1 * (self.a - x)**2 + self.b * (y - x**2)**2

@@ -122,6 +122,7 @@ class BaseTuner:
                 It returns ``numpy.ndarray`` with shape
                 ``(num_proposals, len(self.tunable.hyperparameters)``.
         """
+        pass
 
     def propose(self, n=1, allow_duplicates=False):
         """Propose one or more new hyperparameter configurations.
@@ -240,58 +241,6 @@ class BaseTuner:
         self._trials_set.update(map(tuple, trials))
         self.raw_scores = np.append(self.raw_scores, scores)
         self.scores = self.raw_scores if self.maximize else -self.raw_scores
-
-    @classmethod
-    def as_tuning_function(cls, *args, **kwargs):
-        """Tuner as a tuning function.
-
-        This function returns a function that recives as arguments:
-
-            * scoring_function (function):
-                Python function used to score the given parameters.
-
-            * tunable (btb.tuning.Tunable):
-                A tunable object that contains the hyperparameters to be tuned.
-
-            * iterations (int):
-                Number of tuning iterations to perform.
-
-            * tuner_args (dict):
-                Dictionary that contains parameters to instantiate the ``Tuner`` with.
-        """
-        def tuner_function(scoring_function, tunable, iterations, **tuner_args):
-            """Tuner Function.
-
-            This function instantiates a ``Tuner`` with the given arguments, then tunes this
-            instance as many times as ``iterations`` amount, then return the ``best_score`` found.
-
-            Args:
-                scoring_function (function):
-                  Python function used to score the given parameters.
-                tunable (btb.tuning.Tunable):
-                  A tunable object that contains the hyperparameters to be tuned.
-                iterations (int):
-                  Number of tuning iterations to perform.
-                tuner_args (dict):
-                  Dictionary that contains parameters to instantiate the ``Tuner`` with.
-
-            Returns:
-                float:
-                    Best score that has been found.
-            """
-            kwargs.update(tuner_args)
-            tuner = cls(tunable, *args, **kwargs)
-            best_score = -np.inf
-
-            for _ in range(iterations):
-                proposal = tuner.propose()
-                score = scoring_function(**proposal)
-                tuner.record(proposal, score)
-                best_score = max(score, best_score)
-
-            return best_score
-
-        return tuner_function
 
 
 class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):

@@ -11,28 +11,36 @@ class TestBenchmark(TestCase):
     def test_benchmark_challenges_not_list(self):
 
         # setup
-        tuner_function = MagicMock(return_value='score')
+        function = MagicMock(return_value=0.1)
+        tuner_function = {'test': function}
         challenge = MagicMock(__name__='challenge')
         challenge.return_value.get_tunable.return_value = 'tunable'
 
-        # assert
+        # run
         result = benchmark(tuner_function, challenges=challenge)
 
-        # run
+        # assert
         expected_result = pd.DataFrame({
-            'score': ['score'],
+            'avg': [0.1],
+            'challenge': 'challenge',
             'iterations': [1000],
-            'challenge': 'challenge'
+            'tuner': 'test',
+            'score': [0.1],
         })
 
-        tuner_function.assert_called_once_with(challenge.return_value.score, 'tunable', 1000)
+        function.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
         challenge.return_value.get_tunable.assert_called_once_with()
-        pd.testing.assert_frame_equal(result, expected_result)
+
+        pd.testing.assert_frame_equal(
+            result.sort_index(axis=1),
+            expected_result.sort_index(axis=1),
+        )
 
     def test_benchmark_challenges_list(self):
 
         # setup
-        tuner_function = MagicMock(return_value='score')
+        function = MagicMock(return_value=0.1)
+        tuner_function = {'test': function}
         challenge = MagicMock(__name__='challenge')
         challenge.return_value.get_tunable.return_value = 'tunable'
 
@@ -41,11 +49,17 @@ class TestBenchmark(TestCase):
 
         # run
         expected_result = pd.DataFrame({
-            'score': ['score'],
+            'challenge': 'challenge',
+            'tuner': 'test',
+            'score': [0.1],
             'iterations': [1000],
-            'challenge': 'challenge'
+            'avg': [0.1],
         })
 
-        tuner_function.assert_called_once_with(challenge.return_value.score, 'tunable', 1000)
+        function.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
         challenge.return_value.get_tunable.assert_called_once_with()
-        pd.testing.assert_frame_equal(result, expected_result)
+
+        pd.testing.assert_frame_equal(
+            result.sort_index(axis=1),
+            expected_result.sort_index(axis=1),
+        )

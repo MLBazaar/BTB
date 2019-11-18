@@ -74,20 +74,13 @@ class TestBranin(TestCase):
         assert mock_floathyperparam.call_args_list == [call(min=1, max=2), call(min=3, max=4)]
         mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
 
-    def test_get_tuner_params(self):
+    def test_evaluate(self):
         # run
-        result = Branin().get_tuner_params()
+        result = Branin().evaluate(-np.pi, 12.275)
+        result_2 = Branin().evaluate(np.pi, 2.275)
+        result_3 = Branin().evaluate(10, 1)
 
         # assert
-        assert result == {'maximize': False}
-
-    def test_score(self):
-        # run
-        result = Branin().score(-np.pi, 12.275)
-        result_2 = Branin().score(np.pi, 2.275)
-        result_3 = Branin().score(10, 1)
-
-        # assert
-        assert result.round(6) == 0.397887
-        assert result_2.round(6) == 0.397887
-        assert result_3.round(6) == 5.954976
+        assert result.round(6) == -0.397887
+        assert result_2.round(6) == -0.397887
+        assert result_3.round(6) == -5.954976

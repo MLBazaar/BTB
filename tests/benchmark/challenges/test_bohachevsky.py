@@ -60,18 +60,11 @@ class TestBohachevsky(TestCase):
         assert mock_inthyperparam.call_args_list == [call(min=1, max=2), call(min=3, max=4)]
         mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
 
-    def test_get_tuner_params(self):
+    def test_evaluate(self):
         # run
-        result = Bohachevsky().get_tuner_params()
+        result = Bohachevsky().evaluate(1, 2)
+        result_2 = Bohachevsky().evaluate(0, 0)
 
         # assert
-        assert result == {'maximize': False}
-
-    def test_score(self):
-        # run
-        result = Bohachevsky().score(1, 2)
-        result_2 = Bohachevsky().score(0, 0)
-
-        # assert
-        assert result == 9.6
+        assert result == -9.6
         assert result_2 == 0

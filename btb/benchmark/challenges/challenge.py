@@ -31,8 +31,8 @@ class Challenge(metaclass=ABCMeta):
         return dict()
 
     @abstractmethod
-    def score(self, *args, **kwargs):
-        """Perform scoring with given ``arguments``.
+    def evaluate(self, *args, **kwargs):
+        """Perform evaluation for the given ``arguments``.
 
         This method will score a result with a given configuration, then return the score obtained
         for those ``arguments``.

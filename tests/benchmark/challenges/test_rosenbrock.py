@@ -63,17 +63,10 @@ class TestRosenbrock(TestCase):
         assert mock_inthyperparam.call_args_list == [call(min=1, max=2), call(min=3, max=4)]
         mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
 
-    def test_get_tuner_params(self):
+    def test_evaluate(self):
         # run
-        result = Rosenbrock().get_tuner_params()
-
-        # assert
-        assert result == {'maximize': False}
-
-    def test_score(self):
-        # run
-        result = Rosenbrock().score(1, 2)
-        result_2 = Rosenbrock().score(1, 1)
+        result = Rosenbrock().evaluate(1, 2)
+        result_2 = Rosenbrock().evaluate(1, 1)
 
         # assert
         assert result == 100

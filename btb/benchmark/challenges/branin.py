@@ -62,9 +62,6 @@ class Branin(Challenge):
 
         return Tunable({'x': x, 'y': y})
 
-    def get_tuner_params(self):
-        return {'maximize': False}
-
-    def score(self, x, y):
+    def evaluate(self, x, y):
         z = (y - self.b * x**2 + self.c * x - self.r)**2
-        return self.a * z + self.s * (1 - self.t) * np.cos(x) + self.s
+        return -1 * (self.a * z + self.s * (1 - self.t) * np.cos(x) + self.s)

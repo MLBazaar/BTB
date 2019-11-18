@@ -36,3 +36,4 @@ class BaseAcquisition(metaclass=ABCMeta):
             numpy.ndarray:
                 Selected candidates indexes.
         """
+        pass

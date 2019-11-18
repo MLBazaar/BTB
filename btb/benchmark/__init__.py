@@ -11,16 +11,16 @@ DEFAULT_CHALLENGES = [
 ]
 
 
-def benchmark(tuner_function, challenges=DEFAULT_CHALLENGES, iterations=1000):
+def benchmark(tuning_functions, challenges=DEFAULT_CHALLENGES, iterations=1000):
     """Benchmark function.
 
     This benchmark function iterates over a collection of ``challenges`` and executes a
     ``tuner_function`` for each one of the ``challenges`` for a given amount of iterations.
 
     Args:
-        tuner_function (function):
-            Python function that returns the best score for a given ``scorer``. This function
-            must have three arguments:
+        tuning_functions (dict):
+            Python dictionary with the ``name`` of the function as ``key`` and the function that
+            returns the best score for a given ``scorer``. This function must have three arguments:
 
                 * scorer (function):
                     A function that performs scoring over params.
@@ -51,16 +51,18 @@ def benchmark(tuner_function, challenges=DEFAULT_CHALLENGES, iterations=1000):
     for challenge_class in challenges:
         challenge = challenge_class()
         tunable = challenge.get_tunable()
-        tuner_params = challenge.get_tuner_params()
+        for name, function in tuning_functions.items():
+            score = function(challenge.evaluate, tunable, iterations)
 
-        score = tuner_function(challenge.score, tunable, iterations, **tuner_params)
+            result = pd.Series({
+                'challenge': challenge_class.__name__,
+                'tuner': name,
+                'score': score,
+                'iterations': iterations,
+            })
 
-        result = pd.Series({
-            'score': score,
-            'iterations': iterations,
-            'challenge': challenge_class.__name__,
-        })
+            results.append(result)
 
-        results.append(result)
-
-    return pd.DataFrame(results)
+    df = pd.DataFrame(results)
+    df['avg'] = df['score'].mean()
+    return df

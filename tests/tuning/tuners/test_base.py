@@ -304,23 +304,6 @@ class TestBaseTuner(TestCase):
         with self.assertRaises(ValueError):
             BaseTuner.record(instance, 1, [1, 2])
 
-    @patch('btb.tuning.tuners.base.BaseTuner.propose')
-    def test_as_tuning_function(self, mock_propose):
-        # setup
-        mock_propose.side_effect = [{'x': 1, 'y': 2}, {'x': 3, 'y': 1}]
-        tunable = MagicMock()
-        tunable.transform.return_value = [[1]]
-        scoring_function = MagicMock()
-        scoring_function.side_effect = [1, 2]
-
-        # run
-        tuner_function = BaseTuner.as_tuning_function()
-        best_score = tuner_function(scoring_function, tunable, 2)
-
-        # assert
-        assert best_score == 2
-        assert scoring_function.call_args_list == [call(x=1, y=2), call(x=3, y=1)]
-
 
 class TestBaseMetaModelTuner(TestCase):
     """Test BaseMetaModelTuner class."""

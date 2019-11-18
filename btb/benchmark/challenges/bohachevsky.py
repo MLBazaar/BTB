@@ -44,8 +44,6 @@ class Bohachevsky(Challenge):
 
         return Tunable({'x': x, 'y': y})
 
-    def get_tuner_params(self):
-        return {'maximize': False}
-
-    def score(self, x, y):
-        return x**2 + 2 * y**2 - 0.3 * np.cos(3 * np.pi * x) - 0.4 * np.cos(4 * np.pi * y) + 0.7
+    def evaluate(self, x, y):
+        z = 0.3 * np.cos(3 * np.pi * x)
+        return -1 * (x**2 + 2 * y**2 - z - 0.4 * np.cos(4 * np.pi * y) + 0.7)
