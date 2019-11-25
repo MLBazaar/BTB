@@ -12,4 +12,4 @@ def test_get_tuner_params():
     result = Challenge.get_tuner_params(instance)
 
     # assert
-    assert result == dict()
+    assert result == {}

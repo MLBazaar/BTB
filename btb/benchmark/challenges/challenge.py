@@ -28,7 +28,7 @@ class Challenge(metaclass=ABCMeta):
                 A dictionary containing the needed parameters for the ``Tuner`` to work properly
                 with this challenge.
         """
-        return dict()
+        return {}
 
     @abstractmethod
     def evaluate(self, *args, **kwargs):

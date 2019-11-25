@@ -56,7 +56,7 @@ def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
     if not isinstance(challenges, list):
         challenges = [challenges]
 
-    results = list()
+    results = []
 
     for challenge_class in challenges:
         challenge = challenge_class()
