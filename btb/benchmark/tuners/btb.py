@@ -15,7 +15,7 @@ def tune(tuner, scoring_function, iterations):
     return best_score
 
 
-def make_tuning_function(tuner_class, **tuner_kwargs):
+def make_tuning_function(tuner_class):
     def tuning_function(scoring_function, tunable, iterations, **tuner_kwargs):
         tuner = tuner_class(tunable, **tuner_kwargs)
         return tune(tuner, scoring_function, iterations)

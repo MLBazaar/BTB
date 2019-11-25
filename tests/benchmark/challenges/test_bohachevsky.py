@@ -45,19 +45,18 @@ class TestBohachevsky(TestCase):
         mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
 
     @patch('btb.benchmark.challenges.bohachevsky.IntHyperParam')
-    @patch('btb.benchmark.challenges.bohachevsky.Tunable')
+    @patch('btb.benchmark.challenges.bohachevsky.Tunable', autospec=True)
     def test_get_tunable_custom_min_max(self, mock_tunable, mock_inthyperparam):
         # setup
         mock_inthyperparam.side_effect = [1, 2]
-        mock_tunable.return_value = 'tunable'
         instance = Bohachevsky(min_x=1, max_x=2, min_y=3, max_y=4)
 
         # run
         result = instance.get_tunable()
 
         # assert
-        assert result == 'tunable'
-        assert mock_inthyperparam.call_args_list == [call(min=1, max=2), call(min=3, max=4)]
+        assert result == mock_tunable.return_value
+        mock_inthyperparam.assert_has_calls([call(min=1, max=2), call(min=3, max=4)])
         mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
 
     def test_evaluate(self):

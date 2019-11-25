@@ -11,15 +11,16 @@ DEFAULT_CHALLENGES = [
 ]
 
 
-def benchmark(tuning_functions, challenges=DEFAULT_CHALLENGES, iterations=1000):
+def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
     """Benchmark function.
 
     This benchmark function iterates over a collection of ``challenges`` and executes a
     ``tuner_function`` for each one of the ``challenges`` for a given amount of iterations.
 
     Args:
-        tuning_functions (dict):
-            Python dictionary with the ``name`` of the function as ``key`` and the function that
+        candidates (callable, list, tuple or dict):
+            Python callable function, list of callable functions, tuple with callable functions or
+            dictionary with the ``name`` of the function as ``key`` and the callable function that
             returns the best score for a given ``scorer``. This function must have three arguments:
 
                 * scorer (function):
@@ -42,6 +43,15 @@ def benchmark(tuning_functions, challenges=DEFAULT_CHALLENGES, iterations=1000):
             A ``pandas.DataFrame`` with the obtained scores for the given challenges is being
             returned.
     """
+    if callable(candidates):
+        candidates = {candidates.__name__: candidates}
+
+    elif isinstance(candidates, (list, tuple)):
+        candidates = {candidate.__name__: candidate for candidate in candidates}
+
+    elif not isinstance(candidates, dict):
+        raise TypeError(
+            'Candidates can only be a callable, list of callables, tuple of callables or dict.')
 
     if not isinstance(challenges, list):
         challenges = [challenges]
@@ -51,18 +61,23 @@ def benchmark(tuning_functions, challenges=DEFAULT_CHALLENGES, iterations=1000):
     for challenge_class in challenges:
         challenge = challenge_class()
         tunable = challenge.get_tunable()
-        for name, function in tuning_functions.items():
+
+        for name, function in candidates.items():
             score = function(challenge.evaluate, tunable, iterations)
 
-            result = pd.Series({
-                'challenge': challenge_class.__name__,
+            results.append({
+                'challenge': type(challenge).__name__,
                 'tuner': name,
                 'score': score,
-                'iterations': iterations,
             })
 
-            results.append(result)
+    df = pd.DataFrame.from_records(results)
+    df = df.pivot(index='tuner', columns='challenge', values='score')
 
-    df = pd.DataFrame(results)
-    df['avg'] = df['score'].mean()
+    del df.columns.name
+    del df.index.name
+
+    df['Mean'] = df.mean(axis=1)
+    df['Std'] = df.std(axis=1)
+
     return df

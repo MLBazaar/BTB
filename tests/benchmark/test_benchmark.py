@@ -13,7 +13,7 @@ class TestBenchmark(TestCase):
         # setup
         function = MagicMock(return_value=0.1)
         tuner_function = {'test': function}
-        challenge = MagicMock(__name__='challenge')
+        challenge = MagicMock()
         challenge.return_value.get_tunable.return_value = 'tunable'
 
         # run
@@ -21,12 +21,12 @@ class TestBenchmark(TestCase):
 
         # assert
         expected_result = pd.DataFrame({
-            'avg': [0.1],
-            'challenge': 'challenge',
-            'iterations': [1000],
-            'tuner': 'test',
-            'score': [0.1],
+            'MagicMock': [0.1],
+            'Mean': [0.1],
+            'Std': [0.0],
         })
+
+        expected_result.index = ['test']
 
         function.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
         challenge.return_value.get_tunable.assert_called_once_with()
@@ -49,12 +49,12 @@ class TestBenchmark(TestCase):
 
         # run
         expected_result = pd.DataFrame({
-            'challenge': 'challenge',
-            'tuner': 'test',
-            'score': [0.1],
-            'iterations': [1000],
-            'avg': [0.1],
+            'MagicMock': [0.1],
+            'Mean': [0.1],
+            'Std': [0.0],
         })
+
+        expected_result.index = ['test']
 
         function.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
         challenge.return_value.get_tunable.assert_called_once_with()
@@ -63,3 +63,8 @@ class TestBenchmark(TestCase):
             result.sort_index(axis=1),
             expected_result.sort_index(axis=1),
         )
+
+    def test_benchmark_candidates_not_dict_not_callable(self):
+        # setup
+        with self.assertRaises(TypeError):
+            benchmark(1)
