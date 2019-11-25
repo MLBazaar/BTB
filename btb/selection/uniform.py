@@ -10,4 +10,4 @@ class Uniform(Selector):
     """
 
     def select(self, choice_scores):
-        return self.choices[random.randint(0, len(self.choices) - 1)]
+        return random.choice(self.choices)
