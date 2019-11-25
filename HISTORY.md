@@ -1,5 +1,19 @@
 # History
 
+## 0.3.1 - 2019-11-25
+
+With this release we introduce a `benchmark` module for `BTB` which allows the users to perform
+a benchmark over a series of `challenges`.
+
+### New Features
+
+* New `benchmark` module.
+* New submodule named `challenges` to work toghether with `benchmark` module.
+
+### Resolved Issues
+
+* Issue #139: Implement a Benchmark for BTB
+
 ## 0.3.0 - 2019-11-11
 
 With this release we introduce an improved `BTB` that has a major reorganization of the project
