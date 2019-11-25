@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>History &mdash; BTB 0.3.1.dev0 documentation</title>
+  <title>History &mdash; BTB 0.3.2.dev0 documentation</title>
   
 
   
@@ -147,43 +147,48 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.3.0 - 2019-11-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#new-project-structure">New project structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#new-api">New API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.3.1 - 2019-11-25</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#new-features">New Features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#resolved-issues">Resolved Issues</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.2.5</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.3.0 - 2019-11-11</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-project-structure">New project structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-api">New API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">0.2.5</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug Fixes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.2.4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id6">0.2.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#internal-improvements">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">Bug fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Bug fixes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">0.2.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id6">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">0.2.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id8">Internal Improvements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">0.2.3</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id9">Bug Fixes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id10">0.2.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id11">Bug fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">0.2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Bug Fixes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id12">0.2.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id13">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id14">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id15">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">0.2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Bug fixes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id16">0.1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id17">0.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id16">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">0.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">0.1.1</a></li>
 </ul>
 </li>
 </ul>
@@ -255,7 +260,25 @@
   <div class="section" id="history">
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>0.3.0 - 2019-11-11<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>0.3.1 - 2019-11-25<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>With this release we introduce a <code class="docutils literal notranslate"><span class="pre">benchmark</span></code> module for <code class="docutils literal notranslate"><span class="pre">BTB</span></code> which allows the users to perform
+a benchmark over a series of <code class="docutils literal notranslate"><span class="pre">challenges</span></code>.</p>
+<div class="section" id="new-features">
+<h3>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">benchmark</span></code> module.</p></li>
+<li><p>New submodule named <code class="docutils literal notranslate"><span class="pre">challenges</span></code> to work toghether with <code class="docutils literal notranslate"><span class="pre">benchmark</span></code> module.</p></li>
+</ul>
+</div>
+<div class="section" id="resolved-issues">
+<h3>Resolved Issues<a class="headerlink" href="#resolved-issues" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Issue #139: Implement a Benchmark for BTB</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>0.3.0 - 2019-11-11<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>With this release we introduce an improved <code class="docutils literal notranslate"><span class="pre">BTB</span></code> that has a major reorganization of the project
 with emphasis on an easier way of interacting with <code class="docutils literal notranslate"><span class="pre">BTB</span></code> and an easy way of developing, testing and
 contributing new acquisition functions, metamodels, tuners  and hyperparameters.</p>
@@ -274,8 +297,8 @@ collection of <code class="docutils literal notranslate"><span class="pre">Hyper
 <code class="docutils literal notranslate"><span class="pre">Tuner</span></code>, a <code class="docutils literal notranslate"><span class="pre">Tunable</span></code> instance must be created first with the <code class="docutils literal notranslate"><span class="pre">hyperparameters</span></code> of the
 <code class="docutils literal notranslate"><span class="pre">objective</span> <span class="pre">function</span></code>.</p>
 </div>
-<div class="section" id="new-features">
-<h3>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>New Features<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>New <code class="docutils literal notranslate"><span class="pre">Hyperparameters</span></code> that allow an easier interaction for the final user.</p></li>
 <li><p>New <code class="docutils literal notranslate"><span class="pre">Tunable</span></code> class that manages a collection of <code class="docutils literal notranslate"><span class="pre">Hyperparameters</span></code>.</p></li>
@@ -287,8 +310,8 @@ by the <code class="docutils literal notranslate"><span class="pre">Tuner</span>
 <li><p>Reorganization of the <code class="docutils literal notranslate"><span class="pre">selection</span></code> module to follow a similar <code class="docutils literal notranslate"><span class="pre">API</span></code> to <code class="docutils literal notranslate"><span class="pre">tuning</span></code>.</p></li>
 </ul>
 </div>
-<div class="section" id="resolved-issues">
-<h3>Resolved Issues<a class="headerlink" href="#resolved-issues" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Resolved Issues<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Issue #131: Reorganize the project structure.</p></li>
 <li><p>Issue #133: Implement Tunable class to control a list of hyperparameters.</p></li>
@@ -297,8 +320,8 @@ by the <code class="docutils literal notranslate"><span class="pre">Tuner</span>
 </ul>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>0.2.5<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>0.2.5<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="bug-fixes">
 <h3>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -306,26 +329,26 @@ by the <code class="docutils literal notranslate"><span class="pre">Tuner</span>
 </ul>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>0.2.4<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>0.2.4<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="internal-improvements">
 <h3>Internal Improvements<a class="headerlink" href="#internal-improvements" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Issue #62: Test for <code class="docutils literal notranslate"><span class="pre">None</span></code> in <code class="docutils literal notranslate"><span class="pre">HyperParameter.cast</span></code> instead of <code class="docutils literal notranslate"><span class="pre">HyperParameter.__init__</span></code></p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h3>Bug fixes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>Bug fixes<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Issue #98: Categorical hyperparameters do not support <code class="docutils literal notranslate"><span class="pre">None</span></code> as input</p></li>
 <li><p>Issue #89: Fix the computation of <code class="docutils literal notranslate"><span class="pre">avg_rewards</span></code> in <code class="docutils literal notranslate"><span class="pre">BestKReward</span></code></p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>0.2.3<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id6">
-<h3>Bug Fixes<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h2>0.2.3<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>Bug Fixes<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Issue #84: Error in GP tuning when only one parameter is present bug</p></li>
 <li><p>Issue #96: Fix pickling of HyperParameters</p></li>
@@ -333,34 +356,34 @@ by the <code class="docutils literal notranslate"><span class="pre">Tuner</span>
 </ul>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>0.2.2<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id8">
-<h3>Internal Improvements<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h2>0.2.2<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h3>Internal Improvements<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Updated documentation</p></li>
 </ul>
 </div>
-<div class="section" id="id9">
-<h3>Bug Fixes<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>Bug Fixes<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Issue #94: Fix unicode <code class="docutils literal notranslate"><span class="pre">param_type</span></code> caused error on python 2.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id10">
-<h2>0.2.1<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id11">
-<h3>Bug fixes<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h2>0.2.1<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id14">
+<h3>Bug fixes<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Issue #74: <code class="docutils literal notranslate"><span class="pre">ParamTypes.STRING</span></code> tunables do not work</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id12">
-<h2>0.2.0<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id13">
-<h3>New Features<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h2>0.2.0<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id16">
+<h3>New Features<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>New Recommendation module</p></li>
 <li><p>New HyperParameter types</p></li>
@@ -370,8 +393,8 @@ by the <code class="docutils literal notranslate"><span class="pre">Tuner</span>
 <li><p>Replace print statements with logging</p></li>
 </ul>
 </div>
-<div class="section" id="id14">
-<h3>Internal Improvements<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>Internal Improvements<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Integrated with Travis-CI</p></li>
 <li><p>Exhaustive unit testing</p></li>
@@ -381,23 +404,23 @@ by the <code class="docutils literal notranslate"><span class="pre">Tuner</span>
 <li><p>Resolve Issue #34: make all imports explicit</p></li>
 </ul>
 </div>
-<div class="section" id="id15">
-<h3>Bug Fixes<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3>Bug Fixes<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Fix error from mixing string/numerical hyperparameters</p></li>
 <li><p>Inverse transform for categorical hyperparameter returns single item</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id16">
-<h2>0.1.2<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id19">
+<h2>0.1.2<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Issue #47: Add missing requirements in v0.1.1 setup.py</p></li>
 <li><p>Issue #46: Error on v0.1.1: ‘GP’ object has no attribute ‘X’</p></li>
 </ul>
 </div>
-<div class="section" id="id17">
-<h2>0.1.1<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id20">
+<h2>0.1.1<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>First release.</p></li>
 </ul>
