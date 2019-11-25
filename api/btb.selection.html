@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="btb.selection.best module" href="btb.selection.best.html" />
-    <link rel="prev" title="btb package" href="btb.html" /> 
+    <link rel="prev" title="btb.benchmark.tuners.btb module" href="btb.benchmark.tuners.btb.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +106,11 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">btb.selection package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-btb.selection">Module contents</a></li>
@@ -318,10 +323,13 @@ the number of arm pulls.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.BestKReward.compute_rewards" title="btb.selection.BestKReward.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.BestKReward.bandit" title="btb.selection.BestKReward.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Multi-armed bandit method which chooses the arm for which the upper confidence bound (UCB) of expected reward is greatest.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.BestKReward.compute_rewards" title="btb.selection.BestKReward.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
 <td><p>Retain the K best scores, and replace the rest with nans</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.BestKReward.select" title="btb.selection.BestKReward.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.BestKReward.select" title="btb.selection.BestKReward.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
 <td><p>Select a choice using the K best scores</p></td>
 </tr>
 </tbody>
@@ -331,6 +339,17 @@ the number of arm pulls.</p>
 <dd class="field-odd"><p><strong>k</strong> (<em>int</em>) – number of best scores to consider</p>
 </dd>
 </dl>
+<dl class="method">
+<dt id="btb.selection.BestKReward.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.BestKReward.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-armed bandit method which chooses the arm for which the upper
+confidence bound (UCB) of expected reward is greatest.</p>
+<p>If there are multiple arms with the same UCB1 index, then one is chosen
+at random.</p>
+<p>An explanation is here:
+<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.BestKReward.compute_rewards">
 <code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/best.html#BestKReward.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.BestKReward.compute_rewards" title="Permalink to this definition">¶</a></dt>
@@ -360,16 +379,42 @@ function.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.BestKVelocity.compute_rewards" title="btb.selection.BestKVelocity.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.BestKVelocity.bandit" title="btb.selection.BestKVelocity.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Multi-armed bandit method which chooses the arm for which the upper confidence bound (UCB) of expected reward is greatest.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.BestKVelocity.compute_rewards" title="btb.selection.BestKVelocity.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
 <td><p>Compute the velocity of the best scores</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.BestKVelocity.select" title="btb.selection.BestKVelocity.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
+<td><p>Select a choice using the K best scores</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="btb.selection.BestKVelocity.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.BestKVelocity.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-armed bandit method which chooses the arm for which the upper
+confidence bound (UCB) of expected reward is greatest.</p>
+<p>If there are multiple arms with the same UCB1 index, then one is chosen
+at random.</p>
+<p>An explanation is here:
+<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.BestKVelocity.compute_rewards">
 <code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/best.html#BestKVelocity.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.BestKVelocity.compute_rewards" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the velocity of the best scores</p>
 <p>The velocities are the k distances between the k+1 best scores.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.BestKVelocity.select">
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">choice_scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.BestKVelocity.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a choice using the K best scores</p>
+<p>Keeps the choice counts intact, but only let the bandit see the top k learners’ scores.
+If there is not enough score history to do K-selection, use the default UCB1 reward
+function.</p>
 </dd></dl>
 
 </dd></dl>
@@ -391,11 +436,36 @@ function.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.HierarchicalByAlgorithm.bandit" title="btb.selection.HierarchicalByAlgorithm.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Multi-armed bandit method which chooses the arm for which the upper confidence bound (UCB) of expected reward is greatest.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.HierarchicalByAlgorithm.compute_rewards" title="btb.selection.HierarchicalByAlgorithm.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<td><p>Compute rewards from choice’s scores</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.HierarchicalByAlgorithm.select" title="btb.selection.HierarchicalByAlgorithm.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
 <td><p>Groups the frozen sets by algorithm and first chooses an algorithm based on the traditional UCB1 criteria.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="btb.selection.HierarchicalByAlgorithm.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.HierarchicalByAlgorithm.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-armed bandit method which chooses the arm for which the upper
+confidence bound (UCB) of expected reward is greatest.</p>
+<p>If there are multiple arms with the same UCB1 index, then one is chosen
+at random.</p>
+<p>An explanation is here:
+<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.HierarchicalByAlgorithm.compute_rewards">
+<code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.HierarchicalByAlgorithm.compute_rewards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute rewards from choice’s scores</p>
+<p>Convert a list of scores associated with one choice into a list of rewards. Normally, the
+length of the list will be preserved, even if some of the scores are dropped.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.HierarchicalByAlgorithm.select">
 <code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/hierarchical.html#HierarchicalByAlgorithm.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.HierarchicalByAlgorithm.select" title="Permalink to this definition">¶</a></dt>
@@ -419,14 +489,38 @@ on the traditional UCB1 criteria.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.PureBestKVelocity.compute_rewards" title="btb.selection.PureBestKVelocity.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.PureBestKVelocity.bandit" title="btb.selection.PureBestKVelocity.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Return the choice to take next using multi-armed bandit</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.PureBestKVelocity.compute_rewards" title="btb.selection.PureBestKVelocity.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
 <td><p>Compute the “velocity” of (average distance between) the k+1 best scores.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.PureBestKVelocity.select" title="btb.selection.PureBestKVelocity.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.PureBestKVelocity.select" title="btb.selection.PureBestKVelocity.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
 <td><p>Select the choice with the highest best-K velocity.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="btb.selection.PureBestKVelocity.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.PureBestKVelocity.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the choice to take next using multi-armed bandit</p>
+<p>Multi-armed bandit method. Accepts a mapping of choices to rewards which indicate their
+historical performance, and returns the choice that we should make next in order to
+maximize expected reward in the long term.</p>
+<p>The default implementation is to return the arm with the highest average score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>choice_rewards</strong> (<em>Dict</em><em>[</em><em>object</em><em>, </em><em>List</em><em>[</em><em>float</em><em>]</em><em>]</em>) – maps choice IDs to lists of rewards.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the name of the choice to take next.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.PureBestKVelocity.compute_rewards">
 <code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/pure.html#PureBestKVelocity.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.PureBestKVelocity.compute_rewards" title="Permalink to this definition">¶</a></dt>
@@ -461,14 +555,28 @@ don’t have MIN_K scores yet, return the one with the fewest.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.RecentKReward.compute_rewards" title="btb.selection.RecentKReward.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.RecentKReward.bandit" title="btb.selection.RecentKReward.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Multi-armed bandit method which chooses the arm for which the upper confidence bound (UCB) of expected reward is greatest.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.RecentKReward.compute_rewards" title="btb.selection.RecentKReward.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
 <td><p>Retain the K most recent scores, and replace the rest with zeros</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.RecentKReward.select" title="btb.selection.RecentKReward.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.RecentKReward.select" title="btb.selection.RecentKReward.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
 <td><p>Use the top k learner’s scores for usage in rewards for the bandit calculation</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="btb.selection.RecentKReward.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.RecentKReward.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-armed bandit method which chooses the arm for which the upper
+confidence bound (UCB) of expected reward is greatest.</p>
+<p>If there are multiple arms with the same UCB1 index, then one is chosen
+at random.</p>
+<p>An explanation is here:
+<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.RecentKReward.compute_rewards">
 <code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/recent.html#RecentKReward.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.RecentKReward.compute_rewards" title="Permalink to this definition">¶</a></dt>
@@ -495,17 +603,40 @@ don’t have MIN_K scores yet, return the one with the fewest.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.RecentKVelocity.compute_rewards" title="btb.selection.RecentKVelocity.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.RecentKVelocity.bandit" title="btb.selection.RecentKVelocity.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Multi-armed bandit method which chooses the arm for which the upper confidence bound (UCB) of expected reward is greatest.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.RecentKVelocity.compute_rewards" title="btb.selection.RecentKVelocity.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
 <td><p>Compute the velocity of thte k+1 most recent scores.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.RecentKVelocity.select" title="btb.selection.RecentKVelocity.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
+<td><p>Use the top k learner’s scores for usage in rewards for the bandit calculation</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="btb.selection.RecentKVelocity.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.RecentKVelocity.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-armed bandit method which chooses the arm for which the upper
+confidence bound (UCB) of expected reward is greatest.</p>
+<p>If there are multiple arms with the same UCB1 index, then one is chosen
+at random.</p>
+<p>An explanation is here:
+<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.RecentKVelocity.compute_rewards">
 <code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/recent.html#RecentKVelocity.compute_rewards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.RecentKVelocity.compute_rewards" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the velocity of thte k+1 most recent scores.</p>
 <p>The velocity is the average distance between scores. Return a list with those k velocities
 padded out with zeros so that the count remains the same.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.RecentKVelocity.select">
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">choice_scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.RecentKVelocity.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the top k learner’s scores for usage in rewards for the bandit calculation</p>
 </dd></dl>
 
 </dd></dl>
@@ -531,6 +662,12 @@ padded out with zeros so that the count remains the same.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.UCB1.bandit" title="btb.selection.UCB1.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
 <td><p>Multi-armed bandit method which chooses the arm for which the upper confidence bound (UCB) of expected reward is greatest.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.UCB1.compute_rewards" title="btb.selection.UCB1.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<td><p>Compute rewards from choice’s scores</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.UCB1.select" title="btb.selection.UCB1.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
+<td><p>Select the next best choice to make</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="method">
@@ -542,6 +679,38 @@ confidence bound (UCB) of expected reward is greatest.</p>
 at random.</p>
 <p>An explanation is here:
 <a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.UCB1.compute_rewards">
+<code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.UCB1.compute_rewards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute rewards from choice’s scores</p>
+<p>Convert a list of scores associated with one choice into a list of rewards. Normally, the
+length of the list will be preserved, even if some of the scores are dropped.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.UCB1.select">
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">choice_scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.UCB1.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the next best choice to make</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>choice_scores</strong> (<em>Dict</em><em>[</em><em>object</em><em>, </em><em>List</em><em>[</em><em>float</em><em>]</em><em>]</em>) – <p>Mapping of choice to list of scores for each
+possible choice. The caller is responsible for making sure each choice that is
+possible at this juncture is represented in the dict, even those with no scores.
+Score lists should be in ascending chronological order, that is, the score from the
+earliest trial should be listed first.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.56</span><span class="p">,</span> <span class="mf">0.61</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">],</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">],</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.68</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -559,11 +728,46 @@ at random.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.Uniform.bandit" title="btb.selection.Uniform.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Return the choice to take next using multi-armed bandit</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.Uniform.compute_rewards" title="btb.selection.Uniform.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<td><p>Compute rewards from choice’s scores</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.Uniform.select" title="btb.selection.Uniform.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
 <td><p>Select the next best choice to make</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="btb.selection.Uniform.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.Uniform.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the choice to take next using multi-armed bandit</p>
+<p>Multi-armed bandit method. Accepts a mapping of choices to rewards which indicate their
+historical performance, and returns the choice that we should make next in order to
+maximize expected reward in the long term.</p>
+<p>The default implementation is to return the arm with the highest average score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>choice_rewards</strong> (<em>Dict</em><em>[</em><em>object</em><em>, </em><em>List</em><em>[</em><em>float</em><em>]</em><em>]</em>) – maps choice IDs to lists of rewards.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the name of the choice to take next.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.Uniform.compute_rewards">
+<code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.Uniform.compute_rewards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute rewards from choice’s scores</p>
+<p>Convert a list of scores associated with one choice into a list of rewards. Normally, the
+length of the list will be preserved, even if some of the scores are dropped.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.Uniform.select">
 <code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/uniform.html#Uniform.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.Uniform.select" title="Permalink to this definition">¶</a></dt>
@@ -604,7 +808,7 @@ earliest trial should be listed first.</p>
         <a href="btb.selection.best.html" class="btn btn-neutral float-right" title="btb.selection.best module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="btb.html" class="btn btn-neutral float-left" title="btb package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="btb.benchmark.tuners.btb.html" class="btn btn-neutral float-left" title="btb.benchmark.tuners.btb module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

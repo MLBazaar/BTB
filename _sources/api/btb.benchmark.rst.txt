@@ -1,0 +1,18 @@
+btb.benchmark package
+=====================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   btb.benchmark.challenges
+   btb.benchmark.tuners
+
+Module contents
+---------------
+
+.. automodule:: btb.benchmark
+   :members:
+   :undoc-members:
+   :show-inheritance:

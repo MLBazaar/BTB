@@ -1,0 +1,20 @@
+btb.benchmark.challenges package
+================================
+
+Submodules
+----------
+
+.. toctree::
+
+   btb.benchmark.challenges.bohachevsky
+   btb.benchmark.challenges.branin
+   btb.benchmark.challenges.challenge
+   btb.benchmark.challenges.rosenbrock
+
+Module contents
+---------------
+
+.. automodule:: btb.benchmark.challenges
+   :members:
+   :undoc-members:
+   :show-inheritance:

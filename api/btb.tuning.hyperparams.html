@@ -106,6 +106,11 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="btb.selection.html#module-btb.selection">Module contents</a></li>
@@ -323,8 +328,14 @@ and to inverse transform from the search space into the hyperparameter space.</p
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.BooleanHyperParam.sample" title="btb.tuning.hyperparams.BooleanHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.BooleanHyperParam.inverse_transform" title="btb.tuning.hyperparams.BooleanHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
+<td><p>Invert one or more search space values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.BooleanHyperParam.sample" title="btb.tuning.hyperparams.BooleanHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
 <td><p>Generate sample values in the hyperparameter search space <span class="math notranslate nohighlight">\({0, 1}\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.BooleanHyperParam.transform" title="btb.tuning.hyperparams.BooleanHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
+<td><p>Transform one or more hyperparameter values.</p></td>
 </tr>
 </tbody>
 </table>
@@ -337,6 +348,39 @@ and to inverse transform from the search space into the hyperparameter space.</p
 <dt id="btb.tuning.hyperparams.BooleanHyperParam.dimensions">
 <code class="sig-name descname">dimensions</code><em class="property"> = 1</em><a class="headerlink" href="#btb.tuning.hyperparams.BooleanHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.BooleanHyperParam.inverse_transform">
+<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.BooleanHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert one or more search space values.</p>
+<p>Validates that the input values are within the search space and then transform them into
+hyperparameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
+called two times with a scalar from the search space and an array of two valid values
+from the search space.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
+<span class="go">array([[1]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
+<span class="go">array([[1],</span>
+<span class="go">       [2]])</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="method">
 <dt id="btb.tuning.hyperparams.BooleanHyperParam.sample">
@@ -365,6 +409,66 @@ and it’s <code class="docutils literal notranslate"><span class="pre">sample</
 </div>
 </dd></dl>
 
+<dl class="method">
+<dt id="btb.tuning.hyperparams.BooleanHyperParam.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.BooleanHyperParam.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform one or more hyperparameter values.</p>
+<p>Validates that the input values are within the accepted dimensions and that they are within
+the hyperparameter space. Then transform one or more hyperparameter values from the
+original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
+The accepted value formats are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
+hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
+hyperparameter space to be converted into the search space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
+search space values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
+three times with a single scalar value, an array of two valid values and a 2D array
+with 1 dimension.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([[0.125]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -381,6 +485,21 @@ hyperparameter space. Also provides a method that generates samples of those.</p
 <dt>Search Space:</dt><dd><p><span class="math notranslate nohighlight">\(\{ 0, 1 \}^K\)</span> where <cite>K</cite> is the number of categories.</p>
 </dd>
 </dl>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.cardinality" title="btb.tuning.hyperparams.CategoricalHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.dimensions" title="btb.tuning.hyperparams.CategoricalHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Methods</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -388,8 +507,14 @@ hyperparameter space. Also provides a method that generates samples of those.</p
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.sample" title="btb.tuning.hyperparams.CategoricalHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.inverse_transform" title="btb.tuning.hyperparams.CategoricalHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
+<td><p>Invert one or more search space values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.sample" title="btb.tuning.hyperparams.CategoricalHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
 <td><p>Generate sample values in the hyperparameter search space of <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]^K</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.transform" title="btb.tuning.hyperparams.CategoricalHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
+<td><p>Transform one or more hyperparameter values.</p></td>
 </tr>
 </tbody>
 </table>
@@ -398,6 +523,49 @@ hyperparameter space. Also provides a method that generates samples of those.</p
 <dd class="field-odd"><p><strong>choices</strong> (<em>list</em>) – List of values that the hyperparameter can be.</p>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.CategoricalHyperParam.cardinality">
+<code class="sig-name descname">cardinality</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.CategoricalHyperParam.dimensions">
+<code class="sig-name descname">dimensions</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.CategoricalHyperParam.inverse_transform">
+<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert one or more search space values.</p>
+<p>Validates that the input values are within the search space and then transform them into
+hyperparameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
+called two times with a scalar from the search space and an array of two valid values
+from the search space.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
+<span class="go">array([[1]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
+<span class="go">array([[1],</span>
+<span class="go">       [2]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.tuning.hyperparams.CategoricalHyperParam.sample">
 <code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">n_samples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/categorical.html#CategoricalHyperParam.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam.sample" title="Permalink to this definition">¶</a></dt>
@@ -423,6 +591,66 @@ values from the search space is being returned.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([[1, 0, 0],</span>
 <span class="go">       [0, 1, 0]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.CategoricalHyperParam.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform one or more hyperparameter values.</p>
+<p>Validates that the input values are within the accepted dimensions and that they are within
+the hyperparameter space. Then transform one or more hyperparameter values from the
+original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
+The accepted value formats are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
+hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
+hyperparameter space to be converted into the search space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
+search space values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
+three times with a single scalar value, an array of two valid values and a 2D array
+with 1 dimension.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([[0.125]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -453,6 +681,9 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.FloatHyperParam.cardinality" title="btb.tuning.hyperparams.FloatHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
 <td><p>float(x) -&gt; floating point number</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.FloatHyperParam.dimensions" title="btb.tuning.hyperparams.FloatHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
 </tbody>
 </table>
 <p><strong>Methods</strong></p>
@@ -462,8 +693,14 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.FloatHyperParam.sample" title="btb.tuning.hyperparams.FloatHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.FloatHyperParam.inverse_transform" title="btb.tuning.hyperparams.FloatHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
+<td><p>Invert one or more search space values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.FloatHyperParam.sample" title="btb.tuning.hyperparams.FloatHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
 <td><p>Generate sample values in the hyperparameter search space <span class="math notranslate nohighlight">\({0, 1}\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.FloatHyperParam.transform" title="btb.tuning.hyperparams.FloatHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
+<td><p>Transform one or more hyperparameter values.</p></td>
 </tr>
 </tbody>
 </table>
@@ -483,6 +720,44 @@ by default is <code class="docutils literal notranslate"><span class="pre">None<
 <dt id="btb.tuning.hyperparams.FloatHyperParam.cardinality">
 <code class="sig-name descname">cardinality</code><em class="property"> = inf</em><a class="headerlink" href="#btb.tuning.hyperparams.FloatHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.FloatHyperParam.dimensions">
+<code class="sig-name descname">dimensions</code><em class="property"> = 1</em><a class="headerlink" href="#btb.tuning.hyperparams.FloatHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.FloatHyperParam.inverse_transform">
+<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.FloatHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert one or more search space values.</p>
+<p>Validates that the input values are within the search space and then transform them into
+hyperparameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
+called two times with a scalar from the search space and an array of two valid values
+from the search space.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
+<span class="go">array([[1]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
+<span class="go">array([[1],</span>
+<span class="go">       [2]])</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="method">
 <dt id="btb.tuning.hyperparams.FloatHyperParam.sample">
@@ -513,6 +788,66 @@ values from the search space is being returned.</p>
 </div>
 </dd></dl>
 
+<dl class="method">
+<dt id="btb.tuning.hyperparams.FloatHyperParam.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.FloatHyperParam.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform one or more hyperparameter values.</p>
+<p>Validates that the input values are within the accepted dimensions and that they are within
+the hyperparameter space. Then transform one or more hyperparameter values from the
+original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
+The accepted value formats are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
+hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
+hyperparameter space to be converted into the search space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
+search space values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
+three times with a single scalar value, an array of two valid values and a 2D array
+with 1 dimension.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([[0.125]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -536,7 +871,10 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.IntHyperParam.dimensions" title="btb.tuning.hyperparams.IntHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.IntHyperParam.cardinality" title="btb.tuning.hyperparams.IntHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.IntHyperParam.dimensions" title="btb.tuning.hyperparams.IntHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
 <td><p>int(x=0) -&gt; integer</p></td>
 </tr>
 </tbody>
@@ -548,8 +886,14 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.IntHyperParam.sample" title="btb.tuning.hyperparams.IntHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.IntHyperParam.inverse_transform" title="btb.tuning.hyperparams.IntHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
+<td><p>Invert one or more search space values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.IntHyperParam.sample" title="btb.tuning.hyperparams.IntHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
 <td><p>Generate sample values in the hyperparameter search space of [0, 1).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.IntHyperParam.transform" title="btb.tuning.hyperparams.IntHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
+<td><p>Transform one or more hyperparameter values.</p></td>
 </tr>
 </tbody>
 </table>
@@ -567,9 +911,47 @@ by default is <code class="docutils literal notranslate"><span class="pre">None<
 </dd>
 </dl>
 <dl class="attribute">
+<dt id="btb.tuning.hyperparams.IntHyperParam.cardinality">
+<code class="sig-name descname">cardinality</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.IntHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="btb.tuning.hyperparams.IntHyperParam.dimensions">
 <code class="sig-name descname">dimensions</code><em class="property"> = 1</em><a class="headerlink" href="#btb.tuning.hyperparams.IntHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.IntHyperParam.inverse_transform">
+<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.IntHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert one or more search space values.</p>
+<p>Validates that the input values are within the search space and then transform them into
+hyperparameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
+called two times with a scalar from the search space and an array of two valid values
+from the search space.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
+<span class="go">array([[1]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
+<span class="go">array([[1],</span>
+<span class="go">       [2]])</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="method">
 <dt id="btb.tuning.hyperparams.IntHyperParam.sample">
@@ -595,6 +977,66 @@ values from the search space is being returned.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([[0.625],</span>
+<span class="go">       [0.375]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.hyperparams.IntHyperParam.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.IntHyperParam.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform one or more hyperparameter values.</p>
+<p>Validates that the input values are within the accepted dimensions and that they are within
+the hyperparameter space. Then transform one or more hyperparameter values from the
+original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
+The accepted value formats are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
+hyperparameter space.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
+hyperparameter space to be converted into the search space.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
+search space values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
+instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
+three times with a single scalar value, an array of two valid values and a 2D array
+with 1 dimension.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([[0.125]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">array([[0.125],</span>
+<span class="go">       [0.375]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="go">array([[0.125],</span>
 <span class="go">       [0.375]])</span>
 </pre></div>
 </div>

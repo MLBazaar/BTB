@@ -106,6 +106,11 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3 current"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="btb.selection.html#module-btb.selection">Module contents</a></li>
@@ -278,11 +283,46 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.custom_selector.CustomSelector.bandit" title="btb.selection.custom_selector.CustomSelector.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
+<td><p>Return the choice to take next using multi-armed bandit</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.custom_selector.CustomSelector.compute_rewards" title="btb.selection.custom_selector.CustomSelector.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
+<td><p>Compute rewards from choice’s scores</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.custom_selector.CustomSelector.select" title="btb.selection.custom_selector.CustomSelector.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
 <td><p>Select a choice uniformly at random.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="btb.selection.custom_selector.CustomSelector.bandit">
+<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.custom_selector.CustomSelector.bandit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the choice to take next using multi-armed bandit</p>
+<p>Multi-armed bandit method. Accepts a mapping of choices to rewards which indicate their
+historical performance, and returns the choice that we should make next in order to
+maximize expected reward in the long term.</p>
+<p>The default implementation is to return the arm with the highest average score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>choice_rewards</strong> (<em>Dict</em><em>[</em><em>object</em><em>, </em><em>List</em><em>[</em><em>float</em><em>]</em><em>]</em>) – maps choice IDs to lists of rewards.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the name of the choice to take next.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.selection.custom_selector.CustomSelector.compute_rewards">
+<code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.custom_selector.CustomSelector.compute_rewards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute rewards from choice’s scores</p>
+<p>Convert a list of scores associated with one choice into a list of rewards. Normally, the
+length of the list will be preserved, even if some of the scores are dropped.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.selection.custom_selector.CustomSelector.select">
 <code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">choice_scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/custom_selector.html#CustomSelector.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.custom_selector.CustomSelector.select" title="Permalink to this definition">¶</a></dt>

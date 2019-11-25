@@ -104,6 +104,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../api/btb.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.html">btb.selection package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.selection.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.selection.html#module-btb.selection">Module contents</a></li>
@@ -255,7 +260,7 @@
 <span class="kn">from</span> <span class="nn">btb.tuning.metamodels.base</span> <span class="k">import</span> <span class="n">BaseMetaModel</span>
 
 
-<div class="viewcode-block" id="BaseTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseTuner</span><span class="p">:</span>
+<div class="viewcode-block" id="BaseTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseTuner</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;BaseTuner class.</span>
 
 <span class="sd">    BaseTuner class is the abstract representation of a tuner that is not based on a model.</span>
@@ -369,7 +374,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="BaseTuner.propose"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseTuner.propose"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseTuner.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Propose one or more new hyperparameter configurations.</span>
 
 <span class="sd">        Validate that the amount of proposals requested is valid when ``allow_duplicates`` is</span>
@@ -437,7 +442,7 @@
 
         <span class="k">return</span> <span class="n">hyperparameters</span></div>
 
-<div class="viewcode-block" id="BaseTuner.record"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseTuner.record"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseTuner.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Record one or more ``trials`` with the associated ``scores``.</span>
 
 <span class="sd">        ``Trials`` are recorded with their associated ``scores``. The amount of trials</span>
@@ -488,7 +493,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span> <span class="k">else</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span></div></div>
 
 
-<div class="viewcode-block" id="BaseMetaModelTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseMetaModelTuner</span><span class="p">(</span><span class="n">BaseTuner</span><span class="p">,</span> <span class="n">BaseMetaModel</span><span class="p">,</span> <span class="n">BaseAcquisition</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseMetaModelTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseMetaModelTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseMetaModelTuner</span><span class="p">(</span><span class="n">BaseTuner</span><span class="p">,</span> <span class="n">BaseMetaModel</span><span class="p">,</span> <span class="n">BaseAcquisition</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;BaseMetaModelTuner class.</span>
 
 <span class="sd">    BaseMetaModelTuner class is the abstract representation of a tuner that is based</span>
@@ -544,7 +549,7 @@
 
         <span class="k">return</span> <span class="n">proposals</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
-<div class="viewcode-block" id="BaseMetaModelTuner.record"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseMetaModelTuner.record"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseMetaModelTuner.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Record one or more ``trials`` with the associated ``scores`` and re-fit the model.</span>
 
 <span class="sd">        ``Trials`` are recorded with the associated ``scores`` to them. The amount of trials</span>

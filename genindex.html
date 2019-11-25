@@ -105,6 +105,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api/btb.selection.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/btb.selection.html#module-btb.selection">Module contents</a></li>
@@ -260,6 +265,7 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -299,12 +305,42 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.bandit">bandit() (btb.selection.selector.Selector method)</a>
+      <li><a href="api/btb.selection.best.html#btb.selection.best.BestKReward.bandit">bandit() (btb.selection.best.BestKReward method)</a>
 
       <ul>
+        <li><a href="api/btb.selection.best.html#btb.selection.best.BestKVelocity.bandit">(btb.selection.best.BestKVelocity method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.BestKReward.bandit">(btb.selection.BestKReward method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.BestKVelocity.bandit">(btb.selection.BestKVelocity method)</a>
+</li>
+        <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector.bandit">(btb.selection.custom_selector.CustomSelector method)</a>
+</li>
+        <li><a href="api/btb.selection.hierarchical.html#btb.selection.hierarchical.HierarchicalByAlgorithm.bandit">(btb.selection.hierarchical.HierarchicalByAlgorithm method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.HierarchicalByAlgorithm.bandit">(btb.selection.HierarchicalByAlgorithm method)</a>
+</li>
+        <li><a href="api/btb.selection.pure.html#btb.selection.pure.PureBestKVelocity.bandit">(btb.selection.pure.PureBestKVelocity method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.PureBestKVelocity.bandit">(btb.selection.PureBestKVelocity method)</a>
+</li>
+        <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKReward.bandit">(btb.selection.recent.RecentKReward method)</a>
+</li>
+        <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKVelocity.bandit">(btb.selection.recent.RecentKVelocity method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.RecentKReward.bandit">(btb.selection.RecentKReward method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.RecentKVelocity.bandit">(btb.selection.RecentKVelocity method)</a>
+</li>
+        <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.bandit">(btb.selection.selector.Selector method)</a>
+</li>
         <li><a href="api/btb.selection.html#btb.selection.UCB1.bandit">(btb.selection.UCB1 method)</a>
 </li>
         <li><a href="api/btb.selection.ucb1.html#btb.selection.ucb1.UCB1.bandit">(btb.selection.ucb1.UCB1 method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.Uniform.bandit">(btb.selection.Uniform method)</a>
+</li>
+        <li><a href="api/btb.selection.uniform.html#btb.selection.uniform.Uniform.bandit">(btb.selection.uniform.Uniform method)</a>
 </li>
       </ul></li>
       <li><a href="api/btb.tuning.acquisition.base.html#btb.tuning.acquisition.base.BaseAcquisition">BaseAcquisition (class in btb.tuning.acquisition.base)</a>
@@ -316,6 +352,8 @@
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner">BaseMetaModelTuner (class in btb.tuning.tuners.base)</a>
 </li>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner">BaseTuner (class in btb.tuning.tuners.base)</a>
+</li>
+      <li><a href="api/btb.benchmark.html#btb.benchmark.benchmark">benchmark() (in module btb.benchmark)</a>
 </li>
       <li><a href="api/btb.selection.constants.html#btb.selection.constants.Selectors.BEST_K">BEST_K (btb.selection.constants.Selectors attribute)</a>
 </li>
@@ -333,6 +371,12 @@
         <li><a href="api/btb.selection.best.html#btb.selection.best.BestKVelocity">(class in btb.selection.best)</a>
 </li>
       </ul></li>
+      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Bohachevsky">Bohachevsky (class in btb.benchmark.challenges)</a>
+
+      <ul>
+        <li><a href="api/btb.benchmark.challenges.bohachevsky.html#btb.benchmark.challenges.bohachevsky.Bohachevsky">(class in btb.benchmark.challenges.bohachevsky)</a>
+</li>
+      </ul></li>
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam">BooleanHyperParam (class in btb.tuning)</a>
 
       <ul>
@@ -341,7 +385,31 @@
         <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam">(class in btb.tuning.hyperparams.boolean)</a>
 </li>
       </ul></li>
+      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Branin">Branin (class in btb.benchmark.challenges)</a>
+
+      <ul>
+        <li><a href="api/btb.benchmark.challenges.branin.html#btb.benchmark.challenges.branin.Branin">(class in btb.benchmark.challenges.branin)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.html#module-btb">btb (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.html#module-btb.benchmark">btb.benchmark (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.challenges.html#module-btb.benchmark.challenges">btb.benchmark.challenges (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.challenges.bohachevsky.html#module-btb.benchmark.challenges.bohachevsky">btb.benchmark.challenges.bohachevsky (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.challenges.branin.html#module-btb.benchmark.challenges.branin">btb.benchmark.challenges.branin (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.challenges.challenge.html#module-btb.benchmark.challenges.challenge">btb.benchmark.challenges.challenge (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.challenges.rosenbrock.html#module-btb.benchmark.challenges.rosenbrock">btb.benchmark.challenges.rosenbrock (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.tuners.html#module-btb.benchmark.tuners">btb.benchmark.tuners (module)</a>
+</li>
+      <li><a href="api/btb.benchmark.tuners.btb.html#module-btb.benchmark.tuners.btb">btb.benchmark.tuners.btb (module)</a>
 </li>
       <li><a href="api/btb.selection.html#module-btb.selection">btb.selection (module)</a>
 </li>
@@ -353,8 +421,6 @@
 </li>
       <li><a href="api/btb.selection.hierarchical.html#module-btb.selection.hierarchical">btb.selection.hierarchical (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.selection.pure.html#module-btb.selection.pure">btb.selection.pure (module)</a>
 </li>
       <li><a href="api/btb.selection.recent.html#module-btb.selection.recent">btb.selection.recent (module)</a>
@@ -410,6 +476,8 @@
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.cardinality">cardinality (btb.tuning.BooleanHyperParam attribute)</a>
 
       <ul>
+        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.cardinality">(btb.tuning.CategoricalHyperParam attribute)</a>
+</li>
         <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.cardinality">(btb.tuning.FloatHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.cardinality">(btb.tuning.hyperparams.base.BaseHyperParam attribute)</a>, <a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.cardinality">[1]</a>
@@ -418,9 +486,21 @@
 </li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.cardinality">(btb.tuning.hyperparams.BooleanHyperParam attribute)</a>
 </li>
+        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.cardinality">(btb.tuning.hyperparams.categorical.CategoricalHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.cardinality">(btb.tuning.hyperparams.CategoricalHyperParam attribute)</a>
+</li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.cardinality">(btb.tuning.hyperparams.FloatHyperParam attribute)</a>
 </li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.cardinality">(btb.tuning.hyperparams.IntHyperParam attribute)</a>
+</li>
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality">(btb.tuning.hyperparams.numerical.FloatHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.cardinality">(btb.tuning.hyperparams.numerical.IntHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality">(btb.tuning.hyperparams.numerical.NumericalHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.cardinality">(btb.tuning.IntHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.cardinality">(btb.tuning.Tunable attribute)</a>
 </li>
@@ -437,6 +517,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.Challenge">Challenge (class in btb.benchmark.challenges.challenge)</a>
+</li>
       <li><a href="api/btb.selection.best.html#btb.selection.best.BestKReward.compute_rewards">compute_rewards() (btb.selection.best.BestKReward method)</a>
 
       <ul>
@@ -445,6 +527,12 @@
         <li><a href="api/btb.selection.html#btb.selection.BestKReward.compute_rewards">(btb.selection.BestKReward method)</a>
 </li>
         <li><a href="api/btb.selection.html#btb.selection.BestKVelocity.compute_rewards">(btb.selection.BestKVelocity method)</a>
+</li>
+        <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector.compute_rewards">(btb.selection.custom_selector.CustomSelector method)</a>
+</li>
+        <li><a href="api/btb.selection.hierarchical.html#btb.selection.hierarchical.HierarchicalByAlgorithm.compute_rewards">(btb.selection.hierarchical.HierarchicalByAlgorithm method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.HierarchicalByAlgorithm.compute_rewards">(btb.selection.HierarchicalByAlgorithm method)</a>
 </li>
         <li><a href="api/btb.selection.pure.html#btb.selection.pure.PureBestKVelocity.compute_rewards">(btb.selection.pure.PureBestKVelocity method)</a>
 </li>
@@ -460,6 +548,14 @@
 </li>
         <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.compute_rewards">(btb.selection.selector.Selector method)</a>
 </li>
+        <li><a href="api/btb.selection.html#btb.selection.UCB1.compute_rewards">(btb.selection.UCB1 method)</a>
+</li>
+        <li><a href="api/btb.selection.ucb1.html#btb.selection.ucb1.UCB1.compute_rewards">(btb.selection.ucb1.UCB1 method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.Uniform.compute_rewards">(btb.selection.Uniform method)</a>
+</li>
+        <li><a href="api/btb.selection.uniform.html#btb.selection.uniform.Uniform.compute_rewards">(btb.selection.uniform.Uniform method)</a>
+</li>
       </ul></li>
       <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector">CustomSelector (class in btb.selection.custom_selector)</a>
 </li>
@@ -472,13 +568,25 @@
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.dimensions">dimensions (btb.tuning.BooleanHyperParam attribute)</a>
 
       <ul>
+        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.dimensions">(btb.tuning.CategoricalHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.dimensions">(btb.tuning.FloatHyperParam attribute)</a>
+</li>
         <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.dimensions">(btb.tuning.hyperparams.base.BaseHyperParam attribute)</a>, <a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.dimensions">[1]</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam.dimensions">(btb.tuning.hyperparams.boolean.BooleanHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.dimensions">(btb.tuning.hyperparams.BooleanHyperParam attribute)</a>
 </li>
+        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.dimensions">(btb.tuning.hyperparams.categorical.CategoricalHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.dimensions">(btb.tuning.hyperparams.CategoricalHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.dimensions">(btb.tuning.hyperparams.FloatHyperParam attribute)</a>
+</li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.dimensions">(btb.tuning.hyperparams.IntHyperParam attribute)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.dimensions">(btb.tuning.hyperparams.numerical.FloatHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.dimensions">(btb.tuning.hyperparams.numerical.IntHyperParam attribute)</a>
 </li>
@@ -492,6 +600,24 @@
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Bohachevsky.evaluate">evaluate() (btb.benchmark.challenges.Bohachevsky method)</a>
+
+      <ul>
+        <li><a href="api/btb.benchmark.challenges.bohachevsky.html#btb.benchmark.challenges.bohachevsky.Bohachevsky.evaluate">(btb.benchmark.challenges.bohachevsky.Bohachevsky method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Branin.evaluate">(btb.benchmark.challenges.Branin method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.branin.html#btb.benchmark.challenges.branin.Branin.evaluate">(btb.benchmark.challenges.branin.Branin method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.Challenge.evaluate">(btb.benchmark.challenges.challenge.Challenge method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Rosenbrock.evaluate">(btb.benchmark.challenges.Rosenbrock method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.rosenbrock.Rosenbrock.evaluate">(btb.benchmark.challenges.rosenbrock.Rosenbrock method)</a>
+</li>
+      </ul></li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.acquisition.html#btb.tuning.acquisition.ExpectedImprovementAcquisition">ExpectedImprovementAcquisition (class in btb.tuning.acquisition)</a>
 
@@ -525,6 +651,40 @@
         <li><a href="api/btb.tuning.metamodels.gaussian_process.html#btb.tuning.metamodels.gaussian_process.GaussianProcessMetaModel">(class in btb.tuning.metamodels.gaussian_process)</a>
 </li>
       </ul></li>
+      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Bohachevsky.get_tunable">get_tunable() (btb.benchmark.challenges.Bohachevsky method)</a>
+
+      <ul>
+        <li><a href="api/btb.benchmark.challenges.bohachevsky.html#btb.benchmark.challenges.bohachevsky.Bohachevsky.get_tunable">(btb.benchmark.challenges.bohachevsky.Bohachevsky method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Branin.get_tunable">(btb.benchmark.challenges.Branin method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.branin.html#btb.benchmark.challenges.branin.Branin.get_tunable">(btb.benchmark.challenges.branin.Branin method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.Challenge.get_tunable">(btb.benchmark.challenges.challenge.Challenge method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Rosenbrock.get_tunable">(btb.benchmark.challenges.Rosenbrock method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.rosenbrock.Rosenbrock.get_tunable">(btb.benchmark.challenges.rosenbrock.Rosenbrock method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Bohachevsky.get_tuner_params">get_tuner_params() (btb.benchmark.challenges.Bohachevsky method)</a>
+
+      <ul>
+        <li><a href="api/btb.benchmark.challenges.bohachevsky.html#btb.benchmark.challenges.bohachevsky.Bohachevsky.get_tuner_params">(btb.benchmark.challenges.bohachevsky.Bohachevsky method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Branin.get_tuner_params">(btb.benchmark.challenges.Branin method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.branin.html#btb.benchmark.challenges.branin.Branin.get_tuner_params">(btb.benchmark.challenges.branin.Branin method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.Challenge.get_tuner_params">(btb.benchmark.challenges.challenge.Challenge method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Rosenbrock.get_tuner_params">(btb.benchmark.challenges.Rosenbrock method)</a>
+</li>
+        <li><a href="api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.rosenbrock.Rosenbrock.get_tuner_params">(btb.benchmark.challenges.rosenbrock.Rosenbrock method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.html#btb.tuning.GPEiTuner">GPEiTuner (class in btb.tuning)</a>
 
       <ul>
@@ -533,8 +693,6 @@
         <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPEiTuner">(class in btb.tuning.tuners.gaussian_process)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.html#btb.tuning.GPTuner">GPTuner (class in btb.tuning)</a>
 
       <ul>
@@ -579,16 +737,48 @@
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam">(class in btb.tuning.hyperparams.numerical)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform">inverse_transform() (btb.tuning.hyperparams.base.BaseHyperParam method)</a>
+      <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.inverse_transform">inverse_transform() (btb.tuning.BooleanHyperParam method)</a>
 
       <ul>
+        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.inverse_transform">(btb.tuning.CategoricalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.inverse_transform">(btb.tuning.FloatHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform">(btb.tuning.hyperparams.base.BaseHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam.inverse_transform">(btb.tuning.hyperparams.boolean.BooleanHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.inverse_transform">(btb.tuning.hyperparams.BooleanHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.inverse_transform">(btb.tuning.hyperparams.categorical.CategoricalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.inverse_transform">(btb.tuning.hyperparams.CategoricalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.inverse_transform">(btb.tuning.hyperparams.FloatHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.inverse_transform">(btb.tuning.hyperparams.IntHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.inverse_transform">(btb.tuning.hyperparams.numerical.FloatHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.inverse_transform">(btb.tuning.hyperparams.numerical.IntHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.inverse_transform">(btb.tuning.hyperparams.numerical.NumericalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.inverse_transform">(btb.tuning.IntHyperParam method)</a>
+</li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.inverse_transform">(btb.tuning.Tunable method)</a>
 </li>
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable.inverse_transform">(btb.tuning.tunable.Tunable method)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/btb.benchmark.tuners.btb.html#btb.benchmark.tuners.btb.make_tuning_function">make_tuning_function() (in module btb.benchmark.tuners.btb)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -609,8 +799,30 @@
         <li><a href="api/btb.tuning.acquisition.predicted_score.html#btb.tuning.acquisition.predicted_score.PredictedScoreAcquisition">(class in btb.tuning.acquisition.predicted_score)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.propose">propose() (btb.tuning.tuners.base.BaseTuner method)</a>
+      <li><a href="api/btb.tuning.html#btb.tuning.GPEiTuner.propose">propose() (btb.tuning.GPEiTuner method)</a>
+
+      <ul>
+        <li><a href="api/btb.tuning.html#btb.tuning.GPTuner.propose">(btb.tuning.GPTuner method)</a>
 </li>
+        <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.propose">(btb.tuning.tuners.base.BaseMetaModelTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.propose">(btb.tuning.tuners.base.BaseTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPEiTuner.propose">(btb.tuning.tuners.gaussian_process.GPEiTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPTuner.propose">(btb.tuning.tuners.gaussian_process.GPTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPEiTuner.propose">(btb.tuning.tuners.GPEiTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPTuner.propose">(btb.tuning.tuners.GPTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.uniform.html#btb.tuning.tuners.uniform.UniformTuner.propose">(btb.tuning.tuners.uniform.UniformTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.UniformTuner.propose">(btb.tuning.tuners.UniformTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.UniformTuner.propose">(btb.tuning.UniformTuner method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.selection.constants.html#btb.selection.constants.Selectors.PURE_BEST_K_VEL">PURE_BEST_K_VEL (btb.selection.constants.Selectors attribute)</a>
@@ -637,18 +849,42 @@
         <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKReward">(class in btb.selection.recent)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.selection.html#btb.selection.RecentKVelocity">RecentKVelocity (class in btb.selection)</a>
 
       <ul>
         <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKVelocity">(class in btb.selection.recent)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.record">record() (btb.tuning.tuners.base.BaseMetaModelTuner method)</a>
+      <li><a href="api/btb.tuning.html#btb.tuning.GPEiTuner.record">record() (btb.tuning.GPEiTuner method)</a>
 
       <ul>
+        <li><a href="api/btb.tuning.html#btb.tuning.GPTuner.record">(btb.tuning.GPTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.record">(btb.tuning.tuners.base.BaseMetaModelTuner method)</a>
+</li>
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.record">(btb.tuning.tuners.base.BaseTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPEiTuner.record">(btb.tuning.tuners.gaussian_process.GPEiTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPTuner.record">(btb.tuning.tuners.gaussian_process.GPTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPEiTuner.record">(btb.tuning.tuners.GPEiTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPTuner.record">(btb.tuning.tuners.GPTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.uniform.html#btb.tuning.tuners.uniform.UniformTuner.record">(btb.tuning.tuners.uniform.UniformTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.UniformTuner.record">(btb.tuning.tuners.UniformTuner method)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.UniformTuner.record">(btb.tuning.UniformTuner method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Rosenbrock">Rosenbrock (class in btb.benchmark.challenges)</a>
+
+      <ul>
+        <li><a href="api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.rosenbrock.Rosenbrock">(class in btb.benchmark.challenges.rosenbrock)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -682,6 +918,8 @@
 </li>
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.sample">(btb.tuning.hyperparams.numerical.IntHyperParam method)</a>
 </li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.sample">(btb.tuning.hyperparams.numerical.NumericalHyperParam method)</a>
+</li>
         <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.sample">(btb.tuning.IntHyperParam method)</a>
 </li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.sample">(btb.tuning.Tunable method)</a>
@@ -689,8 +927,6 @@
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable.sample">(btb.tuning.tunable.Tunable method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.scores">scores (btb.tuning.tuners.base.BaseMetaModelTuner attribute)</a>
 
       <ul>
@@ -700,7 +936,11 @@
       <li><a href="api/btb.selection.best.html#btb.selection.best.BestKReward.select">select() (btb.selection.best.BestKReward method)</a>
 
       <ul>
+        <li><a href="api/btb.selection.best.html#btb.selection.best.BestKVelocity.select">(btb.selection.best.BestKVelocity method)</a>
+</li>
         <li><a href="api/btb.selection.html#btb.selection.BestKReward.select">(btb.selection.BestKReward method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.BestKVelocity.select">(btb.selection.BestKVelocity method)</a>
 </li>
         <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector.select">(btb.selection.custom_selector.CustomSelector method)</a>
 </li>
@@ -714,15 +954,25 @@
 </li>
         <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKReward.select">(btb.selection.recent.RecentKReward method)</a>
 </li>
+        <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKVelocity.select">(btb.selection.recent.RecentKVelocity method)</a>
+</li>
         <li><a href="api/btb.selection.html#btb.selection.RecentKReward.select">(btb.selection.RecentKReward method)</a>
 </li>
+        <li><a href="api/btb.selection.html#btb.selection.RecentKVelocity.select">(btb.selection.RecentKVelocity method)</a>
+</li>
         <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.select">(btb.selection.selector.Selector method)</a>
+</li>
+        <li><a href="api/btb.selection.html#btb.selection.UCB1.select">(btb.selection.UCB1 method)</a>
+</li>
+        <li><a href="api/btb.selection.ucb1.html#btb.selection.ucb1.UCB1.select">(btb.selection.ucb1.UCB1 method)</a>
 </li>
         <li><a href="api/btb.selection.html#btb.selection.Uniform.select">(btb.selection.Uniform method)</a>
 </li>
         <li><a href="api/btb.selection.uniform.html#btb.selection.uniform.Uniform.select">(btb.selection.uniform.Uniform method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector">Selector (class in btb.selection.selector)</a>
 </li>
       <li><a href="api/btb.selection.constants.html#btb.selection.constants.Selectors">Selectors (class in btb.selection.constants)</a>
@@ -733,22 +983,48 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.transform">transform() (btb.tuning.hyperparams.base.BaseHyperParam method)</a>
+      <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.transform">transform() (btb.tuning.BooleanHyperParam method)</a>
 
       <ul>
+        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.transform">(btb.tuning.CategoricalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.transform">(btb.tuning.FloatHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.transform">(btb.tuning.hyperparams.base.BaseHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam.transform">(btb.tuning.hyperparams.boolean.BooleanHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.transform">(btb.tuning.hyperparams.BooleanHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.transform">(btb.tuning.hyperparams.categorical.CategoricalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.transform">(btb.tuning.hyperparams.CategoricalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.transform">(btb.tuning.hyperparams.FloatHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.transform">(btb.tuning.hyperparams.IntHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.transform">(btb.tuning.hyperparams.numerical.FloatHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.transform">(btb.tuning.hyperparams.numerical.IntHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.transform">(btb.tuning.hyperparams.numerical.NumericalHyperParam method)</a>
+</li>
+        <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.transform">(btb.tuning.IntHyperParam method)</a>
+</li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.transform">(btb.tuning.Tunable method)</a>
 </li>
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable.transform">(btb.tuning.tunable.Tunable method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.trials">trials (btb.tuning.tuners.base.BaseMetaModelTuner attribute)</a>
 
       <ul>
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.trials">(btb.tuning.tuners.base.BaseTuner attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.tunable">tunable (btb.tuning.tuners.base.BaseMetaModelTuner attribute)</a>
 
       <ul>
@@ -761,6 +1037,8 @@
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable">(class in btb.tuning.tunable)</a>
 </li>
       </ul></li>
+      <li><a href="api/btb.benchmark.tuners.btb.html#btb.benchmark.tuners.btb.tune">tune() (in module btb.benchmark.tuners.btb)</a>
+</li>
   </ul></td>
 </tr></table>
 

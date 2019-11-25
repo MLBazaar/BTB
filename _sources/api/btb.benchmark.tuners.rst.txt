@@ -1,0 +1,17 @@
+btb.benchmark.tuners package
+============================
+
+Submodules
+----------
+
+.. toctree::
+
+   btb.benchmark.tuners.btb
+
+Module contents
+---------------
+
+.. automodule:: btb.benchmark.tuners
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+btb.benchmark.challenges.challenge module
+=========================================
+
+.. automodule:: btb.benchmark.challenges.challenge
+   :members:
+   :undoc-members:
+   :show-inheritance:

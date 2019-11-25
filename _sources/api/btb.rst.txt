@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+   btb.benchmark
    btb.selection
    btb.tuning
 

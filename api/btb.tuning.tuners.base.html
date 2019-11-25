@@ -106,6 +106,11 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="btb.selection.html#module-btb.selection">Module contents</a></li>
@@ -288,7 +293,10 @@ over the <code class="docutils literal notranslate"><span class="pre">self.trial
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tuners.base.BaseMetaModelTuner.record" title="btb.tuning.tuners.base.BaseMetaModelTuner.record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record</span></code></a>(trials, scores)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tuners.base.BaseMetaModelTuner.propose" title="btb.tuning.tuners.base.BaseMetaModelTuner.propose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">propose</span></code></a>([n, allow_duplicates])</p></td>
+<td><p>Propose one or more new hyperparameter configurations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.tuners.base.BaseMetaModelTuner.record" title="btb.tuning.tuners.base.BaseMetaModelTuner.record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record</span></code></a>(trials, scores)</p></td>
 <td><p>Record one or more <code class="docutils literal notranslate"><span class="pre">trials</span></code> with the associated <code class="docutils literal notranslate"><span class="pre">scores</span></code> and re-fit the model.</p></td>
 </tr>
 </tbody>
@@ -340,6 +348,65 @@ Defaults to 2.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="method">
+<dt id="btb.tuning.tuners.base.BaseMetaModelTuner.propose">
+<code class="sig-name descname">propose</code><span class="sig-paren">(</span><em class="sig-param">n=1</em>, <em class="sig-param">allow_duplicates=False</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.tuners.base.BaseMetaModelTuner.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Propose one or more new hyperparameter configurations.</p>
+<p>Validate that the amount of proposals requested is valid when <code class="docutils literal notranslate"><span class="pre">allow_duplicates</span></code> is
+<code class="docutils literal notranslate"><span class="pre">False</span></code> and raise an exception in case there is any missmatch between <code class="docutils literal notranslate"><span class="pre">n</span></code>,
+unique <code class="docutils literal notranslate"><span class="pre">self.trials</span></code> and <code class="docutils literal notranslate"><span class="pre">self.tunable.cardinality</span></code>.
+Call the implemented <code class="docutils literal notranslate"><span class="pre">_propose</span></code> method and convert the returned data in to hyperparameter
+space values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of candidates to create. Defaults to 1.</p></li>
+<li><p><strong>allow_duplicates</strong> (<em>bool</em>) – If it’s False, the tuner will propose trials that are not recorded. Otherwise
+will generate trials that can be repeated. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">n</span></code> is 1, a <code class="docutils literal notranslate"><span class="pre">dict</span></code> will be returned containing the
+hyperparameter names and values. Otherwise, if <code class="docutils literal notranslate"><span class="pre">n</span></code> is bigger than 1,
+a list of such dicts is returned.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict or list</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the amount of requested proposals
+    is bigger than the possible combinations and <code class="docutils literal notranslate"><span class="pre">allow_duplicates</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the unique amount of recorded
+    trials is the same as the amount of combinations available for <code class="docutils literal notranslate"><span class="pre">self.tunable</span></code>.</p></li>
+<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the unique amount of recorded
+    trials is the same as the amount of combinations available for <code class="docutils literal notranslate"><span class="pre">self.tunable</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">UniformTuner</span></code> is being imported,
+instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method propose is being called
+three times, first with a single proposal, a second with two proposals forcing them to
+be different and once where the values can be repeated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="k">import</span> <span class="n">Tunable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="k">import</span> <span class="n">UniformTuner</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">UniformTuner</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">{&#39;bhp&#39;: True, &#39;chp&#39;: &#39;dog&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">[{&#39;bhp&#39;: True, &#39;chp&#39;: &#39;cat&#39;}, {&#39;bhp&#39;: True, &#39;chp&#39;: &#39;dog&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">[{&#39;bhp&#39;: False, &#39;chp&#39;: &#39;dog&#39;}, {&#39;bhp&#39;: False, &#39;chp&#39;: &#39;dog&#39;}]</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.tuning.tuners.base.BaseMetaModelTuner.record">
 <code class="sig-name descname">record</code><span class="sig-paren">(</span><em class="sig-param">trials</em>, <em class="sig-param">scores</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tuners/base.html#BaseMetaModelTuner.record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuners.base.BaseMetaModelTuner.record" title="Permalink to this definition">¶</a></dt>

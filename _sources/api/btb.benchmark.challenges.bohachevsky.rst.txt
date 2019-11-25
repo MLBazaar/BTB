@@ -1,0 +1,7 @@
+btb.benchmark.challenges.bohachevsky module
+===========================================
+
+.. automodule:: btb.benchmark.challenges.bohachevsky
+   :members:
+   :undoc-members:
+   :show-inheritance:

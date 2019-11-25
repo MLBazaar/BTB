@@ -104,6 +104,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../api/btb.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.html">btb.selection package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.selection.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.selection.html#module-btb.selection">Module contents</a></li>
@@ -252,7 +257,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="BaseHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam">[docs]</a><span class="k">class</span> <span class="nc">BaseHyperParam</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.BaseHyperParam">[docs]</a><span class="k">class</span> <span class="nc">BaseHyperParam</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;BaseHyperParam class.</span>
 
 <span class="sd">    A BaseHyperParam is an abstract representation of a single parameter that can be tuned.</span>
@@ -383,7 +388,7 @@
         <span class="sd">&quot;&quot;&quot;Method to be implemented by child classes.&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="BaseHyperParam.inverse_transform"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseHyperParam.inverse_transform"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.BaseHyperParam.inverse_transform">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Invert one or more search space values.</span>
 
 <span class="sd">        Validates that the input values are within the search space and then transform them into</span>
@@ -416,7 +421,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inverse_transform</span><span class="p">(</span><span class="n">values</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BaseHyperParam.sample"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.sample">[docs]</a>    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseHyperParam.sample"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.BaseHyperParam.sample">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate an array of ``n_samples`` random samples in the search space.</span>
 
@@ -441,7 +446,7 @@
 <span class="sd">                   [0.375]])</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="BaseHyperParam.transform"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseHyperParam.transform"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.base.html#btb.tuning.BaseHyperParam.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Transform one or more hyperparameter values.</span>
 
 <span class="sd">        Validates that the input values are within the accepted dimensions and that they are within</span>
