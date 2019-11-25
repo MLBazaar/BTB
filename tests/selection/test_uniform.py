@@ -1,5 +1,4 @@
 from unittest import TestCase
-
 from mock import patch
 
 from btb.selection.uniform import Uniform
@@ -13,22 +12,20 @@ class TestUniform(TestCase):
     # NOTES:
     #     * randint will need to be mocked
 
-    @patch('btb.selection.uniform.random')
-    def test_select(self, random_mock):
+    @patch('random.choice')
+    def test_select(self, mock_choice):
 
         # Set-up
-        selector = Uniform(['DT', 'RF', 'SVM'])
+        choices = ['DT', 'RF', 'SVM']
+        selector = Uniform(choices)
+        expected = 'DT'
 
-        random_mock.randint.return_value = 0
+        mock_choice.return_value = expected
 
         # Run
-        choice_scores = {
-            'DT': [0.7, 0.73, 0.75],
-            'RF': [0.8, 0.83, 0.85],
-            'SVM': [0.9, 0.93, 0.95]
-        }
-        best = selector.select(choice_scores)
+        choice_scores = None
+        actual = selector.select(choice_scores)
 
         # Assert
-        assert best == 'DT'
-        random_mock.randint.assert_called_once_with(0, 2)
+        assert actual == expected
+        mock_choice.assert_called_once_with(choices)
