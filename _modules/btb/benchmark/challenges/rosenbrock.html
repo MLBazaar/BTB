@@ -257,9 +257,9 @@
   <h1>Source code for btb.benchmark.challenges.rosenbrock</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.challenge</span> <span class="k">import</span> <span class="n">Challenge</span>
-<span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="k">import</span> <span class="n">Tunable</span>
-<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.challenge</span> <span class="kn">import</span> <span class="n">Challenge</span>
+<span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 
 
 <div class="viewcode-block" id="Rosenbrock"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.Rosenbrock">[docs]</a><span class="k">class</span> <span class="nc">Rosenbrock</span><span class="p">(</span><span class="n">Challenge</span><span class="p">):</span>
@@ -297,7 +297,7 @@
 <span class="sd">        max_y (int):</span>
 <span class="sd">            Maximum number that the hyperparameter can propouse for ``y``. Defaults to 50.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">min_x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">min_y</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_y</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">min_x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">min_y</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_y</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_x</span> <span class="o">=</span> <span class="n">min_x</span>

@@ -255,7 +255,7 @@
   <h1>Source code for btb.selection.pure</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">btb.selection.selector</span> <span class="k">import</span> <span class="n">Selector</span>
+<span class="kn">from</span> <span class="nn">btb.selection.selector</span> <span class="kn">import</span> <span class="n">Selector</span>
 
 <span class="c1"># the minimum number of scores that each choice must have in order to use best-K</span>
 <span class="c1"># optimizations. If not all choices meet this threshold, default UCB1 selection</span>
@@ -271,7 +271,7 @@
 <span class="sd">    Simply returns the choice with the best best-K velocity.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">K_MIN</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">K_MIN</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">PureBestKVelocity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
 

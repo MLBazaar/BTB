@@ -376,7 +376,7 @@ hyperparameter values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
 called two times with a scalar from the search space and an array of two valid values
 from the search space.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
 <span class="go">array([[1]])</span>
@@ -460,7 +460,7 @@ search space values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
 three times with a single scalar value, an array of two valid values and a 2D array
 with 1 dimension.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">array([[0.125]])</span>
@@ -560,7 +560,7 @@ hyperparameter values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
 called two times with a scalar from the search space and an array of two valid values
 from the search space.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
 <span class="go">array([[1]])</span>
@@ -646,7 +646,7 @@ search space values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
 three times with a single scalar value, an array of two valid values and a 2D array
 with 1 dimension.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">array([[0.125]])</span>
@@ -753,7 +753,7 @@ hyperparameter values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
 called two times with a scalar from the search space and an array of two valid values
 from the search space.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
 <span class="go">array([[1]])</span>
@@ -839,7 +839,7 @@ search space values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
 three times with a single scalar value, an array of two valid values and a 2D array
 with 1 dimension.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">array([[0.125]])</span>
@@ -947,7 +947,7 @@ hyperparameter values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
 called two times with a scalar from the search space and an array of two valid values
 from the search space.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
 <span class="go">array([[1]])</span>
@@ -1033,7 +1033,7 @@ search space values.</p>
 instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
 three times with a single scalar value, an array of two valid values and a 2D array
 with 1 dimension.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">array([[0.125]])</span>

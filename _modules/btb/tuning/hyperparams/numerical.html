@@ -261,7 +261,7 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.base</span> <span class="k">import</span> <span class="n">BaseHyperParam</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.base</span> <span class="kn">import</span> <span class="n">BaseHyperParam</span>
 
 
 <div class="viewcode-block" id="NumericalHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.numerical.html#btb.tuning.NumericalHyperParam">[docs]</a><span class="k">class</span> <span class="nc">NumericalHyperParam</span><span class="p">(</span><span class="n">BaseHyperParam</span><span class="p">):</span>
@@ -309,7 +309,7 @@
 
     <span class="n">cardinality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">min</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
             <span class="nb">min</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">min</span>
 
@@ -447,7 +447,7 @@
 
     <span class="n">dimensions</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 

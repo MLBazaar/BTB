@@ -299,7 +299,7 @@ virtualenv -p <span class="k">$(</span>which python3.6<span class="k">)</span> b
 <h2>Install using Pip<a class="headerlink" href="#install-using-pip" title="Permalink to this headline">¶</a></h2>
 <p>After creating the virtualenv and activating it, we recommend using
 <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> in order to install <strong>BTB</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install btb
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install baytune
 </pre></div>
 </div>
 <p>This will pull and install the latest stable release from <a class="reference external" href="https://pypi.org/">PyPi</a>.</p>
@@ -408,7 +408,7 @@ we want to try out, as well as the <code class="docutils literal notranslate"><s
 <span class="gp">... </span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rf_tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">(</span><span class="n">rf_hyperparams</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">svc_hyperparams</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">FloatHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">10.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">FloatHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">10.0</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">FloatHyperParam</span><span class="p">(</span><span class="mf">0.000000001</span><span class="p">,</span> <span class="mf">0.0000001</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">svc_tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">(</span><span class="n">svc_hyperparams</span><span class="p">)</span>

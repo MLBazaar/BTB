@@ -253,7 +253,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for btb.selection.hierarchical</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">btb.selection.ucb1</span> <span class="k">import</span> <span class="n">UCB1</span>
+<span></span><span class="kn">from</span> <span class="nn">btb.selection.ucb1</span> <span class="kn">import</span> <span class="n">UCB1</span>
 
 
 <div class="viewcode-block" id="HierarchicalByAlgorithm"><a class="viewcode-back" href="../../../api/btb.selection.hierarchical.html#btb.selection.HierarchicalByAlgorithm">[docs]</a><span class="k">class</span> <span class="nc">HierarchicalByAlgorithm</span><span class="p">(</span><span class="n">UCB1</span><span class="p">):</span>
@@ -263,7 +263,7 @@
 <span class="sd">        by_algorithm (Dict[str, List]): mapping of ML algorithms to frozen set choices</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">by_algorithm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">by_algorithm</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HierarchicalByAlgorithm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">by_algorithm</span> <span class="o">=</span> <span class="n">by_algorithm</span>
 

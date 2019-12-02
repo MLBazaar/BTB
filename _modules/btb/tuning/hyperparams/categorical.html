@@ -258,9 +258,9 @@
 <span class="sd">&quot;&quot;&quot;Package where the CategoricalHyperParamClass is defined.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
 
-<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.base</span> <span class="k">import</span> <span class="n">BaseHyperParam</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.base</span> <span class="kn">import</span> <span class="n">BaseHyperParam</span>
 
 
 <div class="viewcode-block" id="CategoricalHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.categorical.html#btb.tuning.CategoricalHyperParam">[docs]</a><span class="k">class</span> <span class="nc">CategoricalHyperParam</span><span class="p">(</span><span class="n">BaseHyperParam</span><span class="p">):</span>
@@ -281,7 +281,7 @@
 <span class="sd">            List of values that the hyperparameter can be.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Instantiation of CategoricalHyperParam.</span>
 
 <span class="sd">        Creates an instance with a list of ``choices`` and fit an instance of</span>

@@ -260,18 +260,18 @@
 <span class="c1"># License: BSD 3 clause</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="k">import</span> <span class="n">cholesky</span><span class="p">,</span> <span class="n">cho_solve</span><span class="p">,</span> <span class="n">solve_triangular</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">fmin_l_bfgs_b</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">cholesky</span><span class="p">,</span> <span class="n">cho_solve</span><span class="p">,</span> <span class="n">solve_triangular</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fmin_l_bfgs_b</span>
 
-<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">clone</span>
-<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">MultiOutputMixin</span>
-<span class="kn">from</span> <span class="nn">.kernels</span> <span class="k">import</span> <span class="n">RBF</span><span class="p">,</span> <span class="n">ConstantKernel</span> <span class="k">as</span> <span class="n">C</span>
-<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">check_random_state</span>
-<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="k">import</span> <span class="n">check_X_y</span><span class="p">,</span> <span class="n">check_array</span>
-<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="k">import</span> <span class="n">ConvergenceWarning</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">clone</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">MultiOutputMixin</span>
+<span class="kn">from</span> <span class="nn">.kernels</span> <span class="kn">import</span> <span class="n">RBF</span><span class="p">,</span> <span class="n">ConstantKernel</span> <span class="k">as</span> <span class="n">C</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">check_random_state</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">check_X_y</span><span class="p">,</span> <span class="n">check_array</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ConvergenceWarning</span>
 
 
 <span class="k">class</span> <span class="nc">GaussianProcessRegressor</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">,</span>
@@ -403,7 +403,7 @@
 <span class="sd">    (array([653.0..., 592.1...]), array([316.6..., 316.6...]))</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
                  <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;fmin_l_bfgs_b&quot;</span><span class="p">,</span> <span class="n">n_restarts_optimizer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                  <span class="n">normalize_y</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">copy_X_train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span>

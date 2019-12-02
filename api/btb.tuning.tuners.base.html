@@ -394,10 +394,10 @@ a list of such dicts is returned.</p>
 instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method propose is being called
 three times, first with a single proposal, a second with two proposals forcing them to
 be different and once where the values can be repeated.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="k">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="k">import</span> <span class="n">UniformTuner</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
@@ -438,10 +438,10 @@ trials.</p></li>
 <p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">UniformTuner</span></code> is being imported,
 instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method record is being called two times
 with valid trials and scores.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="k">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="k">import</span> <span class="n">UniformTuner</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
@@ -561,10 +561,10 @@ a list of such dicts is returned.</p>
 instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method propose is being called
 three times, first with a single proposal, a second with two proposals forcing them to
 be different and once where the values can be repeated.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="k">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="k">import</span> <span class="n">UniformTuner</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
@@ -603,10 +603,10 @@ trials.</p></li>
 <p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">UniformTuner</span></code> is being imported,
 instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method record is being called two times
 with valid trials and scores.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="k">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="k">import</span> <span class="n">UniformTuner</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>

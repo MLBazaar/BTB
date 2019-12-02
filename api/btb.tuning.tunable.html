@@ -338,9 +338,9 @@ is the sum of dimensions from all the <code class="docutils literal notranslate"
 <p class="rubric">Example</p>
 <p>The example below shows a simple usage of a Tunable class which will inverse transform
 a valid data from a 2D list and a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will be returned.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.boolean</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.categorical</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.boolean</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.categorical</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -381,9 +381,9 @@ sum of dimensions from all the <code class="docutils literal notranslate"><span 
 <p class="rubric">Example</p>
 <p>The example below shows a simple usage of a Tunable class which will generate 2
 samples by calling it’s sample method. This will return a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.boolean</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.categorical</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.boolean</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.categorical</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -421,9 +421,9 @@ dimensions from all the <code class="docutils literal notranslate"><span class="
 <p class="rubric">Example</p>
 <p>The example below shows a simple usage of a Tunable class which will transform a valid
 data from a 2D list and a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> is being returned.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.boolean</span> <span class="k">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.categorical</span> <span class="k">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="k">import</span> <span class="n">IntHyperParam</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.boolean</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.categorical</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
