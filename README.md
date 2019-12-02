@@ -54,7 +54,7 @@ After creating the virtualenv and activating it, we recommend using
 [pip](https://pip.pypa.io/en/stable/) in order to install **BTB**:
 
 ```bash
-pip install btb
+pip install baytune
 ```
 
 This will pull and install the latest stable release from [PyPi](https://pypi.org/).
@@ -175,7 +175,7 @@ we want to try out, as well as the ``Selector`` instance.
 ... }
 >>> rf_tunable = Tunable(rf_hyperparams)
 >>> svc_hyperparams = {
-...     'c': FloatHyperParam(min=0.01, max=10.0),
+...     'C': FloatHyperParam(min=0.01, max=10.0),
 ...     'gamma': FloatHyperParam(0.000000001, 0.0000001)
 ... }
 >>> svc_tunable = Tunable(svc_hyperparams)
