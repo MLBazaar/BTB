@@ -2,6 +2,7 @@
 
 """Package where the BaseHyperParam class is defined."""
 
+import inspect
 from abc import ABCMeta, abstractmethod
 
 import numpy as np
@@ -117,7 +118,7 @@ class BaseHyperParam(metaclass=ABCMeta):
             values (numpy.ndarray):
                 2D array of values that will be validated.
         """
-        self._within_range(values, min=self.min, max=self.max)
+        self._within_range(values, min=self._min, max=self._max)
 
     def _within_search_space(self, values):
         """Ensure that the values are within the range of the search space.
@@ -256,3 +257,11 @@ class BaseHyperParam(metaclass=ABCMeta):
         self._within_hyperparam_space(values)
 
         return self._transform(values)
+
+    def __repr__(self):
+        args = ', '.join(
+            '{}={}'.format(param, getattr(self, param))
+            for param in inspect.signature(self.__class__).parameters.keys()
+        )
+        args = args.replace('inf', 'np.inf')
+        return '{}({})'.format(self.__class__.__name__, args)
