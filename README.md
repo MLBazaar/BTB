@@ -230,19 +230,38 @@ For more details about **BTB** and all its possibilities and features, please ch
 
 ## Citing BTB
 
-If you use BTB, please consider citing the following work:
+If you use BTB, please consider citing our related papers.
 
-- Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
+For the current design of BTB and its usage within the larger *Machine Learning Bazaar* project at the MIT Data To AI Lab, please see:
+
+Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. ["The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development."](https://arxiv.org/abs/1905.08942) arXiv Preprint 1905.08942. 2019.
 
 ``` bibtex
-  @MastersThesis{Laura:2018,
-    title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
-    author = "Laura Gustafson",
-    month = "May",
-    year = "2018",
-    url = "https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf",
-    type = "M. Eng Thesis",
-    address = "Cambridge, MA",
-    school = "Massachusetts Institute of Technology",
+@article{smith2019mlbazaar,
+  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+  journal = {arXiv e-prints},
+  year = {2019},
+  eid = {arXiv:1905.08942},
+  pages = {arXiv:1905.08942},
+  archivePrefix = {arXiv},
+  eprint = {1905.08942},
+}
+```
+
+For the initial design of BTB, usage of Recommenders, and initial evaluation, please see:
+
+Laura Gustafson. ["Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML."](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf) Masters thesis, MIT EECS, June 2018.
+
+``` bibtex
+  @mastersthesis{gustafson2018bayesian,
+    author = {Gustafson, Laura},
+    title = {Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML},
+    month = {May},
+    year = {2018},
+    url = {https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf},
+    type = {M. Eng Thesis},
+    school = {Massachusetts Institute of Technology},
+    address = {Cambridge, MA},
   }
 ```
