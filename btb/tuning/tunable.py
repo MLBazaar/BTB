@@ -193,3 +193,6 @@ class Tunable:
             samples.append(items)
 
         return np.concatenate(samples, axis=1)
+
+    def __repr__(self):
+        return 'Tunable({})'.format(self.hyperparams)
