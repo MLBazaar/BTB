@@ -2,12 +2,15 @@
 
 """Package where the BaseTuner class and BaseMetaModelTuner are defined."""
 
+import logging
 from abc import abstractmethod
 
 import numpy as np
 
 from btb.tuning.acquisition.base import BaseAcquisition
 from btb.tuning.metamodels.base import BaseMetaModel
+
+LOGGER = logging.getLogger(__name__)
 
 
 class BaseTuner:
@@ -285,7 +288,8 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
         self.__init_acquisition__(**(self._acquisition_kwargs or dict()))
 
     def _propose(self, num_proposals, allow_duplicates):
-        if len(self._trials_set) < self._min_trials:
+        if self._min_trials > len(self._trials_set):
+            LOGGER.warning('Not enough samples recorded to fit, generating random proposal.')
             return self._sample(num_proposals, allow_duplicates)
 
         num_samples = num_proposals * self._num_candidates
@@ -294,7 +298,11 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
             num_samples = min(remaining, num_samples)
 
         proposals = self._sample(num_samples, allow_duplicates)
+
+        LOGGER.info('Predicting %s samples.' % num_samples)
         predicted = self._predict(proposals)
+
+        LOGGER.info('Acquiere %s from %s samples.' % num_proposals, num_samples)
         index = self._acquire(predicted, num_proposals)
 
         return proposals[index]
@@ -341,4 +349,5 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
         """
         super().record(trials, scores)
         if len(self.trials) >= self._min_trials:
+            LOGGER.info('Fitting the model with %s samples.' % len(self.trials))
             self._fit(self.trials, self.scores)
