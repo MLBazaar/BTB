@@ -37,3 +37,16 @@ class Challenge(metaclass=ABCMeta):
             for param in inspect.signature(self.__class__).parameters.keys()
         )
         return '{}({})'.format(self.__class__.__name__, args)
+
+
+class MLChallenge(Challenge):
+    """Machine Learning Challenge class.
+
+    The MLChallenge class rerpresents a single ``machine learning challenge`` that can be used for
+    benchmark.
+    """
+
+    @abstractmethod
+    def _load_data(self):
+        """Load ``X`` and ``y`` over which to perform fit and evaluate."""
+        pass
