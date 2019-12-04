@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import inspect
+
 import pandas as pd
 
 from btb.benchmark.challenges import Bohachevsky, Branin, Rosenbrock
@@ -9,6 +11,28 @@ DEFAULT_CHALLENGES = [
     Branin,
     Rosenbrock,
 ]
+
+
+def evaluate_candidate(name, candidate, challenges, iterations):
+    candidate_result = []
+
+    for challenge in challenges:
+
+        # Allow class and instance usage for challenges
+        if inspect.isclass(challenge):
+            challenge = challenge()
+
+        tunable_hyperparameters = challenge.get_tunable_hyperparameters()
+        score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
+        result = {
+            'challenge': str(challenge),
+            'candidate': name,
+            'score': score,
+        }
+
+        candidate_result.append(result)
+
+    return candidate_result
 
 
 def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
@@ -58,21 +82,12 @@ def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
 
     results = []
 
-    for challenge_class in challenges:
-        challenge = challenge_class()
-        tunable = challenge.get_tunable()
-
-        for name, function in candidates.items():
-            score = function(challenge.evaluate, tunable, iterations)
-
-            results.append({
-                'challenge': type(challenge).__name__,
-                'tuner': name,
-                'score': score,
-            })
+    for name, candidate in candidates.items():
+        result = evaluate_candidate(name, candidate, challenges, iterations)
+        results.extend(result)
 
     df = pd.DataFrame.from_records(results)
-    df = df.pivot(index='tuner', columns='challenge', values='score')
+    df = df.pivot(index='candidate', columns='challenge', values='score')
 
     del df.columns.name
     del df.index.name
