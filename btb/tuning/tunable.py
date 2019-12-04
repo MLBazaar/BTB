@@ -194,5 +194,23 @@ class Tunable:
 
         return np.concatenate(samples, axis=1)
 
+    def __str__(self):
+        hp = '\n'.join(
+            '    {}: {}'.format(name, hp.__class__.__name__)
+            for name, hp in self.hyperparams.items()
+        )
+
+        return (
+            'Tunable: \n'
+            '  Dimensions: {}\n'
+            '  Cardinality: {}\n'
+            '  Hyperparams: \n'
+            '{}'
+        ).format(
+            self.dimensions,
+            self.cardinality,
+            hp
+        )
+
     def __repr__(self):
         return 'Tunable({})'.format(self.hyperparams)

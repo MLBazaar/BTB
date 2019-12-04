@@ -45,8 +45,8 @@ class TestBaseHyperParam(TestCase):
     def test__within_hyperparam_space(self):
         # setup
         instance = MagicMock()
-        instance._min = 0
-        instance._max = 10
+        instance.min = 0
+        instance.max = 10
         values = 5
 
         # run

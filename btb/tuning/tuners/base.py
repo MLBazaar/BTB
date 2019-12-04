@@ -2,6 +2,7 @@
 
 """Package where the BaseTuner class and BaseMetaModelTuner are defined."""
 
+import inspect
 import logging
 from abc import abstractmethod
 
@@ -245,6 +246,26 @@ class BaseTuner:
         self.raw_scores = np.append(self.raw_scores, scores)
         self.scores = self.raw_scores if self.maximize else -self.raw_scores
 
+    def __repr__(self):
+        args = ', '.join(
+            '{}={}'.format(param, repr(getattr(self, param)))
+            for param in inspect.signature(self.__class__).parameters.keys()
+        )
+        return '{}({})'.format(self.__class__.__name__, args)
+
+    def __str__(self):
+        return (
+            "{}\n"
+            "  hyperparameters: {}\n"
+            "  dimensions: {}\n"
+            "  cardinality: {}"
+        ).format(
+            self.__class__.__name__,
+            len(self.tunable.hyperparams),
+            self.tunable.dimensions,
+            self.tunable.cardinality
+        )
+
 
 class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
     """BaseMetaModelTuner class.
@@ -280,30 +301,27 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
     _metamodel_kwargs = None
     _acquisition_kwargs = None
 
-    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2, **kwargs):
-        self._num_candidates = num_candidates
-        self._min_trials = min_trials
+    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2):
+        self.num_candidates = num_candidates
+        self.min_trials = min_trials
         super().__init__(tunable, maximize)
         self.__init_metamodel__(**(self._metamodel_kwargs or dict()))
         self.__init_acquisition__(**(self._acquisition_kwargs or dict()))
 
     def _propose(self, num_proposals, allow_duplicates):
-        if self._min_trials > len(self._trials_set):
-            LOGGER.warning('Not enough samples recorded to fit, generating random proposal.')
+        if self.min_trials > len(self._trials_set):
+            LOGGER.debug('Not enough samples recorded to generate predictions, '
+                         'generating random proposal.')
             return self._sample(num_proposals, allow_duplicates)
 
-        num_samples = num_proposals * self._num_candidates
+        num_samples = num_proposals * self.num_candidates
         if not allow_duplicates:
             remaining = self.tunable.cardinality - len(self._trials_set)
             num_samples = min(remaining, num_samples)
 
         proposals = self._sample(num_samples, allow_duplicates)
 
-        LOGGER.info('Predicting %s samples.' % num_samples)
         predicted = self._predict(proposals)
-
-        LOGGER.info(('Determine the next %s sampling'
-                     'point/s from %s samples.', (num_proposals, num_samples)))
         index = self._acquire(predicted, num_proposals)
 
         return proposals[index]
@@ -349,6 +367,6 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
             >>> tuner.record(trials, scores)
         """
         super().record(trials, scores)
-        if len(self.trials) >= self._min_trials:
-            LOGGER.info('Fitting the model with %s samples.' % len(self.trials))
+        if len(self.trials) >= self.min_trials:
+            LOGGER.debug('Fitting the model with %s samples.' % len(self.trials))
             self._fit(self.trials, self.scores)

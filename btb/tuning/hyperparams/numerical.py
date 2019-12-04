@@ -56,8 +56,6 @@ class FloatHyperParam(NumericalHyperParam):
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True):
 
-        self.min = min
-        self.max = max
         self.include_min = include_min
         self.include_max = include_max
 
@@ -70,8 +68,8 @@ class FloatHyperParam(NumericalHyperParam):
         if min >= max:
             raise ValueError('The ``min`` value can not be greater or equal to ``max`` value.')
 
-        self._min = min
-        self._max = max
+        self.min = min
+        self.max = max
         self.range = max - min
 
     def _inverse_transform(self, values):
@@ -80,7 +78,7 @@ class FloatHyperParam(NumericalHyperParam):
         Converts a ``numpy.ndarray`` with normalized values from the search space :math:`s_1,
         s_2,... s_n` to the hyperparameter space of :math:`h_1, h_2,... h_n`. This is
         being computed by multiplying the hyperparameter's range with the values to be denormalized
-        and adding the ``self._min`` value to them.
+        and adding the ``self.min`` value to them.
 
         Args:
             values (numpy.ndarray):
@@ -103,14 +101,14 @@ class FloatHyperParam(NumericalHyperParam):
             >>> instance._inverse_transform(np.array([[0.875]]))
             array([[0.8]])
         """
-        return values * self.range + self._min
+        return values * self.range + self.min
 
     def _transform(self, values):
         """Transform one or more hyperparameter values.
 
         Converts a ``numpy.ndarray`` with ``float`` values from the original hyperparameter space
         :math:`h_1, h_2,... h_n` into the normalized search space :math:`s_1, s_2,... s_n`.
-        This is being computed by substracting the ``self._min`` value from the values to be
+        This is being computed by substracting the ``self.min`` value from the values to be
         trasnformed and dividing them by the ``self.range`` of the hyperparameter.
 
         Args:
@@ -136,7 +134,7 @@ class FloatHyperParam(NumericalHyperParam):
             >>> instance._transform(np.array([[0.8]]))
             array([[0.875]])
         """
-        return (values - self._min) / self.range
+        return (values - self.min) / self.range
 
     def sample(self, n_samples):
         """Generate sample values in the hyperparameter search space :math:`{0, 1}`.
@@ -200,8 +198,6 @@ class IntHyperParam(NumericalHyperParam):
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True, step=1):
 
-        self.min = min
-        self.max = max
         self.include_min = include_min
         self.include_max = include_max
 
@@ -214,17 +210,17 @@ class IntHyperParam(NumericalHyperParam):
         if min >= max:
             raise ValueError('The `min` value can not be greater or equal to `max` value.')
 
-        self._min = int(min) if include_min else int(min) + 1
-        self._max = int(max) if include_max else int(max) - 1
+        self.min = int(min) if include_min else int(min) + 1
+        self.max = int(max) if include_max else int(max) - 1
         self.step = step
-        self.cardinality = ((self._max - self._min) // step) + 1
+        self.cardinality = ((self.max - self.min) // step) + 1
 
-        if (self._max - self._min) % self.step:
+        if (self.max - self.min) % self.step:
             raise ValueError(
-                "Invalid step of {} for values inside [{}, {}]".format(step, self._min, self._max)
+                "Invalid step of {} for values inside [{}, {}]".format(step, self.min, self.max)
             )
 
-        self.interval = self.step / (self._max - self._min + self.step)
+        self.interval = self.step / (self.max - self.min + self.step)
 
     def _inverse_transform(self, values):
         """Invert one or more search space values.
@@ -232,7 +228,7 @@ class IntHyperParam(NumericalHyperParam):
         Converts a ``numpy.ndarray`` with normalized values from the search space :math:`s_1,
         s_2,... s_n` to the hyperparameter space of :math:`h_1, h_2,... h_n`. This is
         being computed by divinding the hyperparameter's interval with the values to be inverted
-        and adding the ``self._min`` value to them and resting the 0.5 that has been added during
+        and adding the ``self.min`` value to them and resting the 0.5 that has been added during
         the transformation.
 
         Args:
@@ -256,11 +252,11 @@ class IntHyperParam(NumericalHyperParam):
             >>> instance._inverse_trasnfrom(np.array([[0.625]]))
             array([[3]])
         """
-        unscaled_values = values / self.interval - 0.5 + self._min
+        unscaled_values = values / self.interval - 0.5 + self.min
         rounded = unscaled_values.round()
 
         # Restrict to make sure that we stay within the valid range
-        restricted = np.minimum(np.maximum(rounded, self._min), self._max)
+        restricted = np.minimum(np.maximum(rounded, self.min), self.max)
 
         return restricted.astype(int)
 
@@ -295,7 +291,7 @@ class IntHyperParam(NumericalHyperParam):
             >>> instance._trasnfrom(np.array([[3]]))
             array([[0.625]])
         """
-        return ((values - self._min) / self.step + 0.5) * self.interval
+        return ((values - self.min) / self.step + 0.5) * self.interval
 
     def sample(self, n_samples):
         """Generate sample values in the hyperparameter search space of [0, 1).
