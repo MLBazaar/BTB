@@ -21,6 +21,9 @@ DEFAULT_MLCHALLENGES = [
 def evaluate_candidate(name, candidate, challenges, iterations):
     candidate_result = []
 
+    if not isinstance(challenges, list):
+        challenges = [challenges]
+
     for challenge in challenges:
 
         # Allow class and instance usage for challenges

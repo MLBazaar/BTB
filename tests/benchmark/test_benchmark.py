@@ -1,118 +1,100 @@
 from unittest import TestCase
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import pandas as pd
 
-from btb.benchmark import benchmark
+from btb.benchmark import benchmark, evaluate_candidate
 
 
 class TestBenchmark(TestCase):
 
-    def test_benchmark_challenges_callable(self):
+    def test_evaluate_candidate(self):
         # setup
-        function = MagicMock(return_value=0.1, __name__='test_function')
+        candidate = MagicMock()
         challenge = MagicMock()
-        challenge.return_value.get_tunable.return_value = 'tunable'
+        challenge.__str__.return_value = 'test_challenge'
 
         # run
-        result = benchmark(function, challenges=challenge)
+        result = evaluate_candidate('test_candidate', candidate, challenge, 10)
+
+        # assert
+        challenge.get_tunable_hyperparameters.assert_called_once_with()
+        candidate.assert_called_once_with(
+            challenge.evaluate,
+            challenge.get_tunable_hyperparameters.return_value,
+            10
+        )
+
+        expected_result = [
+            {
+                'challenge': 'test_challenge',
+                'candidate': 'test_candidate',
+                'score': candidate.return_value
+            }
+        ]
+
+        assert result == expected_result
+
+    @patch('btb.benchmark.evaluate_candidate')
+    def test_benchmark_challenges_callable(self, mock_evaluate_candidate):
+        # setup
+        mock_evaluate_candidate.return_value = [{
+            'challenge': 'test_challenge',
+            'candidate': 'test_candidate',
+            'score': 1.0
+        }]
+
+        candidate = MagicMock(__name__='test_candidate')
+        challenge = MagicMock()
+
+        # run
+        result = benchmark(candidate, challenges=challenge)
 
         # assert
         expected_result = pd.DataFrame({
-            'MagicMock': [0.1],
-            'Mean': [0.1],
+            'test_challenge': [1.0],
+            'Mean': [1.0],
             'Std': [0.0],
         })
 
-        expected_result.index = ['test_function']
+        expected_result.index = ['test_candidate']
 
-        function.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
-        challenge.return_value.get_tunable.assert_called_once_with()
+        mock_evaluate_candidate.assert_called_once_with(
+            'test_candidate',
+            candidate,
+            [challenge],
+            1000
+        )
 
         pd.testing.assert_frame_equal(
             result.sort_index(axis=1),
             expected_result.sort_index(axis=1),
         )
 
-    def test_benchmark_challenges_tuple(self):
+    @patch('btb.benchmark.evaluate_candidate')
+    def test_benchmark_challenges_tuple(self, mock_evaluate_candidate):
         # setup
-        function_a = MagicMock(return_value=0.1, __name__='function_a')
-        function_b = MagicMock(return_value=0.1, __name__='function_b')
-        candidates = (function_a, function_b)
+        mock_evaluate_candidate.side_effect = [
+            [{'challenge': 'test_challenge', 'candidate': 'candidate_a', 'score': 1.0}],
+            [{'challenge': 'test_challenge', 'candidate': 'candidate_b', 'score': 1.0}],
+        ]
+
+        candidate_a = MagicMock(return_value=0.1, __name__='candidate_a')
+        candidate_b = MagicMock(return_value=0.1, __name__='candidate_b')
+        candidates = (candidate_a, candidate_b)
         challenge = MagicMock()
-        challenge.return_value.get_tunable.return_value = 'tunable'
 
         # run
         result = benchmark(candidates, challenges=challenge)
 
         # assert
         expected_result = pd.DataFrame({
-            'MagicMock': [0.1, 0.1],
-            'Mean': [0.1, 0.1],
+            'test_challenge': [1.0, 1.0],
+            'Mean': [1.0, 1.0],
             'Std': [0.0, 0.0],
         })
 
-        expected_result.index = ['function_a', 'function_b']
-
-        function_a.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
-        function_b.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
-        challenge.return_value.get_tunable.assert_called_once_with()
-
-        pd.testing.assert_frame_equal(
-            result.sort_index(axis=1),
-            expected_result.sort_index(axis=1),
-        )
-
-    def test_benchmark_challenges_not_list(self):
-
-        # setup
-        function = MagicMock(return_value=0.1)
-        tuner_function = {'test': function}
-        challenge = MagicMock()
-        challenge.return_value.get_tunable.return_value = 'tunable'
-
-        # run
-        result = benchmark(tuner_function, challenges=challenge)
-
-        # assert
-        expected_result = pd.DataFrame({
-            'MagicMock': [0.1],
-            'Mean': [0.1],
-            'Std': [0.0],
-        })
-
-        expected_result.index = ['test']
-
-        function.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
-        challenge.return_value.get_tunable.assert_called_once_with()
-
-        pd.testing.assert_frame_equal(
-            result.sort_index(axis=1),
-            expected_result.sort_index(axis=1),
-        )
-
-    def test_benchmark_challenges_list(self):
-
-        # setup
-        function = MagicMock(return_value=0.1)
-        tuner_function = {'test': function}
-        challenge = MagicMock(__name__='challenge')
-        challenge.return_value.get_tunable.return_value = 'tunable'
-
-        # assert
-        result = benchmark(tuner_function, challenges=[challenge])
-
-        # run
-        expected_result = pd.DataFrame({
-            'MagicMock': [0.1],
-            'Mean': [0.1],
-            'Std': [0.0],
-        })
-
-        expected_result.index = ['test']
-
-        function.assert_called_once_with(challenge.return_value.evaluate, 'tunable', 1000)
-        challenge.return_value.get_tunable.assert_called_once_with()
+        expected_result.index = ['candidate_a', 'candidate_b']
 
         pd.testing.assert_frame_equal(
             result.sort_index(axis=1),
