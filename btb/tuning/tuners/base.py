@@ -302,7 +302,8 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
         LOGGER.info('Predicting %s samples.' % num_samples)
         predicted = self._predict(proposals)
 
-        LOGGER.info('Acquiere %s from %s samples.' % num_proposals, num_samples)
+        LOGGER.info(('Determine the next %s sampling'
+                     'point/s from %s samples.', (num_proposals, num_samples)))
         index = self._acquire(predicted, num_proposals)
 
         return proposals[index]
