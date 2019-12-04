@@ -54,7 +54,8 @@ class FloatHyperParam(NumericalHyperParam):
 
     cardinality = np.inf
 
-    def __init__(self, min=None, max=None, include_min=True, include_max=True):
+    def __init__(self, min=None, max=None, default=None, include_min=True, include_max=True):
+
         if min is None or min == -np.inf:
             min = sys.float_info.min
 
@@ -63,6 +64,11 @@ class FloatHyperParam(NumericalHyperParam):
 
         if min >= max:
             raise ValueError('The ``min`` value can not be greater or equal to ``max`` value.')
+
+        if default is not None:
+            default = float(default)
+
+        self.default = default or min
 
         self.min = min
         self.max = max
@@ -192,7 +198,8 @@ class IntHyperParam(NumericalHyperParam):
 
     dimensions = 1
 
-    def __init__(self, min=None, max=None, include_min=True, include_max=True, step=1):
+    def __init__(self, min=None, max=None, default=None,
+                 include_min=True, include_max=True, step=1):
         if min is None:
             min = -(sys.maxsize / 2)
 
@@ -201,6 +208,11 @@ class IntHyperParam(NumericalHyperParam):
 
         if min >= max:
             raise ValueError('The `min` value can not be greater or equal to `max` value.')
+
+        if default is not None:
+            default = int(default)
+
+        self.default = default or min
 
         self.min = int(min) if include_min else int(min) + 1
         self.max = int(max) if include_max else int(max) - 1

@@ -2,6 +2,8 @@
 
 """Package where the CategoricalHyperParamClass is defined."""
 
+from copy import copy
+
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
@@ -26,17 +28,19 @@ class CategoricalHyperParam(BaseHyperParam):
             List of values that the hyperparameter can be.
     """
 
-    def __init__(self, choices):
+    def __init__(self, choices, default=None):
         """Instantiation of CategoricalHyperParam.
 
         Creates an instance with a list of ``choices`` and fit an instance of
         ``sklearn.preprocessing.OneHotEncoder`` with those values.
         """
-        self.choices = choices
+        self.default = default or choices[0]
+        self.choices = copy(choices)
         self.dimensions = len(choices)
         self.cardinality = self.dimensions
-        self._encoder = OneHotEncoder(sparse=False)
-        self._encoder.fit(np.array(choices).reshape(-1, 1))
+        choices = np.array(choices, dtype='object')
+        self._encoder = OneHotEncoder(categories=[choices], sparse=False)
+        self._encoder.fit(choices.reshape(-1, 1))
 
     def _within_hyperparam_space(self, values):
         mask = np.isin(values, self.choices)
@@ -81,7 +85,7 @@ class CategoricalHyperParam(BaseHyperParam):
         if len(values.shape) == 1:
             values = values.reshape(1, -1)
 
-        return self._encoder.inverse_transform(values)
+        return self._encoder.inverse_transform(values.astype('object'))
 
     def _transform(self, values):
         """Transform one or more categorical values.
@@ -113,7 +117,7 @@ class CategoricalHyperParam(BaseHyperParam):
             array([[1, 0, 0],
                    [0, 0, 1]])
         """
-        return self._encoder.transform(values.reshape(-1, 1)).astype(int)
+        return self._encoder.transform(values.astype('object')).astype(int)
 
     def sample(self, n_samples):
         """Generate sample values in the hyperparameter search space of ``[0, 1]^K``.

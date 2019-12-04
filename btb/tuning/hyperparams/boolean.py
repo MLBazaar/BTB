@@ -21,6 +21,9 @@ class BooleanHyperParam(BaseHyperParam):
     dimensions = 1
     cardinality = 2
 
+    def __init__(self, default=False):
+        self.default = default
+
     def _within_hyperparam_space(self, values):
         if values.dtype is not np.dtype('bool'):
             # values is expected to be np.ndarray(n, 1) [[False], [True]]
