@@ -4,12 +4,17 @@ import inspect
 
 import pandas as pd
 
-from btb.benchmark.challenges import Bohachevsky, Branin, Rosenbrock
+from btb.benchmark.challenges import Bohachevsky, Branin, CensusRF, Rosenbrock
 
 DEFAULT_CHALLENGES = [
     Bohachevsky,
     Branin,
     Rosenbrock,
+]
+
+
+DEFAULT_MLCHALLENGES = [
+    CensusRF
 ]
 
 

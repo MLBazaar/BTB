@@ -3,7 +3,7 @@
 """Package where the Challenge class is defined."""
 
 import inspect
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractstaticmethod
 
 
 class Challenge(metaclass=ABCMeta):
@@ -46,7 +46,7 @@ class MLChallenge(Challenge):
     benchmark.
     """
 
-    @abstractmethod
-    def _load_data(self):
+    @abstractstaticmethod
+    def load_data(self):
         """Load ``X`` and ``y`` over which to perform fit and evaluate."""
         pass
