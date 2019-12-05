@@ -19,6 +19,7 @@ class TestFloatHyperParam(TestCase):
         # assert
         self.assertEqual(instance.min, sys.float_info.min)
         self.assertEqual(instance.max, sys.float_info.max)
+        self.assertEqual(instance.default, sys.float_info.min)
 
     def test___init__with_np_inf(self):
         """Test instantiation with ``min=-np.inf`` and ``max=np.inf``"""
@@ -28,6 +29,7 @@ class TestFloatHyperParam(TestCase):
         # assert
         self.assertEqual(instance.min, sys.float_info.min)
         self.assertEqual(instance.max, sys.float_info.max)
+        self.assertEqual(instance.default, sys.float_info.min)
 
     def test___init__min_no_max(self):
         """Test instantiation with ``min=n`` and ``max=None``"""
@@ -40,6 +42,7 @@ class TestFloatHyperParam(TestCase):
         # assert
         self.assertEqual(instance.min, _min)
         self.assertEqual(instance.max, sys.float_info.max)
+        self.assertEqual(instance.default, 0.1)
 
     def test___init__no_min_max(self):
         """Test instantiation with ``min=None`` and ``max=n``"""
@@ -52,6 +55,7 @@ class TestFloatHyperParam(TestCase):
         # assert
         self.assertEqual(instance.min, sys.float_info.min)
         self.assertEqual(instance.max, _max)
+        self.assertEqual(instance.default, sys.float_info.min)
 
     def test___init__min_eq_max(self):
         """Test instantiation with ``min=n`` and ``max=n``"""
@@ -76,11 +80,12 @@ class TestFloatHyperParam(TestCase):
         _max = 0.9
 
         # run
-        instance = FloatHyperParam(min=_min, max=_max)
+        instance = FloatHyperParam(min=_min, max=_max, default=1)
 
         # assert
         self.assertEqual(instance.min, _min)
         self.assertEqual(instance.max, _max)
+        self.assertEqual(instance.default, 1.0)
 
     @patch('btb.tuning.hyperparams.numerical.sys')
     def test__transform_no_min_no_max(self, mock_sys):
@@ -282,6 +287,7 @@ class TestIntHyperParam(TestCase):
 
         self.assertEqual(instance.min, expected_min)
         self.assertEqual(instance.max, expected_max)
+        self.assertEqual(instance.default, expected_min)
         self.assertEqual(instance.step, 1)
 
     def test___init__exclude_min_no_max(self):
@@ -308,6 +314,7 @@ class TestIntHyperParam(TestCase):
 
         self.assertEqual(instance.min, expected_min)
         self.assertEqual(instance.max, expected_max)
+        self.assertEqual(instance.default, expected_min)
         self.assertEqual(instance.step, 1)
 
     def test___init__min_no_max(self):
@@ -321,6 +328,7 @@ class TestIntHyperParam(TestCase):
         # assert
         self.assertEqual(instance.min, _min)
         self.assertEqual(instance.max, sys.maxsize / 2)
+        self.assertEqual(instance.default, 1)
         self.assertEqual(instance.step, 1)
 
     def test___init__no_min_max(self):
@@ -361,11 +369,12 @@ class TestIntHyperParam(TestCase):
         _max = 9
 
         # run
-        instance = IntHyperParam(min=_min, max=_max)
+        instance = IntHyperParam(min=_min, max=_max, default=5)
 
         # assert
         self.assertEqual(instance.min, _min)
         self.assertEqual(instance.max, _max)
+        self.assertEqual(instance.default, 5)
         self.assertEqual(instance.step, 1)
 
     def test___init__min_max_step(self):

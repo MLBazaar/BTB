@@ -35,6 +35,7 @@ class TestCategoricalHyperParam(TestCase):
 
         # assert
         self.assertEqual(instance.choices, choices)
+        self.assertEqual(instance.default, 'cat')
 
         # TODO: Fix / reimplmement assert_called_with_np
         # expected_encoder_calls = [
