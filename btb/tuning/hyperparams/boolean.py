@@ -19,7 +19,7 @@ class BooleanHyperParam(BaseHyperParam):
 
     Args:
         default (bool):
-            Default boolean value for the hyperparameter.
+            Default boolean value for the hyperparameter. Defaults to ``False``.
     """
 
     dimensions = 1

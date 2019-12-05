@@ -28,7 +28,7 @@ class CategoricalHyperParam(BaseHyperParam):
             List of values that the hyperparameter can be.
 
         default (str or None):
-            Default value for the hyperparameter to take.
+            Default value for the hyperparameter to take. Defaults to the first item in ``choices``
     """
 
     def __init__(self, choices, default=None):

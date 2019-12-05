@@ -46,7 +46,8 @@ class FloatHyperParam(NumericalHyperParam):
             by default is ``None`` which will take the system's maximum float value possible.
 
         default (float):
-            Float number that represents the default value for the hyperparameter.
+            Float number that represents the default value for the hyperparameter. Defaults to
+            ``self.min``
 
         include_min (bool):
             Wheither or not to include the minimum value in the search space.
@@ -190,7 +191,8 @@ class IntHyperParam(NumericalHyperParam):
             by default is ``None`` which will take the system's maximum int value possible.
 
         default (int):
-            Integer number that represents the default value for the hyperparameter.
+            Integer number that represents the default value for the hyperparameter. Defaults to
+            ``self.min``.
 
         step (int):
             Increase amount to take for each sample. Defaults to 1.
