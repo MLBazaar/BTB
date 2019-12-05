@@ -16,6 +16,10 @@ class BooleanHyperParam(BaseHyperParam):
 
     Hyperparameter space:
         ``{True, False}``
+
+    Args:
+        default (bool):
+            Default boolean value for the hyperparameter.
     """
 
     dimensions = 1
