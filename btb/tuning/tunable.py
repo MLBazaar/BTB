@@ -198,8 +198,43 @@ class Tunable:
 
         return np.concatenate(samples, axis=1)
 
+    def get_defaults(self):
+        """Return the default combination for the hyperparameters."""
+        return {
+            name: hyperparam.default
+            for name, hyperparam in self.hyperparams.items()
+        }
+
     @classmethod
     def from_dict(cls, dict_hyperparams):
+        """Create an instance from a dictionary containing information over hyperparameters.
+
+        Class method that creates an instance from a dictionary that describes the type of a
+        hyperparameter, the range or values that this can have and the default value of the
+        hyperparameter.
+
+        Args:
+            dict_hyperparams (dict):
+                A python dictionary containing as `key` the given name for the hyperparameter and
+                as value a dictionary containing the following keys:
+
+                    - Type (str):
+                        ``bool`` for ``BoolHyperParam``, ``int`` for ``IntHyperParam``, ``float``
+                        for ``FloatHyperParam``, ``str`` for ``CategoricalHyperParam``.
+
+                    - Range or Values (list):
+                        Range / values that this hyperparameter can take, in case of
+                        ``CategoricalHyperParam`` those will be used as the ``choices``, for
+                        ``NumericalHyperParams`` the ``min`` value will be used as the minimum
+                        value and the ``max`` value will be used as the ``maximum`` value.
+
+                    - Default (str, bool, int, float or None):
+                        The default value for the hyperparameter.
+
+        Returns:
+            Tunable:
+                A ``Tunable`` instance with the given hyperparameters.
+        """
 
         if not isinstance(dict_hyperparams, dict):
             raise TypeError('Hyperparams must be a dictionary.')

@@ -297,6 +297,26 @@ class TestTunable(TestCase):
         self.chp.sample.assert_called_once_with(1)
         self.ihp.sample.assert_called_once_with(1)
 
+    def test_get_defaults(self):
+        # setup
+        bhp = MagicMock(default=True)
+        chp = MagicMock(default='test')
+        ihp = MagicMock(default=1)
+
+        hyperparams = {
+            'bhp': bhp,
+            'chp': chp,
+            'ihp': ihp,
+        }
+
+        self.instance = Tunable(hyperparams)
+
+        # run
+        result = self.instance.get_defaults()
+
+        # assert
+        assert result == {'bhp': True, 'chp': 'test', 'ihp': 1}
+
     def test_from_dict_not_a_dict(self):
         # run
         with self.assertRaises(TypeError):
