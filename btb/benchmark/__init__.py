@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import inspect
-
 import pandas as pd
 
 from btb.benchmark.challenges import Bohachevsky, Branin, CensusRF, Rosenbrock
@@ -10,10 +8,6 @@ DEFAULT_CHALLENGES = [
     Bohachevsky,
     Branin,
     Rosenbrock,
-]
-
-
-DEFAULT_MLCHALLENGES = [
     CensusRF
 ]
 
@@ -25,11 +19,6 @@ def evaluate_candidate(name, candidate, challenges, iterations):
         challenges = [challenges]
 
     for challenge in challenges:
-
-        # Allow class and instance usage for challenges
-        if inspect.isclass(challenge):
-            challenge = challenge()
-
         tunable_hyperparameters = challenge.get_tunable_hyperparameters()
         score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
         result = {
@@ -43,7 +32,7 @@ def evaluate_candidate(name, candidate, challenges, iterations):
     return candidate_result
 
 
-def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
+def benchmark(candidates, challenges=None, iterations=1000):
     """Benchmark function.
 
     This benchmark function iterates over a collection of ``challenges`` and executes a
@@ -75,6 +64,9 @@ def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
             A ``pandas.DataFrame`` with the obtained scores for the given challenges is being
             returned.
     """
+    if challenges is None:
+        challenges = [challenge_class() for challenge_class in DEFAULT_CHALLENGES]
+
     if callable(candidates):
         candidates = {candidates.__name__: candidates}
 

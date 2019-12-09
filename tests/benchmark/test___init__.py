@@ -37,37 +37,6 @@ class TestBenchmark(TestCase):
 
         assert result == expected_result
 
-    @patch('btb.benchmark.inspect')
-    def test_evaluate_candidate_challenge_is_class(self, mock_inspect):
-        # setup
-        mock_inspect.isclass.return_value = True
-        candidate = MagicMock()
-        challenge = MagicMock()
-        challenge.return_value.__str__.return_value = 'test_challenge'
-
-        # run
-        result = evaluate_candidate('test_candidate', candidate, challenge, 10)
-
-        # assert
-        challenge.assert_called_once_with()
-        challenge.return_value.get_tunable_hyperparameters.assert_called_once_with()
-
-        candidate.assert_called_once_with(
-            challenge.return_value.evaluate,
-            challenge.return_value.get_tunable_hyperparameters.return_value,
-            10
-        )
-
-        expected_result = [
-            {
-                'challenge': 'test_challenge',
-                'candidate': 'test_candidate',
-                'score': candidate.return_value
-            }
-        ]
-
-        assert result == expected_result
-
     @patch('btb.benchmark.evaluate_candidate')
     def test_benchmark_challenges_callable(self, mock_evaluate_candidate):
         # setup
