@@ -69,13 +69,13 @@ class FloatHyperParam(NumericalHyperParam):
         if min >= max:
             raise ValueError('The ``min`` value can not be greater or equal to ``max`` value.')
 
-        if default is not None:
-            default = float(default)
+        if default is None:
+            self.default = float(min)
+        else:
+            self.default = float(default)
 
-        self.default = default or min
-
-        self.min = min
-        self.max = max
+        self.min = float(min)
+        self.max = float(max)
         self.range = max - min
 
     def _inverse_transform(self, values):
@@ -217,10 +217,10 @@ class IntHyperParam(NumericalHyperParam):
         if min >= max:
             raise ValueError('The `min` value can not be greater or equal to `max` value.')
 
-        if default is not None:
-            default = int(default)
-
-        self.default = default or min
+        if default is None:
+            self.default = min
+        else:
+            self.default = int(default)
 
         self.min = int(min) if include_min else int(min) + 1
         self.max = int(max) if include_max else int(max) - 1
