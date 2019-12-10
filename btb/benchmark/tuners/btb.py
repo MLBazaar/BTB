@@ -2,6 +2,8 @@
 
 import numpy as np
 
+from btb.tuning.tunable import Tunable
+
 
 def tune(tuner, scoring_function, iterations):
     best_score = -np.inf
@@ -15,8 +17,9 @@ def tune(tuner, scoring_function, iterations):
     return best_score
 
 
-def make_tuning_function(tuner_class):
-    def tuning_function(scoring_function, tunable, iterations, **tuner_kwargs):
+def make_tuning_function(tuner_class, **tuner_kwargs):
+    def tuning_function(scoring_function, tunable_hyperparameters, iterations):
+        tunable = Tunable.from_dict(tunable_hyperparameters)
         tuner = tuner_class(tunable, **tuner_kwargs)
         return tune(tuner, scoring_function, iterations)
 

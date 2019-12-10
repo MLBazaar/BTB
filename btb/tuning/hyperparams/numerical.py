@@ -45,16 +45,24 @@ class FloatHyperParam(NumericalHyperParam):
             Float number to represent the maximum value that this hyperparameter can take,
             by default is ``None`` which will take the system's maximum float value possible.
 
+        default (float):
+            Float number that represents the default value for the hyperparameter. Defaults to
+            ``self.min``
+
         include_min (bool):
-            Wheither or not to include the minimum value in the search space.
+            Either or not to include the minimum value in the search space.
 
         include_max (bool):
-            Wheither or not to include the maximum value in the search space.
+            Either or not to include the maximum value in the search space.
     """
 
     cardinality = np.inf
 
-    def __init__(self, min=None, max=None, include_min=True, include_max=True):
+    def __init__(self, min=None, max=None, default=None, include_min=True, include_max=True):
+
+        self.include_min = include_min
+        self.include_max = include_max
+
         if min is None or min == -np.inf:
             min = sys.float_info.min
 
@@ -64,8 +72,13 @@ class FloatHyperParam(NumericalHyperParam):
         if min >= max:
             raise ValueError('The ``min`` value can not be greater or equal to ``max`` value.')
 
-        self.min = min
-        self.max = max
+        if default is None:
+            self.default = float(min)
+        else:
+            self.default = float(default)
+
+        self.min = float(min)
+        self.max = float(max)
         self.range = max - min
 
     def _inverse_transform(self, values):
@@ -157,6 +170,11 @@ class FloatHyperParam(NumericalHyperParam):
         """
         return np.random.random((n_samples, self.dimensions))
 
+    def __repr__(self):
+        args = (self.min, self.max, self.default, self.include_min, self.include_max)
+        args = 'min={}, max={}, default={}, include_min={}, include_max={}'.format(*args)
+        return 'FloatHyperParam({})'.format(args)
+
 
 class IntHyperParam(NumericalHyperParam):
     """IntHyperParam class.
@@ -180,27 +198,41 @@ class IntHyperParam(NumericalHyperParam):
             Integer number to represent the maximum value that this hyperparameter can take,
             by default is ``None`` which will take the system's maximum int value possible.
 
+        default (int):
+            Integer number that represents the default value for the hyperparameter. Defaults to
+            ``self.min``.
+
         step (int):
             Increase amount to take for each sample. Defaults to 1.
 
         include_min (bool):
-            Wheither or not to include the minimum value in the search space.
+            Either or not to include the minimum value in the search space.
 
         include_max (bool):
-            Wheither or not to include the maximum value in the search space.
+            Either or not to include the maximum value in the search space.
     """
 
     dimensions = 1
 
-    def __init__(self, min=None, max=None, include_min=True, include_max=True, step=1):
-        if min is None:
+    def __init__(self, min=None, max=None, default=None,
+                 include_min=True, include_max=True, step=1):
+
+        self.include_min = include_min
+        self.include_max = include_max
+
+        if min is None or min == -np.inf:
             min = -(sys.maxsize / 2)
 
-        if max is None:
+        if max is None or max == np.inf:
             max = sys.maxsize / 2
 
         if min >= max:
             raise ValueError('The `min` value can not be greater or equal to `max` value.')
+
+        if default is None:
+            self.default = min
+        else:
+            self.default = int(default)
 
         self.min = int(min) if include_min else int(min) + 1
         self.max = int(max) if include_max else int(max) - 1
@@ -312,3 +344,8 @@ class IntHyperParam(NumericalHyperParam):
         inverted = self._inverse_transform(sampled)
 
         return self._transform(inverted)
+
+    def __repr__(self):
+        args = (self.min, self.max, self.default, self.include_min, self.include_max, self.step)
+        args = 'min={}, max={}, default={}, include_min={}, include_max={}, step={}'.format(*args)
+        return 'IntHyperParam({})'.format(args)

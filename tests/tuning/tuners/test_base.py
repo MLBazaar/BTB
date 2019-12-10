@@ -320,8 +320,8 @@ class TestBaseMetaModelTuner(TestCase):
         BaseMetaModelTuner.__init__(instance, tunable)
 
         # assert
-        assert instance._num_candidates == 1000
-        assert instance._min_trials == 2
+        assert instance.num_candidates == 1000
+        assert instance.min_trials == 2
         instance.__init_metamodel__.assert_called_once_with()
         instance.__init_acquisition__.assert_called_once_with()
 
@@ -346,15 +346,15 @@ class TestBaseMetaModelTuner(TestCase):
         )
 
         # assert
-        assert instance._num_candidates == 5
-        assert instance._min_trials == 20
+        assert instance.num_candidates == 5
+        assert instance.min_trials == 20
         instance.__init_metamodel__.assert_called_once_with(a='test')
         instance.__init_acquisition__.assert_called_once_with(a='acquisition_test')
 
-    def test__propose_min_trials_gt__trials_set(self):
+    def test__proposemin_trials_gt__trials_set(self):
         # setup
         instance = MagicMock()
-        instance._min_trials = 1
+        instance.min_trials = 1
         instance._trials_set.__len__.return_value = 0
         instance._sample.return_value = 'sample'
 
@@ -365,12 +365,12 @@ class TestBaseMetaModelTuner(TestCase):
         instance._sample.assert_called_once_with(1, True)
         assert result == 'sample'
 
-    def test__propose_min_trials_lt__trials_set_allow_duplicates(self):
+    def test__proposemin_trials_lt__trials_set_allow_duplicates(self):
         # setup
         instance = MagicMock()
         instance.tunable.cardinality = 3
-        instance._min_trials = 0
-        instance._num_candidates = 10
+        instance.min_trials = 0
+        instance.num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
         instance._predict.return_value = 'predicted'
@@ -384,12 +384,12 @@ class TestBaseMetaModelTuner(TestCase):
         instance._predict.assert_called_once_with(np.array([1]))
         assert result == 1
 
-    def test__propose_min_trials_lt__trials_set_not_allow_duplicates(self):
+    def test__proposemin_trials_lt__trials_set_not_allow_duplicates(self):
         # setup
         instance = MagicMock()
         instance.tunable.cardinality = 3
-        instance._min_trials = 0
-        instance._num_candidates = 10
+        instance.min_trials = 0
+        instance.num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
         instance._predict.return_value = 'predicted'
@@ -404,12 +404,12 @@ class TestBaseMetaModelTuner(TestCase):
         instance._acquire.assert_called_once_with('predicted', 1)
         assert result == 1
 
-    def test__propose_min_trials_lt__trials_set_not_allow_duplicates_num_samples_is_min(self):
+    def test__proposemin_trials_lt__trials_set_not_allow_duplicates_num_samples_is_min(self):
         # setup
         instance = MagicMock()
         instance.tunable.cardinality = 3
-        instance._min_trials = 0
-        instance._num_candidates = 0
+        instance.min_trials = 0
+        instance.num_candidates = 0
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
         instance._predict.return_value = 'predicted'
@@ -430,7 +430,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance = MagicMock()
         instance.trials = np.array([2])
         instance.scores = 1
-        instance._min_trials = 1
+        instance.min_trials = 1
 
         # run
         BaseMetaModelTuner.record(instance, 1, 1)
