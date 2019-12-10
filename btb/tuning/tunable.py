@@ -267,3 +267,6 @@ class Tunable:
             hyperparams[name] = hp_instance
 
         return cls(hyperparams)
+
+    def __repr__(self):
+        return 'Tunable({})'.format(self.hyperparams)

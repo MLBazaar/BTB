@@ -103,6 +103,18 @@ class TestBaseHyperParam(TestCase):
         instance._transform.assert_called_once_with(np.array([[1]]))
         assert result == 2
 
+    @patch('btb.tuning.hyperparams.base.np.asarray')
+    def test_transform_dimensions_gt_two(self, mock_asarray):
+        # setup
+        array = MagicMock()
+        array.shape.__len__.return_value = 3
+
+        mock_asarray.return_value = array
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam.transform(MagicMock(), 1)
+
     def test__to_array_scalar_value_dimension_one(self):
         # setup
         instance = MagicMock()
@@ -280,3 +292,37 @@ class TestBaseHyperParam(TestCase):
         # run
         BaseHyperParam._to_array(instance, values)
         array.reshape.assert_called_once_with(1, -1)
+
+    @patch('btb.tuning.hyperparams.base.np.array')
+    def test__to_array_len_shape_is_gt_two(self, mock_np_array):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 1
+        values = [1]
+        array = MagicMock()
+        array.shape.__len__.return_value = 3
+
+        mock_np_array.return_value = array
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
+
+    @patch('btb.tuning.hyperparams.base.np.isscalar')
+    @patch('btb.tuning.hyperparams.base.np.array')
+    def test__to_array_not_all_scalars(self, mock_np_array, mock_np_isscalar):
+        # setup
+        instance = MagicMock()
+        instance.dimensions = 2
+        values = [1, 2]
+        array = MagicMock()
+        array.shape.__len__.return_value = 1
+        array.__len__.return_value = 2
+        array.__iter__.return_value = [1]
+
+        mock_np_isscalar.side_effect = [False, True, True, False, False]
+        mock_np_array.return_value = array
+
+        # run
+        with self.assertRaises(ValueError):
+            BaseHyperParam._to_array(instance, values)
