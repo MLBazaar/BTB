@@ -2,7 +2,7 @@
 
 """Package where the CategoricalHyperParamClass is defined."""
 
-from copy import copy
+from copy import deepcopy
 
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
@@ -38,7 +38,7 @@ class CategoricalHyperParam(BaseHyperParam):
         ``sklearn.preprocessing.OneHotEncoder`` with those values.
         """
         self.default = default or choices[0]
-        self.choices = copy(choices)
+        self.choices = deepcopy(choices)
         self.dimensions = len(choices)
         self.cardinality = self.dimensions
         choices = np.array(choices, dtype='object')

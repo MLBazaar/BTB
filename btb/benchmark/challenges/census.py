@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import f1_score, make_scorer
-from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import f1_score
 
 from btb.benchmark.challenges.challenge import MLChallenge
 
 
 class CensusRF(MLChallenge):
     # DATASET
-    TARGET_COLUMN = 'income'
     DATASET = 'census'
+    TARGET_COLUMN = 'income'
 
-    # Cross Validate / Scorer
-    CV = StratifiedKFold(shuffle=True, n_splits=5)
-    SCORER = make_scorer(f1_score)
+    # CROSS VALIDATE / SCORER
+    SCORER = f1_score
     ENCODE = True
     MAKE_BINARY = True
 

@@ -1,0 +1,121 @@
+# -*- coding: utf-8 -*-
+
+from unittest import TestCase
+from unittest.mock import MagicMock, patch
+
+from btb.benchmark.challenges.challenge import MLChallenge
+
+
+class TestMLChallenge(TestCase):
+
+    @patch('btb.benchmark.challenges.challenge.MLChallenge.load_data')
+    def test___init__(self, mock_load_data):
+
+        # setup
+        mock_load_data.return_value = (1, 2)
+
+        # run
+        instance = MLChallenge(
+            model='test',
+            dataset='any',
+            target_column='test_column',
+            encode=False,
+            tunable_hyperparameters='test_hp',
+            scorer='test_scorer',
+            model_defaults='any',
+            make_binary=True
+        )
+
+        # assert
+        assert instance.model == 'test'
+        assert instance.dataset == 'any'
+        assert instance.model == 'test'
+        assert instance.dataset == 'any'
+        assert instance.target_column == 'test_column'
+        assert not instance.encode
+        assert instance.tunable_hyperparameters == 'test_hp'
+        assert instance.scorer == 'test_scorer'
+        assert instance.model_defaults == 'any'
+        assert instance.make_binary
+
+    @patch('btb.benchmark.challenges.challenge.OneHotEncoder')
+    def test___init__encode(self, mock_ohe):
+
+        # setup
+        instance = MagicMock()
+        instance.load_data.return_value = ('X', 'y')
+        instance.encode = True
+        instance.DATASET = 'dataset'
+
+        # run
+        MLChallenge.__init__(instance, encode=True)
+
+        # assert
+        mock_ohe.return_value.fit_transform.assert_called_once_with('X')
+
+    def test_get_tunable_hyperparameters(self):
+        # setup
+        instance = MagicMock()
+        instance.tunable_hyperparameters = {'test': 'hyperparam'}
+
+        # run
+        result = MLChallenge.get_tunable_hyperparameters(instance)
+
+        # assert
+        assert result == {'test': 'hyperparam'}
+
+    @patch('btb.benchmark.challenges.challenge.cross_val_score')
+    @patch('btb.benchmark.challenges.challenge.StratifiedKFold')
+    def test_evaluate_stratified(self, mock_strfkfold, mock_crossval):
+        # setup
+        mock_strfkfold.return_value = 'cv'
+        mock_crossval.return_value.mean.return_value = 1
+        instance = MagicMock()
+        instance.stratified = True
+        instance.cv = None
+        instance.cv_shuffle = True
+        instance.cv_splits = 5
+        instance.cv_random_state = 42
+        instance.X = 'X'
+        instance.y = 'y'
+
+        # run
+        result = MLChallenge.evaluate(instance)
+
+        # assert
+        assert result == 1
+
+        mock_strfkfold.assert_called_once_with(
+            shuffle=True,
+            n_splits=5,
+            random_state=42
+        )
+        mock_crossval(instance.model.return_value, 'X', 'y', cv='cv', scoring='scoring')
+
+    @patch('btb.benchmark.challenges.challenge.cross_val_score')
+    @patch('btb.benchmark.challenges.challenge.KFold')
+    def test_evaluate_kfold(self, mock_kfold, mock_crossval):
+        # setup
+        mock_kfold.return_value = 'cv'
+        mock_crossval.return_value.mean.return_value = 1
+        instance = MagicMock()
+        instance.stratified = False
+        instance.cv = None
+        instance.cv_shuffle = True
+        instance.cv_splits = 5
+        instance.cv_random_state = 42
+        instance.X = 'X'
+        instance.y = 'y'
+
+        # run
+        result = MLChallenge.evaluate(instance)
+
+        # assert
+        assert result == 1
+
+        mock_kfold.assert_called_once_with(
+            shuffle=True,
+            n_splits=5,
+            random_state=42
+        )
+        mock_crossval(instance.model.return_value, 'X', 'y', cv='cv', scoring='scoring')
