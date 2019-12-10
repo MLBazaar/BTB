@@ -2,14 +2,10 @@
 
 """Package where the tuners based on GaussianProcessMetaModel are defined."""
 
-import logging
-
 from btb.tuning.acquisition.expected_improvement import ExpectedImprovementAcquisition
 from btb.tuning.acquisition.predicted_score import PredictedScoreAcquisition
 from btb.tuning.metamodels.gaussian_process import GaussianProcessMetaModel
 from btb.tuning.tuners.base import BaseMetaModelTuner
-
-LOGGER = logging.getLogger(__name__)
 
 
 class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModelTuner):
@@ -40,7 +36,6 @@ class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModel
         """
         self._metamodel_kwargs = {'length_scale': length_scale}
         super().__init__(tunable, maximize, num_candidates, min_trials)
-        LOGGER.debug('%s' % str(self))
 
     def __repr__(self):
         length_scale = self._metamodel_kwargs.get('length_scale')
@@ -79,7 +74,6 @@ class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMe
         self.length_scale = length_scale
         self._metamodel_kwargs = {'length_scale': self.length_scale}
         super().__init__(tunable, maximize, num_candidates, min_trials)
-        LOGGER.debug('%s' % str(self))
 
     def __repr__(self):
         length_scale = self._metamodel_kwargs.get('length_scale')

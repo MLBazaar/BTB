@@ -164,7 +164,7 @@ class FloatHyperParam(NumericalHyperParam):
     def __repr__(self):
         args = (self.min, self.max, self.include_min, self.include_max)
         args = 'min={}, max={}, include_min={}, include_max={}'.format(*args)
-        return ('FloatHyperParam({})'.format(args))
+        return 'FloatHyperParam({})'.format(args)
 
 
 class IntHyperParam(NumericalHyperParam):
@@ -329,4 +329,4 @@ class IntHyperParam(NumericalHyperParam):
     def __repr__(self):
         args = (self.min, self.max, self.include_min, self.include_max, self.step)
         args = 'min={}, max={}, include_min={}, include_max={}, step={}'.format(*args)
-        return ('IntHyperParam({})'.format(args))
+        return 'IntHyperParam({})'.format(args)
