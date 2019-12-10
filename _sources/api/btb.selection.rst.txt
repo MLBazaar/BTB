@@ -7,7 +7,6 @@ Submodules
 .. toctree::
 
    btb.selection.best
-   btb.selection.constants
    btb.selection.custom_selector
    btb.selection.hierarchical
    btb.selection.pure

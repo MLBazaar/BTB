@@ -257,12 +257,15 @@
 
 <span class="sd">&quot;&quot;&quot;Package where the BaseTuner class and BaseMetaModelTuner are defined.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">btb.tuning.acquisition.base</span> <span class="kn">import</span> <span class="n">BaseAcquisition</span>
 <span class="kn">from</span> <span class="nn">btb.tuning.metamodels.base</span> <span class="kn">import</span> <span class="n">BaseMetaModel</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="BaseTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseTuner</span><span class="p">:</span>
@@ -293,6 +296,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_trials_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span> <span class="o">=</span> <span class="n">maximize</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="p">(</span><span class="s1">&#39;Creating instance of </span><span class="si">%s</span><span class="s1"> with </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="s1">&#39;hyperparameters and </span><span class="si">%s</span><span class="s1"> carinality.&#39;</span><span class="p">),</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">hyperparameters</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_check_proposals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_proposals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.</span>
@@ -495,7 +502,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">trials</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trials</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trials_set</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">trials</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span> <span class="k">else</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span> <span class="k">else</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;  hyperparameters: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;  dimensions: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;  cardinality: </span><span class="si">{}</span><span class="s2">&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">hyperparams</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">dimensions</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BaseMetaModelTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseMetaModelTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseMetaModelTuner</span><span class="p">(</span><span class="n">BaseTuner</span><span class="p">,</span> <span class="n">BaseMetaModel</span><span class="p">,</span> <span class="n">BaseAcquisition</span><span class="p">):</span>
@@ -532,23 +552,26 @@
     <span class="n">_metamodel_kwargs</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_acquisition_kwargs</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable</span><span class="p">,</span> <span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_candidates</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">min_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_num_candidates</span> <span class="o">=</span> <span class="n">num_candidates</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_min_trials</span> <span class="o">=</span> <span class="n">min_trials</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable</span><span class="p">,</span> <span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_candidates</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">min_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_candidates</span> <span class="o">=</span> <span class="n">num_candidates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span> <span class="o">=</span> <span class="n">min_trials</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">tunable</span><span class="p">,</span> <span class="n">maximize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__init_metamodel__</span><span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_metamodel_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__init_acquisition__</span><span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_acquisition_kwargs</span> <span class="ow">or</span> <span class="nb">dict</span><span class="p">()))</span>
 
     <span class="k">def</span> <span class="nf">_propose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_proposals</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trials_set</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_trials</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trials_set</span><span class="p">):</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Not enough samples recorded to generate predictions, &#39;</span>
+                         <span class="s1">&#39;generating random proposal.&#39;</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span><span class="n">num_proposals</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="p">)</span>
 
-        <span class="n">num_samples</span> <span class="o">=</span> <span class="n">num_proposals</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_candidates</span>
+        <span class="n">num_samples</span> <span class="o">=</span> <span class="n">num_proposals</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_candidates</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_duplicates</span><span class="p">:</span>
             <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trials_set</span><span class="p">)</span>
             <span class="n">num_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">remaining</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span>
 
         <span class="n">proposals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="p">)</span>
+
         <span class="n">predicted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">proposals</span><span class="p">)</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_acquire</span><span class="p">(</span><span class="n">predicted</span><span class="p">,</span> <span class="n">num_proposals</span><span class="p">)</span>
 
@@ -595,7 +618,8 @@
 <span class="sd">            &gt;&gt;&gt; tuner.record(trials, scores)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trials</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_trials</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trials</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Fitting the model with </span><span class="si">%s</span><span class="s1"> samples.&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trials</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trials</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">)</span></div></div>
 </pre></div>
 

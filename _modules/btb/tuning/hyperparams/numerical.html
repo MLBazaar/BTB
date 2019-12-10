@@ -310,6 +310,10 @@
     <span class="n">cardinality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span> <span class="o">=</span> <span class="n">include_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span> <span class="o">=</span> <span class="n">include_max</span>
+
         <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">min</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
             <span class="nb">min</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">min</span>
 
@@ -410,7 +414,12 @@
 <span class="sd">            array([[0.52058728],</span>
 <span class="sd">                   [0.00582452]])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">))</span></div></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;min=</span><span class="si">{}</span><span class="s1">, max=</span><span class="si">{}</span><span class="s1">, include_min=</span><span class="si">{}</span><span class="s1">, include_max=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;FloatHyperParam(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IntHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.numerical.html#btb.tuning.IntHyperParam">[docs]</a><span class="k">class</span> <span class="nc">IntHyperParam</span><span class="p">(</span><span class="n">NumericalHyperParam</span><span class="p">):</span>
@@ -448,10 +457,14 @@
     <span class="n">dimensions</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span> <span class="o">=</span> <span class="n">include_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span> <span class="o">=</span> <span class="n">include_max</span>
+
+        <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">min</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
             <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">max</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">max</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
             <span class="nb">max</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="o">/</span> <span class="mi">2</span>
 
         <span class="k">if</span> <span class="nb">min</span> <span class="o">&gt;=</span> <span class="nb">max</span><span class="p">:</span>
@@ -566,7 +579,12 @@
         <span class="n">sampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">))</span>
         <span class="n">inverted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inverse_transform</span><span class="p">(</span><span class="n">sampled</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">inverted</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">inverted</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;min=</span><span class="si">{}</span><span class="s1">, max=</span><span class="si">{}</span><span class="s1">, include_min=</span><span class="si">{}</span><span class="s1">, include_max=</span><span class="si">{}</span><span class="s1">, step=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;IntHyperParam(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
