@@ -8,7 +8,7 @@ from btb.benchmark.challenges.challenge import MLChallenge
 
 class CensusRF(MLChallenge):
     # DATASET
-    DATASET = 'census'
+    DATASET = 'census.csv'
     TARGET_COLUMN = 'income'
 
     # CROSS VALIDATE / SCORER

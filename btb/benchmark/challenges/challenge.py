@@ -17,9 +17,6 @@ BTB_DATA_URL = 'https://btb-data.s3.amazonaws.com/'
 
 def _get_dataset_url(name):
 
-    if not name.endswith('.csv'):
-        name = name + '.csv'
-
     if not name.endswith('.gz'):
         name = name + '.gz'
 
