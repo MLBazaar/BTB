@@ -21,6 +21,7 @@ class BaseHyperParam(metaclass=ABCMeta):
     """
     dimensions = 0
     cardinality = 0
+    default = None
 
     def _to_array(self, values):
         """Validate and convert ``values`` to a ``numpy.ndarray`` with the expected shape.

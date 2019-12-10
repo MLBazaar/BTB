@@ -3,8 +3,6 @@
 import numpy as np
 
 from btb.benchmark.challenges.challenge import Challenge
-from btb.tuning import Tunable
-from btb.tuning.hyperparams import FloatHyperParam
 
 B = 5.1 / (4 * pow(np.pi, 2))
 C = 5 / np.pi
@@ -56,11 +54,19 @@ class Branin(Challenge):
         self.min_y = min_y
         self.max_y = max_y
 
-    def get_tunable(self):
-        x = FloatHyperParam(min=self.min_x, max=self.max_x)
-        y = FloatHyperParam(min=self.min_y, max=self.max_y)
-
-        return Tunable({'x': x, 'y': y})
+    def get_tunable_hyperparameters(self):
+        return {
+            'x': {
+                'type': 'float',
+                'range': [self.min_x, self.max_x],
+                'default': None
+            },
+            'y': {
+                'type': 'float',
+                'range': [self.min_y, self.max_y],
+                'default': None
+            }
+        }
 
     def evaluate(self, x, y):
         z = (y - self.b * x**2 + self.c * x - self.r)**2

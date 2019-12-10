@@ -16,10 +16,17 @@ class BooleanHyperParam(BaseHyperParam):
 
     Hyperparameter space:
         ``{True, False}``
+
+    Args:
+        default (bool):
+            Default boolean value for the hyperparameter. Defaults to ``False``.
     """
 
     dimensions = 1
     cardinality = 2
+
+    def __init__(self, default=False):
+        self.default = default
 
     def _within_hyperparam_space(self, values):
         if values.dtype is not np.dtype('bool'):

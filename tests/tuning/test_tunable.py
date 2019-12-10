@@ -296,3 +296,86 @@ class TestTunable(TestCase):
         self.bhp.sample.assert_called_once_with(1)
         self.chp.sample.assert_called_once_with(1)
         self.ihp.sample.assert_called_once_with(1)
+
+    def test_get_defaults(self):
+        # setup
+        bhp = MagicMock(default=True)
+        chp = MagicMock(default='test')
+        ihp = MagicMock(default=1)
+
+        hyperparams = {
+            'bhp': bhp,
+            'chp': chp,
+            'ihp': ihp,
+        }
+
+        self.instance = Tunable(hyperparams)
+
+        # run
+        result = self.instance.get_defaults()
+
+        # assert
+        assert result == {'bhp': True, 'chp': 'test', 'ihp': 1}
+
+    def test_from_dict_not_a_dict(self):
+        # run
+        with self.assertRaises(TypeError):
+            Tunable.from_dict(1)
+
+    @patch('btb.tuning.tunable.IntHyperParam')
+    @patch('btb.tuning.tunable.FloatHyperParam')
+    @patch('btb.tuning.tunable.CategoricalHyperParam')
+    @patch('btb.tuning.tunable.BooleanHyperParam')
+    def test_from_dict(self, mock_bool, mock_cat, mock_float, mock_int):
+        # setup
+        mock_bool.return_value.dimensions = 1
+        mock_cat.return_value .dimensions = 1
+        mock_float.return_value.dimensions = 1
+        mock_int.return_value.dimensions = 1
+
+        mock_bool.return_value.cardinality = 1
+        mock_cat.return_value .cardinality = 1
+        mock_float.return_value.cardinality = 1
+        mock_int.return_value.cardinality = 1
+
+        # run
+        hyperparameters = {
+            'bhp': {
+                'type': 'bool',
+                'default': False
+            },
+            'chp': {
+                'type': 'str',
+                'default': 'cat',
+                'range': ['a', 'b', 'cat']
+            },
+            'fhp': {
+                'type': 'float',
+                'default': None,
+                'range': [0.1, 1.0]
+            },
+            'ihp': {
+                'type': 'int',
+                'default': 5,
+                'range': [1, 10]
+            }
+        }
+
+        result = Tunable.from_dict(hyperparameters)
+
+        # assert
+        mock_bool.assert_called_once_with(default=False)
+        mock_cat.assert_called_once_with(choices=['a', 'b', 'cat'], default='cat')
+        mock_float.assert_called_once_with(min=0.1, max=1.0, default=None)
+        mock_int.assert_called_once_with(min=1, max=10, default=5)
+
+        expected_tunable_hp = {
+            'bhp': mock_bool.return_value,
+            'chp': mock_cat.return_value,
+            'fhp': mock_float.return_value,
+            'ihp': mock_int.return_value
+        }
+
+        assert result.hyperparams == expected_tunable_hp
+        assert result.dimensions == 4
+        assert result.cardinality == 1
