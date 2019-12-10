@@ -111,6 +111,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.2.dev0',
+    version='0.3.2',
     zip_safe=False,
 )
