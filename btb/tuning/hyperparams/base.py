@@ -2,7 +2,6 @@
 
 """Package where the BaseHyperParam class is defined."""
 
-import inspect
 from abc import ABCMeta, abstractmethod
 
 import numpy as np
@@ -257,10 +256,3 @@ class BaseHyperParam(metaclass=ABCMeta):
         self._within_hyperparam_space(values)
 
         return self._transform(values)
-
-    def __repr__(self):
-        args = ', '.join(
-            '{}={}'.format(param, getattr(self, param))
-            for param in inspect.signature(self.__class__).parameters.keys()
-        )
-        return '{}({})'.format(self.__class__.__name__, args)

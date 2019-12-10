@@ -144,3 +144,6 @@ class CategoricalHyperParam(BaseHyperParam):
         sampled = [self.choices[index] for index in indexes]
 
         return self.transform(sampled)
+
+    def __repr__(self):
+        return 'CategoricalHyperParam(choices={})'.format(self.choices)

@@ -38,10 +38,16 @@ class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModel
             length_scale (float or array):
                 A float or array with shape ``(n_features,)``, used for the default ``RBF`` kernel.
         """
-        self.length_scale = length_scale
-        self._metamodel_kwargs = {'length_scale': self.length_scale}
+        self._metamodel_kwargs = {'length_scale': length_scale}
         super().__init__(tunable, maximize, num_candidates, min_trials)
         LOGGER.debug('%s' % str(self))
+
+    def __repr__(self):
+        length_scale = self._metamodel_kwargs.get('length_scale')
+        args = (self.tunable, self.maximize, self.num_candidates, self.min_trials, length_scale)
+        return ('GPTuner(tunable={}, maximize={},'
+                'num_candidates={}, min_trials={},'
+                'length_scale={})').format(*args)
 
 
 class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMetaModelTuner):
@@ -74,3 +80,10 @@ class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMe
         self._metamodel_kwargs = {'length_scale': self.length_scale}
         super().__init__(tunable, maximize, num_candidates, min_trials)
         LOGGER.debug('%s' % str(self))
+
+    def __repr__(self):
+        length_scale = self._metamodel_kwargs.get('length_scale')
+        args = (self.tunable, self.maximize, self.num_candidates, self.min_trials, length_scale)
+        return ('GPTuner(tunable={}, maximize={},'
+                'num_candidates={}, min_trials={},'
+                'length_scale={})').format(*args)

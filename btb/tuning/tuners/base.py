@@ -2,7 +2,6 @@
 
 """Package where the BaseTuner class and BaseMetaModelTuner are defined."""
 
-import inspect
 import logging
 from abc import abstractmethod
 
@@ -245,13 +244,6 @@ class BaseTuner:
         self._trials_set.update(map(tuple, trials))
         self.raw_scores = np.append(self.raw_scores, scores)
         self.scores = self.raw_scores if self.maximize else -self.raw_scores
-
-    def __repr__(self):
-        args = ', '.join(
-            '{}={}'.format(param, repr(getattr(self, param)))
-            for param in inspect.signature(self.__class__).parameters.keys()
-        )
-        return '{}({})'.format(self.__class__.__name__, args)
 
     def __str__(self):
         return (
