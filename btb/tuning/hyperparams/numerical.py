@@ -50,10 +50,10 @@ class FloatHyperParam(NumericalHyperParam):
             ``self.min``
 
         include_min (bool):
-            Wheither or not to include the minimum value in the search space.
+            Either or not to include the minimum value in the search space.
 
         include_max (bool):
-            Wheither or not to include the maximum value in the search space.
+            Either or not to include the maximum value in the search space.
     """
 
     cardinality = np.inf
@@ -206,10 +206,10 @@ class IntHyperParam(NumericalHyperParam):
             Increase amount to take for each sample. Defaults to 1.
 
         include_min (bool):
-            Wheither or not to include the minimum value in the search space.
+            Either or not to include the minimum value in the search space.
 
         include_max (bool):
-            Wheither or not to include the maximum value in the search space.
+            Either or not to include the maximum value in the search space.
     """
 
     dimensions = 1

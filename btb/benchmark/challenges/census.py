@@ -12,7 +12,7 @@ class CensusRF(MLChallenge):
     TARGET_COLUMN = 'income'
 
     # CROSS VALIDATE / SCORER
-    SCORER = f1_score
+    METRIC = f1_score
     ENCODE = True
     MAKE_BINARY = True
 

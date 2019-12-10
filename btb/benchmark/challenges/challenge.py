@@ -16,8 +16,12 @@ BTB_DATA_URL = 'https://btb-data.s3.amazonaws.com/'
 
 
 def _get_dataset_url(name):
-    if not name.endswith('.gzip'):
-        name = name + '.gzip'
+
+    if not name.endswith('.csv'):
+        name = name + '.csv'
+
+    if not name.endswith('.gz'):
+        name = name + '.gz'
 
     return urljoin(BTB_DATA_URL, name)
 
@@ -58,23 +62,24 @@ class MLChallenge(Challenge):
             https://btb-data.s3.amazonaws.com/
 
         target_column (str):
-            Name of the target column.
+            Name of the target column in the dataset.
 
         encode (bool):
-            Weither or not to encode ``X``.
+            Either or not to encode the dataset using ``sklearn.preprocessing.OneHotEncoder``.
 
         model_defaults (dict):
-            Dictionary with default values for the model instantiation.
+            Dictionary with default keyword args for the model instantiation.
 
         make_binary (bool):
-            Weither or not to make ``y`` binary.
+            Either or not to make the target column binary.
 
         tunable_hyperparameters (dict):
             Dictionary representing the tunable hyperparameters for the challenge.
 
-        scorer (callable):
-            Scoring function. If ``None``, then the estimator's scoring function
-            will be used in case there is otherwise the default ``cross_val_score`` function.
+        metric (callable):
+            Metric function. If ``None``, then the estimator's metric function
+            will be used in case there is otherwise the default that ``cross_val_score`` function
+            offers will be used.
     """
     def load_data(self):
         """Load ``X`` and ``y`` over which to perform fit and evaluate."""
@@ -93,9 +98,9 @@ class MLChallenge(Challenge):
         return X, y
 
     def __init__(self, model=None, dataset=None, target_column=None,
-                 encode=False, tunable_hyperparameters=None, scorer=None,
-                 model_defaults=None, make_binary=None, cv_shuffle=True,
-                 cv_splits=5, cv_random_state=42, stratified=True):
+                 encode=False, tunable_hyperparameters=None, metric=None,
+                 model_defaults=None, make_binary=None, stratified=True,
+                 cv_splits=5, cv_random_state=42, cv_shuffle=True):
 
         self.model = model or self.MODEL
         self.dataset = dataset or self.DATASET
@@ -103,11 +108,25 @@ class MLChallenge(Challenge):
         self.model_defaults = model_defaults or self.MODEL_DEFAULTS
         self.make_binary = make_binary or self.MAKE_BINARY
         self.tunable_hyperparameters = tunable_hyperparameters or self.TUNABLE_HYPERPARAMETERS
-        self.scorer = scorer or self.SCORER
+        self.scorer = metric or self.METRIC
         self.stratified = stratified
         self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode
+        self.scorer = make_scorer(self.scorer)
+
+        if self.stratified:
+            self.cv = StratifiedKFold(
+                shuffle=cv_shuffle,
+                n_splits=cv_splits,
+                random_state=cv_random_state
+            )
+        else:
+            self.cv = KFold(
+                shuffle=cv_shuffle,
+                n_splits=cv_splits,
+                random_state=cv_random_state
+            )
 
         if self.encode:
             ohe = OneHotEncoder()
@@ -127,22 +146,6 @@ class MLChallenge(Challenge):
             score (float):
                 Returns the ``mean`` cross validated score.
         """
-        if self.stratified and self.cv is None:
-            self.cv = StratifiedKFold(
-                shuffle=self.cv_shuffle,
-                n_splits=self.cv_splits,
-                random_state=self.cv_random_state
-            )
-
-        elif self.cv is None:
-            self.cv = KFold(
-                shuffle=self.cv_shuffle,
-                n_splits=self.cv_splits,
-                random_state=self.cv_random_state
-            )
-
-        if self._scorer is None:
-            self._scorer = make_scorer(self.scorer)
 
         hyperparams.update((self.model_defaults or {}))
         model = self.model(**hyperparams)
