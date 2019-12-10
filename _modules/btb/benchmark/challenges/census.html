@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>btb.tuning.hyperparams.boolean &mdash; BTB 0.3.2.dev0 documentation</title>
+  <title>btb.benchmark.challenges.census &mdash; BTB 0.3.2.dev0 documentation</title>
   
 
   
@@ -237,7 +237,9 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
-      <li>btb.tuning.hyperparams.boolean</li>
+          <li><a href="../../benchmark.html">btb.benchmark</a> &raquo;</li>
+        
+      <li>btb.benchmark.challenges.census</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -252,128 +254,88 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for btb.tuning.hyperparams.boolean</h1><div class="highlight"><pre>
+  <h1>Source code for btb.benchmark.challenges.census</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="sd">&quot;&quot;&quot;Package where the BooleanHyperParam class is defined.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.base</span> <span class="kn">import</span> <span class="n">BaseHyperParam</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.challenge</span> <span class="kn">import</span> <span class="n">MLChallenge</span>
 
 
-<div class="viewcode-block" id="BooleanHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.boolean.html#btb.tuning.BooleanHyperParam">[docs]</a><span class="k">class</span> <span class="nc">BooleanHyperParam</span><span class="p">(</span><span class="n">BaseHyperParam</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;BooleanHyperParam class.</span>
+<div class="viewcode-block" id="CensusRF"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.CensusRF">[docs]</a><span class="k">class</span> <span class="nc">CensusRF</span><span class="p">(</span><span class="n">MLChallenge</span><span class="p">):</span>
+    <span class="c1"># DATASET</span>
+    <span class="n">DATASET</span> <span class="o">=</span> <span class="s1">&#39;census.csv&#39;</span>
+    <span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s1">&#39;income&#39;</span>
 
-<span class="sd">    The BooleanHyperParam class is responsible for the transformation of boolean values in</span>
-<span class="sd">    to normalized search space of :math:`[0, 1]`, providing the ability to sample values of those</span>
-<span class="sd">    and to inverse transform from the search space into the hyperparameter space.</span>
+    <span class="c1"># CROSS VALIDATE / SCORER</span>
+    <span class="n">METRIC</span> <span class="o">=</span> <span class="n">f1_score</span>
+    <span class="n">ENCODE</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">MAKE_BINARY</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="sd">    Hyperparameter space:</span>
-<span class="sd">        ``{True, False}``</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        default (bool):</span>
-<span class="sd">            Default boolean value for the hyperparameter. Defaults to ``False``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">dimensions</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">cardinality</span> <span class="o">=</span> <span class="mi">2</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
-
-    <span class="k">def</span> <span class="nf">_within_hyperparam_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">):</span>
-            <span class="c1"># values is expected to be np.ndarray(n, 1) [[False], [True]]</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">bool</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Values: </span><span class="si">{}</span><span class="s1"> not within hyperparameter space.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">_inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Invert one or more search space values.</span>
-
-<span class="sd">        Converts a ``numpy.ndarray`` with normalized values from the search space :math:`{0, 1}`</span>
-<span class="sd">        to the original space of ``True`` and ``False`` by casting those values to ``boolean``.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            values (numpy.ndarray):</span>
-<span class="sd">                2D array with values from the search space.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:</span>
-<span class="sd">                2D ``numpy.ndarray`` containing values from the original hyperparameter space.</span>
-
-<span class="sd">        Example:</span>
-<span class="sd">            The example below shows simple usage case where a BooleanHyperParam is being created</span>
-<span class="sd">            and it&#39;s ``_inverse_transform`` method is being called with a valid ``numpy.ndarray``</span>
-<span class="sd">            containing a valid shape of data.</span>
-
-<span class="sd">            &gt;&gt;&gt; instance = BooleanHyperParam()</span>
-<span class="sd">            &gt;&gt;&gt; instance._inverse_transform(np.array([[0], [1]]))</span>
-<span class="sd">            array([[ True],</span>
-<span class="sd">                   [False]])</span>
-<span class="sd">            &gt;&gt;&gt; instance._inverse_transform(np.array([[0]]))</span>
-<span class="sd">            array([[False]])</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Transform one or more hyperparameter values.</span>
-
-<span class="sd">        Converts a ``numpy.array`` with values from the original hyperparameter space into</span>
-<span class="sd">        normalized values in the search space of :math:`\{0, 1\}` by casting those values to</span>
-<span class="sd">        ``int``.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            values (numpy.ndarray):</span>
-<span class="sd">                2D array with values from the hyperparameter space to be converted into the</span>
-<span class="sd">                search space.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:</span>
-<span class="sd">                2D ``numpy.ndarray`` of shape ``(len(values), 1)`` containing the search space</span>
-<span class="sd">                values.</span>
-
-<span class="sd">        Example:</span>
-<span class="sd">            The example below shows simple usage case where a BooleanHyperParam is being created</span>
-<span class="sd">            and it&#39;s ``_transform`` method is being called with a valid ``numpy.ndarray``.</span>
-
-<span class="sd">            &gt;&gt;&gt; instance = BooleanHyperParam()</span>
-<span class="sd">            &gt;&gt;&gt; instance._transform(np.array([[True], [False]]))</span>
-<span class="sd">            array([[1],</span>
-<span class="sd">                   [0]])</span>
-<span class="sd">            &gt;&gt;&gt; instance._transform(np.array([[True]]))</span>
-<span class="sd">            array([[1]])</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-<div class="viewcode-block" id="BooleanHyperParam.sample"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.boolean.html#btb.tuning.BooleanHyperParam.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Generate sample values in the hyperparameter search space :math:`{0, 1}`.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            n_samples (int):</span>
-<span class="sd">                Number of values to sample.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray:</span>
-<span class="sd">                2D array with shape of ``(n_samples, 1)`` with normalized values inside the</span>
-<span class="sd">                search space :math:`{0, 1}`.</span>
-
-<span class="sd">        Example:</span>
-<span class="sd">            The example below shows simple usage case where a BooleanHyperParam is being created</span>
-<span class="sd">            and it&#39;s ``sample`` method is being called with a number of samples to be obtained.</span>
-
-<span class="sd">            &gt;&gt;&gt; instance = BooleanHyperParam()</span>
-<span class="sd">            &gt;&gt;&gt; instance.sample(2)</span>
-<span class="sd">            array([[1],</span>
-<span class="sd">                   [1]])</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">sampled</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;BooleanHyperParam()&#39;</span></div>
+    <span class="c1"># MODEL</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span>
+    <span class="n">MODEL_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="mi">500</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;criterion&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;gini&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;entropy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gini&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;log2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqrt&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;min_samples_split&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">2</span><span class="p">,</span>
+                <span class="mi">100</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="mi">100</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;min_weight_fraction_leaf&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mf">0.0</span><span class="p">,</span>
+                <span class="mf">0.5</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;min_impurity_decrease&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mf">0.0</span><span class="p">,</span>
+                <span class="mf">1000.0</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+    <span class="p">}</span></div>
 </pre></div>
 
            </div>

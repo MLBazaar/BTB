@@ -270,6 +270,7 @@
 <li class="toctree-l2"><a class="reference internal" href="btb.benchmark.challenges.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="btb.benchmark.challenges.bohachevsky.html">btb.benchmark.challenges.bohachevsky module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="btb.benchmark.challenges.branin.html">btb.benchmark.challenges.branin module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.benchmark.challenges.census.html">btb.benchmark.challenges.census module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="btb.benchmark.challenges.challenge.html">btb.benchmark.challenges.challenge module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="btb.benchmark.challenges.rosenbrock.html">btb.benchmark.challenges.rosenbrock module</a></li>
 </ul>
@@ -300,11 +301,14 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.benchmark" title="btb.benchmark.benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">benchmark</span></code></a>(candidates[, challenges, iterations])</p></td>
 <td><p>Benchmark function.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.evaluate_candidate" title="btb.benchmark.evaluate_candidate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate_candidate</span></code></a>(name, candidate, …)</p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 <dl class="function">
 <dt id="btb.benchmark.benchmark">
-<code class="sig-prename descclassname">btb.benchmark.</code><code class="sig-name descname">benchmark</code><span class="sig-paren">(</span><em class="sig-param">candidates, challenges=[&lt;class 'btb.benchmark.challenges.bohachevsky.Bohachevsky'&gt;, &lt;class 'btb.benchmark.challenges.branin.Branin'&gt;, &lt;class 'btb.benchmark.challenges.rosenbrock.Rosenbrock'&gt;], iterations=1000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark.html#benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.benchmark" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">btb.benchmark.</code><code class="sig-name descname">benchmark</code><span class="sig-paren">(</span><em class="sig-param">candidates</em>, <em class="sig-param">challenges=None</em>, <em class="sig-param">iterations=1000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark.html#benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Benchmark function.</p>
 <p>This benchmark function iterates over a collection of <code class="docutils literal notranslate"><span class="pre">challenges</span></code> and executes a
 <code class="docutils literal notranslate"><span class="pre">tuner_function</span></code> for each one of the <code class="docutils literal notranslate"><span class="pre">challenges</span></code> for a given amount of iterations.</p>
@@ -348,6 +352,11 @@ returned.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="function">
+<dt id="btb.benchmark.evaluate_candidate">
+<code class="sig-prename descclassname">btb.benchmark.</code><code class="sig-name descname">evaluate_candidate</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">candidate</em>, <em class="sig-param">challenges</em>, <em class="sig-param">iterations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark.html#evaluate_candidate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.evaluate_candidate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>

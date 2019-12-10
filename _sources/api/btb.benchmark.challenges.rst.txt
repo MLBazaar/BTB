@@ -8,6 +8,7 @@ Submodules
 
    btb.benchmark.challenges.bohachevsky
    btb.benchmark.challenges.branin
+   btb.benchmark.challenges.census
    btb.benchmark.challenges.challenge
    btb.benchmark.challenges.rosenbrock
 

@@ -257,16 +257,37 @@
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges</span> <span class="kn">import</span> <span class="n">Bohachevsky</span><span class="p">,</span> <span class="n">Branin</span><span class="p">,</span> <span class="n">Rosenbrock</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges</span> <span class="kn">import</span> <span class="n">Bohachevsky</span><span class="p">,</span> <span class="n">Branin</span><span class="p">,</span> <span class="n">CensusRF</span><span class="p">,</span> <span class="n">Rosenbrock</span>
 
 <span class="n">DEFAULT_CHALLENGES</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">Bohachevsky</span><span class="p">,</span>
     <span class="n">Branin</span><span class="p">,</span>
     <span class="n">Rosenbrock</span><span class="p">,</span>
+    <span class="n">CensusRF</span>
 <span class="p">]</span>
 
 
-<div class="viewcode-block" id="benchmark"><a class="viewcode-back" href="../../api/btb.benchmark.html#btb.benchmark.benchmark">[docs]</a><span class="k">def</span> <span class="nf">benchmark</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">challenges</span><span class="o">=</span><span class="n">DEFAULT_CHALLENGES</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<div class="viewcode-block" id="evaluate_candidate"><a class="viewcode-back" href="../../api/btb.benchmark.html#btb.benchmark.evaluate_candidate">[docs]</a><span class="k">def</span> <span class="nf">evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenges</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+    <span class="n">candidate_result</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">challenges</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">challenges</span> <span class="o">=</span> <span class="p">[</span><span class="n">challenges</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">challenge</span> <span class="ow">in</span> <span class="n">challenges</span><span class="p">:</span>
+        <span class="n">tunable_hyperparameters</span> <span class="o">=</span> <span class="n">challenge</span><span class="o">.</span><span class="n">get_tunable_hyperparameters</span><span class="p">()</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">candidate</span><span class="p">(</span><span class="n">challenge</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">tunable_hyperparameters</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
+            <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">candidate_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">candidate_result</span></div>
+
+
+<div class="viewcode-block" id="benchmark"><a class="viewcode-back" href="../../api/btb.benchmark.html#btb.benchmark.benchmark">[docs]</a><span class="k">def</span> <span class="nf">benchmark</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">challenges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Benchmark function.</span>
 
 <span class="sd">    This benchmark function iterates over a collection of ``challenges`` and executes a</span>
@@ -298,6 +319,9 @@
 <span class="sd">            A ``pandas.DataFrame`` with the obtained scores for the given challenges is being</span>
 <span class="sd">            returned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">challenges</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">challenges</span> <span class="o">=</span> <span class="p">[</span><span class="n">challenge_class</span><span class="p">()</span> <span class="k">for</span> <span class="n">challenge_class</span> <span class="ow">in</span> <span class="n">DEFAULT_CHALLENGES</span><span class="p">]</span>
+
     <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">candidates</span><span class="p">):</span>
         <span class="n">candidates</span> <span class="o">=</span> <span class="p">{</span><span class="n">candidates</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">candidates</span><span class="p">}</span>
 
@@ -313,21 +337,12 @@
 
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">challenge_class</span> <span class="ow">in</span> <span class="n">challenges</span><span class="p">:</span>
-        <span class="n">challenge</span> <span class="o">=</span> <span class="n">challenge_class</span><span class="p">()</span>
-        <span class="n">tunable</span> <span class="o">=</span> <span class="n">challenge</span><span class="o">.</span><span class="n">get_tunable</span><span class="p">()</span>
-
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">function</span> <span class="ow">in</span> <span class="n">candidates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">score</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">challenge</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">tunable</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
-
-            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">challenge</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-                <span class="s1">&#39;tuner&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-                <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
-            <span class="p">})</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenges</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;tuner&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;candidate&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
 
     <span class="k">del</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span>
     <span class="k">del</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span>

@@ -300,16 +300,20 @@
 <span class="sd">            Float number to represent the maximum value that this hyperparameter can take,</span>
 <span class="sd">            by default is ``None`` which will take the system&#39;s maximum float value possible.</span>
 
+<span class="sd">        default (float):</span>
+<span class="sd">            Float number that represents the default value for the hyperparameter. Defaults to</span>
+<span class="sd">            ``self.min``</span>
+
 <span class="sd">        include_min (bool):</span>
-<span class="sd">            Wheither or not to include the minimum value in the search space.</span>
+<span class="sd">            Either or not to include the minimum value in the search space.</span>
 
 <span class="sd">        include_max (bool):</span>
-<span class="sd">            Wheither or not to include the maximum value in the search space.</span>
+<span class="sd">            Either or not to include the maximum value in the search space.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cardinality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span> <span class="o">=</span> <span class="n">include_min</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span> <span class="o">=</span> <span class="n">include_max</span>
@@ -323,8 +327,13 @@
         <span class="k">if</span> <span class="nb">min</span> <span class="o">&gt;=</span> <span class="nb">max</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The ``min`` value can not be greater or equal to ``max`` value.&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">min</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">max</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="nb">max</span> <span class="o">-</span> <span class="nb">min</span>
 
     <span class="k">def</span> <span class="nf">_inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
@@ -444,19 +453,24 @@
 <span class="sd">            Integer number to represent the maximum value that this hyperparameter can take,</span>
 <span class="sd">            by default is ``None`` which will take the system&#39;s maximum int value possible.</span>
 
+<span class="sd">        default (int):</span>
+<span class="sd">            Integer number that represents the default value for the hyperparameter. Defaults to</span>
+<span class="sd">            ``self.min``.</span>
+
 <span class="sd">        step (int):</span>
 <span class="sd">            Increase amount to take for each sample. Defaults to 1.</span>
 
 <span class="sd">        include_min (bool):</span>
-<span class="sd">            Wheither or not to include the minimum value in the search space.</span>
+<span class="sd">            Either or not to include the minimum value in the search space.</span>
 
 <span class="sd">        include_max (bool):</span>
-<span class="sd">            Wheither or not to include the maximum value in the search space.</span>
+<span class="sd">            Either or not to include the maximum value in the search space.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">dimensions</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span> <span class="o">=</span> <span class="n">include_min</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span> <span class="o">=</span> <span class="n">include_max</span>
@@ -469,6 +483,11 @@
 
         <span class="k">if</span> <span class="nb">min</span> <span class="o">&gt;=</span> <span class="nb">max</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The `min` value can not be greater or equal to `max` value.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">min</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span> <span class="k">if</span> <span class="n">include_min</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="k">if</span> <span class="n">include_max</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>

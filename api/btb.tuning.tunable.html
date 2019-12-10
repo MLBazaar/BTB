@@ -290,6 +290,12 @@ whole, at once.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tunable.Tunable.from_dict" title="btb.tuning.tunable.Tunable.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(dict_hyperparams)</p></td>
+<td><p>Create an instance from a dictionary containing information over hyperparameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.tunable.Tunable.get_defaults" title="btb.tuning.tunable.Tunable.get_defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_defaults</span></code></a>()</p></td>
+<td><p>Return the default combination for the hyperparameters.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tunable.Tunable.inverse_transform" title="btb.tuning.tunable.Tunable.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
 <td><p>Invert one or more hyperparameter configurations.</p></td>
 </tr>
@@ -319,6 +325,57 @@ tunable.</p>
 <dd class="field-odd"><p><strong>hyperparams</strong> (<em>dict</em>) – Dictionary object that contains the name and the hyperparameter asociated to it.</p>
 </dd>
 </dl>
+<dl class="method">
+<dt id="btb.tuning.tunable.Tunable.from_dict">
+<em class="property">classmethod </em><code class="sig-name descname">from_dict</code><span class="sig-paren">(</span><em class="sig-param">dict_hyperparams</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tunable.html#Tunable.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tunable.Tunable.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance from a dictionary containing information over hyperparameters.</p>
+<p>Class method that creates an instance from a dictionary that describes the type of a
+hyperparameter, the range or values that this can have and the default value of the
+hyperparameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dict_hyperparams</strong> (<em>dict</em>) – <p>A python dictionary containing as <cite>key</cite> the given name for the hyperparameter and
+as value a dictionary containing the following keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Type (str):</dt><dd><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> for <code class="docutils literal notranslate"><span class="pre">BoolHyperParam</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code> for <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>
+for <code class="docutils literal notranslate"><span class="pre">FloatHyperParam</span></code>, <code class="docutils literal notranslate"><span class="pre">str</span></code> for <code class="docutils literal notranslate"><span class="pre">CategoricalHyperParam</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Range or Values (list):</dt><dd><p>Range / values that this hyperparameter can take, in case of
+<code class="docutils literal notranslate"><span class="pre">CategoricalHyperParam</span></code> those will be used as the <code class="docutils literal notranslate"><span class="pre">choices</span></code>, for
+<code class="docutils literal notranslate"><span class="pre">NumericalHyperParams</span></code> the <code class="docutils literal notranslate"><span class="pre">min</span></code> value will be used as the minimum
+value and the <code class="docutils literal notranslate"><span class="pre">max</span></code> value will be used as the <code class="docutils literal notranslate"><span class="pre">maximum</span></code> value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Default (str, bool, int, float or None):</dt><dd><p>The default value for the hyperparameter.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">Tunable</span></code> instance with the given hyperparameters.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="btb.tuning.html#btb.tuning.Tunable" title="btb.tuning.Tunable">Tunable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.tunable.Tunable.get_defaults">
+<code class="sig-name descname">get_defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tunable.html#Tunable.get_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tunable.Tunable.get_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the default combination for the hyperparameters.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="btb.tuning.tunable.Tunable.inverse_transform">
 <code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tunable.html#Tunable.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tunable.Tunable.inverse_transform" title="Permalink to this definition">¶</a></dt>

@@ -274,10 +274,10 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam" title="btb.tuning.hyperparams.numerical.FloatHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FloatHyperParam</span></code></a>([min, max, include_min, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam" title="btb.tuning.hyperparams.numerical.FloatHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FloatHyperParam</span></code></a>([min, max, default, …])</p></td>
 <td><p>FloatHyperParam class.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam" title="btb.tuning.hyperparams.numerical.IntHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IntHyperParam</span></code></a>([min, max, include_min, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam" title="btb.tuning.hyperparams.numerical.IntHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IntHyperParam</span></code></a>([min, max, default, …])</p></td>
 <td><p>IntHyperParam class.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam" title="btb.tuning.hyperparams.numerical.NumericalHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumericalHyperParam</span></code></a></p></td>
@@ -287,7 +287,7 @@
 </table>
 <dl class="class">
 <dt id="btb.tuning.hyperparams.numerical.FloatHyperParam">
-<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.numerical.</code><code class="sig-name descname">FloatHyperParam</code><span class="sig-paren">(</span><em class="sig-param">min=None</em>, <em class="sig-param">max=None</em>, <em class="sig-param">include_min=True</em>, <em class="sig-param">include_max=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/numerical.html#FloatHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.numerical.</code><code class="sig-name descname">FloatHyperParam</code><span class="sig-paren">(</span><em class="sig-param">min=None</em>, <em class="sig-param">max=None</em>, <em class="sig-param">default=None</em>, <em class="sig-param">include_min=True</em>, <em class="sig-param">include_max=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/numerical.html#FloatHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam" title="btb.tuning.hyperparams.numerical.NumericalHyperParam"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.hyperparams.numerical.NumericalHyperParam</span></code></a></p>
 <p>FloatHyperParam class.</p>
 <p>The FloatHyperParam class represents a single hyperparameter within a range of <code class="docutils literal notranslate"><span class="pre">float</span></code>
@@ -339,14 +339,21 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 by default is <code class="docutils literal notranslate"><span class="pre">None</span></code> which will take the system’s minimum float value possible.</p></li>
 <li><p><strong>max</strong> (<em>float</em>) – Float number to represent the maximum value that this hyperparameter can take,
 by default is <code class="docutils literal notranslate"><span class="pre">None</span></code> which will take the system’s maximum float value possible.</p></li>
-<li><p><strong>include_min</strong> (<em>bool</em>) – Wheither or not to include the minimum value in the search space.</p></li>
-<li><p><strong>include_max</strong> (<em>bool</em>) – Wheither or not to include the maximum value in the search space.</p></li>
+<li><p><strong>default</strong> (<em>float</em>) – Float number that represents the default value for the hyperparameter. Defaults to
+<code class="docutils literal notranslate"><span class="pre">self.min</span></code></p></li>
+<li><p><strong>include_min</strong> (<em>bool</em>) – Either or not to include the minimum value in the search space.</p></li>
+<li><p><strong>include_max</strong> (<em>bool</em>) – Either or not to include the maximum value in the search space.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="attribute">
 <dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality">
 <code class="sig-name descname">cardinality</code><em class="property"> = inf</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.default">
+<code class="sig-name descname">default</code><em class="property"> = None</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.default" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -480,7 +487,7 @@ with 1 dimension.</p>
 
 <dl class="class">
 <dt id="btb.tuning.hyperparams.numerical.IntHyperParam">
-<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.numerical.</code><code class="sig-name descname">IntHyperParam</code><span class="sig-paren">(</span><em class="sig-param">min=None</em>, <em class="sig-param">max=None</em>, <em class="sig-param">include_min=True</em>, <em class="sig-param">include_max=True</em>, <em class="sig-param">step=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/numerical.html#IntHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.numerical.</code><code class="sig-name descname">IntHyperParam</code><span class="sig-paren">(</span><em class="sig-param">min=None</em>, <em class="sig-param">max=None</em>, <em class="sig-param">default=None</em>, <em class="sig-param">include_min=True</em>, <em class="sig-param">include_max=True</em>, <em class="sig-param">step=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/numerical.html#IntHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam" title="btb.tuning.hyperparams.numerical.NumericalHyperParam"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.hyperparams.numerical.NumericalHyperParam</span></code></a></p>
 <p>IntHyperParam class.</p>
 <p>The IntHyperParam class represents a single hyperparameter within an range of <code class="docutils literal notranslate"><span class="pre">int</span></code>
@@ -532,15 +539,22 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 by default is <code class="docutils literal notranslate"><span class="pre">None</span></code> which will take the system’s minimum int value possible.</p></li>
 <li><p><strong>max</strong> (<em>int</em>) – Integer number to represent the maximum value that this hyperparameter can take,
 by default is <code class="docutils literal notranslate"><span class="pre">None</span></code> which will take the system’s maximum int value possible.</p></li>
+<li><p><strong>default</strong> (<em>int</em>) – Integer number that represents the default value for the hyperparameter. Defaults to
+<code class="docutils literal notranslate"><span class="pre">self.min</span></code>.</p></li>
 <li><p><strong>step</strong> (<em>int</em>) – Increase amount to take for each sample. Defaults to 1.</p></li>
-<li><p><strong>include_min</strong> (<em>bool</em>) – Wheither or not to include the minimum value in the search space.</p></li>
-<li><p><strong>include_max</strong> (<em>bool</em>) – Wheither or not to include the maximum value in the search space.</p></li>
+<li><p><strong>include_min</strong> (<em>bool</em>) – Either or not to include the minimum value in the search space.</p></li>
+<li><p><strong>include_max</strong> (<em>bool</em>) – Either or not to include the maximum value in the search space.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="attribute">
 <dt id="btb.tuning.hyperparams.numerical.IntHyperParam.cardinality">
 <code class="sig-name descname">cardinality</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.numerical.IntHyperParam.default">
+<code class="sig-name descname">default</code><em class="property"> = None</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam.default" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -715,6 +729,11 @@ defined by a numerical value and can take any number within that range.</p>
 <dl class="attribute">
 <dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality">
 <code class="sig-name descname">cardinality</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.default">
+<code class="sig-name descname">default</code><em class="property"> = None</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.default" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
