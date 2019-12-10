@@ -153,4 +153,4 @@ class CategoricalHyperParam(BaseHyperParam):
         return self.transform(sampled)
 
     def __repr__(self):
-        return 'CategoricalHyperParam(choices={})'.format(self.choices)
+        return 'CategoricalHyperParam(choices={}, default={})'.format(self.choices, self.default)

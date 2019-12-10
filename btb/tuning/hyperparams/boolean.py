@@ -118,4 +118,4 @@ class BooleanHyperParam(BaseHyperParam):
         return np.round(sampled).astype(int)
 
     def __repr__(self):
-        return 'BooleanHyperParam()'
+        return 'BooleanHyperParam(default={})'.format(self.default)

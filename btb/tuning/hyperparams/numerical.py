@@ -171,8 +171,8 @@ class FloatHyperParam(NumericalHyperParam):
         return np.random.random((n_samples, self.dimensions))
 
     def __repr__(self):
-        args = (self.min, self.max, self.include_min, self.include_max)
-        args = 'min={}, max={}, include_min={}, include_max={}'.format(*args)
+        args = (self.min, self.max, self.default, self.include_min, self.include_max)
+        args = 'min={}, max={}, default={}, include_min={}, include_max={}'.format(*args)
         return 'FloatHyperParam({})'.format(args)
 
 
@@ -346,6 +346,6 @@ class IntHyperParam(NumericalHyperParam):
         return self._transform(inverted)
 
     def __repr__(self):
-        args = (self.min, self.max, self.include_min, self.include_max, self.step)
-        args = 'min={}, max={}, include_min={}, include_max={}, step={}'.format(*args)
+        args = (self.min, self.max, self.default, self.include_min, self.include_max, self.step)
+        args = 'min={}, max={}, default={}, include_min={}, include_max={}, step={}'.format(*args)
         return 'IntHyperParam({})'.format(args)
