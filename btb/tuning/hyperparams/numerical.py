@@ -55,6 +55,10 @@ class FloatHyperParam(NumericalHyperParam):
     cardinality = np.inf
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True):
+
+        self.include_min = include_min
+        self.include_max = include_max
+
         if min is None or min == -np.inf:
             min = sys.float_info.min
 
@@ -157,6 +161,11 @@ class FloatHyperParam(NumericalHyperParam):
         """
         return np.random.random((n_samples, self.dimensions))
 
+    def __repr__(self):
+        args = (self.min, self.max, self.include_min, self.include_max)
+        args = 'min={}, max={}, include_min={}, include_max={}'.format(*args)
+        return 'FloatHyperParam({})'.format(args)
+
 
 class IntHyperParam(NumericalHyperParam):
     """IntHyperParam class.
@@ -193,10 +202,14 @@ class IntHyperParam(NumericalHyperParam):
     dimensions = 1
 
     def __init__(self, min=None, max=None, include_min=True, include_max=True, step=1):
-        if min is None:
+
+        self.include_min = include_min
+        self.include_max = include_max
+
+        if min is None or min == -np.inf:
             min = -(sys.maxsize / 2)
 
-        if max is None:
+        if max is None or max == np.inf:
             max = sys.maxsize / 2
 
         if min >= max:
@@ -312,3 +325,8 @@ class IntHyperParam(NumericalHyperParam):
         inverted = self._inverse_transform(sampled)
 
         return self._transform(inverted)
+
+    def __repr__(self):
+        args = (self.min, self.max, self.include_min, self.include_max, self.step)
+        args = 'min={}, max={}, include_min={}, include_max={}, step={}'.format(*args)
+        return 'IntHyperParam({})'.format(args)

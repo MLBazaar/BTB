@@ -109,3 +109,6 @@ class BooleanHyperParam(BaseHyperParam):
         sampled = np.random.random((n_samples, self.dimensions))
 
         return np.round(sampled).astype(int)
+
+    def __repr__(self):
+        return 'BooleanHyperParam()'

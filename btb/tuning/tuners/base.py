@@ -2,12 +2,15 @@
 
 """Package where the BaseTuner class and BaseMetaModelTuner are defined."""
 
+import logging
 from abc import abstractmethod
 
 import numpy as np
 
 from btb.tuning.acquisition.base import BaseAcquisition
 from btb.tuning.metamodels.base import BaseMetaModel
+
+LOGGER = logging.getLogger(__name__)
 
 
 class BaseTuner:
@@ -38,6 +41,10 @@ class BaseTuner:
         self._trials_set = set()
         self.raw_scores = np.empty((0, 1), dtype=np.float)
         self.maximize = maximize
+        LOGGER.debug(
+            ('Creating instance of %s with %s' 'hyperparameters and %s carinality.'),
+            len(self.tunable.hyperparameters), self.__class__.__name__, self.tunable.cardinality
+        )
 
     def _check_proposals(self, num_proposals):
         """Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.
@@ -242,6 +249,19 @@ class BaseTuner:
         self.raw_scores = np.append(self.raw_scores, scores)
         self.scores = self.raw_scores if self.maximize else -self.raw_scores
 
+    def __str__(self):
+        return (
+            "{}\n"
+            "  hyperparameters: {}\n"
+            "  dimensions: {}\n"
+            "  cardinality: {}"
+        ).format(
+            self.__class__.__name__,
+            len(self.tunable.hyperparams),
+            self.tunable.dimensions,
+            self.tunable.cardinality
+        )
+
 
 class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
     """BaseMetaModelTuner class.
@@ -277,23 +297,26 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
     _metamodel_kwargs = None
     _acquisition_kwargs = None
 
-    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2, **kwargs):
-        self._num_candidates = num_candidates
-        self._min_trials = min_trials
+    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2):
+        self.num_candidates = num_candidates
+        self.min_trials = min_trials
         super().__init__(tunable, maximize)
         self.__init_metamodel__(**(self._metamodel_kwargs or dict()))
         self.__init_acquisition__(**(self._acquisition_kwargs or dict()))
 
     def _propose(self, num_proposals, allow_duplicates):
-        if len(self._trials_set) < self._min_trials:
+        if self.min_trials > len(self._trials_set):
+            LOGGER.debug('Not enough samples recorded to generate predictions, '
+                         'generating random proposal.')
             return self._sample(num_proposals, allow_duplicates)
 
-        num_samples = num_proposals * self._num_candidates
+        num_samples = num_proposals * self.num_candidates
         if not allow_duplicates:
             remaining = self.tunable.cardinality - len(self._trials_set)
             num_samples = min(remaining, num_samples)
 
         proposals = self._sample(num_samples, allow_duplicates)
+
         predicted = self._predict(proposals)
         index = self._acquire(predicted, num_proposals)
 
@@ -340,5 +363,6 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
             >>> tuner.record(trials, scores)
         """
         super().record(trials, scores)
-        if len(self.trials) >= self._min_trials:
+        if len(self.trials) >= self.min_trials:
+            LOGGER.debug('Fitting the model with %s samples.' % len(self.trials))
             self._fit(self.trials, self.scores)
