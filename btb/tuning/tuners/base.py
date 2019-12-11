@@ -42,7 +42,7 @@ class BaseTuner:
         self.raw_scores = np.empty((0, 1), dtype=np.float)
         self.maximize = maximize
         LOGGER.debug(
-            ('Creating instance of %s with %s hyperparameters and %s carinality.'),
+            ('Creating instance of %s with %s hyperparameters and carinality %s.'),
             len(self.tunable.hyperparams), self.__class__.__name__, self.tunable.cardinality
         )
 
