@@ -27,12 +27,14 @@ class Tunable:
         hyperparams (dict):
             Dictionary object that contains the name and the hyperparameter asociated to it.
     """
+    hyperparams = None
+    names = None
+    dimensions = 0
+    cardinality = 1
 
     def __init__(self, hyperparams):
         self.hyperparams = hyperparams
         self.names = list(hyperparams)
-        self.dimensions = 0
-        self.cardinality = 1
 
         for hyperparam in hyperparams.values():
             self.dimensions = self.dimensions + hyperparam.dimensions
