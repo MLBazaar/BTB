@@ -35,9 +35,6 @@ class TestBaseTuner(TestCase):
     def test___init__maximize_false(self):
         # setup
         tunable = MagicMock(spec_set=Tunable)
-        tunable.dimensions = 2
-        tunable.cardinality = 1
-        tunable.hyperparams = {'ihp': 'test_ihp'}
 
         # run
         instance = BaseTuner(tunable, False)
