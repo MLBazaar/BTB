@@ -6,7 +6,9 @@ from unittest.mock import MagicMock, call, patch
 import numpy as np
 import pandas as pd
 
+from btb.tuning.hyperparams.boolean import BooleanHyperParam
 from btb.tuning.hyperparams.categorical import CategoricalHyperParam
+from btb.tuning.hyperparams.numerical import IntHyperParam
 from btb.tuning.tunable import Tunable
 
 
@@ -23,9 +25,9 @@ class TestTunable(TestCase):
     @patch('btb.tuning.tunable.list')
     def setUp(self, list_mock):
         """Instantiate the ``Tunable`` and it's ``Hyperparameters`` that we will be using."""
-        self.bhp = MagicMock()
-        self.chp = MagicMock()
-        self.ihp = MagicMock()
+        self.bhp = MagicMock(spec_set=BooleanHyperParam)
+        self.chp = MagicMock(spec_set=CategoricalHyperParam)
+        self.ihp = MagicMock(spec_set=IntHyperParam)
 
         list_mock.return_value = ['bhp', 'chp', 'ihp']
 
@@ -240,10 +242,6 @@ class TestTunable(TestCase):
     def test_inverse_transform_valid_data(self):
         """Test that the inverse transform method is calling the hyperparameters."""
         # setup
-        self.bhp.K = 1
-        self.chp.K = 1
-        self.ihp.K = 1
-
         self.bhp.inverse_transform.return_value = [[True]]
         self.chp.inverse_transform.return_value = [['cat']]
         self.ihp.inverse_transform.return_value = [[1]]

@@ -1,5 +1,17 @@
 # History
 
+## 0.3.3 - 2019-12-11
+
+Fix a bug where creating an instance of `Tuner` ends in an error.
+
+### Internal Improvements
+
+Improve unittests to use `spec_set` in order to detect errors while mocking an object.
+
+### Resolved Issues
+
+* Issue #153: Bug with tunner logger message that avoids creating the Tunner.
+
 ## 0.3.2 - 2019-12-10
 
 With this release we add the new `benchmark` challenge `MLChallenge` which allows users to
