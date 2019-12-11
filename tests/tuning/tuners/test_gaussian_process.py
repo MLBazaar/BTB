@@ -5,6 +5,7 @@ from unittest.mock import MagicMock
 
 from sklearn.gaussian_process import GaussianProcessRegressor
 
+from btb.tuning.tunable import Tunable
 from btb.tuning.tuners.gaussian_process import GPEiTuner, GPTuner
 
 
@@ -13,10 +14,13 @@ class TestGaussianProcessTuner(TestCase):
 
     def test___init__(self):
         # setup
-        instance = MagicMock()
+        tunable = MagicMock(spec=Tunable)
+        tunable.dimensions = 2
+        tunable.cardinality = 1
+        tunable.hyperparams = {'ihp': 'test_ihp'}
 
         # run
-        instance = GPTuner(MagicMock())
+        instance = GPTuner(tunable)
 
         # assert
         assert instance._MODEL_CLASS == GaussianProcessRegressor
@@ -28,10 +32,13 @@ class TestGaussianProcessExpectedImprovementTuner(TestCase):
 
     def test___init__(self):
         # setup
-        instance = MagicMock()
+        tunable = MagicMock(spec=Tunable)
+        tunable.dimensions = 2
+        tunable.cardinality = 1
+        tunable.hyperparams = {'ihp': 'test_ihp'}
 
         # run
-        instance = GPEiTuner(MagicMock())
+        instance = GPEiTuner(tunable)
 
         # assert
         assert instance._MODEL_CLASS == GaussianProcessRegressor

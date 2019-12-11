@@ -42,8 +42,8 @@ class BaseTuner:
         self.raw_scores = np.empty((0, 1), dtype=np.float)
         self.maximize = maximize
         LOGGER.debug(
-            ('Creating instance of %s with %s' 'hyperparameters and %s carinality.'),
-            len(self.tunable.hyperparameters), self.__class__.__name__, self.tunable.cardinality
+            ('Creating instance of %s with %s hyperparameters and %s carinality.'),
+            len(self.tunable.hyperparams), self.__class__.__name__, self.tunable.cardinality
         )
 
     def _check_proposals(self, num_proposals):

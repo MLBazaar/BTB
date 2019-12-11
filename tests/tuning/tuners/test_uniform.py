@@ -3,6 +3,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
+from btb.tuning.tunable import Tunable
 from btb.tuning.tuners.uniform import UniformTuner
 
 
@@ -10,7 +11,12 @@ class TestUniformTuner(TestCase):
     """Test UniformTuner class."""
 
     def setUp(self):
-        self.instance = UniformTuner(MagicMock())
+        tunable = MagicMock(spec=Tunable)
+        tunable.dimensions = 2
+        tunable.cardinality = 1
+        tunable.hyperparams = {'ihp': 'test_ihp'}
+
+        self.instance = UniformTuner(tunable)
 
     def test___init__(self):
         assert isinstance(self.instance.tunable, MagicMock)

@@ -6,7 +6,9 @@ from unittest.mock import MagicMock, call, patch
 import numpy as np
 import pandas as pd
 
+from btb.tuning.hyperparams.boolean import BooleanHyperParam
 from btb.tuning.hyperparams.categorical import CategoricalHyperParam
+from btb.tuning.hyperparams.numerical import IntHyperParam
 from btb.tuning.tunable import Tunable
 
 
@@ -23,9 +25,15 @@ class TestTunable(TestCase):
     @patch('btb.tuning.tunable.list')
     def setUp(self, list_mock):
         """Instantiate the ``Tunable`` and it's ``Hyperparameters`` that we will be using."""
-        self.bhp = MagicMock()
-        self.chp = MagicMock()
-        self.ihp = MagicMock()
+        self.bhp = MagicMock(spec=BooleanHyperParam)
+        self.chp = MagicMock(spec=CategoricalHyperParam)
+        self.ihp = MagicMock(spec=IntHyperParam)
+        self.bhp.default = True
+        self.chp.default = 'cat'
+        self.ihp.default = 1
+        self.bhp.cardinality = 1
+        self.chp.cardinality = 1
+        self.ihp.cardinality = 1
 
         list_mock.return_value = ['bhp', 'chp', 'ihp']
 
