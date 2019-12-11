@@ -128,6 +128,7 @@ class BTBSession:
             tunable_spec = self.tunables[tunable_name]
 
             tunable = Tunable.from_dict(tunable_spec)
+            LOGGER.info('Obtaining default configuration for %s', tunable_name)
             config = tunable.get_defaults()
 
             self._tuners[tunable_name] = self.tuner(tunable)
@@ -136,6 +137,7 @@ class BTBSession:
             tunable_name = self._selector.select(self._normalized_scores)
             tuner = self._tuners[tunable_name]
             try:
+                LOGGER.info('Generating new proposal configuration for %s', tunable_name)
                 config = tuner.propose(1)
 
             except ValueError:
@@ -186,6 +188,16 @@ class BTBSession:
                 LOGGER.exception('Could not record score to tuner.')
 
     def run(self, iterations=10):
+        """Execute proposal iterations over the tunables.
+
+        Given a number of ``iterations`` propose new configurations for the tunables,
+        score and record those inside the ``tuner`` object.
+
+        Returns:
+            best_proposal (dict):
+                Best configuration found with the name of the tunable and the hyperparameters
+                and crossvalidated score obtained for it.
+        """
         for _ in self._range(iterations):
             self.iterations += 1
             proposal = self.propose()
