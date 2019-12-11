@@ -37,7 +37,10 @@ class CategoricalHyperParam(BaseHyperParam):
         Creates an instance with a list of ``choices`` and fit an instance of
         ``sklearn.preprocessing.OneHotEncoder`` with those values.
         """
-        self.default = default or choices[0]
+        if default not in choices:
+            default = choices[0]
+
+        self.default = default
         self.choices = deepcopy(choices)
         self.dimensions = len(choices)
         self.cardinality = self.dimensions
