@@ -14,11 +14,7 @@ class TestGaussianProcessTuner(TestCase):
 
     def test___init__(self):
         # setup
-        tunable = MagicMock(spec=Tunable)
-        tunable.dimensions = 2
-        tunable.cardinality = 1
-        tunable.hyperparams = {'ihp': 'test_ihp'}
-
+        tunable = MagicMock(spec_set=Tunable)
         # run
         instance = GPTuner(tunable)
 
@@ -32,10 +28,7 @@ class TestGaussianProcessExpectedImprovementTuner(TestCase):
 
     def test___init__(self):
         # setup
-        tunable = MagicMock(spec=Tunable)
-        tunable.dimensions = 2
-        tunable.cardinality = 1
-        tunable.hyperparams = {'ihp': 'test_ihp'}
+        tunable = MagicMock(spec_set=Tunable)
 
         # run
         instance = GPEiTuner(tunable)

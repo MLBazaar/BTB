@@ -11,11 +11,7 @@ class TestUniformTuner(TestCase):
     """Test UniformTuner class."""
 
     def setUp(self):
-        tunable = MagicMock(spec=Tunable)
-        tunable.dimensions = 2
-        tunable.cardinality = 1
-        tunable.hyperparams = {'ihp': 'test_ihp'}
-
+        tunable = MagicMock(spec_set=Tunable)
         self.instance = UniformTuner(tunable)
 
     def test___init__(self):
