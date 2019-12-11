@@ -288,6 +288,21 @@
 <p>Tunable class.</p>
 <p>The Tunable class represents a collection of <code class="docutils literal notranslate"><span class="pre">HyperParams</span></code> that need to be tuned as a
 whole, at once.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tunable.Tunable.cardinality" title="btb.tuning.tunable.Tunable.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.tunable.Tunable.dimensions" title="btb.tuning.tunable.Tunable.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<td><p>int(x=0) -&gt; integer</p></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Methods</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -330,6 +345,16 @@ tunable.</p>
 <dd class="field-odd"><p><strong>hyperparams</strong> (<em>dict</em>) – Dictionary object that contains the name and the hyperparameter asociated to it.</p>
 </dd>
 </dl>
+<dl class="attribute">
+<dt>
+<code class="sig-name descname">cardinality</code><em class="property"> = 1</em></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.tunable.Tunable.dimensions">
+<code class="sig-name descname">dimensions</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.tunable.Tunable.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="btb.tuning.tunable.Tunable.from_dict">
 <em class="property">classmethod </em><code class="sig-name descname">from_dict</code><span class="sig-paren">(</span><em class="sig-param">dict_hyperparams</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tunable.html#Tunable.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tunable.Tunable.from_dict" title="Permalink to this definition">¶</a></dt>
@@ -381,6 +406,11 @@ value and the <code class="docutils literal notranslate"><span class="pre">max</
 <dd><p>Return the default combination for the hyperparameters.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt>
+<code class="sig-name descname">hyperparams</code><em class="property"> = None</em></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="btb.tuning.tunable.Tunable.inverse_transform">
 <code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tunable.html#Tunable.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tunable.Tunable.inverse_transform" title="Permalink to this definition">¶</a></dt>
@@ -423,6 +453,11 @@ a valid data from a 2D list and a <code class="docutils literal notranslate"><sp
 </pre></div>
 </div>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="btb.tuning.tunable.Tunable.names">
+<code class="sig-name descname">names</code><em class="property"> = None</em><a class="headerlink" href="#btb.tuning.tunable.Tunable.names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="btb.tuning.tunable.Tunable.sample">
