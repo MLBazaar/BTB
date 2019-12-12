@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 import logging
 from collections import Counter, defaultdict
@@ -41,10 +43,25 @@ class BTBSession:
         verbose (bool):
             If ``True`` a progress bar will be displayed for the ``run`` process.
     """
+    tunables = None
+    scorer = None
+    tuner = None
+    selector = None
+    maximize = None
+    max_errors = None
+
+    best_proposal = None
+    proposals = None
+    iterations = None
+    errors = None
+
+    _tunable_names = None
+    _normalized_scores = None
+    _tuners = None
 
     def _normalize(self, score):
         if score is not None:
-            return score if self._maximize else -score
+            return score if self.maximize else -score
 
     def __init__(self, tunables, scorer, tuner=GPTuner, selector=UCB1,
                  maximize=True, max_errors=1, verbose=False):
@@ -53,7 +70,7 @@ class BTBSession:
         self.scorer = scorer
         self.tuner = tuner
         self.max_errors = max_errors
-        self._maximize = maximize
+        self.maximize = maximize
 
         self.best_proposal = None
         self.proposals = dict()
@@ -64,11 +81,11 @@ class BTBSession:
         self._normalized_scores = defaultdict(list)
         self._tuners = dict()
         self._tunable_names = list(self.tunables.keys())
-        self._selector = UCB1(self._tunable_names)
+        self.selector = selector(self._tunable_names)
         self._range = trange if verbose else range
 
     def _make_dumpable(self, to_dump):
-        dumpable = dict()
+        dumpable = {}
         for key, value in to_dump.items():
             if not isinstance(key, str):
                 key = str(key)
