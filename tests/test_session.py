@@ -115,12 +115,10 @@ class TestBTBSession(TestCase):
         with self.assertRaises(ValueError):
             BTBSession.propose(instance)
 
-    @patch('btb.session.BTBSession._make_id')
     @patch('btb.session.Tunable')
-    def test_propose_normalized_scores_lt_tunable_names(self, mock_tunable, mock_make_id):
+    def test_propose_normalized_scores_lt_tunable_names(self, mock_tunable):
         # setup
         mock_tunable.from_dict.return_value.get_defaults.return_value = 'defaults'
-        mock_make_id.return_value = 1
 
         tuner = MagicMock()
 
@@ -131,6 +129,8 @@ class TestBTBSession(TestCase):
         instance.tunables = {'test_tunable': 'test_spec'}
         instance._tunable_names = ['test_tunable']
 
+        instance._make_id.return_value = 1
+
         # run
         res_name, res_config = BTBSession.propose(instance)
 
@@ -139,15 +139,15 @@ class TestBTBSession(TestCase):
         assert res_config == 'defaults'
 
         expected_proposals = {
-            '1': {
+            1: {
                 'id': 1,
                 'name': 'test_tunable',
                 'config': 'defaults'
             }
         }
         assert instance.proposals == expected_proposals
+        instance._make_id.assert_called_once_with('test_tunable', 'defaults')
 
         mock_tunable.from_dict.assert_called_once_with('test_spec')
         tuner.assert_called_once_with(mock_tunable.from_dict.return_value)
         mock_tunable.from_dict.return_value.get_defaults.assert_called_once_with()
-        mock_make_id.assert_called_once_with('test_tunable', 'defaults')
