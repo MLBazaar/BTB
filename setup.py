@@ -26,13 +26,13 @@ install_requires = [
     'numpy>=1.14.0,<1.18.0',
     'scikit-learn>=0.20.0,<0.22.0',
     'scipy>=1.0.1,<1.4.0',
-    'pandas>=0.21.0,<0.26.0'
+    'pandas>=0.21.0,<0.26.0',
+    'tqdm>=4.36.1',
 ]
 
 
 examples_require = [
     'jupyter>=1.0.0',
-    'tqdm>=4.36.1',
     'matplotlib>=3.1.1',
 ]
 
