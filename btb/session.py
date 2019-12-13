@@ -55,6 +55,7 @@ class BTBSession:
     iterations = None
     errors = None
 
+    _best_normalized = None
     _tunable_names = None
     _normalized_scores = None
     _tuners = None
@@ -124,7 +125,7 @@ class BTBSession:
 
         By accessing the dictionary ``self.tunables``, ``BTBSession``, ensures that
         every tunable has been scored atleast once. The following proposals use the
-        ``self._selector`` in order to select the ``tunable`` from which a proposal
+        ``self.selector`` in order to select the ``tunable`` from which a proposal
         is generated.
 
         In case that the ``tuner`` can't propose more configurations it will return
@@ -151,7 +152,7 @@ class BTBSession:
             self._tuners[tunable_name] = self.tuner(tunable)
 
         else:
-            tunable_name = self._selector.select(self._normalized_scores)
+            tunable_name = self.selector.select(self._normalized_scores)
             tuner = self._tuners[tunable_name]
             try:
                 LOGGER.info('Generating new proposal configuration for %s', tunable_name)
@@ -178,6 +179,15 @@ class BTBSession:
         Records the associated configuration and score to the tuner. Evaluates if the
         score is the best score found, if so, updates ``self._best_normalized`` and
         ``self.best_proposal`` with the associated to them values.
+
+        Args:
+            tunable_name (str):
+                The name of the tunable that the score and config pertain.
+            config (dict):
+                Dictionary representation of the configuration given to the tunable to obtain
+                the score.
+            score (float):
+                Obtained score with the given configuration.
         """
         proposal_id = self._make_id(tunable_name, config)
         proposal = self.proposals[proposal_id]
@@ -188,19 +198,19 @@ class BTBSession:
             errors = self.errors[tunable_name]
 
             if errors >= self.max_errors:
-                LOGGER.warn('Too many errors: %s. Removing tunable %s', errors, tunable_name)
+                LOGGER.warning('Too many errors: %s. Removing tunable %s', errors, tunable_name)
                 self._normalized_scores.pop(tunable_name, None)
                 self._tunable_names.remove(tunable_name)
         else:
             normalized = self._normalize(score)
-            if score and normalized > self._best_normalized:
+            if normalized > self._best_normalized:
                 LOGGER.info('New optimal found: %s - %s', tunable_name, score)
                 self.best_proposal = proposal
-                self._best_normalized = score
+                self._best_normalized = normalized
             try:
                 tuner = self._tuners[tunable_name]
-                tuner.record(config, score)
-                self._normalized_scores[tunable_name].append(score)
+                tuner.record(config, normalized)
+                self._normalized_scores[tunable_name].append(normalized)
             except Exception:
                 LOGGER.exception('Could not record score to tuner.')
 
