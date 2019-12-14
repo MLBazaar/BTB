@@ -59,6 +59,7 @@ class BTBSession:
     _tunable_names = None
     _normalized_scores = None
     _tuners = None
+    _range = None
 
     def _normalize(self, score):
         if score is not None:
@@ -173,6 +174,21 @@ class BTBSession:
 
         return tunable_name, config
 
+    def handle_error(self, tunable_name):
+        """Handle errors when ``score`` is ``None`` in ``record`` method.
+
+        Args:
+            tunable_name (str):
+                Name of the tunable that obtained ``None`` as a score.
+        """
+        self.errors[tunable_name] += 1
+        errors = self.errors[tunable_name]
+
+        if errors >= self.max_errors:
+            LOGGER.warning('Too many errors: %s. Removing tunable %s', errors, tunable_name)
+            self._normalized_scores.pop(tunable_name, None)
+            self._tunable_names.remove(tunable_name)
+
     def record(self, tunable_name, config, score):
         """Record the configuration and the associated score to it inside the tuner.
 
@@ -194,13 +210,7 @@ class BTBSession:
         proposal['score'] = score
 
         if score is None:
-            self.errors[tunable_name] += 1
-            errors = self.errors[tunable_name]
-
-            if errors >= self.max_errors:
-                LOGGER.warning('Too many errors: %s. Removing tunable %s', errors, tunable_name)
-                self._normalized_scores.pop(tunable_name, None)
-                self._tunable_names.remove(tunable_name)
+            self.handle_error(tunable_name)
         else:
             normalized = self._normalize(score)
             if normalized > self._best_normalized:
