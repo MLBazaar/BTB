@@ -20,7 +20,7 @@ class BTBSession:
 
     BTBSession class creates an object that tunes a list of ``tunables`` using a
     ``tuner`` and a ``selector`` in order to determinate the best ``tunable`` and the
-    best ``configuration`` for it.
+    best ``configuration`` for a given ``scorer``.
 
     Args:
         tunables (dict):
@@ -71,8 +71,9 @@ class BTBSession:
         self.tunables = tunables
         self.scorer = scorer
         self.tuner = tuner
-        self.max_errors = max_errors
+        self.selector = selector(self._tunable_names)
         self.maximize = maximize
+        self.max_errors = max_errors
 
         self.best_proposal = None
         self.proposals = dict()
@@ -83,7 +84,6 @@ class BTBSession:
         self._normalized_scores = defaultdict(list)
         self._tuners = dict()
         self._tunable_names = list(self.tunables.keys())
-        self.selector = selector(self._tunable_names)
         self._range = trange if verbose else range
 
     def _make_dumpable(self, to_dump):
@@ -124,10 +124,9 @@ class BTBSession:
     def propose(self):
         """Propose a new configuration for a tunable.
 
-        By accessing the dictionary ``self.tunables``, ``BTBSession``, ensures that
-        every tunable has been scored atleast once. The following proposals use the
-        ``self.selector`` in order to select the ``tunable`` from which a proposal
-        is generated.
+        ``BTBSession``, ensures that  every tunable has been scored atleast once. The
+        following proposals use the ``self.selector`` in order to select the ``tunable``
+        from which a proposal is generated.
 
         In case that the ``tuner`` can't propose more configurations it will return
         ``None`` and will remove the ``tunable`` from the list.
@@ -138,6 +137,10 @@ class BTBSession:
             None:
                 ``None`` is being returned When the ``tunable`` has no more combinations to be
                 evaluated.
+
+        Raises:
+            ValueError:
+                A ``ValueErorr`` is being raised if ``self.tunables`` is empty.
         """
         if not self.tunables:
             raise ValueError('All the tunables failed.')
@@ -175,7 +178,10 @@ class BTBSession:
         return tunable_name, config
 
     def handle_error(self, tunable_name):
-        """Handle errors when ``score`` is ``None`` in ``record`` method.
+        """Handle errors when ``score`` is ``None``.
+
+        If the given ``tunable_name`` accumulates more errors than ``self.max_errors``
+        this is being removed from the selector's choices.
 
         Args:
             tunable_name (str):
