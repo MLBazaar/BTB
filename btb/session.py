@@ -74,6 +74,7 @@ class BTBSession:
         self.tunables = tunables
         self.scorer = scorer
         self.tuner = tuner
+        self._tunable_names = list(self.tunables.keys())
         self.selector = selector(self._tunable_names)
         self.maximize = maximize
         self.max_errors = max_errors
@@ -86,7 +87,6 @@ class BTBSession:
         self._best_normalized = self._normalize(-np.inf)
         self._normalized_scores = defaultdict(list)
         self._tuners = dict()
-        self._tunable_names = list(self.tunables.keys())
         self._range = trange if verbose else range
 
     def _make_dumpable(self, to_dump):
