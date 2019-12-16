@@ -27,7 +27,7 @@ install_requires = [
     'scikit-learn>=0.20.0,<0.22.0',
     'scipy>=1.0.1,<1.4.0',
     'pandas>=0.21.0,<0.26.0',
-    'tqdm>=4.36.1',
+    'tqdm>=4.36.1,<4.50.0',
 ]
 
 
@@ -38,7 +38,6 @@ examples_require = [
 
 
 tests_require = [
-    'mock>=2.0.0',
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
 ]

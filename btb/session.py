@@ -18,28 +18,31 @@ LOGGER = logging.getLogger(__name__)
 class BTBSession:
     """BTBSession class.
 
-    BTBSession class creates an object that tunes a list of ``tunables`` using a
-    ``tuner`` and a ``selector`` in order to determinate the best ``tunable`` and the
-    best ``configuration`` for a given ``scorer``.
+    BTBSession class creates an object that tunes a dictionary of ``tunables`` using a
+    ``btb.tuning.tuners.BaseTuner`` and a ``btb.selection.selector.Selector`` in order
+    to determinate the best ``tunable`` and the best ``configuration`` for a given ``scorer``.
 
     Args:
         tunables (dict):
             Python dictionary that has as keys the name of the tunable and
             as value a dictionary with the tunable hyperparameters.
         scorer (callable object / function):
-            A scorer callable object or function with signature ``scorer(tunable_name, config)``
+            A callable object or function with signature ``scorer(tunable_name, config)``
             wich should return only a single value.
         tuner (btb.tuning.tuner.BaseTuner):
             A tuner based on BTB ``BaseTuner`` class. This tuner will manage the new proposals.
             Defaults to ``btb.tuning.tuners.gaussian_process.GPTuner``
         selector (btb.selection.selector.Selector):
             A selector based on BTB ``Selector`` class. This will determinate which one of
-            the tunables is performing better. Defaults to ``btb.selection.selectors.ucb1.UCB1``
+            the tunables is performing better, and which one to test next. Defaults to
+            ``btb.selection.selectors.ucb1.UCB1``
         maximize (bool):
             If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller
-            is better. Defaults to ``True``.
+            is better, this should depend on the problem type (maximization or minimization).
+            Defaults to ``True``.
         max_erors (int):
-            Amount of errors allowed for a tunable to not generate a score.
+            Amount of errors allowed for a tunable to not generate a score. Once this amount of
+            errors is reached, the tunable will be removed from the list. Defaults to 1.
         verbose (bool):
             If ``True`` a progress bar will be displayed for the ``run`` process.
     """
