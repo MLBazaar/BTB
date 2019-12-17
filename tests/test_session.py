@@ -2,7 +2,7 @@
 
 from collections import Counter, defaultdict
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 import numpy as np
 from tqdm.autonotebook import trange
@@ -115,10 +115,12 @@ class TestBTBSession(TestCase):
         with self.assertRaises(ValueError):
             BTBSession.propose(instance)
 
+    @patch('btb.session.isinstance')
     @patch('btb.session.Tunable')
-    def test_propose_normalized_scores_lt_tunable_names(self, mock_tunable):
+    def test_propose_normalized_scores_lt_tunable_names(self, mock_tunable, mock_isinstance):
         # setup
         mock_tunable.from_dict.return_value.get_defaults.return_value = 'defaults'
+        mock_isinstance.return_value = True
 
         tuner = MagicMock()
 
@@ -151,6 +153,9 @@ class TestBTBSession(TestCase):
         mock_tunable.from_dict.assert_called_once_with('test_spec')
         tuner.assert_called_once_with(mock_tunable.from_dict.return_value)
         mock_tunable.from_dict.return_value.get_defaults.assert_called_once_with()
+
+        expected_isinstance_calls = [call('test_spec', dict), call('defaults', mock_tunable)]
+        mock_isinstance.has_calls(expected_isinstance_calls)
 
     def test_propose_normalized_scores_gt_tunable_names(self):
         # setup
