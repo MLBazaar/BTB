@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import itertools
 import json
 import logging
 from collections import Counter, defaultdict
@@ -25,7 +26,8 @@ class BTBSession:
     Args:
         tunables (dict):
             Python dictionary that has as keys the name of the tunable and
-            as value a dictionary with the tunable hyperparameters.
+            as value a dictionary with the tunable hyperparameters or an
+            ``btb.tuning.tunable.Tunable`` instance.
         scorer (callable object / function):
             A callable object or function with signature ``scorer(tunable_name, config)``
             wich should return only a single value.
@@ -150,9 +152,15 @@ class BTBSession:
 
         if len(self._normalized_scores) < len(self._tunable_names):
             tunable_name = self._tunable_names[len(self._normalized_scores)]
-            tunable_spec = self.tunables[tunable_name]
+            tunable = self.tunables[tunable_name]
 
-            tunable = Tunable.from_dict(tunable_spec)
+            if isinstance(tunable, dict):
+                LOGGER.info('Creating Tunable instance from dict.')
+                tunable = Tunable.from_dict(tunable)
+
+            if not isinstance(tunable, Tunable):
+                raise TypeError('Tunable can only be an instance of btb.tuning.Tunable or dict')
+
             LOGGER.info('Obtaining default configuration for %s', tunable_name)
             config = tunable.get_defaults()
 
@@ -233,7 +241,7 @@ class BTBSession:
             except Exception:
                 LOGGER.exception('Could not record score to tuner.')
 
-    def run(self, iterations=10):
+    def run(self, iterations=None):
         """Execute proposal iterations over the tunables.
 
         Given a number of ``iterations`` propose new configurations for the tunables,
@@ -244,7 +252,12 @@ class BTBSession:
                 Best configuration found with the name of the tunable and the hyperparameters
                 and crossvalidated score obtained for it.
         """
-        for _ in self._range(iterations):
+        if iterations is None:
+            iterator = itertools.count()
+        else:
+            iterator = self._range(iterations)
+
+        for _ in iterator:
             self.iterations += 1
             proposal = self.propose()
             if proposal is None:
