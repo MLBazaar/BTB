@@ -8,7 +8,7 @@ from copy import deepcopy
 from urllib.parse import urljoin
 
 import pandas as pd
-from sklearn.metrics import make_scorer
+from sklearn.metrics import f1_score, make_scorer
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import OneHotEncoder
 
@@ -94,8 +94,16 @@ class MLChallenge(Challenge):
 
         return X, y
 
+    def _get_scorer(self, name):
+        # There is a bug when the scorer is imported outside of the scope of make_scorer
+        scorers = {
+            'f1_score': f1_score,
+        }
+
+        return make_scorer(scorers[name])
+
     def __init__(self, model=None, dataset=None, target_column=None,
-                 encode=False, tunable_hyperparameters=None, metric=None,
+                 encode=None, tunable_hyperparameters=None, metric=None,
                  model_defaults=None, make_binary=None, stratified=True,
                  cv_splits=5, cv_random_state=42, cv_shuffle=True):
 
@@ -110,7 +118,7 @@ class MLChallenge(Challenge):
         self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode
-        self.scorer = make_scorer(self.scorer)
+        self.scorer = self._get_scorer(self.scorer)
 
         if self.stratified:
             self.cv = StratifiedKFold(
@@ -143,7 +151,6 @@ class MLChallenge(Challenge):
             score (float):
                 Returns the ``mean`` cross validated score.
         """
-
         hyperparams.update((self.model_defaults or {}))
         model = self.model(**hyperparams)
-        return cross_val_score(model, self.X, self.y, cv=self.cv, scoring=self._scorer).mean()
+        return cross_val_score(model, self.X, self.y, cv=self.cv, scoring=self.scorer).mean()
