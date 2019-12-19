@@ -80,20 +80,13 @@ class CensusRFC(MLChallenge):
         },
     }
 
+    def __repr__(self):
+        return self.__class__.__name__
 
-class CensusSGDC(MLChallenge):
-    # DATASET
-    DATASET = 'census.csv'
-    TARGET_COLUMN = 'income'
 
-    # CROSS VALIDATE / SCORER
-    METRIC = 'f1_score'
-    ENCODE = True
-    MAKE_BINARY = True
-
+class CensusSGDC(CensusRFC):
     # MODEL
     MODEL = SGDClassifier
-    MODEL_DEFAULTS = {'random_state': 0}
     TUNABLE_HYPERPARAMETERS = {
         "loss": {
             "type": "str",
@@ -148,15 +141,4 @@ class CensusSGDC(MLChallenge):
             "type": "bool",
             "default": True,
         },
-        "learning_rate": {
-            "type": "str",
-            "default": None,
-            "values": [
-                None,
-                "l2",
-                "l1",
-                "elasticnet"
-            ]
-        },
     }
-

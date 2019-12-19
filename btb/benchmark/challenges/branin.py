@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import inspect
+
 import numpy as np
 
 from btb.benchmark.challenges.challenge import Challenge
@@ -71,3 +73,27 @@ class Branin(Challenge):
     def evaluate(self, x, y):
         z = (y - self.b * x**2 + self.c * x - self.r)**2
         return -1 * (self.a * z + self.s * (1 - self.t) * np.cos(x) + self.s)
+
+    def __repr__(self):
+        args = inspect.getargspec(self.__init__)
+        keys = args.args[1:]
+        defaults = dict(zip(keys, args.defaults))
+        if all(getattr(self, key) == default for key, default in defaults.items()):
+            return 'Branin()'
+
+        else:
+            args = (
+                self.b,
+                self.c,
+                self.r,
+                self.s,
+                self.t,
+                self.min_x,
+                self.max_x,
+                self.min_y,
+                self.max_y
+            )
+            args = ('a={}, b={}, c={}, r={}, s={}, t={},'
+                    'min_x={}, max_x={}, min_y={}, max_y={}'.format(*args))
+
+            return 'Branin({})'.format(args)

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import inspect
+
 from btb.benchmark.challenges.challenge import Challenge
 
 
@@ -62,3 +64,15 @@ class Rosenbrock(Challenge):
 
     def evaluate(self, x, y):
         return -1 * ((self.a - x)**2 + self.b * (y - x**2)**2)
+
+    def __repr__(self):
+        args = inspect.getargspec(self.__init__)
+        keys = args.args[1:]
+        defaults = dict(zip(keys, args.defaults))
+        if all(getattr(self, key) == default for key, default in defaults.items()):
+            return 'Rosenbrock()'
+
+        else:
+            args = (self.a, self.b, self.min_x, self.max_x, self.min_y, self.max_y)
+            args = 'a={}, b={}, min_x={}, max_x={}, min_y={}, max_y={}'.format(*args)
+            return 'Rosenbrock({})'.format(args)

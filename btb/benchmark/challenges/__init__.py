@@ -4,7 +4,7 @@
 
 from btb.benchmark.challenges.bohachevsky import Bohachevsky
 from btb.benchmark.challenges.branin import Branin
-from btb.benchmark.challenges.census import CensusRFC, CensusSVC
+from btb.benchmark.challenges.census import CensusRFC, CensusSGDC
 from btb.benchmark.challenges.rosenbrock import Rosenbrock
 
-__all__ = ('Bohachevsky', 'Branin', 'CensusRFC', 'CensusSVC', 'Rosenbrock', )
+__all__ = ('Bohachevsky', 'Branin', 'CensusRFC', 'CensusSGDC', 'Rosenbrock', )
