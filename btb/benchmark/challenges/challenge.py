@@ -78,6 +78,11 @@ class MLChallenge(Challenge):
             will be used in case there is otherwise the default that ``cross_val_score`` function
             offers will be used.
     """
+
+    SCORERS = {
+        'f1_score': f1_score
+    }
+
     def load_data(self):
         """Load ``X`` and ``y`` over which to perform fit and evaluate."""
         if os.path.isdir(self.dataset):
@@ -93,14 +98,6 @@ class MLChallenge(Challenge):
             y = y.iloc[0] == y
 
         return X, y
-
-    def _get_scorer(self, name):
-        # There is a bug when the scorer is imported outside of the scope of make_scorer
-        scorers = {
-            'f1_score': f1_score,
-        }
-
-        return make_scorer(scorers[name])
 
     def __init__(self, model=None, dataset=None, target_column=None,
                  encode=None, tunable_hyperparameters=None, metric=None,
@@ -118,7 +115,7 @@ class MLChallenge(Challenge):
         self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode
-        self.scorer = self._get_scorer(self.scorer)
+        self.scorer = make_scorer(self.SCORERS[self.scorer])
 
         if self.stratified:
             self.cv = StratifiedKFold(

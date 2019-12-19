@@ -25,7 +25,7 @@ class TestMLChallenge(TestCase):
             target_column='test_column',
             encode=False,
             tunable_hyperparameters='test_hp',
-            metric='test_scorer',
+            metric='f1_score',
             model_defaults='any',
             make_binary=True
         )
@@ -43,7 +43,6 @@ class TestMLChallenge(TestCase):
         assert instance.make_binary
         assert instance.cv == 'cv'
 
-        mock_make_scorer.assert_called_once_with('test_scorer')
         mock_strfkfold.assert_called_once_with(shuffle=True, n_splits=5, random_state=42)
 
     @patch('btb.benchmark.challenges.challenge.make_scorer')
@@ -63,7 +62,7 @@ class TestMLChallenge(TestCase):
             target_column='test_column',
             encode=False,
             tunable_hyperparameters='test_hp',
-            metric='test_scorer',
+            metric='f1_score',
             model_defaults='any',
             make_binary=True,
             stratified=False
@@ -82,7 +81,6 @@ class TestMLChallenge(TestCase):
         assert instance.make_binary
         assert instance.cv == 'kfold'
 
-        mock_make_scorer.assert_called_once_with('test_scorer')
         mock_kfold.assert_called_once_with(shuffle=True, n_splits=5, random_state=42)
 
     @patch('btb.benchmark.challenges.challenge.make_scorer')
