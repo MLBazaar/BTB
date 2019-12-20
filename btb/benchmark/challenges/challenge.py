@@ -8,7 +8,7 @@ from copy import deepcopy
 from urllib.parse import urljoin
 
 import pandas as pd
-from sklearn.metrics import f1_score, make_scorer
+from sklearn.metrics import f1_score, make_scorer, r2_score
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import OneHotEncoder
 
@@ -80,7 +80,8 @@ class MLChallenge(Challenge):
     """
 
     SCORERS = {
-        'f1_score': f1_score
+        'f1_score': f1_score,
+        'r2_score': r2_score
     }
 
     def load_data(self):
@@ -101,7 +102,7 @@ class MLChallenge(Challenge):
 
     def __init__(self, model=None, dataset=None, target_column=None,
                  encode=None, tunable_hyperparameters=None, metric=None,
-                 model_defaults=None, make_binary=None, stratified=True,
+                 model_defaults=None, make_binary=None, stratified=None,
                  cv_splits=5, cv_random_state=42, cv_shuffle=True):
 
         self.model = model or self.MODEL
@@ -111,7 +112,7 @@ class MLChallenge(Challenge):
         self.make_binary = make_binary or self.MAKE_BINARY
         self.tunable_hyperparameters = tunable_hyperparameters or self.TUNABLE_HYPERPARAMETERS
         self.scorer = metric or self.METRIC
-        self.stratified = stratified
+        self.stratified = self.STRATIFIED if stratified is None else stratified
         self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode

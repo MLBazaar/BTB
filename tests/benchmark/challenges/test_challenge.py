@@ -27,7 +27,8 @@ class TestMLChallenge(TestCase):
             tunable_hyperparameters='test_hp',
             metric='f1_score',
             model_defaults='any',
-            make_binary=True
+            make_binary=True,
+            stratified=True
         )
 
         # assert

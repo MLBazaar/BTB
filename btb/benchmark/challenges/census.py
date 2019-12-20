@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
 from sklearn.linear_model import SGDClassifier
 
 from btb.benchmark.challenges.challenge import MLChallenge
@@ -15,6 +15,7 @@ class CensusRFC(MLChallenge):
     METRIC = 'f1_score'
     ENCODE = True
     MAKE_BINARY = True
+    STRATIFIED = True
 
     # MODEL
     MODEL = RandomForestClassifier
@@ -141,4 +142,35 @@ class CensusSGDC(CensusRFC):
             "type": "bool",
             "default": True,
         },
+    }
+
+
+class CensusABC(CensusRFC):
+    # MODEL
+    MODEL = AdaBoostClassifier
+    TUNABLE_HYPERPARAMETERS = {
+        "n_estimators": {
+            "type": "int",
+            "default": 50,
+            "range": [
+                1,
+                500
+            ]
+        },
+        "learning_rate": {
+            "type": "float",
+            "default": 1.0,
+            "range": [
+                1.0,
+                10.0
+            ]
+        },
+        "algorithm": {
+            "type": "str",
+            "default": "SAMME.R",
+            "values": [
+                "SAMME",
+                "SAMME.R"
+            ]
+        }
     }
