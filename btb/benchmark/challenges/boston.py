@@ -1,4 +1,3 @@
-from sklearn.datasets import load_boston
 from sklearn.ensemble import AdaBoostRegressor, BaggingRegressor, RandomForestRegressor
 
 from btb.benchmark.challenges.challenge import MLChallenge
@@ -6,17 +5,14 @@ from btb.benchmark.challenges.challenge import MLChallenge
 
 class BostonRFR(MLChallenge):
 
-    def load_data(self):
-        return load_boston(return_X_y=True)
-
-    # DATSEt
-    DATASET = 'boston'
-    TARGET_COLUMN = ''
+    # DATSET
+    DATASET = 'boston.csv'
+    TARGET_COLUMN = 'medv'
     STRATIFIED = False
 
     # CROSS VALIDATE / SCORER
     METRIC = 'r2_score'
-    ENCODE = False
+    ENCODE = True
     MAKE_BINARY = False
 
     # MODEL
@@ -80,14 +76,6 @@ class BostonRFR(MLChallenge):
                 0.0,
                 10.0
             ]
-        },
-        "bootstrap": {
-            "type": "bool",
-            "default": True
-        },
-        "oob_score": {
-            "type": "bool",
-            "default": False
         }
     }
 
