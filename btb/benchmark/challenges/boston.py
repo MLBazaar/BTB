@@ -5,6 +5,14 @@ from btb.benchmark.challenges.challenge import MLChallenge
 
 
 class BostonRFR(MLChallenge):
+    """
+    This dataset contains information collected by the U.S Census Service
+    concerning housing in the area of Boston. It was obtained from the
+    StatLib archive http://lib.stat.cmu.edu/datasets/boston
+
+    The prediction task is to determine the price of a house based on the
+    location and other features that the dataset provides.
+    """
 
     # DATSET
     DATASET = 'boston.csv'

@@ -8,6 +8,14 @@ from btb.benchmark.challenges.challenge import MLChallenge
 
 
 class CensusRFC(MLChallenge):
+    """
+    The Census challenge is based on the `Census Income Dataset`. The extraction
+    was done by Barry Becker from the 1994 Census Database. The prediction task
+    is to determine whether a person makes over 50.000 USD a year.
+
+    This dataset has been obtained from https://archive.ics.uci.edu/ml/datasets/census+income
+    """
+
     # DATASET
     DATASET = 'census.csv'
     TARGET_COLUMN = 'income'
