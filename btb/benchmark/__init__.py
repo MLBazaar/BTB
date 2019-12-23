@@ -7,6 +7,7 @@ from btb.benchmark.challenges.boston import BostonABR, BostonBR, BostonRFR
 from btb.benchmark.challenges.branin import Branin
 from btb.benchmark.challenges.census import CensusABC, CensusRFC, CensusSGDC
 from btb.benchmark.challenges.rosenbrock import Rosenbrock
+from btb.benchmark.challenges.wind import WindABC, WindRFC, WindSGDC
 
 DEFAULT_CHALLENGES = [
     # Simple
@@ -20,7 +21,10 @@ DEFAULT_CHALLENGES = [
     BostonRFR,
     CensusABC,
     CensusRFC,
-    CensusSGDC
+    CensusSGDC,
+    WindABC,
+    WindRFC,
+    WindSGDC
 ]
 
 
