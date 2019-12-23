@@ -2,6 +2,7 @@
 
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
 from sklearn.linear_model import SGDClassifier
+from sklearn.metrics import f1_score
 
 from btb.benchmark.challenges.challenge import MLChallenge
 
@@ -12,7 +13,7 @@ class CensusRFC(MLChallenge):
     TARGET_COLUMN = 'income'
 
     # CROSS VALIDATE / SCORER
-    METRIC = 'f1_score'
+    METRIC = f1_score
     ENCODE = True
     MAKE_BINARY = True
     STRATIFIED = True

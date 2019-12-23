@@ -1,4 +1,5 @@
 from sklearn.ensemble import AdaBoostRegressor, BaggingRegressor, RandomForestRegressor
+from sklearn.metrics import r2_score
 
 from btb.benchmark.challenges.challenge import MLChallenge
 
@@ -11,7 +12,7 @@ class BostonRFR(MLChallenge):
     STRATIFIED = False
 
     # CROSS VALIDATE / SCORER
-    METRIC = 'r2_score'
+    METRIC = r2_score
     ENCODE = True
     MAKE_BINARY = False
 

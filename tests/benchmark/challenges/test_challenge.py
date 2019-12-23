@@ -96,7 +96,7 @@ class TestMLChallenge(TestCase):
         instance.DATASET = 'dataset'
 
         # run
-        MLChallenge.__init__(instance, encode=True)
+        MLChallenge.__init__(instance, metric='test', encode=True)
 
         # assert
         mock_ohe.return_value.fit_transform.assert_called_once_with('X')

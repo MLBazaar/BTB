@@ -8,7 +8,7 @@ from copy import deepcopy
 from urllib.parse import urljoin
 
 import pandas as pd
-from sklearn.metrics import f1_score, make_scorer, r2_score
+from sklearn.metrics import make_scorer
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import OneHotEncoder
 
@@ -79,11 +79,6 @@ class MLChallenge(Challenge):
             offers will be used.
     """
 
-    SCORERS = {
-        'f1_score': f1_score,
-        'r2_score': r2_score
-    }
-
     def load_data(self):
         """Load ``X`` and ``y`` over which to perform fit and evaluate."""
         if os.path.isdir(self.dataset):
@@ -111,12 +106,18 @@ class MLChallenge(Challenge):
         self.model_defaults = model_defaults or self.MODEL_DEFAULTS
         self.make_binary = make_binary or self.MAKE_BINARY
         self.tunable_hyperparameters = tunable_hyperparameters or self.TUNABLE_HYPERPARAMETERS
-        self.scorer = metric or self.METRIC
+
+        if metric:
+            self.metric = metric
+        else:
+            # Allow to either write a metric method or assign a METRIC function
+            self.metric = getattr(self, 'metric', self.__class__.METRIC)
+
         self.stratified = self.STRATIFIED if stratified is None else stratified
         self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode
-        self.scorer = make_scorer(self.SCORERS[self.scorer])
+        self.scorer = make_scorer(self.metric)
 
         if self.stratified:
             self.cv = StratifiedKFold(
