@@ -19,9 +19,14 @@ LOGGER = logging.getLogger(__name__)
 class BTBSession:
     """BTBSession class.
 
-    BTBSession class creates an object that tunes a dictionary of ``tunables`` using a
-    ``btb.tuning.tuners.BaseTuner`` and a ``btb.selection.selector.Selector`` in order
-    to determinate the best ``tunable`` and the best ``configuration`` for a given ``scorer``.
+    A BTBSession represents the process of selecting and tuning several tunables
+    until the best possible configuration for a specific ``scorer`` is found.
+
+    For this, a loop is run in which for each iteration a combination of a ``Selector`` and
+    ``Tuner`` is used to decide which tunable to score next and with which hyperparameters.
+
+    While running, the ``BTBSession`` handles the errors discarding, if configured to do so,
+    the tunables that have reached as many errors as the user specified.
 
     Args:
         tunables (dict):
@@ -133,12 +138,12 @@ class BTBSession:
         following proposals use the ``self.selector`` in order to select the ``tunable``
         from which a proposal is generated.
 
-        In case that the ``tuner`` can't propose more configurations it will return
+        If the ``tuner`` can not propose more configurations it will return
         ``None`` and will remove the ``tunable`` from the list.
 
         Returns:
-            tupple (str, dict):
-                Returns a tupple with the name of the tunable and the proposal as a dictionary.
+            tuple (str, dict):
+                Returns a tuple with the name of the tunable and the proposal as a dictionary.
             None:
                 ``None`` is being returned When the ``tunable`` has no more combinations to be
                 evaluated.
@@ -192,7 +197,7 @@ class BTBSession:
         """Handle errors when ``score`` is ``None``.
 
         If the given ``tunable_name`` accumulates more errors than ``self.max_errors``
-        this is being removed from the selector's choices.
+        this is removed from the selector's choices.
 
         Args:
             tunable_name (str):
