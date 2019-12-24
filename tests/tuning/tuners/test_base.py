@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, call, patch
 import numpy as np
 
 from btb.tuning.tunable import Tunable
-from btb.tuning.tuners.base import BaseMetaModelTuner, BaseTuner
+from btb.tuning.tuners.base import BaseMetaModelTuner, BaseTuner, StopTuning
 
 
 class TestBaseTuner(TestCase):
@@ -49,7 +49,7 @@ class TestBaseTuner(TestCase):
         assert not instance.maximize
 
     def test__check_proposals_proposals_gt_cardinality(self):
-        """Test that ``ValueError`` is being raised if ``proposals`` is greater than
+        """Test that ``StopTuning`` is being raised if ``proposals`` is greater than
         ``self.tunable.cardinality``.
         """
         # setup
@@ -58,11 +58,11 @@ class TestBaseTuner(TestCase):
         instance.tunable.cardinality = 4
 
         # run / assert
-        with self.assertRaises(ValueError):
+        with self.assertRaises(StopTuning):
             BaseTuner._check_proposals(instance, 5)
 
     def test__check_proposals_trials_eq_cardinality(self):
-        """Test that ``ValueError`` is being raised if ``self.trials`` is equal to
+        """Test that ``StopTuning`` is being raised if ``self.trials`` is equal to
         ``self.tunable.cardinality``.
         """
         # setup
@@ -72,11 +72,11 @@ class TestBaseTuner(TestCase):
         instance._trials_set.__len__.return_value = 2
 
         # run / assert
-        with self.assertRaises(ValueError):
+        with self.assertRaises(StopTuning):
             BaseTuner._check_proposals(instance, 1)
 
     def test__check_proposals_trials_and_proposals_gt_cardinality(self):
-        """Test that ``ValueError`` is being raised if ``proposals`` + ``len(self.trials)``
+        """Test that ``StopTuning`` is being raised if ``proposals`` + ``len(self.trials)``
         is greater than ``self.tunable.cardinality``.
         """
         # setup
@@ -86,11 +86,11 @@ class TestBaseTuner(TestCase):
         instance._trials_set.__len__.return_value = 2
 
         # run / assert
-        with self.assertRaises(ValueError):
+        with self.assertRaises(StopTuning):
             BaseTuner._check_proposals(instance, 3)
 
     def test__check_proposals_not_raise(self):
-        """Test that ``ValueError`` is not being raised."""
+        """Test that ``StopTuning`` is not being raised."""
         # setup
         instance = MagicMock()
         instance.tunable = MagicMock(spec_set=Tunable)

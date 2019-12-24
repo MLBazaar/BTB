@@ -13,6 +13,10 @@ from btb.tuning.metamodels.base import BaseMetaModel
 LOGGER = logging.getLogger(__name__)
 
 
+class StopTuning(Exception):
+    pass
+
+
 class BaseTuner:
     """BaseTuner class.
 
@@ -50,18 +54,18 @@ class BaseTuner:
         """Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.
 
         Raises:
-            ValueError:
-                A ``ValueError`` exception is being produced if the amount of requested proposals
+            StopTuning:
+                A ``StopTuning`` exception is being produced if the amount of requested proposals
                 is bigger than the possible combinations and ``allow_duplicates`` is ``False``.
-            ValueError:
-                A ``ValueError`` exception is being produced if the unique amount of recorded
+            StopTuning:
+                A ``StopTuning`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
-            ValueError:
-                A ``ValueError`` exception is being produced if the unique amount of recorded
+            StopTuning:
+                A ``StopTuning`` exception is being produced if the unique amount of recorded
                 trials is the same as the amount of combinations available for ``self.tunable``.
         """
         if num_proposals > self.tunable.cardinality:
-            raise ValueError(
+            raise StopTuning(
                 'The number of proposals requested is bigger than the combinations: {} of the'
                 '``tunable``. Use ``allow_duplicates=True``, if you would like to generate that'
                 'amount of combinations.'.format(self.tunable.cardinality)
@@ -69,13 +73,13 @@ class BaseTuner:
 
         num_tried = len(self._trials_set)
         if num_tried == self.tunable.cardinality:
-            raise ValueError(
+            raise StopTuning(
                 'All of the possible combinations where recorded. Use ``allow_duplicates=True``'
                 'to keep generating combinations.'
             )
 
         if num_tried + num_proposals > self.tunable.cardinality:
-            raise ValueError(
+            raise StopTuning(
                 'The maximum amount of new proposed combinations will exceed the amount of'
                 'possible combinations, either use ``num_proposals={}`` to generate the remaining'
                 'combinations or ``allow_duplicates=True`` to keep generating more'

@@ -1,7 +1,7 @@
 from unittest import TestCase
+from unittest.mock import patch
 
 import numpy as np
-from mock import patch
 
 from btb.selection.best import BestKReward, BestKVelocity
 

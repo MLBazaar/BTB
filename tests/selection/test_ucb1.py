@@ -1,6 +1,5 @@
 from unittest import TestCase
-
-from mock import patch
+from unittest.mock import patch
 
 from btb.selection.ucb1 import UCB1
 
@@ -34,4 +33,10 @@ class TestUCB1(TestCase):
         # Assert
         # The first choice tried wins if there are duplicate max scores
         assert best == 'SVM'
-        mock__shuffle.assert_called_once()
+
+        call_rewards = {
+            'DT': [0.7, 0.8, 0.9],
+            'RF': [0.9, 0.93, 0.95],
+            'SVM': [0.9, 0.93, 0.95]
+        }
+        mock__shuffle.assert_called_once_with(call_rewards)

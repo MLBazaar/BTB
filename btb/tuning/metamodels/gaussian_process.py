@@ -28,7 +28,10 @@ class GaussianProcessMetaModel(BaseMetaModel):
     }
 
     def __init_metamodel__(self, length_scale=1):
-        self._MODEL_KWARGS_DEFAULT['kernel'] = RBF(length_scale=length_scale)
+        if self._model_kwargs is None:
+            self._model_kwargs = {}
+
+        self._model_kwargs['kernel'] = RBF(length_scale=length_scale)
 
     def _predict(self, candidates):
         predictions = self._model_instance.predict(candidates, return_std=True)
