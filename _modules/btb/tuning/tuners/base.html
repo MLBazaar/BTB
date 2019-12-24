@@ -122,6 +122,10 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.session.html">btb.session module</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.html#module-btb">Module contents</a></li>
 </ul>
 </li>
@@ -278,6 +282,10 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
+<div class="viewcode-block" id="StopTuning"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.StopTuning">[docs]</a><span class="k">class</span> <span class="nc">StopTuning</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
 <div class="viewcode-block" id="BaseTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.base.html#btb.tuning.BaseTuner">[docs]</a><span class="k">class</span> <span class="nc">BaseTuner</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;BaseTuner class.</span>
 
@@ -315,18 +323,18 @@
         <span class="sd">&quot;&quot;&quot;Validate ``num_proposals`` with ``self.tunable.cardinality`` and ``self.trials``.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError:</span>
-<span class="sd">                A ``ValueError`` exception is being produced if the amount of requested proposals</span>
+<span class="sd">            StopTuning:</span>
+<span class="sd">                A ``StopTuning`` exception is being produced if the amount of requested proposals</span>
 <span class="sd">                is bigger than the possible combinations and ``allow_duplicates`` is ``False``.</span>
-<span class="sd">            ValueError:</span>
-<span class="sd">                A ``ValueError`` exception is being produced if the unique amount of recorded</span>
+<span class="sd">            StopTuning:</span>
+<span class="sd">                A ``StopTuning`` exception is being produced if the unique amount of recorded</span>
 <span class="sd">                trials is the same as the amount of combinations available for ``self.tunable``.</span>
-<span class="sd">            ValueError:</span>
-<span class="sd">                A ``ValueError`` exception is being produced if the unique amount of recorded</span>
+<span class="sd">            StopTuning:</span>
+<span class="sd">                A ``StopTuning`` exception is being produced if the unique amount of recorded</span>
 <span class="sd">                trials is the same as the amount of combinations available for ``self.tunable``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">num_proposals</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span>
                 <span class="s1">&#39;The number of proposals requested is bigger than the combinations: </span><span class="si">{}</span><span class="s1"> of the&#39;</span>
                 <span class="s1">&#39;``tunable``. Use ``allow_duplicates=True``, if you would like to generate that&#39;</span>
                 <span class="s1">&#39;amount of combinations.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span><span class="p">)</span>
@@ -334,13 +342,13 @@
 
         <span class="n">num_tried</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trials_set</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">num_tried</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span>
                 <span class="s1">&#39;All of the possible combinations where recorded. Use ``allow_duplicates=True``&#39;</span>
                 <span class="s1">&#39;to keep generating combinations.&#39;</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">num_tried</span> <span class="o">+</span> <span class="n">num_proposals</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span>
                 <span class="s1">&#39;The maximum amount of new proposed combinations will exceed the amount of&#39;</span>
                 <span class="s1">&#39;possible combinations, either use ``num_proposals=</span><span class="si">{}</span><span class="s1">`` to generate the remaining&#39;</span>
                 <span class="s1">&#39;combinations or ``allow_duplicates=True`` to keep generating more&#39;</span>

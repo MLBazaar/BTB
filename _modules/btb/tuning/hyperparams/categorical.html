@@ -122,6 +122,10 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.session.html">btb.session module</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.html#module-btb">Module contents</a></li>
 </ul>
 </li>
@@ -295,14 +299,21 @@
 <span class="sd">        default (str or None):</span>
 <span class="sd">            Default value for the hyperparameter to take. Defaults to the first item in ``choices``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NO_DEFAULT</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Instantiation of CategoricalHyperParam.</span>
 
 <span class="sd">        Creates an instance with a list of ``choices`` and fit an instance of</span>
 <span class="sd">        ``sklearn.preprocessing.OneHotEncoder`` with those values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span> <span class="ow">or</span> <span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">default</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`default` not within `choices`&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cardinality</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span>

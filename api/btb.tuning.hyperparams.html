@@ -124,6 +124,10 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="btb.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="btb.session.html">btb.session module</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
 </ul>
 </li>
@@ -498,7 +502,7 @@ with 1 dimension.</p>
 
 <dl class="class">
 <dt id="btb.tuning.hyperparams.CategoricalHyperParam">
-<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.</code><code class="sig-name descname">CategoricalHyperParam</code><span class="sig-paren">(</span><em class="sig-param">choices</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/categorical.html#CategoricalHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.</code><code class="sig-name descname">CategoricalHyperParam</code><span class="sig-paren">(</span><em class="sig-param">choices</em>, <em class="sig-param">default=&lt;object object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/categorical.html#CategoricalHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam" title="btb.tuning.hyperparams.base.BaseHyperParam"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.hyperparams.base.BaseHyperParam</span></code></a></p>
 <p>CategoricalHyperParam Class.</p>
 <p>The CategoricalHyperParam class is responsible for the transform of categorical values
@@ -517,10 +521,13 @@ hyperparameter space. Also provides a method that generates samples of those.</p
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.cardinality" title="btb.tuning.hyperparams.CategoricalHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.NO_DEFAULT" title="btb.tuning.hyperparams.CategoricalHyperParam.NO_DEFAULT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NO_DEFAULT</span></code></a></p></td>
+<td><p>The most base type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.cardinality" title="btb.tuning.hyperparams.CategoricalHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
 <td><p>int(x=0) -&gt; integer</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.dimensions" title="btb.tuning.hyperparams.CategoricalHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.CategoricalHyperParam.dimensions" title="btb.tuning.hyperparams.CategoricalHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
 <td><p>int(x=0) -&gt; integer</p></td>
 </tr>
 </tbody>
@@ -551,6 +558,11 @@ hyperparameter space. Also provides a method that generates samples of those.</p
 </ul>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="btb.tuning.hyperparams.CategoricalHyperParam.NO_DEFAULT">
+<code class="sig-name descname">NO_DEFAULT</code><em class="property"> = &lt;object object&gt;</em><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam.NO_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="btb.tuning.hyperparams.CategoricalHyperParam.cardinality">
 <code class="sig-name descname">cardinality</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.CategoricalHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>

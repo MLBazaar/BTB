@@ -124,6 +124,10 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="btb.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="btb.session.html">btb.session module</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
 </ul>
 </li>
@@ -289,6 +293,18 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.tuners.base.BaseTuner" title="btb.tuning.tuners.base.BaseTuner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseTuner</span></code></a>(tunable[, maximize])</p></td>
 <td><p>BaseTuner class.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exceptions</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tuners.base.StopTuning" title="btb.tuning.tuners.base.StopTuning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StopTuning</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -627,6 +643,24 @@ with valid trials and scores.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="btb.tuning.tuners.base.StopTuning">
+<em class="property">exception </em><code class="sig-prename descclassname">btb.tuning.tuners.base.</code><code class="sig-name descname">StopTuning</code><a class="reference internal" href="../_modules/btb/tuning/tuners/base.html#StopTuning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuners.base.StopTuning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<dl class="attribute">
+<dt id="btb.tuning.tuners.base.StopTuning.args">
+<code class="sig-name descname">args</code><a class="headerlink" href="#btb.tuning.tuners.base.StopTuning.args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.tuning.tuners.base.StopTuning.with_traceback">
+<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.tuners.base.StopTuning.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
 </dd></dl>

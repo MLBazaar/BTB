@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.session module &mdash; BTB 0.3.4.dev0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing" href="../contributing.html" />
+    <link rel="prev" title="btb.tuning.tunable module" href="btb.tuning.tunable.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BTB
+          
+
+          
+            
+            <img src="../_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-using-pip">Install using Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-from-source">Install from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-for-development">Install for Development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#tuners">Tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../readme.html#selectors">Selectors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#what-s-next">What’s next?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#citing-btb">Citing BTB</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="btb.benchmark.html">btb.benchmark package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html#module-btb.selection">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#module-btb.tuning">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="btb.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">btb.session module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#release-workflow">Release Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#release-candidates">Release Candidates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id1">0.3.3 - 2019-12-11</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#internal-improvements">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#resolved-issues">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id2">0.3.2 - 2019-12-10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-features">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id3">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id4">0.3.1 - 2019-11-25</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id5">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id6">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id7">0.3.0 - 2019-11-11</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-project-structure">New project structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-api">New API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id8">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id9">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id10">0.2.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id11">0.2.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id12">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id13">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id14">0.2.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id15">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id16">0.2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id17">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id18">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id19">0.2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id20">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id21">0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id22">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id23">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id24">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id25">0.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id26">0.1.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="btb.html">btb package</a> &raquo;</li>
+        
+      <li>btb.session module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/api/btb.session.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-btb.session">
+<span id="btb-session-module"></span><h1>btb.session module<a class="headerlink" href="#module-btb.session" title="Permalink to this headline">¶</a></h1>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.session.BTBSession" title="btb.session.BTBSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BTBSession</span></code></a>(tunables, scorer[, tuner, …])</p></td>
+<td><p>BTBSession class.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="btb.session.BTBSession">
+<em class="property">class </em><code class="sig-prename descclassname">btb.session.</code><code class="sig-name descname">BTBSession</code><span class="sig-paren">(</span><em class="sig-param">tunables</em>, <em class="sig-param">scorer</em>, <em class="sig-param">tuner=&lt;class 'btb.tuning.tuners.gaussian_process.GPTuner'&gt;</em>, <em class="sig-param">selector=&lt;class 'btb.selection.ucb1.UCB1'&gt;</em>, <em class="sig-param">maximize=True</em>, <em class="sig-param">max_errors=1</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/session.html#BTBSession"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.session.BTBSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>BTBSession class.</p>
+<p>A BTBSession represents the process of selecting and tuning several tunables
+until the best possible configuration for a specific <code class="docutils literal notranslate"><span class="pre">scorer</span></code> is found.</p>
+<p>For this, a loop is run in which for each iteration a combination of a <code class="docutils literal notranslate"><span class="pre">Selector</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Tuner</span></code> is used to decide which tunable to score next and with which hyperparameters.</p>
+<p>While running, the <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> handles the errors discarding, if configured to do so,
+the tunables that have reached as many errors as the user specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tunables</strong> (<em>dict</em>) – Python dictionary that has as keys the name of the tunable and
+as value a dictionary with the tunable hyperparameters or an
+<code class="docutils literal notranslate"><span class="pre">btb.tuning.tunable.Tunable</span></code> instance.</p></li>
+<li><p><strong>scorer</strong> (<em>callable object / function</em>) – A callable object or function with signature <code class="docutils literal notranslate"><span class="pre">scorer(tunable_name,</span> <span class="pre">config)</span></code>
+wich should return only a single value.</p></li>
+<li><p><strong>tuner</strong> (<em>btb.tuning.tuner.BaseTuner</em>) – A tuner based on BTB <code class="docutils literal notranslate"><span class="pre">BaseTuner</span></code> class. This tuner will manage the new proposals.
+Defaults to <code class="docutils literal notranslate"><span class="pre">btb.tuning.tuners.gaussian_process.GPTuner</span></code></p></li>
+<li><p><strong>selector</strong> (<a class="reference internal" href="btb.selection.selector.html#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><em>btb.selection.selector.Selector</em></a>) – A selector based on BTB <code class="docutils literal notranslate"><span class="pre">Selector</span></code> class. This will determinate which one of
+the tunables is performing better, and which one to test next. Defaults to
+<code class="docutils literal notranslate"><span class="pre">btb.selection.selectors.ucb1.UCB1</span></code></p></li>
+<li><p><strong>maximize</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> the scores are interpreted as bigger is better, if <code class="docutils literal notranslate"><span class="pre">False</span></code> then smaller
+is better, this should depend on the problem type (maximization or minimization).
+Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>max_erors</strong> (<em>int</em>) – Amount of errors allowed for a tunable to not generate a score. Once this amount of
+errors is reached, the tunable will be removed from the list. Defaults to 1.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> a progress bar will be displayed for the <code class="docutils literal notranslate"><span class="pre">run</span></code> process.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.session.BTBSession.handle_error" title="btb.session.BTBSession.handle_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">handle_error</span></code></a>(tunable_name)</p></td>
+<td><p>Handle errors when <code class="docutils literal notranslate"><span class="pre">score</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.session.BTBSession.propose" title="btb.session.BTBSession.propose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">propose</span></code></a>()</p></td>
+<td><p>Propose a new configuration for a tunable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.session.BTBSession.record" title="btb.session.BTBSession.record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record</span></code></a>(tunable_name, config, score)</p></td>
+<td><p>Record the configuration and the associated score to it inside the tuner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.session.BTBSession.run" title="btb.session.BTBSession.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([iterations])</p></td>
+<td><p>Execute proposal iterations over the tunables.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="btb.session.BTBSession.best_proposal">
+<code class="sig-name descname">best_proposal</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.best_proposal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.errors">
+<code class="sig-name descname">errors</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.session.BTBSession.handle_error">
+<code class="sig-name descname">handle_error</code><span class="sig-paren">(</span><em class="sig-param">tunable_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/session.html#BTBSession.handle_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.session.BTBSession.handle_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle errors when <code class="docutils literal notranslate"><span class="pre">score</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>If the given <code class="docutils literal notranslate"><span class="pre">tunable_name</span></code> accumulates more errors than <code class="docutils literal notranslate"><span class="pre">self.max_errors</span></code>
+this is removed from the selector’s choices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tunable_name</strong> (<em>str</em>) – Name of the tunable that obtained <code class="docutils literal notranslate"><span class="pre">None</span></code> as a score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.iterations">
+<code class="sig-name descname">iterations</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.iterations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.max_errors">
+<code class="sig-name descname">max_errors</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.max_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.maximize">
+<code class="sig-name descname">maximize</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.maximize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.proposals">
+<code class="sig-name descname">proposals</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.proposals" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.session.BTBSession.propose">
+<code class="sig-name descname">propose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/session.html#BTBSession.propose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.session.BTBSession.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Propose a new configuration for a tunable.</p>
+<p><code class="docutils literal notranslate"><span class="pre">BTBSession</span></code>, ensures that  every tunable has been scored atleast once. The
+following proposals use the <code class="docutils literal notranslate"><span class="pre">self.selector</span></code> in order to select the <code class="docutils literal notranslate"><span class="pre">tunable</span></code>
+from which a proposal is generated.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">tuner</span></code> can not propose more configurations it will return
+<code class="docutils literal notranslate"><span class="pre">None</span></code> and will remove the <code class="docutils literal notranslate"><span class="pre">tunable</span></code> from the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>Returns a tuple with the name of the tunable and the proposal as a dictionary.
+None:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">None</span></code> is being returned When the <code class="docutils literal notranslate"><span class="pre">tunable</span></code> has no more combinations to be
+evaluated.</p>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple (str, dict)</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueErorr</span></code> is being raised if <code class="docutils literal notranslate"><span class="pre">self.tunables</span></code> is empty.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.session.BTBSession.record">
+<code class="sig-name descname">record</code><span class="sig-paren">(</span><em class="sig-param">tunable_name</em>, <em class="sig-param">config</em>, <em class="sig-param">score</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/session.html#BTBSession.record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.session.BTBSession.record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record the configuration and the associated score to it inside the tuner.</p>
+<p>Records the associated configuration and score to the tuner. Evaluates if the
+score is the best score found, if so, updates <code class="docutils literal notranslate"><span class="pre">self._best_normalized</span></code> and
+<code class="docutils literal notranslate"><span class="pre">self.best_proposal</span></code> with the associated to them values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tunable_name</strong> (<em>str</em>) – The name of the tunable that the score and config pertain.</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – Dictionary representation of the configuration given to the tunable to obtain
+the score.</p></li>
+<li><p><strong>score</strong> (<em>float</em>) – Obtained score with the given configuration.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.session.BTBSession.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">iterations=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/session.html#BTBSession.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.session.BTBSession.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute proposal iterations over the tunables.</p>
+<p>Given a number of <code class="docutils literal notranslate"><span class="pre">iterations</span></code> propose new configurations for the tunables,
+score and record those inside the <code class="docutils literal notranslate"><span class="pre">tuner</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Best configuration found with the name of the tunable and the hyperparameters
+and crossvalidated score obtained for it.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>best_proposal (dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.scorer">
+<code class="sig-name descname">scorer</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.scorer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.selector">
+<code class="sig-name descname">selector</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.tunables">
+<code class="sig-name descname">tunables</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.tunables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.session.BTBSession.tuner">
+<code class="sig-name descname">tuner</code><em class="property"> = None</em><a class="headerlink" href="#btb.session.BTBSession.tuner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="btb.tuning.tunable.html" class="btn btn-neutral float-left" title="btb.tuning.tunable module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
