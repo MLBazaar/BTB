@@ -30,14 +30,21 @@ class CategoricalHyperParam(BaseHyperParam):
         default (str or None):
             Default value for the hyperparameter to take. Defaults to the first item in ``choices``
     """
+    NO_DEFAULT = object()
 
-    def __init__(self, choices, default=None):
+    def __init__(self, choices, default=NO_DEFAULT):
         """Instantiation of CategoricalHyperParam.
 
         Creates an instance with a list of ``choices`` and fit an instance of
         ``sklearn.preprocessing.OneHotEncoder`` with those values.
         """
-        self.default = default or choices[0]
+        if default is self.NO_DEFAULT:
+            self.default = choices[0]
+        elif default not in choices:
+            raise ValueError('`default` not within `choices`')
+        else:
+            self.default = default
+
         self.choices = deepcopy(choices)
         self.dimensions = len(choices)
         self.cardinality = self.dimensions

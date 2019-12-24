@@ -26,19 +26,18 @@ install_requires = [
     'numpy>=1.14.0,<1.18.0',
     'scikit-learn>=0.20.0,<0.22.0',
     'scipy>=1.0.1,<1.4.0',
-    'pandas>=0.21.0,<0.26.0'
+    'pandas>=0.21.0,<0.26.0',
+    'tqdm>=4.36.1,<4.50.0',
 ]
 
 
 examples_require = [
     'jupyter>=1.0.0',
-    'tqdm>=4.36.1',
     'matplotlib>=3.1.1',
 ]
 
 
 tests_require = [
-    'mock>=2.0.0',
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
 ]
@@ -111,6 +110,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.3',
+    version='0.3.4.dev0',
     zip_safe=False,
 )

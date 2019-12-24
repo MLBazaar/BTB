@@ -7,18 +7,10 @@ from sklearn.metrics import f1_score
 from btb.benchmark.challenges.challenge import MLChallenge
 
 
-class CensusRFC(MLChallenge):
-    """
-    The Census challenge is based on the `Census Income Dataset`. The extraction
-    was done by Barry Becker from the 1994 Census Database. The prediction task
-    is to determine whether a person makes over 50.000 USD a year.
-
-    This dataset has been obtained from https://archive.ics.uci.edu/ml/datasets/census+income
-    """
-
+class WindRFC(MLChallenge):
     # DATASET
-    DATASET = 'census.csv'
-    TARGET_COLUMN = 'income'
+    DATASET = 'wind.csv'
+    TARGET_COLUMN = 'class'
 
     # CROSS VALIDATE / SCORER
     METRIC = f1_score
@@ -91,7 +83,7 @@ class CensusRFC(MLChallenge):
     }
 
 
-class CensusSGDC(CensusRFC):
+class WindSGDC(WindRFC):
     # MODEL
     MODEL = SGDClassifier
     TUNABLE_HYPERPARAMETERS = {
@@ -151,7 +143,7 @@ class CensusSGDC(CensusRFC):
     }
 
 
-class CensusABC(CensusRFC):
+class WindABC(WindRFC):
     # MODEL
     MODEL = AdaBoostClassifier
     TUNABLE_HYPERPARAMETERS = {

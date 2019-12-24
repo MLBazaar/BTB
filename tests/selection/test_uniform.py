@@ -1,6 +1,5 @@
 from unittest import TestCase
-
-from mock import patch
+from unittest.mock import patch
 
 from btb.selection.uniform import Uniform
 

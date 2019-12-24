@@ -1,5 +1,29 @@
 # History
 
+## 0.3.4 - 2019-12-24
+
+With this release we introduce a `BTBSession` class. This class represents the process of selecting
+and tuning several tunables until the best possible configuration fo a specific `scorer` is found.
+We also have improved and fixed some minor bugs arround the code (described in the issues below).
+
+### New Features
+
+* `BTBSession` that makes `BTB` more user friendly.
+
+### Internal Improvements
+
+Improved unittests, removed old dependencies, added more `MLChallenges` and fixed an issue with
+the bound methods.
+
+### Resolved Issues
+
+* Issue #145: Implement `BTBSession`.
+* Issue #155: Set defaut to `None` for `CategoricalHyperParam` is not possible.
+* Issue #157: Metamodel `_MODEL_KWARGS_DEFAULT` becomes mutable.
+* Issue #158: Remove `mock` dependency from the package.
+* Issue #160: Add more Machine Learning Challenges and more estimators.
+
+
 ## 0.3.3 - 2019-12-11
 
 Fix a bug where creating an instance of `Tuner` ends in an error.

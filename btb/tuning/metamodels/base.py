@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta
+from copy import deepcopy
 
 import numpy as np
 
@@ -40,9 +41,10 @@ class BaseMetaModel(metaclass=ABCMeta):
         ``self._MODEL_CLASS`` provided by the user and ``self._MODEL_KWARGS_DEFAULT``.
         """
         if self._MODEL_KWARGS_DEFAULT is not None:
-            model_kwargs = self._MODEL_KWARGS_DEFAULT
+            model_kwargs = deepcopy(self._MODEL_KWARGS_DEFAULT)
+
         else:
-            model_kwargs = dict()
+            model_kwargs = {}
 
         if self._model_kwargs:
             model_kwargs.update(self._model_kwargs)
