@@ -267,13 +267,29 @@
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges</span> <span class="kn">import</span> <span class="n">Bohachevsky</span><span class="p">,</span> <span class="n">Branin</span><span class="p">,</span> <span class="n">CensusRF</span><span class="p">,</span> <span class="n">Rosenbrock</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.bohachevsky</span> <span class="kn">import</span> <span class="n">Bohachevsky</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.boston</span> <span class="kn">import</span> <span class="n">BostonABR</span><span class="p">,</span> <span class="n">BostonBR</span><span class="p">,</span> <span class="n">BostonRFR</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.branin</span> <span class="kn">import</span> <span class="n">Branin</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.census</span> <span class="kn">import</span> <span class="n">CensusABC</span><span class="p">,</span> <span class="n">CensusRFC</span><span class="p">,</span> <span class="n">CensusSGDC</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.rosenbrock</span> <span class="kn">import</span> <span class="n">Rosenbrock</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.wind</span> <span class="kn">import</span> <span class="n">WindABC</span><span class="p">,</span> <span class="n">WindRFC</span><span class="p">,</span> <span class="n">WindSGDC</span>
 
 <span class="n">DEFAULT_CHALLENGES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Simple</span>
     <span class="n">Bohachevsky</span><span class="p">,</span>
     <span class="n">Branin</span><span class="p">,</span>
     <span class="n">Rosenbrock</span><span class="p">,</span>
-    <span class="n">CensusRF</span>
+
+    <span class="c1"># ML</span>
+    <span class="n">BostonABR</span><span class="p">,</span>
+    <span class="n">BostonBR</span><span class="p">,</span>
+    <span class="n">BostonRFR</span><span class="p">,</span>
+    <span class="n">CensusABC</span><span class="p">,</span>
+    <span class="n">CensusRFC</span><span class="p">,</span>
+    <span class="n">CensusSGDC</span><span class="p">,</span>
+    <span class="n">WindABC</span><span class="p">,</span>
+    <span class="n">WindRFC</span><span class="p">,</span>
+    <span class="n">WindSGDC</span>
 <span class="p">]</span>
 
 

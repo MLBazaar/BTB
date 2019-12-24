@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>btb.benchmark.challenges.census &mdash; BTB 0.3.4.dev0 documentation</title>
+  <title>btb.benchmark.challenges.boston &mdash; BTB 0.3.4.dev0 documentation</title>
   
 
   
@@ -249,7 +249,7 @@
         
           <li><a href="../../benchmark.html">btb.benchmark</a> &raquo;</li>
         
-      <li>btb.benchmark.challenges.census</li>
+      <li>btb.benchmark.challenges.boston</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -264,37 +264,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for btb.benchmark.challenges.census</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span><span class="p">,</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span>
+  <h1>Source code for btb.benchmark.challenges.boston</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostRegressor</span><span class="p">,</span> <span class="n">BaggingRegressor</span><span class="p">,</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
 
 <span class="kn">from</span> <span class="nn">btb.benchmark.challenges.challenge</span> <span class="kn">import</span> <span class="n">MLChallenge</span>
 
 
-<div class="viewcode-block" id="CensusRFC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.CensusRFC">[docs]</a><span class="k">class</span> <span class="nc">CensusRFC</span><span class="p">(</span><span class="n">MLChallenge</span><span class="p">):</span>
+<div class="viewcode-block" id="BostonRFR"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.BostonRFR">[docs]</a><span class="k">class</span> <span class="nc">BostonRFR</span><span class="p">(</span><span class="n">MLChallenge</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The Census challenge is based on the `Census Income Dataset`. The extraction</span>
-<span class="sd">    was done by Barry Becker from the 1994 Census Database. The prediction task</span>
-<span class="sd">    is to determine whether a person makes over 50.000 USD a year.</span>
+<span class="sd">    This dataset contains information collected by the U.S Census Service</span>
+<span class="sd">    concerning housing in the area of Boston. It was obtained from the</span>
+<span class="sd">    StatLib archive http://lib.stat.cmu.edu/datasets/boston</span>
 
-<span class="sd">    This dataset has been obtained from https://archive.ics.uci.edu/ml/datasets/census+income</span>
+<span class="sd">    The prediction task is to determine the price of a house based on the</span>
+<span class="sd">    location and other features that the dataset provides.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># DATASET</span>
-    <span class="n">DATASET</span> <span class="o">=</span> <span class="s1">&#39;census.csv&#39;</span>
-    <span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s1">&#39;income&#39;</span>
+    <span class="c1"># DATSET</span>
+    <span class="n">DATASET</span> <span class="o">=</span> <span class="s1">&#39;boston.csv&#39;</span>
+    <span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s1">&#39;medv&#39;</span>
+    <span class="n">STRATIFIED</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># CROSS VALIDATE / SCORER</span>
-    <span class="n">METRIC</span> <span class="o">=</span> <span class="n">f1_score</span>
+    <span class="n">METRIC</span> <span class="o">=</span> <span class="n">r2_score</span>
     <span class="n">ENCODE</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">MAKE_BINARY</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">STRATIFIED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">MAKE_BINARY</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># MODEL</span>
-    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span>
     <span class="n">MODEL_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
     <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -307,16 +305,16 @@
         <span class="p">},</span>
         <span class="s2">&quot;criterion&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;gini&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
             <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;entropy&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;gini&quot;</span>
+                <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mae&quot;</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="kc">None</span><span class="p">,</span>
                 <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;log2&quot;</span><span class="p">,</span>
@@ -328,7 +326,7 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
             <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="mi">2</span><span class="p">,</span>
-                <span class="mi">100</span>
+                <span class="mi">1000</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -336,7 +334,7 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
             <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="mi">1</span><span class="p">,</span>
-                <span class="mi">100</span>
+                <span class="mi">1000</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="s2">&quot;min_weight_fraction_leaf&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -352,75 +350,16 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
             <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="mf">0.0</span><span class="p">,</span>
-                <span class="mf">1000.0</span>
+                <span class="mf">10.0</span>
             <span class="p">]</span>
-        <span class="p">},</span>
+        <span class="p">}</span>
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="CensusSGDC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.CensusSGDC">[docs]</a><span class="k">class</span> <span class="nc">CensusSGDC</span><span class="p">(</span><span class="n">CensusRFC</span><span class="p">):</span>
+<div class="viewcode-block" id="BostonABR"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.BostonABR">[docs]</a><span class="k">class</span> <span class="nc">BostonABR</span><span class="p">(</span><span class="n">BostonRFR</span><span class="p">):</span>
     <span class="c1"># MODEL</span>
-    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">SGDClassifier</span>
-    <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;hinge&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;log&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;hinge&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;modified_huber&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;squared_hinge&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;perceptron&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;squared_loss&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;huber&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;epsilon_insensitive&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;squared_epsilon_insensitive&quot;</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;penalty&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="kc">None</span><span class="p">,</span>
-                <span class="s2">&quot;l2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;l1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;elasticnet&quot;</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
-            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mf">0.0001</span><span class="p">,</span>
-                <span class="mi">1</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mi">1</span><span class="p">,</span>
-                <span class="mi">5000</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;tol&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mf">1e-3</span><span class="p">,</span>
-            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mf">1e-3</span><span class="p">,</span>
-                <span class="mi">1</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">}</span></div>
-
-
-<div class="viewcode-block" id="CensusABC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.CensusABC">[docs]</a><span class="k">class</span> <span class="nc">CensusABC</span><span class="p">(</span><span class="n">CensusRFC</span><span class="p">):</span>
-    <span class="c1"># MODEL</span>
-    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">AdaBoostRegressor</span>
+    <span class="n">MODEL_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
     <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
@@ -438,14 +377,39 @@
                 <span class="mf">10.0</span>
             <span class="p">]</span>
         <span class="p">},</span>
-        <span class="s2">&quot;algorithm&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;SAMME.R&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
             <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;SAMME&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;SAMME.R&quot;</span>
+                <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;square&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exponential&quot;</span>
             <span class="p">]</span>
         <span class="p">}</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="BostonBR"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.BostonBR">[docs]</a><span class="k">class</span> <span class="nc">BostonBR</span><span class="p">(</span><span class="n">BostonRFR</span><span class="p">):</span>
+    <span class="c1"># MODEL</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">BaggingRegressor</span>
+    <span class="n">MODEL_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bootstrap&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="mi">500</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;max_samples&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="mi">100</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
     <span class="p">}</span></div>
 </pre></div>
 

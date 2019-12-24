@@ -7,10 +7,12 @@ Submodules
 .. toctree::
 
    btb.benchmark.challenges.bohachevsky
+   btb.benchmark.challenges.boston
    btb.benchmark.challenges.branin
    btb.benchmark.challenges.census
    btb.benchmark.challenges.challenge
    btb.benchmark.challenges.rosenbrock
+   btb.benchmark.challenges.wind
 
 Module contents
 ---------------

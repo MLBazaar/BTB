@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>btb.benchmark.challenges.census &mdash; BTB 0.3.4.dev0 documentation</title>
+  <title>btb.benchmark.challenges.wind &mdash; BTB 0.3.4.dev0 documentation</title>
   
 
   
@@ -249,7 +249,7 @@
         
           <li><a href="../../benchmark.html">btb.benchmark</a> &raquo;</li>
         
-      <li>btb.benchmark.challenges.census</li>
+      <li>btb.benchmark.challenges.wind</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -264,7 +264,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for btb.benchmark.challenges.census</h1><div class="highlight"><pre>
+  <h1>Source code for btb.benchmark.challenges.wind</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span><span class="p">,</span> <span class="n">RandomForestClassifier</span>
@@ -274,18 +274,10 @@
 <span class="kn">from</span> <span class="nn">btb.benchmark.challenges.challenge</span> <span class="kn">import</span> <span class="n">MLChallenge</span>
 
 
-<div class="viewcode-block" id="CensusRFC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.CensusRFC">[docs]</a><span class="k">class</span> <span class="nc">CensusRFC</span><span class="p">(</span><span class="n">MLChallenge</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The Census challenge is based on the `Census Income Dataset`. The extraction</span>
-<span class="sd">    was done by Barry Becker from the 1994 Census Database. The prediction task</span>
-<span class="sd">    is to determine whether a person makes over 50.000 USD a year.</span>
-
-<span class="sd">    This dataset has been obtained from https://archive.ics.uci.edu/ml/datasets/census+income</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<div class="viewcode-block" id="WindRFC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.WindRFC">[docs]</a><span class="k">class</span> <span class="nc">WindRFC</span><span class="p">(</span><span class="n">MLChallenge</span><span class="p">):</span>
     <span class="c1"># DATASET</span>
-    <span class="n">DATASET</span> <span class="o">=</span> <span class="s1">&#39;census.csv&#39;</span>
-    <span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s1">&#39;income&#39;</span>
+    <span class="n">DATASET</span> <span class="o">=</span> <span class="s1">&#39;wind.csv&#39;</span>
+    <span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span>
 
     <span class="c1"># CROSS VALIDATE / SCORER</span>
     <span class="n">METRIC</span> <span class="o">=</span> <span class="n">f1_score</span>
@@ -358,7 +350,7 @@
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="CensusSGDC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.CensusSGDC">[docs]</a><span class="k">class</span> <span class="nc">CensusSGDC</span><span class="p">(</span><span class="n">CensusRFC</span><span class="p">):</span>
+<div class="viewcode-block" id="WindSGDC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.WindSGDC">[docs]</a><span class="k">class</span> <span class="nc">WindSGDC</span><span class="p">(</span><span class="n">WindRFC</span><span class="p">):</span>
     <span class="c1"># MODEL</span>
     <span class="n">MODEL</span> <span class="o">=</span> <span class="n">SGDClassifier</span>
     <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
@@ -418,7 +410,7 @@
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="CensusABC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.CensusABC">[docs]</a><span class="k">class</span> <span class="nc">CensusABC</span><span class="p">(</span><span class="n">CensusRFC</span><span class="p">):</span>
+<div class="viewcode-block" id="WindABC"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.WindABC">[docs]</a><span class="k">class</span> <span class="nc">WindABC</span><span class="p">(</span><span class="n">WindRFC</span><span class="p">):</span>
     <span class="c1"># MODEL</span>
     <span class="n">MODEL</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span>
     <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
