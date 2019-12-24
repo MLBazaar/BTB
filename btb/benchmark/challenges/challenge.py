@@ -2,6 +2,7 @@
 
 """Package where the Challenge class is defined."""
 
+import inspect
 import os
 from abc import ABCMeta, abstractmethod
 from copy import deepcopy
@@ -42,6 +43,23 @@ class Challenge(metaclass=ABCMeta):
         for those ``arguments``.
         """
         pass
+
+    def __repr__(self):
+        args = inspect.getargspec(self.__init__)
+        keys = args.args[1:]
+        defaults = dict(zip(keys, args.defaults))
+        instanced = {key: getattr(self, key) for key in keys}
+
+        if defaults == instanced:
+            return '{}()'.format(self.__class__.__name__)
+
+        else:
+            args = ', '.join(
+                '{}={}'.format(key, value)
+                for key, value in instanced.items()
+            )
+
+            return '{}({})'.format(self.__class__.__name__, args)
 
 
 class MLChallenge(Challenge):
@@ -153,3 +171,6 @@ class MLChallenge(Challenge):
         hyperparams.update((self.model_defaults or {}))
         model = self.model(**hyperparams)
         return cross_val_score(model, self.X, self.y, cv=self.cv, scoring=self.scorer).mean()
+
+    def __repr__(self):
+        return '{}()'.format(self.__class__.__name__)

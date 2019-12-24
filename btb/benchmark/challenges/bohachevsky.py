@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import inspect
-
 import numpy as np
 
 from btb.benchmark.challenges.challenge import Challenge
@@ -55,15 +53,3 @@ class Bohachevsky(Challenge):
     def evaluate(self, x, y):
         z = 0.3 * np.cos(3 * np.pi * x)
         return -1 * (x**2 + 2 * y**2 - z - 0.4 * np.cos(4 * np.pi * y) + 0.7)
-
-    def __repr__(self):
-        args = inspect.getargspec(self.__init__)
-        keys = args.args[1:]
-        defaults = dict(zip(keys, args.defaults))
-        if all(getattr(self, key) == default for key, default in defaults.items()):
-            return 'Bohachevsky()'
-
-        else:
-            args = (self.min_x, self.max_x, self.min_y, self.max_y)
-            args = 'min_x={}, max_x={}, min_y={}, max_y={}'.format(*args)
-            return 'Bohachevsky({})'.format(args)

@@ -82,9 +82,6 @@ class WindRFC(MLChallenge):
         },
     }
 
-    def __repr__(self):
-        return self.__class__.__name__
-
 
 class WindSGDC(WindRFC):
     # MODEL
