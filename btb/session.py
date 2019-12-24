@@ -11,6 +11,7 @@ from tqdm.autonotebook import trange
 
 from btb.selection.ucb1 import UCB1
 from btb.tuning.tunable import Tunable
+from btb.tuning.tuners.base import StopTuning
 from btb.tuning.tuners.gaussian_process import GPTuner
 
 LOGGER = logging.getLogger(__name__)
@@ -178,11 +179,11 @@ class BTBSession:
                 LOGGER.info('Generating new proposal configuration for %s', tunable_name)
                 config = tuner.propose(1)
 
-            except ValueError:
+            except StopTuning:
                 LOGGER.info('%s has no more configs to propose.' % tunable_name)
                 self._normalized_scores.pop(tunable_name, None)
                 self._tunable_names.remove(tunable_name)
-                return None
+                tunable_name, config = self.propose()
 
         proposal_id = self._make_id(tunable_name, config)
         self.proposals[proposal_id] = {
@@ -264,18 +265,21 @@ class BTBSession:
 
         for _ in iterator:
             self.iterations += 1
-            proposal = self.propose()
-            if proposal is None:
-                continue
-
-            tunable_name, config = proposal
+            tunable_name, config = self.propose()
 
             try:
                 LOGGER.debug('Scoring proposal %s - %s: %s', self.iterations, tunable_name, config)
                 score = self.scorer(tunable_name, config)
 
             except Exception:
-                LOGGER.exception('Proposal %s - %s crashed', self.iterations, tunable_name)
+                params = '\n'.join('{}: {}'.format(k, v) for k, v in config.items())
+                LOGGER.exception(
+                    'Proposal %s - %s crashed with the following configuration: %s',
+                    self.iterations,
+                    tunable_name,
+                    params
+                )
+
                 score = None
 
             self.record(tunable_name, config, score)

@@ -8,6 +8,7 @@ import numpy as np
 from tqdm.autonotebook import trange
 
 from btb.session import BTBSession
+from btb.tuning.tuners.base import StopTuning
 from btb.tuning.tuners.gaussian_process import GPTuner
 
 
@@ -196,7 +197,7 @@ class TestBTBSession(TestCase):
         # setup
 
         tuner = MagicMock()
-        tuner.propose.side_effect = ValueError('test')
+        tuner.propose.side_effect = [StopTuning('test')]
 
         instance = MagicMock(spec_set=BTBSession)
         instance._normalized_scores.__len__.return_value = 1
@@ -209,11 +210,8 @@ class TestBTBSession(TestCase):
         instance._make_id.return_value = 1
 
         # run
-        result = BTBSession.propose(instance)
-
-        # assert
-        assert result is None
-        tuner.propose.assert_called_once_with(1)
+        with self.assertRaises(ValueError):
+            BTBSession.propose(instance)
 
     def test_handle_error_errors_lt_max_errors(self):
         # setup
@@ -312,26 +310,8 @@ class TestBTBSession(TestCase):
     def test_run_score(self):
         # setup
         instance = MagicMock(spec_set=BTBSession)
-        instance.propose.side_effect = [None, ('test', 'config')]
-        instance.scorer.return_value = 1
-        instance.best_proposal = {'test': 'config'}
-        instance._range = range
-        instance.iterations = 0
-
-        # run
-        result = BTBSession.run(instance, 2)
-
-        # assert
-        instance.scorer.assert_called_once_with('test', 'config')
-        instance.record.assert_called_once_with('test', 'config', 1)
-        assert result == {'test': 'config'}
-        assert instance.iterations == 2
-
-    def test_run_score_none(self):
-        # setup
-        instance = MagicMock(spec_set=BTBSession)
         instance.propose.return_value = ('test', 'config')
-        instance.scorer.side_effect = Exception()
+        instance.scorer.return_value = 1
         instance.best_proposal = {'test': 'config'}
         instance._range = range
         instance.iterations = 0
@@ -341,6 +321,24 @@ class TestBTBSession(TestCase):
 
         # assert
         instance.scorer.assert_called_once_with('test', 'config')
-        instance.record.assert_called_once_with('test', 'config', None)
+        instance.record.assert_called_once_with('test', 'config', 1)
+        assert result == {'test': 'config'}
+        assert instance.iterations == 1
+
+    def test_run_score_none(self):
+        # setup
+        instance = MagicMock(spec_set=BTBSession)
+        instance.propose.return_value = ('test', {'hp': 'test'})
+        instance.scorer.side_effect = Exception()
+        instance.best_proposal = {'test': 'config'}
+        instance._range = range
+        instance.iterations = 0
+
+        # run
+        result = BTBSession.run(instance, 1)
+
+        # assert
+        instance.scorer.assert_called_once_with('test', {'hp': 'test'})
+        instance.record.assert_called_once_with('test', {'hp': 'test'}, None)
         assert result == {'test': 'config'}
         assert instance.iterations == 1
