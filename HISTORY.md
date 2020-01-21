@@ -1,5 +1,18 @@
 # History
 
+## 0.3.5 - 2020-01-21
+
+With this release we are improving `BTBSession` by adding private attributes, or not intended to
+be public / modified by the user and also improving the documentation of it.
+
+### Internal Improvements
+
+Improved docstrings, unittests and public interface of `BTBSession`.
+
+### Resolved Issues
+
+* Issue #162: Fix session with the given comments on PR 156.
+
 ## 0.3.4 - 2019-12-24
 
 With this release we introduce a `BTBSession` class. This class represents the process of selecting
