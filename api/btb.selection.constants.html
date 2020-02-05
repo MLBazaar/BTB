@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>btb.selection.ucb1 module &mdash; BTB 0.3.2.dev0 documentation</title>
+  <title>btb.selection.constants module &mdash; BTB 0.3.2.dev0 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="btb.selection.uniform module" href="btb.selection.uniform.html" />
-    <link rel="prev" title="btb.selection.selector module" href="btb.selection.selector.html" /> 
+    <link rel="next" title="btb.selection.custom_selector module" href="btb.selection.custom_selector.html" />
+    <link rel="prev" title="btb.selection.best module" href="btb.selection.best.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -241,14 +241,14 @@
         
           <li><a href="btb.selection.html">btb.selection package</a> &raquo;</li>
         
-      <li>btb.selection.ucb1 module</li>
+      <li>btb.selection.constants module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/api/btb.selection.ucb1.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/api/btb.selection.constants.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -262,8 +262,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-btb.selection.ucb1">
-<span id="btb-selection-ucb1-module"></span><h1>btb.selection.ucb1 module<a class="headerlink" href="#module-btb.selection.ucb1" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-btb.selection.constants">
+<span id="btb-selection-constants-module"></span><h1>btb.selection.constants module<a class="headerlink" href="#module-btb.selection.constants" title="Permalink to this headline">¶</a></h1>
 <p><strong>Classes</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -271,82 +271,87 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.ucb1.UCB1" title="btb.selection.ucb1.UCB1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UCB1</span></code></a>(choices)</p></td>
-<td><p>UCB1 selector</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors" title="btb.selection.constants.Selectors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Selectors</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
-<dt id="btb.selection.ucb1.UCB1">
-<em class="property">class </em><code class="sig-prename descclassname">btb.selection.ucb1.</code><code class="sig-name descname">UCB1</code><span class="sig-paren">(</span><em class="sig-param">choices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/ucb1.html#UCB1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.ucb1.UCB1" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="btb.selection.selector.html#btb.selection.selector.Selector" title="btb.selection.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.selection.selector.Selector</span></code></a></p>
-<p>UCB1 selector</p>
-<p>Uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.</p>
-<p>See also:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Auer</span><span class="p">,</span> <span class="n">Peter</span> <span class="n">et</span> <span class="n">al</span><span class="o">.</span> <span class="s2">&quot;Finite-time Analysis of the Multiarmed Bandit Problem.&quot;</span>
-<span class="n">Machine</span> <span class="n">Learning</span> <span class="mi">47</span> <span class="p">(</span><span class="mi">2002</span><span class="p">):</span> <span class="mi">235</span><span class="o">-</span><span class="mf">256.</span>
-</pre></div>
-</div>
-<p><strong>Methods</strong></p>
+<dt id="btb.selection.constants.Selectors">
+<em class="property">class </em><code class="sig-prename descclassname">btb.selection.constants.</code><code class="sig-name descname">Selectors</code><a class="reference internal" href="../_modules/btb/selection/constants.html#Selectors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.constants.Selectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p><strong>Attributes</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.ucb1.UCB1.bandit" title="btb.selection.ucb1.UCB1.bandit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bandit</span></code></a>(choice_rewards)</p></td>
-<td><p>Multi-armed bandit method which chooses the arm for which the upper confidence bound (UCB) of expected reward is greatest.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.BEST_K" title="btb.selection.constants.Selectors.BEST_K"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BEST_K</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.ucb1.UCB1.compute_rewards" title="btb.selection.ucb1.UCB1.compute_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_rewards</span></code></a>(scores)</p></td>
-<td><p>Compute rewards from choice’s scores</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.BEST_K_VEL" title="btb.selection.constants.Selectors.BEST_K_VEL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BEST_K_VEL</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.ucb1.UCB1.select" title="btb.selection.ucb1.UCB1.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(choice_scores)</p></td>
-<td><p>Select the next best choice to make</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.HIER_ALG" title="btb.selection.constants.Selectors.HIER_ALG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HIER_ALG</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.PURE_BEST_K_VEL" title="btb.selection.constants.Selectors.PURE_BEST_K_VEL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PURE_BEST_K_VEL</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.RECENT_K" title="btb.selection.constants.Selectors.RECENT_K"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RECENT_K</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.RECENT_K_VEL" title="btb.selection.constants.Selectors.RECENT_K_VEL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RECENT_K_VEL</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.UCB1" title="btb.selection.constants.Selectors.UCB1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UCB1</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.selection.constants.Selectors.UNIFORM" title="btb.selection.constants.Selectors.UNIFORM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNIFORM</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="btb.selection.ucb1.UCB1.bandit">
-<code class="sig-name descname">bandit</code><span class="sig-paren">(</span><em class="sig-param">choice_rewards</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/selection/ucb1.html#UCB1.bandit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.selection.ucb1.UCB1.bandit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-armed bandit method which chooses the arm for which the upper
-confidence bound (UCB) of expected reward is greatest.</p>
-<p>If there are multiple arms with the same UCB1 index, then one is chosen
-at random.</p>
-<p>An explanation is here:
-<a class="reference external" href="https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf">https://www.cs.bham.ac.uk/internal/courses/robotics/lectures/ucb1.pdf</a></p>
-</dd></dl>
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.BEST_K">
+<code class="sig-name descname">BEST_K</code><em class="property"> = 'bestk'</em><a class="headerlink" href="#btb.selection.constants.Selectors.BEST_K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
-<dt id="btb.selection.ucb1.UCB1.compute_rewards">
-<code class="sig-name descname">compute_rewards</code><span class="sig-paren">(</span><em class="sig-param">scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.ucb1.UCB1.compute_rewards" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute rewards from choice’s scores</p>
-<p>Convert a list of scores associated with one choice into a list of rewards. Normally, the
-length of the list will be preserved, even if some of the scores are dropped.</p>
-</dd></dl>
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.BEST_K_VEL">
+<code class="sig-name descname">BEST_K_VEL</code><em class="property"> = 'bestkvel'</em><a class="headerlink" href="#btb.selection.constants.Selectors.BEST_K_VEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
-<dt id="btb.selection.ucb1.UCB1.select">
-<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">choice_scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.selection.ucb1.UCB1.select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select the next best choice to make</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>choice_scores</strong> (<em>Dict</em><em>[</em><em>object</em><em>, </em><em>List</em><em>[</em><em>float</em><em>]</em><em>]</em>) – <p>Mapping of choice to list of scores for each
-possible choice. The caller is responsible for making sure each choice that is
-possible at this juncture is represented in the dict, even those with no scores.
-Score lists should be in ascending chronological order, that is, the score from the
-earliest trial should be listed first.</p>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.56</span><span class="p">,</span> <span class="mf">0.61</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">],</span>
-    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">],</span>
-    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.68</span><span class="p">],</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</p>
-</dd>
-</dl>
-</dd></dl>
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.HIER_ALG">
+<code class="sig-name descname">HIER_ALG</code><em class="property"> = 'hieralg'</em><a class="headerlink" href="#btb.selection.constants.Selectors.HIER_ALG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.PURE_BEST_K_VEL">
+<code class="sig-name descname">PURE_BEST_K_VEL</code><em class="property"> = 'purebestkvel'</em><a class="headerlink" href="#btb.selection.constants.Selectors.PURE_BEST_K_VEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.RECENT_K">
+<code class="sig-name descname">RECENT_K</code><em class="property"> = 'recentk'</em><a class="headerlink" href="#btb.selection.constants.Selectors.RECENT_K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.RECENT_K_VEL">
+<code class="sig-name descname">RECENT_K_VEL</code><em class="property"> = 'recentkvel'</em><a class="headerlink" href="#btb.selection.constants.Selectors.RECENT_K_VEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.UCB1">
+<code class="sig-name descname">UCB1</code><em class="property"> = 'ucb1'</em><a class="headerlink" href="#btb.selection.constants.Selectors.UCB1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.selection.constants.Selectors.UNIFORM">
+<code class="sig-name descname">UNIFORM</code><em class="property"> = 'uniform'</em><a class="headerlink" href="#btb.selection.constants.Selectors.UNIFORM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -360,10 +365,10 @@ earliest trial should be listed first.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="btb.selection.uniform.html" class="btn btn-neutral float-right" title="btb.selection.uniform module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="btb.selection.custom_selector.html" class="btn btn-neutral float-right" title="btb.selection.custom_selector module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="btb.selection.selector.html" class="btn btn-neutral float-left" title="btb.selection.selector module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="btb.selection.best.html" class="btn btn-neutral float-left" title="btb.selection.best module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

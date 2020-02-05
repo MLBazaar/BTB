@@ -1,7 +1,0 @@
-btb.benchmark.challenges.census module
-======================================
-
-.. automodule:: btb.benchmark.challenges.census
-   :members:
-   :undoc-members:
-   :show-inheritance:

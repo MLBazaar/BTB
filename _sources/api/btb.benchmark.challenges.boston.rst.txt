@@ -1,7 +1,0 @@
-btb.benchmark.challenges.boston module
-======================================
-
-.. automodule:: btb.benchmark.challenges.boston
-   :members:
-   :undoc-members:
-   :show-inheritance:
