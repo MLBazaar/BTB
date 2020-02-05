@@ -22,7 +22,7 @@ BTB ("Bayesian Tuning and Bandits") is a simple, extensible backend for developi
 
 It is currently being used in several AutoML systems:
 - [ATM](https://github.com/HDI-Project/ATM), distributed, multi-tenant AutoML system for classifier tuning
-- MIT TA2, MIT's system for the DARPA [Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program.
+- MIT TA2, MIT's system for the DARPA [Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
 - [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose AutoML system
 
 # Quickstart
@@ -187,19 +187,38 @@ For more details about **BTB** and all its possibilities and features, please ch
 
 ## Citing BTB
 
-If you use BTB, please consider citing the following work:
+If you use BTB, please consider citing our related papers.
 
-- Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
+- For the initial design and implementation of BTB (v0.1):
 
-``` bibtex
+  Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
+
+  ``` bibtex
   @MastersThesis{Laura:2018,
-    title = "Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML",
-    author = "Laura Gustafson",
-    month = "May",
-    year = "2018",
-    url = "https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf",
-    type = "M. Eng Thesis",
-    address = "Cambridge, MA",
-    school = "Massachusetts Institute of Technology",
+    title = {Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML},
+    author = {Laura Gustafson},
+    month = {May},
+    year = {2018},
+    url = {https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf},
+    type = {M. Eng Thesis},
+    address = {Cambridge, MA},
+    school = {Massachusetts Institute of Technology}",
   }
-```
+  ```
+
+- For recent designs of BTB and its usage within the larger *ML Bazaar* project within the MIT Data to AI Lab:
+
+  Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. ["The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development."](https://arxiv.org/abs/1905.08942) arXiv Preprint 1905.08942. 2019.
+
+  ``` bibtex
+  @article{smith2019mlbazaar,
+    author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+    title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+    journal = {arXiv e-prints},
+    year = {2019},
+    eid = {arXiv:1905.08942},
+    pages = {arXiv:1905.08942},
+    archivePrefix = {arXiv},
+    eprint = {1905.08942},
+  }
+  ```
