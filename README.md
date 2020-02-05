@@ -12,7 +12,6 @@ A simple, extensible backend for developing auto-tuning systems.
 [![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
 
-
 * Free software: MIT license
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
@@ -25,51 +24,6 @@ It is currently being used in several AutoML systems:
 - [ATM](https://github.com/HDI-Project/ATM), distributed, multi-tenant AutoML system for classifier tuning
 - MIT TA2, MIT's system for the DARPA [Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program.
 - [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose AutoML system
-
-# Install
-
-## Requirements
-
-**BTB** has been developed and tested on [Python 3.5, 3.6 and 3.7](https://www.python.org/downloads)
-
-Also, although it is not strictly required, the usage of a
-[virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
-interfering with other software installed in the system where **BTB** is run.
-
-These are the minimum commands needed to create a virtualenv using python3.6 for **BTB**:
-
-```bash
-pip install virtualenv
-virtualenv -p $(which python3.6) btb-venv
-```
-
-Afterwards, you have to execute this command to have the virtualenv activated:
-
-```bash
-source btb-venv/bin/activate
-```
-
-Remember about executing it every time you start a new console to work on **BTB**!
-
-## Install from Source
-
-With your virtualenv activated, you can clone the repository and install it from
-source by running `make install` on the `stable` branch:
-
-```bash
-git clone git@github.com:HDI-Project/BTB.git
-cd BTB
-git checkout stable
-make install
-```
-
-## Install for Development
-
-If you want to contribute to the project, a few more steps are required to make the project ready
-for development.
-
-Please head to the [Contributing Guide](https://HDI-Project.github.io/BTB/contributing.html#get-started)
-for more details about this process.
 
 # Quickstart
 
