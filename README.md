@@ -51,17 +51,6 @@ source btb-venv/bin/activate
 
 Remember about executing it every time you start a new console to work on **BTB**!
 
-## Install using Pip
-
-After creating the virtualenv and activating it, we recommend using
-[pip](https://pip.pypa.io/en/stable/) in order to install **BTB**:
-
-```bash
-pip install btb
-```
-
-This will pull and install the latest stable release from [PyPi](https://pypi.org/).
-
 ## Install from Source
 
 With your virtualenv activated, you can clone the repository and install it from
@@ -83,6 +72,16 @@ Please head to the [Contributing Guide](https://HDI-Project.github.io/BTB/contri
 for more details about this process.
 
 # Quickstart
+
+## Install
+
+BTB has been developed and tested on [Python 3.5, 3.6, and 3.7](https://www.python.org/downloads).
+
+```bash
+pip install baytune
+```
+
+This will pull and install the latest stable release from [PyPI](https://pypi.org/).
 
 ## Tuners
 
@@ -228,6 +227,7 @@ Then we perform the following steps in a loop.
     ```
 
 ## What's next?
+
 For more details about **BTB** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/BTB/)!
 
