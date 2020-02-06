@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Package where the CategoricalHyperParamClass is defined."""
+"""Package where the CategoricalHyperParam class is defined."""
 
 from copy import deepcopy
 
