@@ -10,6 +10,13 @@ Subpackages
    btb.selection
    btb.tuning
 
+Submodules
+----------
+
+.. toctree::
+
+   btb.session
+
 Module contents
 ---------------
 

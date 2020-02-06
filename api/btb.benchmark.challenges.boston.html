@@ -1,0 +1,1025 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.benchmark.challenges.boston module &mdash; BTB 0.3.6.dev0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="btb.benchmark.challenges.branin module" href="btb.benchmark.challenges.branin.html" />
+    <link rel="prev" title="btb.benchmark.challenges.bohachevsky module" href="btb.benchmark.challenges.bohachevsky.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BTB
+          
+
+          
+            
+            <img src="../_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-using-pip">Install using Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-from-source">Install from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#install-for-development">Install for Development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#tuners">Tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../readme.html#selectors">Selectors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#what-s-next">What’s next?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../readme.html#citing-btb">Citing BTB</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="btb.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="btb.benchmark.html">btb.benchmark package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="btb.benchmark.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.benchmark.html#module-btb.benchmark">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.selection.html#module-btb.selection">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.html#module-btb.tuning">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="btb.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="btb.session.html">btb.session module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="btb.html#module-btb">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#release-workflow">Release Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#release-candidates">Release Candidates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id1">0.3.5 - 2020-01-21</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#internal-improvements">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#resolved-issues">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id2">0.3.4 - 2019-12-24</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-features">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id3">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id4">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id5">0.3.3 - 2019-12-11</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id6">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id7">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id8">0.3.2 - 2019-12-10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id9">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id10">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id11">0.3.1 - 2019-11-25</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id12">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id13">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id14">0.3.0 - 2019-11-11</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-project-structure">New project structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-api">New API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id15">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id16">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id17">0.2.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id18">0.2.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id19">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id20">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id21">0.2.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id22">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id23">0.2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id24">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id25">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id26">0.2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id27">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id28">0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id29">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id30">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id31">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id32">0.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id33">0.1.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="btb.html">btb package</a> &raquo;</li>
+        
+          <li><a href="btb.benchmark.html">btb.benchmark package</a> &raquo;</li>
+        
+          <li><a href="btb.benchmark.challenges.html">btb.benchmark.challenges package</a> &raquo;</li>
+        
+      <li>btb.benchmark.challenges.boston module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/api/btb.benchmark.challenges.boston.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-btb.benchmark.challenges.boston">
+<span id="btb-benchmark-challenges-boston-module"></span><h1>btb.benchmark.challenges.boston module<a class="headerlink" href="#module-btb.benchmark.challenges.boston" title="Permalink to this headline">¶</a></h1>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR" title="btb.benchmark.challenges.boston.BostonABR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BostonABR</span></code></a>([model, dataset, target_column, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR" title="btb.benchmark.challenges.boston.BostonBR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BostonBR</span></code></a>([model, dataset, target_column, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR" title="btb.benchmark.challenges.boston.BostonRFR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BostonRFR</span></code></a>([model, dataset, target_column, …])</p></td>
+<td><p>This dataset contains information collected by the U.S Census Service concerning housing in the area of Boston.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="btb.benchmark.challenges.boston.BostonABR">
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonABR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonABR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR" title="btb.benchmark.challenges.boston.BostonRFR"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.boston.BostonRFR</span></code></a></p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.DATASET" title="btb.benchmark.challenges.boston.BostonABR.DATASET"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DATASET</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.ENCODE" title="btb.benchmark.challenges.boston.BostonABR.ENCODE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ENCODE</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.MAKE_BINARY" title="btb.benchmark.challenges.boston.BostonABR.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonABR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.METRIC" title="btb.benchmark.challenges.boston.BostonABR.METRIC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC</span></code></a>(y_pred[, sample_weight, multioutput])</p></td>
+<td><p>R^2 (coefficient of determination) regression score function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.evaluate" title="btb.benchmark.challenges.boston.BostonABR.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(**hyperparams)</p></td>
+<td><p>Apply cross validation to hyperparameter combination.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.get_tunable_hyperparameters" title="btb.benchmark.challenges.boston.BostonABR.get_tunable_hyperparameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tunable_hyperparameters</span></code></a>()</p></td>
+<td><p>Return a dictionary with hyperparameters to be tuned.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.load_data" title="btb.benchmark.challenges.boston.BostonABR.load_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_data</span></code></a>()</p></td>
+<td><p>Load <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> over which to perform fit and evaluate.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.MODEL" title="btb.benchmark.challenges.boston.BostonABR.MODEL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL</span></code></a></p></td>
+<td><p>An AdaBoost regressor.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.DATASET">
+<code class="sig-name descname">DATASET</code><em class="property"> = 'boston.csv'</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.DATASET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.ENCODE">
+<code class="sig-name descname">ENCODE</code><em class="property"> = True</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.ENCODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.MAKE_BINARY">
+<code class="sig-name descname">MAKE_BINARY</code><em class="property"> = False</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.MAKE_BINARY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonABR.METRIC">
+<code class="sig-name descname">METRIC</code><span class="sig-paren">(</span><em class="sig-param">y_pred</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">multioutput='uniform_average'</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.METRIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>R^2 (coefficient of determination) regression score function.</p>
+<p>Best possible score is 1.0 and it can be negative (because the
+model can be arbitrarily worse). A constant model that always
+predicts the expected value of y, disregarding the input features,
+would get a R^2 score of 0.0.</p>
+<p>Read more in the <span class="xref std std-ref">User Guide</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em>) – Ground truth (correct) target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em>) – Estimated target values.</p></li>
+<li><p><strong>sample_weight</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>)</em><em>, </em><em>optional</em>) – Sample weights.</p></li>
+<li><p><strong>multioutput</strong> (<em>string in</em><em> [</em><em>'raw_values'</em><em>, </em><em>'uniform_average'</em><em>, </em><em>'variance_weighted'</em><em>] or </em><em>None</em><em> or </em><em>array-like of shape</em><em> (</em><em>n_outputs</em><em>)</em>) – <p>Defines aggregating of multiple output scores.
+Array-like value defines weights used to average scores.
+Default is “uniform_average”.</p>
+<dl class="simple">
+<dt>’raw_values’ :</dt><dd><p>Returns a full set of scores in case of multioutput input.</p>
+</dd>
+<dt>’uniform_average’ :</dt><dd><p>Scores of all outputs are averaged with uniform weight.</p>
+</dd>
+<dt>’variance_weighted’ :</dt><dd><p>Scores of all outputs are averaged, weighted by the variances
+of each individual output.</p>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.19: </span>Default value of multioutput is ‘uniform_average’.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>z</strong> – The R^2 score or ndarray of scores if ‘multioutput’ is
+‘raw_values’.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float or ndarray of floats</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This is not a symmetric function.</p>
+<p>Unlike most other scores, R^2 score may be negative (it need not actually
+be the square of a quantity R).</p>
+<p>This metric is not well-defined for single samples and will return a NaN
+value if n_samples is less than two.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id1"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Coefficient_of_determination">Wikipedia entry on the Coefficient of determination</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>  
+<span class="go">0.948...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;variance_weighted&#39;</span><span class="p">)</span> 
+<span class="go">0.938...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">-3.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.MODEL">
+<code class="sig-name descname">MODEL</code><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.MODEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.weight_boosting.AdaBoostRegressor</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS">
+<code class="sig-name descname">MODEL_DEFAULTS</code><em class="property"> = {'random_state': 0}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.STRATIFIED">
+<code class="sig-name descname">STRATIFIED</code><em class="property"> = False</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.STRATIFIED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN">
+<code class="sig-name descname">TARGET_COLUMN</code><em class="property"> = 'medv'</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS">
+<code class="sig-name descname">TUNABLE_HYPERPARAMETERS</code><em class="property"> = {'learning_rate': {'default': 1.0, 'range': [1.0, 10.0], 'type': 'float'}, 'loss': {'default': 'linear', 'type': 'str', 'values': ['linear', 'square', 'exponential']}, 'n_estimators': {'default': 50, 'range': [1, 500], 'type': 'int'}}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonABR.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">**hyperparams</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply cross validation to hyperparameter combination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hyperparams</strong> (<em>dict</em>) – A combination of <code class="docutils literal notranslate"><span class="pre">self.tunable_hyperparams</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the <code class="docutils literal notranslate"><span class="pre">mean</span></code> cross validated score.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>score (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonABR.get_tunable_hyperparameters">
+<code class="sig-name descname">get_tunable_hyperparameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.get_tunable_hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary with hyperparameters to be tuned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonABR.load_data">
+<code class="sig-name descname">load_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> over which to perform fit and evaluate.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.benchmark.challenges.boston.BostonBR">
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonBR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonBR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR" title="btb.benchmark.challenges.boston.BostonRFR"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.boston.BostonRFR</span></code></a></p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.DATASET" title="btb.benchmark.challenges.boston.BostonBR.DATASET"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DATASET</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.ENCODE" title="btb.benchmark.challenges.boston.BostonBR.ENCODE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ENCODE</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.MAKE_BINARY" title="btb.benchmark.challenges.boston.BostonBR.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonBR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.METRIC" title="btb.benchmark.challenges.boston.BostonBR.METRIC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC</span></code></a>(y_pred[, sample_weight, multioutput])</p></td>
+<td><p>R^2 (coefficient of determination) regression score function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.evaluate" title="btb.benchmark.challenges.boston.BostonBR.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(**hyperparams)</p></td>
+<td><p>Apply cross validation to hyperparameter combination.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.get_tunable_hyperparameters" title="btb.benchmark.challenges.boston.BostonBR.get_tunable_hyperparameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tunable_hyperparameters</span></code></a>()</p></td>
+<td><p>Return a dictionary with hyperparameters to be tuned.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.load_data" title="btb.benchmark.challenges.boston.BostonBR.load_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_data</span></code></a>()</p></td>
+<td><p>Load <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> over which to perform fit and evaluate.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.MODEL" title="btb.benchmark.challenges.boston.BostonBR.MODEL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL</span></code></a></p></td>
+<td><p>A Bagging regressor.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.DATASET">
+<code class="sig-name descname">DATASET</code><em class="property"> = 'boston.csv'</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.DATASET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.ENCODE">
+<code class="sig-name descname">ENCODE</code><em class="property"> = True</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.ENCODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.MAKE_BINARY">
+<code class="sig-name descname">MAKE_BINARY</code><em class="property"> = False</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.MAKE_BINARY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonBR.METRIC">
+<code class="sig-name descname">METRIC</code><span class="sig-paren">(</span><em class="sig-param">y_pred</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">multioutput='uniform_average'</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.METRIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>R^2 (coefficient of determination) regression score function.</p>
+<p>Best possible score is 1.0 and it can be negative (because the
+model can be arbitrarily worse). A constant model that always
+predicts the expected value of y, disregarding the input features,
+would get a R^2 score of 0.0.</p>
+<p>Read more in the <span class="xref std std-ref">User Guide</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em>) – Ground truth (correct) target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em>) – Estimated target values.</p></li>
+<li><p><strong>sample_weight</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>)</em><em>, </em><em>optional</em>) – Sample weights.</p></li>
+<li><p><strong>multioutput</strong> (<em>string in</em><em> [</em><em>'raw_values'</em><em>, </em><em>'uniform_average'</em><em>, </em><em>'variance_weighted'</em><em>] or </em><em>None</em><em> or </em><em>array-like of shape</em><em> (</em><em>n_outputs</em><em>)</em>) – <p>Defines aggregating of multiple output scores.
+Array-like value defines weights used to average scores.
+Default is “uniform_average”.</p>
+<dl class="simple">
+<dt>’raw_values’ :</dt><dd><p>Returns a full set of scores in case of multioutput input.</p>
+</dd>
+<dt>’uniform_average’ :</dt><dd><p>Scores of all outputs are averaged with uniform weight.</p>
+</dd>
+<dt>’variance_weighted’ :</dt><dd><p>Scores of all outputs are averaged, weighted by the variances
+of each individual output.</p>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.19: </span>Default value of multioutput is ‘uniform_average’.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>z</strong> – The R^2 score or ndarray of scores if ‘multioutput’ is
+‘raw_values’.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float or ndarray of floats</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This is not a symmetric function.</p>
+<p>Unlike most other scores, R^2 score may be negative (it need not actually
+be the square of a quantity R).</p>
+<p>This metric is not well-defined for single samples and will return a NaN
+value if n_samples is less than two.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Coefficient_of_determination">Wikipedia entry on the Coefficient of determination</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>  
+<span class="go">0.948...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;variance_weighted&#39;</span><span class="p">)</span> 
+<span class="go">0.938...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">-3.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.MODEL">
+<code class="sig-name descname">MODEL</code><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.MODEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.bagging.BaggingRegressor</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS">
+<code class="sig-name descname">MODEL_DEFAULTS</code><em class="property"> = {'bootstrap': True, 'random_state': 0}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.STRATIFIED">
+<code class="sig-name descname">STRATIFIED</code><em class="property"> = False</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.STRATIFIED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN">
+<code class="sig-name descname">TARGET_COLUMN</code><em class="property"> = 'medv'</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS">
+<code class="sig-name descname">TUNABLE_HYPERPARAMETERS</code><em class="property"> = {'max_samples': {'default': 1, 'range': [1, 100], 'type': 'int'}, 'n_estimators': {'default': 10, 'range': [1, 500], 'type': 'int'}}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonBR.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">**hyperparams</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply cross validation to hyperparameter combination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hyperparams</strong> (<em>dict</em>) – A combination of <code class="docutils literal notranslate"><span class="pre">self.tunable_hyperparams</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the <code class="docutils literal notranslate"><span class="pre">mean</span></code> cross validated score.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>score (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonBR.get_tunable_hyperparameters">
+<code class="sig-name descname">get_tunable_hyperparameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.get_tunable_hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary with hyperparameters to be tuned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonBR.load_data">
+<code class="sig-name descname">load_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> over which to perform fit and evaluate.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="btb.benchmark.challenges.boston.BostonRFR">
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonRFR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonRFR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.MLChallenge" title="btb.benchmark.challenges.challenge.MLChallenge"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.challenge.MLChallenge</span></code></a></p>
+<p>This dataset contains information collected by the U.S Census Service
+concerning housing in the area of Boston. It was obtained from the
+StatLib archive <a class="reference external" href="http://lib.stat.cmu.edu/datasets/boston">http://lib.stat.cmu.edu/datasets/boston</a></p>
+<p>The prediction task is to determine the price of a house based on the
+location and other features that the dataset provides.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.DATASET" title="btb.benchmark.challenges.boston.BostonRFR.DATASET"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DATASET</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.ENCODE" title="btb.benchmark.challenges.boston.BostonRFR.ENCODE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ENCODE</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.MAKE_BINARY" title="btb.benchmark.challenges.boston.BostonRFR.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonRFR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<td><p>bool(x) -&gt; bool</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<td><p>str(object=’’) -&gt; str</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.METRIC" title="btb.benchmark.challenges.boston.BostonRFR.METRIC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC</span></code></a>(y_pred[, sample_weight, multioutput])</p></td>
+<td><p>R^2 (coefficient of determination) regression score function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.evaluate" title="btb.benchmark.challenges.boston.BostonRFR.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(**hyperparams)</p></td>
+<td><p>Apply cross validation to hyperparameter combination.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.get_tunable_hyperparameters" title="btb.benchmark.challenges.boston.BostonRFR.get_tunable_hyperparameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tunable_hyperparameters</span></code></a>()</p></td>
+<td><p>Return a dictionary with hyperparameters to be tuned.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.load_data" title="btb.benchmark.challenges.boston.BostonRFR.load_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_data</span></code></a>()</p></td>
+<td><p>Load <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> over which to perform fit and evaluate.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.MODEL" title="btb.benchmark.challenges.boston.BostonRFR.MODEL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL</span></code></a></p></td>
+<td><p>A random forest regressor.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.DATASET">
+<code class="sig-name descname">DATASET</code><em class="property"> = 'boston.csv'</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.DATASET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.ENCODE">
+<code class="sig-name descname">ENCODE</code><em class="property"> = True</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.ENCODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.MAKE_BINARY">
+<code class="sig-name descname">MAKE_BINARY</code><em class="property"> = False</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.MAKE_BINARY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.METRIC">
+<code class="sig-name descname">METRIC</code><span class="sig-paren">(</span><em class="sig-param">y_pred</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">multioutput='uniform_average'</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.METRIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>R^2 (coefficient of determination) regression score function.</p>
+<p>Best possible score is 1.0 and it can be negative (because the
+model can be arbitrarily worse). A constant model that always
+predicts the expected value of y, disregarding the input features,
+would get a R^2 score of 0.0.</p>
+<p>Read more in the <span class="xref std std-ref">User Guide</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em>) – Ground truth (correct) target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em>) – Estimated target values.</p></li>
+<li><p><strong>sample_weight</strong> (<em>array-like of shape =</em><em> (</em><em>n_samples</em><em>)</em><em>, </em><em>optional</em>) – Sample weights.</p></li>
+<li><p><strong>multioutput</strong> (<em>string in</em><em> [</em><em>'raw_values'</em><em>, </em><em>'uniform_average'</em><em>, </em><em>'variance_weighted'</em><em>] or </em><em>None</em><em> or </em><em>array-like of shape</em><em> (</em><em>n_outputs</em><em>)</em>) – <p>Defines aggregating of multiple output scores.
+Array-like value defines weights used to average scores.
+Default is “uniform_average”.</p>
+<dl class="simple">
+<dt>’raw_values’ :</dt><dd><p>Returns a full set of scores in case of multioutput input.</p>
+</dd>
+<dt>’uniform_average’ :</dt><dd><p>Scores of all outputs are averaged with uniform weight.</p>
+</dd>
+<dt>’variance_weighted’ :</dt><dd><p>Scores of all outputs are averaged, weighted by the variances
+of each individual output.</p>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.19: </span>Default value of multioutput is ‘uniform_average’.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>z</strong> – The R^2 score or ndarray of scores if ‘multioutput’ is
+‘raw_values’.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float or ndarray of floats</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This is not a symmetric function.</p>
+<p>Unlike most other scores, R^2 score may be negative (it need not actually
+be the square of a quantity R).</p>
+<p>This metric is not well-defined for single samples and will return a NaN
+value if n_samples is less than two.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Coefficient_of_determination">Wikipedia entry on the Coefficient of determination</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>  
+<span class="go">0.948...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;variance_weighted&#39;</span><span class="p">)</span> 
+<span class="go">0.938...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">-3.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.MODEL">
+<code class="sig-name descname">MODEL</code><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.MODEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.forest.RandomForestRegressor</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS">
+<code class="sig-name descname">MODEL_DEFAULTS</code><em class="property"> = {'random_state': 0}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.STRATIFIED">
+<code class="sig-name descname">STRATIFIED</code><em class="property"> = False</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.STRATIFIED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN">
+<code class="sig-name descname">TARGET_COLUMN</code><em class="property"> = 'medv'</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS">
+<code class="sig-name descname">TUNABLE_HYPERPARAMETERS</code><em class="property"> = {'criterion': {'default': 'mse', 'type': 'str', 'values': ['mse', 'mae']}, 'max_features': {'default': 'auto', 'range': [None, 'auto', 'log2', 'sqrt'], 'type': 'str'}, 'min_impurity_decrease': {'default': 0.0, 'range': [0.0, 10.0], 'type': 'float'}, 'min_samples_leaf': {'default': 1, 'range': [1, 1000], 'type': 'int'}, 'min_samples_split': {'default': 2, 'range': [2, 1000], 'type': 'int'}, 'min_weight_fraction_leaf': {'default': 0.0, 'range': [0.0, 0.5], 'type': 'float'}, 'n_estimators': {'default': 10, 'range': [1, 500], 'type': 'int'}}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">**hyperparams</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply cross validation to hyperparameter combination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hyperparams</strong> (<em>dict</em>) – A combination of <code class="docutils literal notranslate"><span class="pre">self.tunable_hyperparams</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the <code class="docutils literal notranslate"><span class="pre">mean</span></code> cross validated score.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>score (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.get_tunable_hyperparameters">
+<code class="sig-name descname">get_tunable_hyperparameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.get_tunable_hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary with hyperparameters to be tuned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.load_data">
+<code class="sig-name descname">load_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> over which to perform fit and evaluate.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="btb.benchmark.challenges.branin.html" class="btn btn-neutral float-right" title="btb.benchmark.challenges.branin module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="btb.benchmark.challenges.bohachevsky.html" class="btn btn-neutral float-left" title="btb.benchmark.challenges.bohachevsky module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

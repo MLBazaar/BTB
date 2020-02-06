@@ -1,7 +1,0 @@
-btb.selection.constants module
-==============================
-
-.. automodule:: btb.selection.constants
-   :members:
-   :undoc-members:
-   :show-inheritance:

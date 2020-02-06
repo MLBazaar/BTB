@@ -1,0 +1,7 @@
+btb.benchmark.challenges.wind module
+====================================
+
+.. automodule:: btb.benchmark.challenges.wind
+   :members:
+   :undoc-members:
+   :show-inheritance:
