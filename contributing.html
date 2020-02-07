@@ -85,14 +85,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html#install">Install</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#install-using-pip">Install using Pip</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#install-from-source">Install from Source</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#install-for-development">Install for Development</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="readme.html#tuners">Tuners</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="readme.html#selectors">Selectors</a></li>
 </ul>
@@ -335,14 +329,22 @@ are welcome :)</p></li>
 <li><p>Fork the <cite>BTB</cite> repo on GitHub.</p></li>
 <li><p>Clone your fork locally:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:your_name_here/BTB.git
+$ <span class="nb">cd</span> BTB/
 </pre></div>
 </div>
 </li>
+<li><p>Create a new [virtualenv](<a class="reference external" href="https://virtualenv.pypa.io/en/latest">https://virtualenv.pypa.io/en/latest</a>) for
+development:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ pip install virtualenv
+$ virtualenv -p <span class="k">$(</span>which python3.6<span class="k">)</span> btb-venv
+$ <span class="nb">source</span> btb-venv/bin/activate
+</pre></div>
+</div>
+<p>Remember to activate your virtualenv before every development session!</p>
+</li>
 <li><p>Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed,
 this is how you set up your fork for local development:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ mkvirtualenv btb
-$ <span class="nb">cd</span> btb/
-$ make install-develop
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ make install-develop
 </pre></div>
 </div>
 </li>
