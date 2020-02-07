@@ -308,8 +308,11 @@
 <span class="sd">        trials (numpy.ndarray):</span>
 <span class="sd">            A ``numpy.ndarray`` with shape ``(n, self.tunable.dimensions)`` where ``n`` is the</span>
 <span class="sd">            number of trials recorded.</span>
-<span class="sd">        scores (numpy.ndarray):</span>
+<span class="sd">        raw_scores (numpy.ndarray):</span>
 <span class="sd">            A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of scores recorded.</span>
+<span class="sd">        scores (numpy.ndarray):</span>
+<span class="sd">            A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of normalized</span>
+<span class="sd">            scores recorded.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        tunable (btb.tuning.tunable.Tunable):</span>
@@ -324,6 +327,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">trials</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">dimensions</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trials_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span> <span class="o">=</span> <span class="n">maximize</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
             <span class="p">(</span><span class="s1">&#39;Creating </span><span class="si">%s</span><span class="s1"> instance with </span><span class="si">%s</span><span class="s1"> hyperparameters and carinality </span><span class="si">%s</span><span class="s1">.&#39;</span><span class="p">),</span>
