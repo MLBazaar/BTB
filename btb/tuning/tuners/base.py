@@ -28,8 +28,11 @@ class BaseTuner:
         trials (numpy.ndarray):
             A ``numpy.ndarray`` with shape ``(n, self.tunable.dimensions)`` where ``n`` is the
             number of trials recorded.
-        scores (numpy.ndarray):
+        raw_scores (numpy.ndarray):
             A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of scores recorded.
+        scores (numpy.ndarray):
+            A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of normalized
+            scores recorded.
 
     Args:
         tunable (btb.tuning.tunable.Tunable):
@@ -44,6 +47,7 @@ class BaseTuner:
         self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float)
         self._trials_set = set()
         self.raw_scores = np.empty((0, 1), dtype=np.float)
+        self.scores = np.empty((0, 1), dtype=np.float)
         self.maximize = maximize
         LOGGER.debug(
             ('Creating %s instance with %s hyperparameters and carinality %s.'),

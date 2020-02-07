@@ -23,6 +23,7 @@ class TestBaseTuner(TestCase):
         assert instance.tunable is tunable
         assert isinstance(instance.trials, np.ndarray)
         assert isinstance(instance.raw_scores, np.ndarray)
+        assert isinstance(instance.scores, np.ndarray)
         assert isinstance(instance._trials_set, set)
         assert isinstance(instance.maximize, bool)
 
@@ -43,6 +44,7 @@ class TestBaseTuner(TestCase):
         assert isinstance(instance.tunable, MagicMock)
         assert isinstance(instance.trials, np.ndarray)
         assert isinstance(instance.raw_scores, np.ndarray)
+        assert isinstance(instance.scores, np.ndarray)
         assert isinstance(instance._trials_set, set)
         assert isinstance(instance.maximize, bool)
 
