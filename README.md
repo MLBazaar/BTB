@@ -12,74 +12,30 @@ A simple, extensible backend for developing auto-tuning systems.
 [![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
 
-
 * Free software: MIT license
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
 
 # Overview
 
-Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
+BTB ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It provides an easy-to-use interface for *tuning* and *selection*.
 
-**BTB** is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).
+It is currently being used in several AutoML systems:
+- [ATM](https://github.com/HDI-Project/ATM), distributed, multi-tenant AutoML system for classifier tuning
+- MIT TA2, MIT's system for the DARPA [Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
+- [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose AutoML system
 
-# Install
+# Quickstart
 
-## Requirements
+## Install
 
-**BTB** has been developed and tested on [Python 3.5, 3.6 and 3.7](https://www.python.org/downloads)
-
-Also, although it is not strictly required, the usage of a
-[virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
-interfering with other software installed in the system where **BTB** is run.
-
-These are the minimum commands needed to create a virtualenv using python3.6 for **BTB**:
-
-```bash
-pip install virtualenv
-virtualenv -p $(which python3.6) btb-venv
-```
-
-Afterwards, you have to execute this command to have the virtualenv activated:
-
-```bash
-source btb-venv/bin/activate
-```
-
-Remember about executing it every time you start a new console to work on **BTB**!
-
-## Install using Pip
-
-After creating the virtualenv and activating it, we recommend using
-[pip](https://pip.pypa.io/en/stable/) in order to install **BTB**:
+BTB has been developed and tested on [Python 3.5, 3.6, and 3.7](https://www.python.org/downloads).
 
 ```bash
 pip install baytune
 ```
 
-This will pull and install the latest stable release from [PyPi](https://pypi.org/).
-
-## Install from Source
-
-With your virtualenv activated, you can clone the repository and install it from
-source by running `make install` on the `stable` branch:
-
-```bash
-git clone git@github.com:HDI-Project/BTB.git
-cd BTB
-git checkout stable
-make install
-```
-
-## Install for Development
-
-If you want to contribute to the project, a few more steps are required to make the project ready
-for development.
-
-Please head to the [Contributing Guide](https://HDI-Project.github.io/BTB/contributing.html#get-started)
-for more details about this process.
-
-# Quickstart
+This will pull and install the latest stable release from [PyPI](https://pypi.org/).
 
 ## Tuners
 
@@ -225,6 +181,7 @@ Then we perform the following steps in a loop.
     ```
 
 ## What's next?
+
 For more details about **BTB** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/BTB/)!
 
@@ -232,36 +189,36 @@ For more details about **BTB** and all its possibilities and features, please ch
 
 If you use BTB, please consider citing our related papers.
 
-For the current design of BTB and its usage within the larger *Machine Learning Bazaar* project at the MIT Data To AI Lab, please see:
+- For the initial design and implementation of BTB (v0.1):
 
-Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. ["The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development."](https://arxiv.org/abs/1905.08942) arXiv Preprint 1905.08942. 2019.
+  Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
 
-``` bibtex
-@article{smith2019mlbazaar,
-  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
-  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
-  journal = {arXiv e-prints},
-  year = {2019},
-  eid = {arXiv:1905.08942},
-  pages = {arXiv:1905.08942},
-  archivePrefix = {arXiv},
-  eprint = {1905.08942},
-}
-```
-
-For the initial design of BTB, usage of Recommenders, and initial evaluation, please see:
-
-Laura Gustafson. ["Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML."](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf) Masters thesis, MIT EECS, June 2018.
-
-``` bibtex
-  @mastersthesis{gustafson2018bayesian,
-    author = {Gustafson, Laura},
+  ``` bibtex
+  @MastersThesis{Laura:2018,
     title = {Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML},
+    author = {Laura Gustafson},
     month = {May},
     year = {2018},
     url = {https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf},
     type = {M. Eng Thesis},
-    school = {Massachusetts Institute of Technology},
     address = {Cambridge, MA},
+    school = {Massachusetts Institute of Technology}",
   }
-```
+  ```
+
+- For recent designs of BTB and its usage within the larger *ML Bazaar* project within the MIT Data to AI Lab:
+
+  Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. ["The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development."](https://arxiv.org/abs/1905.08942) arXiv Preprint 1905.08942. 2019.
+
+  ``` bibtex
+  @article{smith2019mlbazaar,
+    author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+    title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+    journal = {arXiv e-prints},
+    year = {2019},
+    eid = {arXiv:1905.08942},
+    pages = {arXiv:1905.08942},
+    archivePrefix = {arXiv},
+    eprint = {1905.08942},
+  }
+  ```
