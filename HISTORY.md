@@ -1,5 +1,78 @@
 # History
 
+## 0.3.5 - 2020-01-21
+
+With this release we are improving `BTBSession` by adding private attributes, or not intended to
+be public / modified by the user and also improving the documentation of it.
+
+### Internal Improvements
+
+Improved docstrings, unittests and public interface of `BTBSession`.
+
+### Resolved Issues
+
+* Issue #162: Fix session with the given comments on PR 156.
+
+## 0.3.4 - 2019-12-24
+
+With this release we introduce a `BTBSession` class. This class represents the process of selecting
+and tuning several tunables until the best possible configuration fo a specific `scorer` is found.
+We also have improved and fixed some minor bugs arround the code (described in the issues below).
+
+### New Features
+
+* `BTBSession` that makes `BTB` more user friendly.
+
+### Internal Improvements
+
+Improved unittests, removed old dependencies, added more `MLChallenges` and fixed an issue with
+the bound methods.
+
+### Resolved Issues
+
+* Issue #145: Implement `BTBSession`.
+* Issue #155: Set defaut to `None` for `CategoricalHyperParam` is not possible.
+* Issue #157: Metamodel `_MODEL_KWARGS_DEFAULT` becomes mutable.
+* Issue #158: Remove `mock` dependency from the package.
+* Issue #160: Add more Machine Learning Challenges and more estimators.
+
+
+## 0.3.3 - 2019-12-11
+
+Fix a bug where creating an instance of `Tuner` ends in an error.
+
+### Internal Improvements
+
+Improve unittests to use `spec_set` in order to detect errors while mocking an object.
+
+### Resolved Issues
+
+* Issue #153: Bug with tunner logger message that avoids creating the Tunner.
+
+## 0.3.2 - 2019-12-10
+
+With this release we add the new `benchmark` challenge `MLChallenge` which allows users to
+perform benchmarking over datasets with machine learning estimators, and also some new
+features to make the workflow easier.
+
+### New Features
+
+* New `MLChallenge` challenge that allows performing crossvalidation over datasets and machine
+learning estimators.
+* New `from_dict` function for `Tunable` class in order to instantiate from a dictionary that
+contains information over hyperparameters.
+* New `default` value for each hyperparameter type.
+
+### Resolved Issues
+
+* Issue #68: Remove `btb.tuning.constants` module.
+* Issue #120: Tuner repr not helpful.
+* Issue #121: HyperParameter repr not helpful.
+* Issue #141: Imlement propper logging to the tuning section.
+* Issue #150: Implement Tunable `from_dict`.
+* Issue #151: Add default value for hyperparameters.
+* Issue #152: Support `None` as a choice in `CategoricalHyperPrameters`.
+
 ## 0.3.1 - 2019-11-25
 
 With this release we introduce a `benchmark` module for `BTB` which allows the users to perform

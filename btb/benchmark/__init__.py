@@ -2,16 +2,53 @@
 
 import pandas as pd
 
-from btb.benchmark.challenges import Bohachevsky, Branin, Rosenbrock
+from btb.benchmark.challenges.bohachevsky import Bohachevsky
+from btb.benchmark.challenges.boston import BostonABR, BostonBR, BostonRFR
+from btb.benchmark.challenges.branin import Branin
+from btb.benchmark.challenges.census import CensusABC, CensusRFC, CensusSGDC
+from btb.benchmark.challenges.rosenbrock import Rosenbrock
+from btb.benchmark.challenges.wind import WindABC, WindRFC, WindSGDC
 
 DEFAULT_CHALLENGES = [
+    # Simple
     Bohachevsky,
     Branin,
     Rosenbrock,
+
+    # ML
+    BostonABR,
+    BostonBR,
+    BostonRFR,
+    CensusABC,
+    CensusRFC,
+    CensusSGDC,
+    WindABC,
+    WindRFC,
+    WindSGDC
 ]
 
 
-def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
+def evaluate_candidate(name, candidate, challenges, iterations):
+    candidate_result = []
+
+    if not isinstance(challenges, list):
+        challenges = [challenges]
+
+    for challenge in challenges:
+        tunable_hyperparameters = challenge.get_tunable_hyperparameters()
+        score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
+        result = {
+            'challenge': str(challenge),
+            'candidate': name,
+            'score': score,
+        }
+
+        candidate_result.append(result)
+
+    return candidate_result
+
+
+def benchmark(candidates, challenges=None, iterations=1000):
     """Benchmark function.
 
     This benchmark function iterates over a collection of ``challenges`` and executes a
@@ -43,6 +80,9 @@ def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
             A ``pandas.DataFrame`` with the obtained scores for the given challenges is being
             returned.
     """
+    if challenges is None:
+        challenges = [challenge_class() for challenge_class in DEFAULT_CHALLENGES]
+
     if callable(candidates):
         candidates = {candidates.__name__: candidates}
 
@@ -58,21 +98,12 @@ def benchmark(candidates, challenges=DEFAULT_CHALLENGES, iterations=1000):
 
     results = []
 
-    for challenge_class in challenges:
-        challenge = challenge_class()
-        tunable = challenge.get_tunable()
-
-        for name, function in candidates.items():
-            score = function(challenge.evaluate, tunable, iterations)
-
-            results.append({
-                'challenge': type(challenge).__name__,
-                'tuner': name,
-                'score': score,
-            })
+    for name, candidate in candidates.items():
+        result = evaluate_candidate(name, candidate, challenges, iterations)
+        results.extend(result)
 
     df = pd.DataFrame.from_records(results)
-    df = df.pivot(index='tuner', columns='challenge', values='score')
+    df = df.pivot(index='candidate', columns='challenge', values='score')
 
     del df.columns.name
     del df.index.name

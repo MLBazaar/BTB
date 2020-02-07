@@ -5,7 +5,8 @@ from unittest.mock import MagicMock, call, patch
 
 import numpy as np
 
-from btb.tuning.tuners.base import BaseMetaModelTuner, BaseTuner
+from btb.tuning.tunable import Tunable
+from btb.tuning.tuners.base import BaseMetaModelTuner, BaseTuner, StopTuning
 
 
 class TestBaseTuner(TestCase):
@@ -13,29 +14,27 @@ class TestBaseTuner(TestCase):
 
     def test___init__defaults(self):
         # setup
-        tunable = MagicMock()
-        tunable.dimensions = 2
+        tunable = MagicMock(spec_set=Tunable)
 
         # run
         instance = BaseTuner(tunable)
 
         # assert
-        assert isinstance(instance.tunable, MagicMock)
+        assert instance.tunable is tunable
         assert isinstance(instance.trials, np.ndarray)
         assert isinstance(instance.raw_scores, np.ndarray)
         assert isinstance(instance._trials_set, set)
         assert isinstance(instance.maximize, bool)
 
         assert instance.maximize
-        assert instance.trials.shape == (0, 2)
+        assert instance.trials.shape == (0, 1)
         assert instance.raw_scores.shape == (0, 1)
         assert instance.trials.dtype == np.float
         assert instance.raw_scores.dtype == np.float
 
     def test___init__maximize_false(self):
         # setup
-        tunable = MagicMock()
-        tunable.dimensions = 2
+        tunable = MagicMock(spec_set=Tunable)
 
         # run
         instance = BaseTuner(tunable, False)
@@ -50,47 +49,51 @@ class TestBaseTuner(TestCase):
         assert not instance.maximize
 
     def test__check_proposals_proposals_gt_cardinality(self):
-        """Test that ``ValueError`` is being raised if ``proposals`` is greater than
+        """Test that ``StopTuning`` is being raised if ``proposals`` is greater than
         ``self.tunable.cardinality``.
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.cardinality = 4
 
         # run / assert
-        with self.assertRaises(ValueError):
+        with self.assertRaises(StopTuning):
             BaseTuner._check_proposals(instance, 5)
 
     def test__check_proposals_trials_eq_cardinality(self):
-        """Test that ``ValueError`` is being raised if ``self.trials`` is equal to
+        """Test that ``StopTuning`` is being raised if ``self.trials`` is equal to
         ``self.tunable.cardinality``.
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.cardinality = 2
         instance._trials_set.__len__.return_value = 2
 
         # run / assert
-        with self.assertRaises(ValueError):
+        with self.assertRaises(StopTuning):
             BaseTuner._check_proposals(instance, 1)
 
     def test__check_proposals_trials_and_proposals_gt_cardinality(self):
-        """Test that ``ValueError`` is being raised if ``proposals`` + ``len(self.trials)``
+        """Test that ``StopTuning`` is being raised if ``proposals`` + ``len(self.trials)``
         is greater than ``self.tunable.cardinality``.
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.cardinality = 4
         instance._trials_set.__len__.return_value = 2
 
         # run / assert
-        with self.assertRaises(ValueError):
+        with self.assertRaises(StopTuning):
             BaseTuner._check_proposals(instance, 3)
 
     def test__check_proposals_not_raise(self):
-        """Test that ``ValueError`` is not being raised."""
+        """Test that ``StopTuning`` is not being raised."""
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.cardinality = 4
         instance._trials_set.__len__.return_value = 2
 
@@ -104,6 +107,7 @@ class TestBaseTuner(TestCase):
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         inverse_return = instance.tunable.inverse_transform.return_value
         inverse_return.to_dict.return_value = [1]
         instance._propose = MagicMock(return_value=1)
@@ -125,6 +129,7 @@ class TestBaseTuner(TestCase):
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         inverse_return = instance.tunable.inverse_transform.return_value
         inverse_return.to_dict.return_value = [1]
         instance._propose = MagicMock(return_value=1)
@@ -146,6 +151,7 @@ class TestBaseTuner(TestCase):
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         inverse_return = instance.tunable.inverse_transform.return_value
         inverse_return.to_dict.return_value = [1, 2]
         instance._propose = MagicMock(return_value=2)
@@ -167,6 +173,7 @@ class TestBaseTuner(TestCase):
 
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         inverse_return = instance.tunable.inverse_transform.return_value
         inverse_return.to_dict.return_value = [1, 2]
         instance._propose = MagicMock(return_value=2)
@@ -184,6 +191,7 @@ class TestBaseTuner(TestCase):
         """Test the method ``_sample``when using duplicates."""
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.sample.return_value = 1
 
         # run
@@ -198,6 +206,7 @@ class TestBaseTuner(TestCase):
         # setup
         instance = MagicMock()
         instance._trials_set = set()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.sample.return_value = np.array([[3]])
 
         # run
@@ -213,6 +222,7 @@ class TestBaseTuner(TestCase):
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance._trials_set = set({(1, ), (2, )})
 
         side_effect = [np.array([[3]]), np.array([[1]]), np.array([[1]]), np.array([[4]])]
@@ -230,6 +240,7 @@ class TestBaseTuner(TestCase):
 
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.transform.return_value = np.array([[1, 0]])
         instance.trials = np.empty((0, 2), dtype=np.float)
         instance._trials_set = set()
@@ -253,6 +264,7 @@ class TestBaseTuner(TestCase):
 
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.transform.return_value = np.array([[1, 0]])
         instance.trials = np.empty((0, 2), dtype=np.float)
         instance._trials_set = set()
@@ -277,6 +289,7 @@ class TestBaseTuner(TestCase):
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.trials = np.empty((0, 2), dtype=np.float)
         instance.raw_scores = np.empty((0, 1), dtype=np.float)
         instance._trials_set = set()
@@ -298,6 +311,7 @@ class TestBaseTuner(TestCase):
         """
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.transform.return_value = np.array([[1, 0]])
 
         # run / assert
@@ -311,7 +325,7 @@ class TestBaseMetaModelTuner(TestCase):
     @patch('btb.tuning.tuners.base.super')
     def test___init___default_values(self, mock_super):
         # setup
-        tunable = MagicMock()
+        tunable = MagicMock(spec_set=Tunable)
         instance = MagicMock()
         instance.__init_metamodel__ = MagicMock()
         instance.__init_acquisition__ = MagicMock()
@@ -320,8 +334,8 @@ class TestBaseMetaModelTuner(TestCase):
         BaseMetaModelTuner.__init__(instance, tunable)
 
         # assert
-        assert instance._num_candidates == 1000
-        assert instance._min_trials == 2
+        assert instance.num_candidates == 1000
+        assert instance.min_trials == 2
         instance.__init_metamodel__.assert_called_once_with()
         instance.__init_acquisition__.assert_called_once_with()
 
@@ -329,7 +343,7 @@ class TestBaseMetaModelTuner(TestCase):
     def test___init___users_values(self, mock_super):
 
         # setup
-        tunable = MagicMock()
+        tunable = MagicMock(spec_set=Tunable)
         instance = MagicMock()
         instance._metamodel_kwargs = {'a': 'test'}
         instance._acquisition_kwargs = {'a': 'acquisition_test'}
@@ -346,15 +360,15 @@ class TestBaseMetaModelTuner(TestCase):
         )
 
         # assert
-        assert instance._num_candidates == 5
-        assert instance._min_trials == 20
+        assert instance.num_candidates == 5
+        assert instance.min_trials == 20
         instance.__init_metamodel__.assert_called_once_with(a='test')
         instance.__init_acquisition__.assert_called_once_with(a='acquisition_test')
 
-    def test__propose_min_trials_gt__trials_set(self):
+    def test__proposemin_trials_gt__trials_set(self):
         # setup
         instance = MagicMock()
-        instance._min_trials = 1
+        instance.min_trials = 1
         instance._trials_set.__len__.return_value = 0
         instance._sample.return_value = 'sample'
 
@@ -365,12 +379,13 @@ class TestBaseMetaModelTuner(TestCase):
         instance._sample.assert_called_once_with(1, True)
         assert result == 'sample'
 
-    def test__propose_min_trials_lt__trials_set_allow_duplicates(self):
+    def test__proposemin_trials_lt__trials_set_allow_duplicates(self):
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.cardinality = 3
-        instance._min_trials = 0
-        instance._num_candidates = 10
+        instance.min_trials = 0
+        instance.num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
         instance._predict.return_value = 'predicted'
@@ -384,12 +399,13 @@ class TestBaseMetaModelTuner(TestCase):
         instance._predict.assert_called_once_with(np.array([1]))
         assert result == 1
 
-    def test__propose_min_trials_lt__trials_set_not_allow_duplicates(self):
+    def test__proposemin_trials_lt__trials_set_not_allow_duplicates(self):
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.cardinality = 3
-        instance._min_trials = 0
-        instance._num_candidates = 10
+        instance.min_trials = 0
+        instance.num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
         instance._predict.return_value = 'predicted'
@@ -404,12 +420,13 @@ class TestBaseMetaModelTuner(TestCase):
         instance._acquire.assert_called_once_with('predicted', 1)
         assert result == 1
 
-    def test__propose_min_trials_lt__trials_set_not_allow_duplicates_num_samples_is_min(self):
+    def test__proposemin_trials_lt__trials_set_not_allow_duplicates_num_samples_is_min(self):
         # setup
         instance = MagicMock()
+        instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.cardinality = 3
-        instance._min_trials = 0
-        instance._num_candidates = 0
+        instance.min_trials = 0
+        instance.num_candidates = 0
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
         instance._predict.return_value = 'predicted'
@@ -430,7 +447,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance = MagicMock()
         instance.trials = np.array([2])
         instance.scores = 1
-        instance._min_trials = 1
+        instance.min_trials = 1
 
         # run
         BaseMetaModelTuner.record(instance, 1, 1)

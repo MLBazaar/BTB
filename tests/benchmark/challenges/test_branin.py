@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from unittest.mock import call, patch
 
 import numpy as np
 
@@ -42,36 +41,45 @@ class TestBranin(TestCase):
         assert branin.min_y == 6
         assert branin.max_y == 7
 
-    @patch('btb.benchmark.challenges.branin.FloatHyperParam')
-    @patch('btb.benchmark.challenges.branin.Tunable')
-    def test_get_tunable(self, mock_tunable, mock_floathyperparam):
-        # setup
-        mock_floathyperparam.side_effect = [1, 2]
-        mock_tunable.return_value = 'tunable'
-
+    def test_get_tunable_hyperparameters(self):
         # run
-        result = Branin().get_tunable()
+        result = Branin().get_tunable_hyperparameters()
 
         # assert
-        expected_calls = [call(min=-5.0, max=10.0), call(min=0.0, max=15.0)]
-        assert result == 'tunable'
-        assert mock_floathyperparam.call_args_list == expected_calls
-        mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
+        expected_result = {
+            'x': {
+                'type': 'float',
+                'range': [-5.0, 10.0],
+                'default': None
+            },
+            'y': {
+                'type': 'float',
+                'range': [0.0, 15.0],
+                'default': None
+            }
+        }
 
-    @patch('btb.benchmark.challenges.branin.FloatHyperParam')
-    @patch('btb.benchmark.challenges.branin.Tunable', autospec=True)
-    def test_get_tunable_custom_min_max(self, mock_tunable, mock_floathyperparam):
-        # setup
-        mock_floathyperparam.side_effect = [1, 2]
-        instance = Branin(min_x=1, max_x=2, min_y=3, max_y=4)
+        result == expected_result
 
+    def test_get_tunable_custom_min_max(self):
         # run
-        result = instance.get_tunable()
+        result = Branin(min_x=1, max_x=2, min_y=3, max_y=4).get_tunable_hyperparameters()
 
         # assert
-        assert result == mock_tunable.return_value
-        mock_floathyperparam.assert_has_calls([call(min=1, max=2), call(min=3, max=4)])
-        mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
+        expected_result = {
+            'x': {
+                'type': 'float',
+                'range': [1, 2],
+                'default': None
+            },
+            'y': {
+                'type': 'float',
+                'range': [3, 4],
+                'default': None
+            }
+        }
+
+        result == expected_result
 
     def test_evaluate(self):
         # run

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from unittest.mock import call, patch
 
 from btb.benchmark.challenges.bohachevsky import Bohachevsky
 
@@ -28,36 +27,45 @@ class TestBohachevsky(TestCase):
         assert bohachevsky.min_y == 6
         assert bohachevsky.max_y == 7
 
-    @patch('btb.benchmark.challenges.bohachevsky.IntHyperParam')
-    @patch('btb.benchmark.challenges.bohachevsky.Tunable')
-    def test_get_tunable(self, mock_tunable, mock_inthyperparam):
-        # setup
-        mock_inthyperparam.side_effect = [1, 2]
-        mock_tunable.return_value = 'tunable'
-
+    def test_get_tunable_hyperparameters(self):
         # run
-        result = Bohachevsky().get_tunable()
+        result = Bohachevsky().get_tunable_hyperparameters()
 
         # assert
-        expected_calls = [call(min=-100, max=100), call(min=-100, max=100)]
-        assert result == 'tunable'
-        assert mock_inthyperparam.call_args_list == expected_calls
-        mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
+        expected_result = {
+            'x': {
+                'type': 'int',
+                'range': [-100, 100],
+                'default': None
+            },
+            'y': {
+                'type': 'int',
+                'range': [-100, 100],
+                'default': None
+            }
+        }
 
-    @patch('btb.benchmark.challenges.bohachevsky.IntHyperParam')
-    @patch('btb.benchmark.challenges.bohachevsky.Tunable', autospec=True)
-    def test_get_tunable_custom_min_max(self, mock_tunable, mock_inthyperparam):
-        # setup
-        mock_inthyperparam.side_effect = [1, 2]
-        instance = Bohachevsky(min_x=1, max_x=2, min_y=3, max_y=4)
+        assert result == expected_result
 
+    def test_get_tunable_hyperparameters_custom_min_max(self):
         # run
-        result = instance.get_tunable()
+        result = Bohachevsky(min_x=1, max_x=2, min_y=3, max_y=4).get_tunable_hyperparameters()
 
         # assert
-        assert result == mock_tunable.return_value
-        mock_inthyperparam.assert_has_calls([call(min=1, max=2), call(min=3, max=4)])
-        mock_tunable.assert_called_once_with({'x': 1, 'y': 2})
+        expected_result = {
+            'x': {
+                'type': 'int',
+                'range': [1, 2],
+                'default': None
+            },
+            'y': {
+                'type': 'int',
+                'range': [3, 4],
+                'default': None
+            }
+        }
+
+        assert result == expected_result
 
     def test_evaluate(self):
         # run

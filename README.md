@@ -131,7 +131,7 @@ we want to try out, as well as the ``Selector`` instance.
 ... }
 >>> rf_tunable = Tunable(rf_hyperparams)
 >>> svc_hyperparams = {
-...     'c': FloatHyperParam(min=0.01, max=10.0),
+...     'C': FloatHyperParam(min=0.01, max=10.0),
 ...     'gamma': FloatHyperParam(0.000000001, 0.0000001)
 ... }
 >>> svc_tunable = Tunable(svc_hyperparams)

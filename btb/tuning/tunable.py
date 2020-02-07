@@ -3,6 +3,10 @@
 import numpy as np
 import pandas as pd
 
+from btb.tuning.hyperparams.boolean import BooleanHyperParam
+from btb.tuning.hyperparams.categorical import CategoricalHyperParam
+from btb.tuning.hyperparams.numerical import FloatHyperParam, IntHyperParam
+
 """Package where the Tunable class is defined."""
 
 
@@ -23,12 +27,14 @@ class Tunable:
         hyperparams (dict):
             Dictionary object that contains the name and the hyperparameter asociated to it.
     """
+    hyperparams = None
+    names = None
+    dimensions = 0
+    cardinality = 1
 
     def __init__(self, hyperparams):
         self.hyperparams = hyperparams
         self.names = list(hyperparams)
-        self.dimensions = 0
-        self.cardinality = 1
 
         for hyperparam in hyperparams.values():
             self.dimensions = self.dimensions + hyperparam.dimensions
@@ -193,3 +199,76 @@ class Tunable:
             samples.append(items)
 
         return np.concatenate(samples, axis=1)
+
+    def get_defaults(self):
+        """Return the default combination for the hyperparameters."""
+        return {
+            name: hyperparam.default
+            for name, hyperparam in self.hyperparams.items()
+        }
+
+    @classmethod
+    def from_dict(cls, dict_hyperparams):
+        """Create an instance from a dictionary containing information over hyperparameters.
+
+        Class method that creates an instance from a dictionary that describes the type of a
+        hyperparameter, the range or values that this can have and the default value of the
+        hyperparameter.
+
+        Args:
+            dict_hyperparams (dict):
+                A python dictionary containing as `key` the given name for the hyperparameter and
+                as value a dictionary containing the following keys:
+
+                    - Type (str):
+                        ``bool`` for ``BoolHyperParam``, ``int`` for ``IntHyperParam``, ``float``
+                        for ``FloatHyperParam``, ``str`` for ``CategoricalHyperParam``.
+
+                    - Range or Values (list):
+                        Range / values that this hyperparameter can take, in case of
+                        ``CategoricalHyperParam`` those will be used as the ``choices``, for
+                        ``NumericalHyperParams`` the ``min`` value will be used as the minimum
+                        value and the ``max`` value will be used as the ``maximum`` value.
+
+                    - Default (str, bool, int, float or None):
+                        The default value for the hyperparameter.
+
+        Returns:
+            Tunable:
+                A ``Tunable`` instance with the given hyperparameters.
+        """
+
+        if not isinstance(dict_hyperparams, dict):
+            raise TypeError('Hyperparams must be a dictionary.')
+
+        hyperparams = {}
+
+        for name, hyperparam in dict_hyperparams.items():
+            hp_type = hyperparam['type']
+            hp_default = hyperparam.get('default')
+
+            if hp_type == 'int':
+                hp_range = hyperparam.get('range') or hyperparam.get('values')
+                hp_min = min(hp_range) if hp_range else None
+                hp_max = max(hp_range) if hp_range else None
+                hp_instance = IntHyperParam(min=hp_min, max=hp_max, default=hp_default)
+
+            elif hp_type == 'float':
+                hp_range = hyperparam.get('range') or hyperparam.get('values')
+                hp_min = min(hp_range)
+                hp_max = max(hp_range)
+                hp_instance = FloatHyperParam(min=hp_min, max=hp_max, default=hp_default)
+
+            elif hp_type == 'bool':
+                hp_instance = BooleanHyperParam(default=hp_default)
+
+            elif hp_type == 'str':
+                hp_choices = hyperparam.get('range') or hyperparam.get('values')
+                hp_instance = CategoricalHyperParam(choices=hp_choices, default=hp_default)
+
+            hyperparams[name] = hp_instance
+
+        return cls(hyperparams)
+
+    def __repr__(self):
+        return 'Tunable({})'.format(self.hyperparams)

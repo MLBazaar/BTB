@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from btb.benchmark.challenges.challenge import Challenge
-from btb.tuning import Tunable
-from btb.tuning.hyperparams import IntHyperParam
 
 
 class Rosenbrock(Challenge):
@@ -48,11 +46,19 @@ class Rosenbrock(Challenge):
         self.min_y = min_y
         self.max_y = max_y
 
-    def get_tunable(self):
-        x = IntHyperParam(min=self.min_x, max=self.max_x)
-        y = IntHyperParam(min=self.min_y, max=self.max_y)
-
-        return Tunable({'x': x, 'y': y})
+    def get_tunable_hyperparameters(self):
+        return {
+            'x': {
+                'type': 'int',
+                'range': [self.min_x, self.max_x],
+                'default': None
+            },
+            'y': {
+                'type': 'int',
+                'range': [self.min_y, self.max_y],
+                'default': None
+            }
+        }
 
     def evaluate(self, x, y):
         return -1 * ((self.a - x)**2 + self.b * (y - x**2)**2)
