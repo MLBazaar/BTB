@@ -291,7 +291,7 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="BTBSession"><a class="viewcode-back" href="../../api/btb.session.html#btb.session.BTBSession">[docs]</a><span class="k">class</span> <span class="nc">BTBSession</span><span class="p">:</span>
+<div class="viewcode-block" id="BTBSession"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession">[docs]</a><span class="k">class</span> <span class="nc">BTBSession</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;BTBSession class.</span>
 
 <span class="sd">    A BTBSession represents the process of selecting and tuning several tunables</span>
@@ -423,7 +423,7 @@
 
         <span class="k">return</span> <span class="n">md5</span><span class="p">(</span><span class="n">hashable</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
-<div class="viewcode-block" id="BTBSession.propose"><a class="viewcode-back" href="../../api/btb.session.html#btb.session.BTBSession.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BTBSession.propose"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Propose a new configuration to score.</span>
 
 <span class="sd">        Every time ``propose`` is called, a new tunable will be selected and a new</span>
@@ -452,10 +452,10 @@
 <span class="sd">            StopTuning:</span>
 <span class="sd">                If the ``BTBSession`` has run out of proposals to generate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span><span class="s1">&#39;There are no proposals left to try.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span><span class="s1">&#39;There are no tunables left to try.&#39;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">):</span>
             <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">)]</span>
             <span class="n">tunable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
 
@@ -493,7 +493,7 @@
 
         <span class="k">return</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span></div>
 
-<div class="viewcode-block" id="BTBSession.handle_error"><a class="viewcode-back" href="../../api/btb.session.html#btb.session.BTBSession.handle_error">[docs]</a>    <span class="k">def</span> <span class="nf">handle_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">):</span>
+<div class="viewcode-block" id="BTBSession.handle_error"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.handle_error">[docs]</a>    <span class="k">def</span> <span class="nf">handle_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Handle errors when ``score`` is ``None``.</span>
 
 <span class="sd">        If the given ``tunable_name`` accumulates more errors than ``self._max_errors``</span>
@@ -511,7 +511,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTBSession.record"><a class="viewcode-back" href="../../api/btb.session.html#btb.session.BTBSession.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
+<div class="viewcode-block" id="BTBSession.record"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Record the configuration and the obtained score to the tuner.</span>
 
 <span class="sd">        If the score is the best one so far, the ``best_proposal`` and ``best_score`` are</span>
@@ -533,6 +533,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">normalized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">normalized</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">normalized</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_normalized</span><span class="p">:</span>
                 <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;New optimal found: </span><span class="si">%s</span><span class="s1"> - </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">best_proposal</span> <span class="o">=</span> <span class="n">proposal</span>
@@ -541,11 +543,10 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">tuner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
                 <span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">normalized</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">normalized</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Could not record score to tuner.&#39;</span><span class="p">)</span></div>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Could not record configuration and score to tuner.&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTBSession.run"><a class="viewcode-back" href="../../api/btb.session.html#btb.session.BTBSession.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BTBSession.run"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run the selection and tuning loop for the given number of iterations.</span>
 
 <span class="sd">        At each iteration, the `BTBSession` will generate a new proposal calling</span>
