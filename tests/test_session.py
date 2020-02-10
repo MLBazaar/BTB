@@ -115,7 +115,7 @@ class TestBTBSession(TestCase):
     def test_propose_no_tunables(self):
         # setup
         instance = MagicMock(spec_set=BTBSession)
-        instance._tunables = None
+        instance._tunable_names = None
 
         # run
         with self.assertRaises(StopTuning):
