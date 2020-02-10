@@ -178,10 +178,10 @@ class BTBSession:
             StopTuning:
                 If the ``BTBSession`` has run out of proposals to generate.
         """
-        if not self._tunables:
-            raise StopTuning('There are no proposals left to try.')
+        if not self._tunable_names:
+            raise StopTuning('There are no tunables left to try.')
 
-        if len(self._normalized_scores) < len(self._tunable_names):
+        if len(self._tuners) < len(self._tunable_names):
             tunable_name = self._tunable_names[len(self._normalized_scores)]
             tunable = self._tunables[tunable_name]
 
@@ -259,6 +259,8 @@ class BTBSession:
             self.handle_error(tunable_name)
         else:
             normalized = self._normalize(score)
+            self._normalized_scores[tunable_name].append(normalized)
+
             if normalized > self._best_normalized:
                 LOGGER.info('New optimal found: %s - %s', tunable_name, score)
                 self.best_proposal = proposal
@@ -267,9 +269,8 @@ class BTBSession:
             try:
                 tuner = self._tuners[tunable_name]
                 tuner.record(config, normalized)
-                self._normalized_scores[tunable_name].append(normalized)
             except Exception:
-                LOGGER.exception('Could not record score to tuner.')
+                LOGGER.exception('Could not record configuration and score to tuner.')
 
     def run(self, iterations=None):
         """Run the selection and tuning loop for the given number of iterations.
