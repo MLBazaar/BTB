@@ -21,7 +21,7 @@ def test_tuning():
         proposed = tuner.propose(1)
         tuner.record(proposed, random.random())
 
-    # TODO add asserts
+    # asserts
     assert len(tuner.trials) == 10
     assert len(tuner._trials_set) == 10
     assert len(tuner.raw_scores) == 10
@@ -43,7 +43,7 @@ def test_tuning_minimize():
         proposed = tuner.propose(1)
         tuner.record(proposed, random.random())
 
-    # TODO add asserts
+    # asserts
     assert len(tuner.trials) == 10
     assert len(tuner._trials_set) == 10
     assert len(tuner.raw_scores) == 10
