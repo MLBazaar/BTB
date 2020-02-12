@@ -21,17 +21,14 @@ def test_benchmark_rosenbrock():
     benchmark(candidate, challenges=Rosenbrock(), iterations=1)
 
 
-def test_tunable_tuner():
-
+def test_tuning():
     hyperparams = {
         'bhp': BooleanHyperParam(default=False),
         'chp': CategoricalHyperParam(choices=['a', 'b', None], default=None),
         'fhp': FloatHyperParam(min=0.1, max=1.0, default=0.5),
         'ihp': IntHyperParam(min=-1, max=1)
     }
-
     tunable = Tunable(hyperparams)
-
     tuner = GPEiTuner(tunable)
 
     for _ in range(10):
