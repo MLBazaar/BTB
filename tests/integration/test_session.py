@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
+from unittest.mock import Mock
 
 import pytest
 
@@ -129,33 +130,45 @@ class BTBSessionTest(TestCase):
         assert best['name'] == 'a_tunable'
         assert best['config'] == {'a_parameter': 2}
 
-    # def test_accept_errors(self):
-    #     tunables = {
-    #         'a_tunable': {
-    #             'a_parameter': {
-    #                 'type': 'int',
-    #                 'default': 0,
-    #                 'range': [0, 2]
-    #             }
-    #         },
-    #         'another_tunable': {
-    #             'a_parameter': {
-    #                 'type': 'int',
-    #                 'default': 0,
-    #                 'range': [0, 2]
-    #             }
-    #         }
-    #     }
+    @pytest.mark.skip(reason="This is not implemented yet")
+    def test_allow_duplicates(self):
+        tunables = {
+            'a_tunable': {
+                'a_parameter': {
+                    'type': 'int',
+                    'default': 0,
+                    'range': [0, 2]
+                }
+            }
+        }
 
-    #     def scorer(name, proposal):
-    #         if name == 'another_tunable':
-    #             raise Exception()
-    #         else:
-    #             return proposal['a_parameter']
+        session = BTBSession(tunables, self.scorer, allow_duplicates=True)
 
-    #     session = BTBSession(tunables, scorer)
+        best = session.run(10)
 
-    #     best = session.run(6)
+        assert best['name'] == 'another_tunable'
+        assert best['config'] == {'a_parameter': 2}
 
-    #     assert best['name'] == 'a_tunable'
-    #     assert best['config'] == {'a_parameter': 2}
+    def test_allow_errors(self):
+        tunables = {
+            'a_tunable': {
+                'a_parameter': {
+                    'type': 'int',
+                    'default': 0,
+                    'range': [0, 1]
+                }
+            }
+        }
+
+        scorer = Mock()
+        scorer.side_effect = [
+            Exception,
+            Exception,
+            1
+        ]
+        session = BTBSession(tunables, scorer, max_errors=3)
+
+        best = session.run(3)
+
+        assert best['name'] == 'a_tunable'
+        assert best['config'] == {'a_parameter': 1}

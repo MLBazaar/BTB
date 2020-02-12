@@ -206,7 +206,14 @@ class BTBSession:
             self._tuners[tunable_name] = self._tuner_class(tunable)
 
         else:
-            tunable_name = self._selector.select(self._normalized_scores)
+            if self._normalized_scores:
+                tunable_name = self._selector.select(self._normalized_scores)
+            else:
+                # if _normalized_scores is still empty the selector crashes
+                # this happens when max_errors > 1, all tunables have tuners
+                # and all previous trials have crashed.
+                tunable_name = np.random.choice(list(self._tuners.keys()))
+
             tuner = self._tuners[tunable_name]
             try:
                 LOGGER.info('Generating new proposal configuration for %s', tunable_name)
