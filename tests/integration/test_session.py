@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from unittest.mock import Mock
 
 import pytest
 
@@ -160,15 +159,15 @@ class BTBSessionTest(TestCase):
             }
         }
 
-        scorer = Mock()
-        scorer.side_effect = [
-            Exception,
-            Exception,
-            1
-        ]
-        session = BTBSession(tunables, scorer, max_errors=3)
+        def scorer(name, proposal):
+            if proposal['a_parameter'] == 0:
+                raise Exception()
 
-        best = session.run(3)
+            return 1
+
+        session = BTBSession(tunables, scorer, max_errors=10)
+
+        best = session.run(10)
 
         assert best['name'] == 'a_tunable'
         assert best['config'] == {'a_parameter': 1}
