@@ -203,7 +203,14 @@ class BTBSession:
             LOGGER.info('Obtaining default configuration for %s', tunable_name)
             config = tunable.get_defaults()
 
-            self._tuners[tunable_name] = self._tuner_class(tunable)
+            if tunable.cardinality == 1:
+                LOGGER.warn('Skipping tuner creation for Tunable %s with cardinality 1',
+                            tunable_name)
+                tuner = None
+            else:
+                tuner = self._tuner_class(tunable)
+
+            self._tuners[tunable_name] = tuner
 
         else:
             if self._normalized_scores:
@@ -216,11 +223,14 @@ class BTBSession:
 
             tuner = self._tuners[tunable_name]
             try:
+                if tuner is None:
+                    raise StopTuning('Tunable %s has no tunable hyperparameters', tunable_name)
+
                 LOGGER.info('Generating new proposal configuration for %s', tunable_name)
                 config = tuner.propose(1)
 
             except StopTuning:
-                LOGGER.info('%s has no more configs to propose.' % tunable_name)
+                LOGGER.info('%s has no more configs to propose.', tunable_name)
                 self._remove_tunable(tunable_name)
                 tunable_name, config = self.propose()
 
@@ -281,9 +291,14 @@ class BTBSession:
                 self._best_normalized = normalized
             try:
                 tuner = self._tuners[tunable_name]
-                tuner.record(config, normalized)
+                if tuner is None:
+                    LOGGER.warn('Skipping record for Tunable %s with cardinality 1', tunable_name)
+                else:
+                    tuner.record(config, normalized)
+
             except Exception:
-                LOGGER.exception('Could not record configuration and score to tuner.')
+                LOGGER.exception('Could not record configuration and score for tuner %s.',
+                                 tunable_name)
 
     def run(self, iterations=None):
         """Run the selection and tuning loop for the given number of iterations.
