@@ -81,7 +81,7 @@ class TestBTBSession(TestCase):
         assert instance._scorer is scorer
         assert instance._tuner_class == 'my_tuner'
         assert instance._max_errors == 2
-        assert instance._best_normalized == np.inf
+        assert instance._best_normalized == -np.inf
         assert instance._normalized_scores == defaultdict(list)
         assert instance._tuners == {}
         assert instance._tunable_names == ['my_test_tuner']
@@ -115,7 +115,7 @@ class TestBTBSession(TestCase):
     def test_propose_no_tunables(self):
         # setup
         instance = MagicMock(spec_set=BTBSession)
-        instance._tunable_names = None
+        instance._tunables = None
 
         # run
         with self.assertRaises(StopTuning):
@@ -218,6 +218,43 @@ class TestBTBSession(TestCase):
         with self.assertRaises(ValueError):
             BTBSession.propose(instance)
 
+    @patch('btb.session.isinstance')
+    @patch('btb.session.Tunable')
+    def test_propose_tunable_cardinality_eq_one(self, mock_tunable, mock_isinstance):
+        # setup
+        mock_tunable.from_dict.return_value.cardinality = 1
+        mock_tunable.from_dict.return_value.get_defaults.return_value = 'parameters'
+        mock_isinstance.return_value = True
+
+        instance = MagicMock(spec_set=BTBSession)
+        instance._tuners = {}
+        instance._tunable_names = ['test_tunable']
+        instance.proposals = {}
+
+        instance._make_id.return_value = 1
+
+        # run
+        tunable_name, config = BTBSession.propose(instance)
+
+        # assert
+        instance._make_id.assert_called_once_with('test_tunable', 'parameters')
+        instance._tuner_class.assert_not_called()
+
+        assert instance._tuners == {'test_tunable': None}
+        assert 'test_tunable' == tunable_name
+        assert 'parameters' == config
+
+    def test_propose_tuner_is_none(self):
+        # setup
+        instance = MagicMock(spec_set=BTBSession)
+        instance._tuners = {'test_tunable': None}
+        instance._tunable_names = ['test_tunable']
+        instance._normalized_scores = None
+
+        # run
+        with self.assertRaises(ValueError):
+            BTBSession.propose(instance)
+
     def test_handle_error_errors_lt_max_errors(self):
         # setup
         instance = MagicMock(spec_set=BTBSession)
@@ -241,8 +278,7 @@ class TestBTBSession(TestCase):
         BTBSession.handle_error(instance, 'test')
 
         # assert
-        instance._normalized_scores.pop.assert_called_once_with('test', None)
-        instance._tunable_names.remove.assert_called_once_with('test')
+        instance._remove_tunable.assert_called_once_with('test')
 
     def test_record_score_is_none(self):
         # setup
@@ -284,6 +320,29 @@ class TestBTBSession(TestCase):
         assert instance._best_normalized == 1
 
         tuner.record.assert_called_once_with('config', 1)
+
+    def test_record_score_gt_best_tuner_none(self):
+        # setup
+        instance = MagicMock(spec_set=BTBSession)
+        instance._make_id.return_value = 0
+        instance.proposals = [{'test': 'test'}]
+        instance._tuners = {'test': None}
+        instance.best_proposal = None
+
+        instance._best_normalized = 0
+        instance._normalize.return_value = 1
+        instance._normalized_scores = defaultdict(list)
+
+        # run
+        BTBSession.record(instance, 'test', 'config', 1)
+
+        # assert
+        expected_normalized_scores = defaultdict(list)
+        expected_normalized_scores['test'].append(1)
+
+        assert instance._normalized_scores == expected_normalized_scores
+        assert instance.best_proposal == {'test': 'test', 'score': 1}
+        assert instance._best_normalized == 1
 
     def test_record_score_lt_best(self):
         # setup
