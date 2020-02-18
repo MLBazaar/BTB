@@ -304,27 +304,6 @@
 <span class="sd">    the tunables that have reached as many errors as the user specified.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        _tunables (dict):</span>
-<span class="sd">            Python dictionary that has as keys the name of the tunable and</span>
-<span class="sd">            as value a dictionary with the tunable hyperparameters or an</span>
-<span class="sd">            ``btb.tuning.tunable.Tunable`` instance.</span>
-<span class="sd">        _scorer (callable object / function):</span>
-<span class="sd">            A callable object or function with signature ``scorer(tunable_name, config)``</span>
-<span class="sd">            wich should return only a single value.</span>
-<span class="sd">        _tuner_class (btb.tuning.tuner.BaseTuner):</span>
-<span class="sd">            A tuner based on BTB ``BaseTuner`` class. This tuner will manage the new proposals.</span>
-<span class="sd">            Defaults to ``btb.tuning.tuners.gaussian_process.GPTuner``</span>
-<span class="sd">        _selector_class (btb.selection.selector.Selector):</span>
-<span class="sd">            A selector based on BTB ``Selector`` class. This will determinate which one of</span>
-<span class="sd">            the tunables is performing better, and which one to test next. Defaults to</span>
-<span class="sd">            ``btb.selection.selectors.ucb1.UCB1``</span>
-<span class="sd">        _maximize (bool):</span>
-<span class="sd">            If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller</span>
-<span class="sd">            is better, this should depend on the problem type (maximization or minimization).</span>
-<span class="sd">            Defaults to ``True``.</span>
-<span class="sd">        _max_erors (int):</span>
-<span class="sd">            Amount of errors allowed for a tunable to not generate a score. Once this amount of</span>
-<span class="sd">            errors is reached, the tunable will be removed from the list. Defaults to 1.</span>
 <span class="sd">        best_proposal (dict):</span>
 <span class="sd">            Best configuration found with the name of the tunable and the hyperparameters</span>
 <span class="sd">            and crossvalidated score obtained for it.</span>
@@ -336,14 +315,29 @@
 <span class="sd">            Amount of iterations run.</span>
 <span class="sd">        errors (list):</span>
 <span class="sd">            A list with produced errors during the session.</span>
-<span class="sd">        _best_normalized (float):</span>
-<span class="sd">            Best normalized score obtained.</span>
-<span class="sd">        _tunable_names (list):</span>
-<span class="sd">            A list that contains the tunables that still have proposals.</span>
-<span class="sd">        _normalized_scores (defaultdict):</span>
-<span class="sd">            Dictionary with the name of the tunables and the obtained normalized scores.</span>
-<span class="sd">        _tuners (dict):</span>
-<span class="sd">            The name of the tunable and the tuner instance to which this belongs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tunables (dict):</span>
+<span class="sd">            Python dictionary that has as keys the name of the tunable and</span>
+<span class="sd">            as value a dictionary with the tunable hyperparameters or an</span>
+<span class="sd">            ``btb.tuning.tunable.Tunable`` instance.</span>
+<span class="sd">        scorer (callable object / function):</span>
+<span class="sd">            A callable object or function with signature ``scorer(tunable_name, config)``</span>
+<span class="sd">            wich should return only a single value.</span>
+<span class="sd">        tuner_class (btb.tuning.tuner.BaseTuner):</span>
+<span class="sd">            A tuner based on BTB ``BaseTuner`` class. This tuner will manage the new proposals.</span>
+<span class="sd">            Defaults to ``btb.tuning.tuners.gaussian_process.GPTuner``</span>
+<span class="sd">        selector_class (btb.selection.selector.Selector):</span>
+<span class="sd">            A selector based on BTB ``Selector`` class. This will determinate which one of</span>
+<span class="sd">            the tunables is performing better, and which one to test next. Defaults to</span>
+<span class="sd">            ``btb.selection.selectors.ucb1.UCB1``</span>
+<span class="sd">        maximize (bool):</span>
+<span class="sd">            If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller</span>
+<span class="sd">            is better, this should depend on the problem type (maximization or minimization).</span>
+<span class="sd">            Defaults to ``True``.</span>
+<span class="sd">        max_erors (int):</span>
+<span class="sd">            Amount of errors allowed for a tunable to not generate a score. Once this amount of</span>
+<span class="sd">            errors is reached, the tunable will be removed from the list. Defaults to 1.</span>
 <span class="sd">        verbose (bool):</span>
 <span class="sd">            If ``True`` a progress bar will be displayed for the ``run`` process.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -353,18 +347,17 @@
     <span class="n">_selector</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_maximize</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_max_errors</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_best_normalized</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_tunable_names</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_normalized_scores</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_tuners</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_range</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">best_proposal</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">best_score</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">proposals</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">iterations</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">errors</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="n">_best_normalized</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_tunable_names</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_normalized_scores</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_tuners</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_range</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -387,7 +380,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_score</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_best_normalized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_normalized</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_range</span> <span class="o">=</span> <span class="n">trange</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="nb">range</span>
@@ -423,6 +416,21 @@
 
         <span class="k">return</span> <span class="n">md5</span><span class="p">(</span><span class="n">hashable</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">_remove_tunable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove a tunable from the candidates list.</span>
+
+<span class="sd">        This is necessary when:</span>
+<span class="sd">            - Duplicates are not allowed and the tunable has exhausted all its</span>
+<span class="sd">              configurations.</span>
+<span class="sd">            - The tunable has failed more than ``max_errors`` times.</span>
+
+<span class="sd">        When this happens, the tunable is removved from the tunables dict</span>
+<span class="sd">        and its scores are removed from the normmalized_scores dict used by</span>
+<span class="sd">        the selectors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
 <div class="viewcode-block" id="BTBSession.propose"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Propose a new configuration to score.</span>
 
@@ -452,11 +460,11 @@
 <span class="sd">            StopTuning:</span>
 <span class="sd">                If the ``BTBSession`` has run out of proposals to generate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span><span class="s1">&#39;There are no tunables left to try.&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">):</span>
-            <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">)]</span>
+            <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">)]</span>
             <span class="n">tunable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tunable</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -469,19 +477,35 @@
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Obtaining default configuration for </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">tunable</span><span class="o">.</span><span class="n">get_defaults</span><span class="p">()</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuner_class</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Skipping tuner creation for Tunable </span><span class="si">%s</span><span class="s1"> with cardinality 1&#39;</span><span class="p">,</span>
+                            <span class="n">tunable_name</span><span class="p">)</span>
+                <span class="n">tuner</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tuner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuner_class</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tuner</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">:</span>
+                <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if _normalized_scores is still empty the selector crashes</span>
+                <span class="c1"># this happens when max_errors &gt; 1, all tunables have tuners</span>
+                <span class="c1"># and all previous trials have crashed.</span>
+                <span class="n">tunable_name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
             <span class="n">tuner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
             <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tuner</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span><span class="s1">&#39;Tunable </span><span class="si">%s</span><span class="s1"> has no tunable hyperparameters&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+
                 <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Generating new proposal configuration for </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
                 <span class="n">config</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
             <span class="k">except</span> <span class="n">StopTuning</span><span class="p">:</span>
-                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> has no more configs to propose.&#39;</span> <span class="o">%</span> <span class="n">tunable_name</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> has no more configs to propose.&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_remove_tunable</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span>
                 <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propose</span><span class="p">()</span>
 
         <span class="n">proposal_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_id</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
@@ -508,8 +532,7 @@
 
         <span class="k">if</span> <span class="n">errors</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_errors</span><span class="p">:</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Too many errors: </span><span class="si">%s</span><span class="s1">. Removing tunable </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_tunable</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BTBSession.record"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Record the configuration and the obtained score to the tuner.</span>
@@ -542,9 +565,14 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_best_normalized</span> <span class="o">=</span> <span class="n">normalized</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">tuner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
-                <span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">normalized</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tuner</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Skipping record for Tunable </span><span class="si">%s</span><span class="s1"> with cardinality 1&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">normalized</span><span class="p">)</span>
+
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Could not record configuration and score to tuner.&#39;</span><span class="p">)</span></div>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Could not record configuration and score for tuner </span><span class="si">%s</span><span class="s1">.&#39;</span><span class="p">,</span>
+                                 <span class="n">tunable_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BTBSession.run"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run the selection and tuning loop for the given number of iterations.</span>
