@@ -82,7 +82,7 @@ def build_model(name, hyperparameters):
 def score_model(name, hyperparameters):
     model = build_model(name, hyperparameters)
     r2_scorer = make_scorer(r2_score)
-    scores = cross_val_score(model, X_train, y_train, scoring=r2_scorer)
+    scores = cross_val_score(model, X_train, y_train, scoring=r2_scorer, cv=5)
     return scores.mean()
 
 dataset = load_dataset()
