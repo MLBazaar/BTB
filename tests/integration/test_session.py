@@ -129,6 +129,45 @@ class BTBSessionTest(TestCase):
         assert best['name'] == 'a_tunable'
         assert best['config'] == {'a_parameter': 2}
 
+    def test_normalized_score_becomes_none(self):
+        proposals = [
+            1,
+            0,
+        ]
+
+        def scorer(name, proposal):
+            if name == 'another_tunable':
+                raise Exception()
+
+            else:
+                score = proposals.pop(0)
+                if score == 1:
+                    return score
+                else:
+                    raise Exception()
+
+        tunables = {
+            'a_tunable': {
+                'a_parameter': {
+                    'type': 'int',
+                    'default': 0,
+                    'range': [0, 2]
+                }
+            },
+            'another_tunable': {
+                'a_parameter': {
+                    'type': 'int',
+                    'default': 0,
+                    'range': [0, 2]
+                }
+            }
+        }
+
+        session = BTBSession(tunables, scorer)
+
+        with pytest.raises(StopTuning):
+            session.run(4)
+
     @pytest.mark.skip(reason="This is not implemented yet")
     def test_allow_duplicates(self):
         tunables = {

@@ -128,6 +128,7 @@ class TestBTBSession(TestCase):
 
         # assert
         assert tunable_name == 'test_name'
+        mock_np_random_choice.assert_not_called()
         selector.select.assert_called_once_with([
             ('test_name', 0.1),
             ('second_test_name', 0.2),
