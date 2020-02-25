@@ -10,6 +10,9 @@ What is BTB?
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
 
+Overview
+--------
+
 *BTB* ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning
 systems such as AutoML. It provides an easy-to-use interface for *tuning* and *selection*.
 This backend helps the tuning process of the hyperparameters for any given *objective_function*.
@@ -41,17 +44,15 @@ was presented in 2019 as part of the Machine Learning Bazaar:
    :titlesonly:
 
    self
-   getting_started/install
-   getting_started/quickstart
+   install
+   quickstart
 
 .. toctree::
    :caption: Advanced Usage
    :maxdepth: 1
 
-   advanced_usage/tunable
-   advanced_usage/tuning
-   advanced_usage/selection
-   advanced_usage/btb_session
+   advanced_usage/tuners
+   advanced_usage/selectors
 
 .. toctree::
    :caption: API Reference
