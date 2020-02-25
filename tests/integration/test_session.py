@@ -130,51 +130,44 @@ class BTBSessionTest(TestCase):
         assert best['config'] == {'a_parameter': 2}
 
     def test_normalized_score_becomes_none(self):
+        """Tunables that worked at some point but end up removed are not tried again.
+
+        After commit ``6a08dc3cf1b68b35630cae6a87783aec4e2c9f83`` the following
+        scenario has been observed:
+
+        - One tunable produces a score at least once and then fails the next trials.
+        - All the other tunables never produce any score.
+        - Once all the tuners are created, only the one that produced a score is used.
+        - After enough errors, this one is discarded, so `_normalized_errors` is empty.
+        - Since a random.choice is used over the list of tunables, which still contains
+          the one tha has been discarded, at some point the discarded one is tried again.
+
+        This test certifies that this scenario cannot happen again, by validating that
+        the number of errors is always ``max_errors`` at most.
         """
-        Due to a bug in commit ``@531990e``, we create this test to avoid the following problem:
-
-        ``BTBSession`` was runing with a ``max_errors=5``, with two tunables. One of them doesn't
-        generate any score and the other one generates scores until it starts failing.
-        When the first one didn't generate any score for ``5`` iterations, it gets removed and
-        only the one that generated scores is left.
-
-        This one stops generating new scores and after ``5`` errors should be removed and not used
-        anymore. However, this one gets proposed atleast one more time, when
-        ``self._normalized_scores`` becomes ``None`` this one is being returned, and also there
-        was a posibility that the first one gets returned aswell as ``numpy.random`` was being
-        called with the wrong dictionary keys: ``self._tuners.keys()`` instead of
-        ``self._tunables.keys()``.
-
-        As this test doesn't raise any exception, it was detected thro the log. We are using
-        ``session.iterations`` to ensure that after the ``max_errors`` for both tunables is
-        reached, the ``session`` ends and doesn't continue like in the commit above.
-        """
-        proposals = [1, 1, 0, 0, 0]
+        scores = []
 
         def scorer(name, proposal):
-            if name == 'another_tunable':
-                raise Exception()
+            """Produce a score for the first trial and then fail forever."""
+            if not scores:
+                scores.append(1)   # boolean variable fails due to scope unles using global
+                return 1
 
-            else:
-                score = proposals.pop(0)
-                if score == 1:
-                    return score
-                else:
-                    raise Exception()
+            raise Exception()
 
         tunables = {
             'a_tunable': {
                 'a_parameter': {
                     'type': 'int',
                     'default': 0,
-                    'range': [0, 2]
+                    'range': [0, 10]
                 }
             },
             'another_tunable': {
                 'a_parameter': {
                     'type': 'int',
                     'default': 0,
-                    'range': [0, 2]
+                    'range': [0, 10]
                 }
             }
         }
@@ -182,10 +175,9 @@ class BTBSessionTest(TestCase):
         session = BTBSession(tunables, scorer, max_errors=3)
 
         with pytest.raises(StopTuning):
-            session.run(22)
+            session.run(8)
 
-        # 9 is 3 for another_tunable, 5 for a_tunable, +1 from run before StopTuning is raised.
-        assert session.iterations == 9
+        assert session.errors == {'a_tunable': 3, 'another_tunable': 3}
 
     @pytest.mark.skip(reason="This is not implemented yet")
     def test_allow_duplicates(self):
