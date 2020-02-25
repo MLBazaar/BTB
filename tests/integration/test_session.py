@@ -130,10 +130,7 @@ class BTBSessionTest(TestCase):
         assert best['config'] == {'a_parameter': 2}
 
     def test_normalized_score_becomes_none(self):
-        proposals = [
-            1,
-            0,
-        ]
+        proposals = [1, 1, 0, 0, 0]
 
         def scorer(name, proposal):
             if name == 'another_tunable':
@@ -163,10 +160,13 @@ class BTBSessionTest(TestCase):
             }
         }
 
-        session = BTBSession(tunables, scorer)
+        session = BTBSession(tunables, scorer, max_errors=3)
 
         with pytest.raises(StopTuning):
-            session.run(4)
+            session.run(22)
+
+        # 9 is 3 for another_tunable, 5 for a_tunable, +1 from run before StopTuning is raised.
+        assert session.iterations == 9
 
     @pytest.mark.skip(reason="This is not implemented yet")
     def test_allow_duplicates(self):
