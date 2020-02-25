@@ -146,12 +146,16 @@ class TestBTBSession(TestCase):
             'second_test_name': 'second_test',
         }
 
+        # python3.5 randomness issue, we read as in `btb.session`
+        expected_mock_call = list(instance._tunables.keys())
+
         # run
         tunable_name = BTBSession._get_next_tunable_name(instance)
 
         # assert
+
         assert tunable_name == 'test_name'
-        mock_np_random_choice.assert_called_once_with(['test_name', 'second_test_name'])
+        mock_np_random_choice.assert_called_once_with(expected_mock_call)
 
     def test_propose_no_tunables(self):
         # setup
