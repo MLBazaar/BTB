@@ -130,6 +130,25 @@ class BTBSessionTest(TestCase):
         assert best['config'] == {'a_parameter': 2}
 
     def test_normalized_score_becomes_none(self):
+        """
+        Due to a bug in commit ``@531990e``, we create this test to avoid the following problem:
+
+        ``BTBSession`` was runing with a ``max_errors=5``, with two tunables. One of them doesn't
+        generate any score and the other one generates scores until it starts failing.
+        When the first one didn't generate any score for ``5`` iterations, it gets removed and
+        only the one that generated scores is left.
+
+        This one stops generating new scores and after ``5`` errors should be removed and not used
+        anymore. However, this one gets proposed atleast one more time, when
+        ``self._normalized_scores`` becomes ``None`` this one is being returned, and also there
+        was a posibility that the first one gets returned aswell as ``numpy.random`` was being
+        called with the wrong dictionary keys: ``self._tuners.keys()`` instead of
+        ``self._tunables.keys()``.
+
+        As this test doesn't raise any exception, it was detected thro the log. We are using
+        ``session.iterations`` to ensure that after the ``max_errors`` for both tunables is
+        reached, the ``session`` ends and doesn't continue like in the commit above.
+        """
         proposals = [1, 1, 0, 0, 0]
 
         def scorer(name, proposal):
