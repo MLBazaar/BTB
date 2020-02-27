@@ -1,5 +1,5 @@
-What is BTB?
-=================
+Overview
+========
 
 .. image:: images/BTB-Icon-small.png
    :width: 300 px
@@ -9,9 +9,6 @@ What is BTB?
 * Free software: `MIT license <https://github.com/HDI-Project/BTB/blob/master/LICENSE>`_
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
-
-Overview
---------
 
 *BTB* ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning
 systems such as AutoML. It provides an easy-to-use interface for *tuning* and *selection*.
@@ -40,35 +37,35 @@ was presented in 2019 as part of the Machine Learning Bazaar:
   Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. Sigmod 2020.
 
 .. toctree::
-   :caption: Getting Started
-   :titlesonly:
+   :hidden:
+   :maxdepth: 2
 
    self
    install
-   quickstart
 
 .. toctree::
-   :caption: Advanced Usage
+   :caption: User Guides
    :maxdepth: 1
 
-   advanced_usage/tuners
-   advanced_usage/selectors
+   user_guides/tuners
+   user_guides/selectors
+   user_guides/btbsession
 
 .. toctree::
-   :caption: API Reference
+   :caption: Reference
    :titlesonly:
 
-   api/btb.session
-   api/btb.tuning
-   api/btb.selection
+   Session Reference <api/btb.session>
+   Tuning Reference <api/btb.tuning>
+   Selection Reference <api/btb.selection>
 
 .. toctree::
-   :caption: Resources
-   :titlesonly:
+   :caption: Development Notes
+   :hidden:
 
    contributing
+   history
    authors
-   changelog
 
 Indices and tables
 ==================

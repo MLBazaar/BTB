@@ -1,15 +1,9 @@
-Quickstart
+BTBSession
 ==========
 
 Below there is a short example using ``BTBSession`` to perform tuning over
 ``ExtraTreesRegressor`` and ``RandomForestRegressor`` ensemblers from `scikit-learn`_
 and both of them are evaluated against the `Boston dataset`_ regression problem.
-
-.. note:: Some additional dependencies are required in order to run this Quickstart.
-          Make sure that `you have already installed them`_.
-
-Create a scoring function
--------------------------
 
 Let's import all the needed packages in order to run our code. We will import the ``load_boston``
 from ``sklearn.datasets`` and two estimators (``ExtraTreesRegressor`` and ``RandomForest``). In
