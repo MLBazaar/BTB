@@ -129,6 +129,56 @@ class BTBSessionTest(TestCase):
         assert best['name'] == 'a_tunable'
         assert best['config'] == {'a_parameter': 2}
 
+    def test_normalized_score_becomes_none(self):
+        """Tunables that worked at some point but end up removed are not tried again.
+
+        After commit ``6a08dc3cf1b68b35630cae6a87783aec4e2c9f83`` the following
+        scenario has been observed:
+
+        - One tunable produces a score at least once and then fails the next trials.
+        - All the other tunables never produce any score.
+        - Once all the tuners are created, only the one that produced a score is used.
+        - After enough errors, this one is discarded, so `_normalized_errors` is empty.
+        - Since a random.choice is used over the list of tunables, which still contains
+          the one tha has been discarded, at some point the discarded one is tried again.
+
+        This test certifies that this scenario cannot happen again, by validating that
+        the number of errors is always ``max_errors`` at most.
+        """
+        scores = []
+
+        def scorer(name, proposal):
+            """Produce a score for the first trial and then fail forever."""
+            if not scores:
+                scores.append(1)   # boolean variable fails due to scope unles using global
+                return 1
+
+            raise Exception()
+
+        tunables = {
+            'a_tunable': {
+                'a_parameter': {
+                    'type': 'int',
+                    'default': 0,
+                    'range': [0, 10]
+                }
+            },
+            'another_tunable': {
+                'a_parameter': {
+                    'type': 'int',
+                    'default': 0,
+                    'range': [0, 10]
+                }
+            }
+        }
+
+        session = BTBSession(tunables, scorer, max_errors=3)
+
+        with pytest.raises(StopTuning):
+            session.run(8)
+
+        assert session.errors == {'a_tunable': 3, 'another_tunable': 3}
+
     @pytest.mark.skip(reason="This is not implemented yet")
     def test_allow_duplicates(self):
         tunables = {
