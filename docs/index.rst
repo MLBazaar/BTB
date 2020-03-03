@@ -1,10 +1,34 @@
-Overview
-========
+.. image:: https://img.shields.io/badge/Development%20Status-2%20--%20Pre--Alpha-yellow
+    :target: https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha
+    :alt: Development Status Shield
+
+.. image:: https://img.shields.io/pypi/v/baytune.svg
+    :target: https://pypi.python.org/pypi/baytune
+    :alt: PyPI Shield
+
+.. image:: https://travis-ci.org/HDI-Project/BTB.svg?branch=master
+    :target: https://travis-ci.org/HDI-Project/BTB
+    :alt: Travis CI Shield
+
+.. image:: https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/HDI-Project/BTB
+    :alt: Codecov Shield
+
+.. image:: https://pepy.tech/badge/baytune
+    :target: https://pepy.tech/project/baytune
+    :alt: Downloads Shield
+
+|
 
 .. image:: images/BTB-Icon-small.png
-   :width: 300 px
-   :alt: BTB
+   :alt: BTB Logo
    :align: center
+   :target: https://github.com/HDI-Project/BTB
+
+.. centered:: A simple, extensible backend for developing auto-tuning systems
+
+Overview
+========
 
 * Free software: `MIT license <https://github.com/HDI-Project/BTB/blob/master/LICENSE>`_
 * Documentation: https://HDI-Project.github.io/BTB
@@ -40,7 +64,7 @@ was presented in 2019 as part of the Machine Learning Bazaar:
    :hidden:
    :maxdepth: 2
 
-   self
+   Overview<self>
    install
 
 .. toctree::
@@ -54,6 +78,7 @@ was presented in 2019 as part of the Machine Learning Bazaar:
 .. toctree::
    :caption: Reference
    :titlesonly:
+   :maxdepth: 1
 
    Session Reference <api/btb.session>
    Tuning Reference <api/btb.tuning>
