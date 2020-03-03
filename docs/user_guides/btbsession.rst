@@ -1,6 +1,15 @@
 BTBSession
 ==========
 
+A ``BTBSession`` represents the process of selecting and tuning several tunables
+until the best possible configuration for a specific ``scorer`` is found.
+
+For this, a loop is run in which for each iteration a combination of a ``Selector`` and
+``Tuner`` is used to decide which tunable to score next and with which hyperparameters.
+
+While running, the ``BTBSession`` handles the errors discarding, if configured to do so,
+the tunables that have reached as many errors as the user specified.
+
 Below there is a short example using ``BTBSession`` to perform tuning over
 ``ExtraTreesRegressor`` and ``RandomForestRegressor`` ensemblers from `scikit-learn`_
 and both of them are evaluated against the `Boston dataset`_ regression problem.
@@ -109,7 +118,7 @@ order to evaluate wich of this two machine learning models will obtain a better 
 .. ipython:: python
 
     session = BTBSession(tunables, score_model)
-    session.run(10)
+    session.run(5)
 
 Once this 10 iterations are done, our session will return the ``best_proposal``, or we can access
 it thro ``session.best_proposal``. Inside this dictionary we will find the ``name``, ``config`` and

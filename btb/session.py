@@ -20,7 +20,7 @@ LOGGER = logging.getLogger(__name__)
 class BTBSession:
     """BTBSession class.
 
-    A BTBSession represents the process of selecting and tuning several tunables
+    A ``BTBSession`` represents the process of selecting and tuning several tunables
     until the best possible configuration for a specific ``scorer`` is found.
 
     For this, a loop is run in which for each iteration a combination of a ``Selector`` and
