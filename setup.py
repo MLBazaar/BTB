@@ -56,8 +56,9 @@ development_requires = [
 
     # docs
     'autodocsumm>=0.1.10',
+    'ipython>=6.5.0',
     'm2r>=0.2.0',
-    'Sphinx>=1.7.1',
+    'Sphinx>=1.7.1,<2.4',
     'sphinx_rtd_theme>=0.2.4',
 
     # style check
@@ -110,6 +111,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.5',
+    version='0.3.6.dev2',
     zip_safe=False,
 )

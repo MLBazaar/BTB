@@ -1,5 +1,23 @@
 # History
 
+## 0.3.6 - 2020-03-04
+
+This release improves `BTBSession` error handling and allows `Tunables` with cardinality
+equal to 1 to be scored with `BTBSession`. Also, we provide a new documentation for
+this version of `BTB`.
+
+### Internal Improvements
+
+Improved documentation, unittests and integration tests.
+
+### Resolved Issues
+
+* Issue #164: Improve documentation for `v0.3.5+`.
+* Issue #166: Wrong erro raised by BTBSession on too many errors.
+* Issue #170: Tuner has no scores attribute until record is run once.
+* Issue #175: BTBSession crashes when record is not performed.
+* Issue #176: BTBSession fails to select a proper Tunable when normalized_scores becomse None.
+
 ## 0.3.5 - 2020-01-21
 
 With this release we are improving `BTBSession` by adding private attributes, or not intended to

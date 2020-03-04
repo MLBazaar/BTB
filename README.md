@@ -7,51 +7,44 @@
 
 A simple, extensible backend for developing auto-tuning systems.
 
+[![Development Status](https://img.shields.io/badge/Development%20Status-2%20--%20Pre--Alpha-yellow)](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 [![PyPi Shield](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
 [![Travis CI Shield](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
 [![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
 
-
 * Free software: MIT license
+* Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
 
 # Overview
 
-Bayesian Tuning and Bandits is a simple, extensible backend for developing auto-tuning systems such as AutoML systems. It is currently being used in [ATM](https://github.com/HDI-Project/ATM) (an AutoML system that allows tuning of classifiers) and MIT's system for the DARPA [Data driven discovery of models program](https://www.darpa.mil/program/data-driven-discovery-of-models).
+BTB ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning
+systems such as AutoML systems. It provides an easy-to-use interface for *tuning* and *selection*.
 
-**BTB** is under active development. If you come across any issues, please report them [here](https://github.com/HDI-Project/BTB/issues/new).
+It is currently being used in several AutoML systems:
+- [ATM](https://github.com/HDI-Project/ATM), distributed, multi-tenant AutoML system for
+classifier tuning
+- MIT TA2, MIT's system for the DARPA [Data-driven discovery of models](
+https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
+- [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose
+AutoML system
 
 # Install
 
 ## Requirements
 
-**BTB** has been developed and tested on [Python 3.5, 3.6 and 3.7](https://www.python.org/downloads)
+**BTB** has been developed and tested on [Python 3.5 and 3.6](https://www.python.org/downloads/)
 
 Also, although it is not strictly required, the usage of a
 [virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
 interfering with other software installed in the system where **BTB** is run.
 
-These are the minimum commands needed to create a virtualenv using python3.6 for **BTB**:
+## Install with pip
 
-```bash
-pip install virtualenv
-virtualenv -p $(which python3.6) btb-venv
-```
-
-Afterwards, you have to execute this command to have the virtualenv activated:
-
-```bash
-source btb-venv/bin/activate
-```
-
-Remember about executing it every time you start a new console to work on **BTB**!
-
-## Install using Pip
-
-After creating the virtualenv and activating it, we recommend using
-[pip](https://pip.pypa.io/en/stable/) in order to install **BTB**:
+The easiest and recommended way to install **BTB** is using [pip](
+https://pip.pypa.io/en/stable/):
 
 ```bash
 pip install baytune
@@ -59,209 +52,137 @@ pip install baytune
 
 This will pull and install the latest stable release from [PyPi](https://pypi.org/).
 
-## Install from Source
-
-With your virtualenv activated, you can clone the repository and install it from
-source by running `make install` on the `stable` branch:
-
-```bash
-git clone git@github.com:HDI-Project/BTB.git
-cd BTB
-git checkout stable
-make install
-```
-
-## Install for Development
-
-If you want to contribute to the project, a few more steps are required to make the project ready
-for development.
-
-Please head to the [Contributing Guide](https://HDI-Project.github.io/BTB/contributing.html#get-started)
-for more details about this process.
+If you want to install from source or contribute to the project please read the
+[Contributing Guide](https://hdi-project.github.io/BTB/contributing.html#get-started).
 
 # Quickstart
 
-## Tuners
+Below there is a short example using ``BTBSession`` to perform tuning over
+``ExtraTreesRegressor`` and ``RandomForestRegressor`` ensemblers from [scikit-learn](
+https://scikit-learn.org/) and both of them are evaluated against the [Boston dataset](
+http://lib.stat.cmu.edu/datasets/boston) regression problem.
 
-Tuners are specifically designed to speed up the process of selecting the
-optimal hyper parameter values for a specific machine learning algorithm.
+```python3
+from sklearn.datasets import load_boston as load_dataset
+from sklearn.ensemble import ExtraTreesRegressor, RandomForestRegressor
+from sklearn.metrics import make_scorer, r2_score
+from sklearn.model_selection import cross_val_score, train_test_split
 
-`btb.tuning.tuners` defines Tuners: classes with a fit/predict/propose interface for
-suggesting sets of hyperparameters.
+from btb.session import BTBSession
 
-This is done by following a Bayesian Optimization approach and iteratively:
+models = {
+    'random_forest': RandomForestRegressor,
+    'extra_trees': ExtraTreesRegressor,
+}
 
-* letting the tuner propose new sets of hyper parameter
-* fitting and scoring the model with the proposed hyper parameters
-* passing the score obtained back to the tuner
+def build_model(name, hyperparameters):
+    model_class = models[name]
+    return model_class(random_state=0, **hyperparameters)
 
-At each iteration the tuner will use the information already obtained to propose
-the set of hyper parameters that it considers that have the highest probability
-to obtain the best results.
+def score_model(name, hyperparameters):
+    model = build_model(name, hyperparameters)
+    r2_scorer = make_scorer(r2_score)
+    scores = cross_val_score(model, X_train, y_train, scoring=r2_scorer, cv=5)
+    return scores.mean()
 
-To instantiate a ``Tuner`` all we need is a ``Tunable`` class with a collection of
-``hyperparameters``.
+dataset = load_dataset()
 
-``` python
->>> from btb.tuning import Tunable
->>> from btb.tuning.tuners import GPTuner
->>> from btb.tuning.hyperparams import IntHyperParam
->>> hyperparams = {
-...     'n_estimators': IntHyperParam(min=10, max=500),
-...     'max_depth': IntHyperParam(min=10, max=500),
-... }
->>> tunable = Tunable(hyperparams)
->>> tuner = GPTuner(tunable)
+X_train, X_test, y_train, y_test = train_test_split(
+    dataset.data, dataset.target, test_size=0.3, random_state=0)
+
+tunables = {
+    'random_forest': {
+        'n_estimators': {
+            'type': 'int',
+            'default': 2,
+            'range': [1, 1000]
+        },
+        'max_features': {
+            'type': 'str',
+            'default': 'log2',
+            'range': [None, 'auto', 'log2', 'sqrt']
+        },
+        'min_samples_split': {
+            'type': 'int',
+            'default': 2,
+            'range': [2, 20]
+        },
+        'min_samples_leaf': {
+            'type': 'int',
+            'default': 2,
+            'range': [1, 20]
+        },
+    },
+    'extra_trees': {
+        'n_estimators': {
+            'type': 'int',
+            'default': 2,
+            'range': [1, 1000]
+        },
+        'max_features': {
+            'type': 'str',
+            'default': 'log2',
+            'range': [None, 'auto', 'log2', 'sqrt']
+        },
+        'min_samples_split': {
+            'type': 'int',
+            'default': 2,
+            'range': [2, 20]
+        },
+        'min_samples_leaf': {
+            'type': 'int',
+            'default': 2,
+            'range': [1, 20]
+        },
+    }
+}
+
+session = BTBSession(tunables, score_model)
+best_proposal = session.run(20)
 ```
 
-Then we perform the following three steps in a loop.
+# What's next?
 
-1. Let the Tuner propose a new set of parameters:
-
-    ``` python
-    >>> parameters = tuner.propose()
-    >>> parameters
-    {'n_estimators': 297, 'max_depth': 3}
-    ```
-
-2. Fit and score a new model using these parameters:
-
-    ``` python
-    >>> model = RandomForestClassifier(**parameters)
-    >>> model.fit(X_train, y_train)
-    RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
-                max_depth=3, max_features='auto', max_leaf_nodes=None,
-                min_impurity_decrease=0.0, min_impurity_split=None,
-                min_samples_leaf=1, min_samples_split=2,
-                min_weight_fraction_leaf=0.0, n_estimators=297, n_jobs=1,
-                oob_score=False, random_state=None, verbose=0,
-                warm_start=False)
-    >>> score = model.score(X_test, y_test)
-    >>> score
-    0.77
-    ```
-
-3. Pass the used parameters and the score obtained back to the tuner:
-
-    ``` python
-    tuner.record(parameters, score)
-    ```
-
-At each iteration, the ``Tuner`` will use the information about the previous tests
-to evaluate and propose the set of parameter values that have the highest probability
-of obtaining the highest score.
-
-### Selectors
-
-The selectors are intended to be used in combination with tuners in order to find
-out and decide which model seems to get the best results once it is properly fine tuned.
-
-In order to use the selector we will create a ``Tuner`` instance for each model that
-we want to try out, as well as the ``Selector`` instance.
-
-```python
->>> from sklearn.ensemble import RandomForestClassifier
->>> from sklearn.svm import SVC
->>> from btb.selection import UCB1
->>> from btb.tuning.hyperparams import FloatHyperParam
->>> models = {
-...     'RF': RandomForestClassifier,
-...     'SVC': SVC
-... }
->>> selector = UCB1(['RF', 'SVC'])
->>> rf_hyperparams = {
-...     'n_estimators': IntHyperParam(min=10, max=500),
-...     'max_depth': IntHyperParam(min=3, max=20)
-... }
->>> rf_tunable = Tunable(rf_hyperparams)
->>> svc_hyperparams = {
-...     'C': FloatHyperParam(min=0.01, max=10.0),
-...     'gamma': FloatHyperParam(0.000000001, 0.0000001)
-... }
->>> svc_tunable = Tunable(svc_hyperparams)
->>> tuners = {
-...     'RF': GPTuner(rf_tunable),
-...     'SVC': GPTuner(svc_tunable)
-... }
-```
-
-Then we perform the following steps in a loop.
-
-1. Pass all the obtained scores to the selector and let it decide which model to test.
-
-    ``` python
-    >>> next_choice = selector.select({
-    ...     'RF': tuners['RF'].scores,
-    ...     'SVC': tuners['SVC'].scores
-    ... })
-    >>> next_choice
-    'RF'
-    ```
-
-2. Obtain a new set of parameters from the indicated tuner and create a model instance.
-
-    ``` python
-    >>> parameters = tuners[next_choice].propose()
-    >>> parameters
-    {'n_estimators': 289, 'max_depth': 18}
-    >>> model = models[next_choice](**parameters)
-    ```
-
-3. Evaluate the score of the new model instance and pass it back to the tuner
-
-    ``` python
-    >>> model.fit(X_train, y_train)
-    RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
-                max_depth=18, max_features='auto', max_leaf_nodes=None,
-                min_impurity_decrease=0.0, min_impurity_split=None,
-                min_samples_leaf=1, min_samples_split=2,
-                min_weight_fraction_leaf=0.0, n_estimators=289, n_jobs=1,
-                oob_score=False, random_state=None, verbose=0,
-                warm_start=False)
-    >>> score = model.score(X_test, y_test)
-    >>> score
-    0.89
-    >>> tuners[next_choice].record(parameters, score)
-    ```
-
-## What's next?
 For more details about **BTB** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/BTB/)!
 
-## Citing BTB
+Also do not forget to have a look at the [notebook tutorials](
+https://github.com/HDI-Project/BTB/tree/master/examples/tutorials)!
+
+# Citing BTB
 
 If you use BTB, please consider citing our related papers.
 
-For the current design of BTB and its usage within the larger *Machine Learning Bazaar* project at the MIT Data To AI Lab, please see:
+- For the initial design and implementation of BTB (v0.1):
 
-Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. ["The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development."](https://arxiv.org/abs/1905.08942) arXiv Preprint 1905.08942. 2019.
+  Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. [(pdf)](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf)
 
-``` bibtex
-@article{smith2019mlbazaar,
-  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
-  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
-  journal = {arXiv e-prints},
-  year = {2019},
-  eid = {arXiv:1905.08942},
-  pages = {arXiv:1905.08942},
-  archivePrefix = {arXiv},
-  eprint = {1905.08942},
-}
-```
-
-For the initial design of BTB, usage of Recommenders, and initial evaluation, please see:
-
-Laura Gustafson. ["Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML."](https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf) Masters thesis, MIT EECS, June 2018.
-
-``` bibtex
-  @mastersthesis{gustafson2018bayesian,
-    author = {Gustafson, Laura},
+  ``` bibtex
+  @MastersThesis{Laura:2018,
     title = {Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML},
+    author = {Laura Gustafson},
     month = {May},
     year = {2018},
     url = {https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf},
     type = {M. Eng Thesis},
-    school = {Massachusetts Institute of Technology},
     address = {Cambridge, MA},
+    school = {Massachusetts Institute of Technology}",
   }
-```
+  ```
+
+- For recent designs of BTB and its usage within the larger *ML Bazaar* project within the MIT Data to AI Lab:
+
+  Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. ["The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development."](https://arxiv.org/abs/1905.08942) arXiv Preprint 1905.08942. 2019.
+
+  ``` bibtex
+  @article{smith2019mlbazaar,
+    author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+    title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+    journal = {arXiv e-prints},
+    year = {2019},
+    eid = {arXiv:1905.08942},
+    pages = {arXiv:1905.08942},
+    archivePrefix = {arXiv},
+    eprint = {1905.08942},
+  }
+  ```
