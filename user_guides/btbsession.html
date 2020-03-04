@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BTBSession &mdash; BTB 0.3.6.dev2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="btb.session module" href="../api/btb.session.html" />
+    <link rel="prev" title="Selectors" href="selectors.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BTB
+          
+
+          
+            
+            <img src="../_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.6.dev2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#stable-release">Stable Release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#from-source">From source</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">User Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tuners.html">Tuners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">BTBSession</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/btb.session.html">Session Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/btb.tuning.html">Tuning Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/btb.selection.html">Selection Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Development Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#release-workflow">Release Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#release-candidates">Release Candidates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id1">0.3.5 - 2020-01-21</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#internal-improvements">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#resolved-issues">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id2">0.3.4 - 2019-12-24</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-features">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id3">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id4">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id5">0.3.3 - 2019-12-11</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id6">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id7">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id8">0.3.2 - 2019-12-10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id9">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id10">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id11">0.3.1 - 2019-11-25</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id12">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id13">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id14">0.3.0 - 2019-11-11</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-project-structure">New project structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#new-api">New API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id15">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id16">Resolved Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id17">0.2.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id18">0.2.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id19">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id20">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id21">0.2.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id22">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id23">0.2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id24">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id25">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id26">0.2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id27">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id28">0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id29">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id30">Internal Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../history.html#id31">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id32">0.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html#id33">0.1.1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>BTBSession</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/user_guides/btbsession.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="btbsession">
+<h1>BTBSession<a class="headerlink" href="#btbsession" title="Permalink to this headline">¶</a></h1>
+<p>A <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> represents the process of selecting and tuning several tunables
+until the best possible configuration for a specific <code class="docutils literal notranslate"><span class="pre">scorer</span></code> is found.</p>
+<p>For this, a loop is run in which for each iteration a combination of a <code class="docutils literal notranslate"><span class="pre">Selector</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Tuner</span></code> is used to decide which tunable to score next and with which hyperparameters.</p>
+<p>While running, the <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> handles the errors discarding, if configured to do so,
+the tunables that have reached as many errors as the user specified.</p>
+<p>Below there is a short example using <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> to perform tuning over
+<code class="docutils literal notranslate"><span class="pre">ExtraTreesRegressor</span></code> and <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> ensemblers from <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a>
+and both of them are evaluated against the <a class="reference external" href="http://lib.stat.cmu.edu/datasets/boston">Boston dataset</a> regression problem.</p>
+<p>Let’s import all the needed packages in order to run our code. We will import the <code class="docutils literal notranslate"><span class="pre">load_boston</span></code>
+from <code class="docutils literal notranslate"><span class="pre">sklearn.datasets</span></code> and two estimators (<code class="docutils literal notranslate"><span class="pre">ExtraTreesRegressor</span></code> and <code class="docutils literal notranslate"><span class="pre">RandomForest</span></code>). In
+order to evaluate them we will use the <code class="docutils literal notranslate"><span class="pre">r2_score</span></code>. We will also be importing some basics in order
+to perform cross validation and split our data from the <code class="docutils literal notranslate"><span class="pre">model_selection</span></code>. And finally we will
+import our <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code>.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span> <span class="k">as</span> <span class="n">load_dataset</span>
+
+<span class="gp">In [2]: </span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">ExtraTreesRegressor</span><span class="p">,</span> <span class="n">RandomForestRegressor</span>
+
+<span class="gp">In [3]: </span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">r2_score</span>
+
+<span class="gp">In [4]: </span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">train_test_split</span>
+
+<span class="gp">In [5]: </span><span class="kn">from</span> <span class="nn">btb.session</span> <span class="kn">import</span> <span class="n">BTBSession</span>
+</pre></div>
+</div>
+<p>Then we can create a dictionary to reffer to each model of our choice:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">   ...: </span>    <span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="n">RandomForestRegressor</span><span class="p">,</span>
+<span class="gp">   ...: </span>    <span class="s1">&#39;extra_trees&#39;</span><span class="p">:</span> <span class="n">ExtraTreesRegressor</span><span class="p">,</span>
+<span class="gp">   ...: </span><span class="p">}</span>
+<span class="gp">   ...: </span>
+</pre></div>
+</div>
+<p>Then we will proceed to create a function that will <em>build the model</em> and another one that will
+<em>score</em> the model. This is needed because <code class="docutils literal notranslate"><span class="pre">BTBSession.score</span></code> is being called with the
+<code class="docutils literal notranslate"><span class="pre">tunable_name</span></code> and <code class="docutils literal notranslate"><span class="pre">config</span></code>. So pretty much the scoring function must be prepared to recive
+this two parameters and generate a <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">):</span>
+<span class="gp">   ...: </span>    <span class="n">model_class</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<span class="gp">   ...: </span>    <span class="k">return</span> <span class="n">model_class</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">hyperparameters</span><span class="p">)</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [8]: </span><span class="k">def</span> <span class="nf">score_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">):</span>
+<span class="gp">   ...: </span>    <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">)</span>
+<span class="gp">   ...: </span>    <span class="n">r2_scorer</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">r2_score</span><span class="p">)</span>
+<span class="gp">   ...: </span>    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">r2_scorer</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">   ...: </span>    <span class="k">return</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="gp">   ...: </span>
+</pre></div>
+</div>
+<p>Once we have this two functions, we can proceed on loading the dataset, generating its splits
+and create a list of <code class="docutils literal notranslate"><span class="pre">tunables</span></code> for our <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code>.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [9]: </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">()</span>
+
+<span class="gp">In [10]: </span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+<span class="gp">   ....: </span>    <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+
+<span class="gp">In [11]: </span><span class="n">tunables</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">   ....: </span>    <span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>    <span class="p">},</span>
+<span class="gp">   ....: </span>    <span class="s1">&#39;extra_trees&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">   ....: </span>            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="gp">   ....: </span>        <span class="p">},</span>
+<span class="gp">   ....: </span>    <span class="p">}</span>
+<span class="gp">   ....: </span><span class="p">}</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+<p>Now that we have everything set up, we can proceed to generate our <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> and run it in
+order to evaluate wich of this two machine learning models will obtain a better score.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [12]: </span><span class="n">session</span> <span class="o">=</span> <span class="n">BTBSession</span><span class="p">(</span><span class="n">tunables</span><span class="p">,</span> <span class="n">score_model</span><span class="p">)</span>
+
+<span class="gp">In [13]: </span><span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gh">Out[13]: </span><span class="go"></span>
+<span class="go">{&#39;id&#39;: &#39;3d13663b862dfa86ef525ecce1c5c4b8&#39;,</span>
+<span class="go"> &#39;name&#39;: &#39;extra_trees&#39;,</span>
+<span class="go"> &#39;config&#39;: {&#39;n_estimators&#39;: 976,</span>
+<span class="go">  &#39;max_features&#39;: None,</span>
+<span class="go">  &#39;min_samples_split&#39;: 12,</span>
+<span class="go">  &#39;min_samples_leaf&#39;: 14},</span>
+<span class="go"> &#39;score&#39;: 0.8011118073334498}</span>
+</pre></div>
+</div>
+<p>Once this 10 iterations are done, our session will return the <code class="docutils literal notranslate"><span class="pre">best_proposal</span></code>, or we can access
+it thro <code class="docutils literal notranslate"><span class="pre">session.best_proposal</span></code>. Inside this dictionary we will find the <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">config</span></code> and
+the <code class="docutils literal notranslate"><span class="pre">score</span></code> for the best configuration found during those 10 iterations.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/btb.session.html" class="btn btn-neutral float-right" title="btb.session module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="selectors.html" class="btn btn-neutral float-left" title="Selectors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
