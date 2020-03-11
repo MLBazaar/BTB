@@ -1,31 +1,14 @@
 # -*- coding: utf-8 -*-
+import logging
 
 import pandas as pd
 
-from btb.benchmark.challenges.bohachevsky import Bohachevsky
-from btb.benchmark.challenges.boston import BostonABR, BostonBR, BostonRFR
-from btb.benchmark.challenges.branin import Branin
-from btb.benchmark.challenges.census import CensusABC, CensusRFC, CensusSGDC
-from btb.benchmark.challenges.rosenbrock import Rosenbrock
-from btb.benchmark.challenges.wind import WindABC, WindRFC, WindSGDC
+from btb.benchmark.challenges.challenge import ATMChallenge
+from btb.benchmark.challenges import MATH_CHALLENGES, ML_CHALLENGES
+from btb.benchmark.tuners import get_all_tuning_functions
 
-DEFAULT_CHALLENGES = [
-    # Simple
-    Bohachevsky,
-    Branin,
-    Rosenbrock,
-
-    # ML
-    BostonABR,
-    BostonBR,
-    BostonRFR,
-    CensusABC,
-    CensusRFC,
-    CensusSGDC,
-    WindABC,
-    WindRFC,
-    WindSGDC
-]
+DEFAULT_CHALLENGES = MATH_CHALLENGES + ML_CHALLENGES
+LOGGER = logging.getLogger(__name__)
 
 
 def evaluate_candidate(name, candidate, challenges, iterations):
@@ -36,14 +19,20 @@ def evaluate_candidate(name, candidate, challenges, iterations):
 
     for challenge in challenges:
         tunable_hyperparameters = challenge.get_tunable_hyperparameters()
-        score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
-        result = {
-            'challenge': str(challenge),
-            'candidate': name,
-            'score': score,
-        }
 
-        candidate_result.append(result)
+        try:
+            score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
+            result = {
+                'challenge': str(challenge),
+                'candidate': name,
+                'score': score,
+            }
+
+        except Exception as ex:
+            LOGGER.warn('Could not score candidate %s with challenge %s', name, challenge)
+
+        if result:
+            candidate_result.append(result)
 
     return candidate_result
 
@@ -99,16 +88,16 @@ def benchmark(candidates, challenges=None, iterations=1000):
     results = []
 
     for name, candidate in candidates.items():
+
         result = evaluate_candidate(name, candidate, challenges, iterations)
-        results.extend(result)
+
+        if result:
+            results.extend(result)
 
     df = pd.DataFrame.from_records(results)
     df = df.pivot(index='candidate', columns='challenge', values='score')
 
     del df.columns.name
     del df.index.name
-
-    df['Mean'] = df.mean(axis=1)
-    df['Std'] = df.std(axis=1)
 
     return df

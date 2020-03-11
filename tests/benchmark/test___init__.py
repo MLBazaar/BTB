@@ -55,8 +55,6 @@ class TestBenchmark(TestCase):
         # assert
         expected_result = pd.DataFrame({
             'test_challenge': [1.0],
-            'Mean': [1.0],
-            'Std': [0.0],
         })
 
         expected_result.index = ['test_candidate']
@@ -92,8 +90,6 @@ class TestBenchmark(TestCase):
         # assert
         expected_result = pd.DataFrame({
             'test_challenge': [1.0, 1.0],
-            'Mean': [1.0, 1.0],
-            'Std': [0.0, 0.0],
         })
 
         expected_result.index = ['candidate_a', 'candidate_b']

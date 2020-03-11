@@ -3,18 +3,25 @@
 """Package where the Challenge class is defined."""
 
 import inspect
+import logging
 import os
 from abc import ABCMeta, abstractmethod
 from copy import deepcopy
 from urllib.parse import urljoin
 
+import boto3
 import pandas as pd
-from sklearn.metrics import make_scorer
+from botocore import UNSIGNED
+from botocore.client import Config
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import f1_score, make_scorer
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import OneHotEncoder
 
+ATM_DATA_URL = 'http://atm-data.s3.amazonaws.com/'
 BTB_DATA_URL = 'https://btb-data.s3.amazonaws.com/'
 
+LOGGER = logging.getLogger(__name__)
 
 def _get_dataset_url(name):
 
@@ -151,7 +158,7 @@ class MLChallenge(Challenge):
             )
 
         if self.encode:
-            ohe = OneHotEncoder()
+            ohe = OneHotEncoder(categories='auto')
             self.X = ohe.fit_transform(self.X)
 
     def get_tunable_hyperparameters(self):
@@ -174,3 +181,124 @@ class MLChallenge(Challenge):
 
     def __repr__(self):
         return '{}()'.format(self.__class__.__name__)
+
+
+class ATMChallenge(MLChallenge):
+
+    # TARGET
+    TARGET_COLUMN = 'class'
+    MAKE_BINARY = False
+
+    # CROSS VALIDATE / SCORER
+    METRIC = f1_score
+    ENCODE = True
+    STRATIFIED = True
+
+    # MODEL
+    MODEL = RandomForestClassifier
+    MODEL_DEFAULTS = {'random_state': 0}
+    TUNABLE_HYPERPARAMETERS = {
+        "n_estimators": {
+            "type": "int",
+            "default": 10,
+            "range": [
+                1,
+                500
+            ]
+        },
+        "criterion": {
+            "type": "str",
+            "default": "gini",
+            "values": [
+                "entropy",
+                "gini"
+            ]
+        },
+        "max_features": {
+            "type": "str",
+            "default": None,
+            "values": [
+                None,
+                "auto",
+                "log2",
+                "sqrt"
+            ]
+        },
+        "min_samples_split": {
+            "type": "int",
+            "default": 2,
+            "range": [
+                2,
+                100
+            ]
+        },
+        "min_samples_leaf": {
+            "type": "int",
+            "default": 1,
+            "range": [
+                1,
+                100
+            ]
+        },
+        "min_weight_fraction_leaf": {
+            "type": "float",
+            "default": 0.0,
+            "range": [
+                0.0,
+                0.5
+            ]
+        },
+        "min_impurity_decrease": {
+            "type": "float",
+            "default": 0.0,
+            "range": [
+                0.0,
+                1000.0
+            ]
+        },
+    }
+
+    @classmethod
+    def get_atm_dataset_url(cls, name):
+        if not name.endswith('.csv'):
+            name = name + '.csv'
+
+        return urljoin(ATM_DATA_URL, name)
+
+    @classmethod
+    def get_available_datasets(cls, args=None):
+        client = boto3.client('s3', config=Config(signature_version=UNSIGNED))
+        available_datasets = [
+            obj['Key'] for obj in client.list_objects(Bucket='atm-data')['Contents']
+        ]
+
+        return available_datasets
+
+    @classmethod
+    def get_all_challenges(cls):
+        available_datasets = cls.get_available_datasets()
+        available_challenges = []
+        for dataset in available_datasets:
+            try:
+                available_challenges.append(cls(dataset=dataset))
+            except Exception as ex:
+                LOGGER.warn('Dataset: %s could not be instantiated. Error: %s', dataset, ex)
+
+        LOGGER.info('%s/%s datasets loaded', len(available_datasets), len(available_challenges))
+
+        return available_challenges
+
+    def load_data(self):
+        """Load ``X`` and ``y`` over which to perform fit and evaluate."""
+        url = self.get_atm_dataset_url(self.dataset)
+        X = pd.read_csv(url)
+
+        y = X.pop(self.target_column)
+
+        if self.make_binary:
+            y = y.iloc[0] == y
+
+        return X, y
+
+    def __repr__(self):
+        return '{}(dataset={})'.format(self.__class__.__name__, self.dataset)

@@ -23,6 +23,7 @@ except IOError:
 
 
 install_requires = [
+    'boto3>=1.12.18,<2',
     'numpy>=1.14.0,<1.18.0',
     'scikit-learn>=0.20.0,<0.22.0',
     'scipy>=1.0.1,<1.4.0',
