@@ -23,6 +23,7 @@ BTB_DATA_URL = 'https://btb-data.s3.amazonaws.com/'
 
 LOGGER = logging.getLogger(__name__)
 
+
 def _get_dataset_url(name):
 
     if not name.endswith('.gz'):

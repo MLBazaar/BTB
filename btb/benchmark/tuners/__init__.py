@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from btb.benchmark.tuners.btb import make_btb_tuning_function
-from btb.tuning.tuners import GPTuner, GPEiTuner, UniformTuner
-
+from btb.tuning.tuners import GPEiTuner, GPTuner, UniformTuner
 
 BTB_TUNERS = [GPTuner, GPEiTuner, UniformTuner]
 
