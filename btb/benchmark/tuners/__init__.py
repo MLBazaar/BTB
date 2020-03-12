@@ -14,10 +14,10 @@ def get_all_tuning_functions():
     """
     Return all the tuning functions ready to use with benchmark.
     """
-    tuning_functions = list()
+    tuning_functions = {}
     for _, value in TUNERS.items():
-        function, tuners = value
-        for tuner in tuners:
-            tuning_functions.append(function(tuner))
+        function, tuner_classes = value
+        for tuner_class in tuner_classes:
+            tuning_functions[tuner_class.__name__] = function(tuner_class)
 
     return tuning_functions

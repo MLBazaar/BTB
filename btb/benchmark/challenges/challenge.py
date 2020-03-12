@@ -270,24 +270,27 @@ class ATMChallenge(MLChallenge):
     def get_available_datasets(cls, args=None):
         client = boto3.client('s3', config=Config(signature_version=UNSIGNED))
         available_datasets = [
-            obj['Key'] for obj in client.list_objects(Bucket='atm-data')['Contents']
+            obj['Key']
+            for obj in client.list_objects(Bucket='atm-data')['Contents']
+            if obj['Key'] != 'index.html'
         ]
 
         return available_datasets
 
     @classmethod
-    def get_all_challenges(cls):
-        available_datasets = cls.get_available_datasets()
-        available_challenges = []
-        for dataset in available_datasets:
+    def get_all_challenges(cls, challenges=None):
+        datasets = challenges or cls.get_available_datasets()
+        loaded_challenges = []
+        for dataset in datasets:
             try:
-                available_challenges.append(cls(dataset=dataset))
+                loaded_challenges.append(cls(dataset=dataset))
+                LOGGER.info('Dataset %s loaded', dataset)
             except Exception as ex:
-                LOGGER.warn('Dataset: %s could not be instantiated. Error: %s', dataset, ex)
+                LOGGER.warn('Dataset: %s could not be loaded. Error: %s', dataset, ex)
 
-        LOGGER.info('%s/%s datasets loaded', len(available_datasets), len(available_challenges))
+        LOGGER.info('%s / %s datasets loaded.', len(loaded_challenges), len(datasets))
 
-        return available_challenges
+        return loaded_challenges
 
     def load_data(self):
         """Load ``X`` and ``y`` over which to perform fit and evaluate."""

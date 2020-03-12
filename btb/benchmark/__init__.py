@@ -3,10 +3,11 @@ import argparse
 import logging
 
 import pandas as pd
+import tabulate
 
 from btb.benchmark.challenges import MATH_CHALLENGES, ML_CHALLENGES
-from btb.benchmark.challenges.challenge import ATMChallenge  # noqa: F401
-from btb.benchmark.tuners import get_all_tuning_functions  # noqa: F401
+from btb.benchmark.challenges.challenge import ATMChallenge
+from btb.benchmark.tuners import get_all_tuning_functions
 
 DEFAULT_CHALLENGES = MATH_CHALLENGES + ML_CHALLENGES
 LOGGER = logging.getLogger(__name__)
@@ -105,12 +106,70 @@ def benchmark(candidates, challenges=None, iterations=1000):
     return df
 
 
-def _atmchallenge_benchmark():
-    pass
+def _load_candidates(args):
+    all_candidates = get_all_tuning_functions()
+
+    if args.all:
+        return all_candidates
+
+    if args.candidate:
+        candidates = {}
+        for candidate in args.candidate:
+            try:
+                candidates[candidate] = all_candidates[candidate]
+            except Exception:
+                LOGGER.warn('Could not load candidate %s', candidate)
+
+        return candidates
 
 
-def _standard_benchmark():
-    pass
+def evaluate(challenges, args):
+    """
+    Evaluate from Command Line Inputs.
+    """
+    candidates = _load_candidates(args)
+    results = benchmark(candidates, challenges=challenges, iterations=args.iterations)
+
+    print(tabulate.tabulate(
+        results,
+        showindex=False,
+        tablefmt='github',
+        headers=results.columns
+    ))
+
+    if args.report:
+        results.to_csv(args.report, index=False)
+
+
+def _atmchallenge_benchmark(args):
+
+    if args.all:
+        challenges = ATMChallenge.get_all_challenges()
+
+    elif args.challenges:
+        challenges = ATMChallenge.get_all_challenges(challenges=args.challenges)
+
+    else:
+        raise ValueError('No challenge dataset provided.')
+
+    evaluate(challenges, args)
+
+
+def _standard_benchmark(args):
+    if args.all:
+        challenges = DEFAULT_CHALLENGES
+
+    elif args.challenges:
+        challenges = {}
+        available_challenges = {challenge.__name__: challenge for challenge in DEFAULT_CHALLENGES}
+
+        for challenge in args.challenges:
+            try:
+                challenges[challenge] = available_challenges[challenge]
+            except Exception:
+                LOGGER.warn('Could not load challenge %s', challenge)
+
+    evaluate(challenges, args)
 
 
 def _get_parser():
@@ -125,11 +184,19 @@ def _get_parser():
                                  help='Process all the challenges available for the given mode.')
     challenges_args.add_argument('challenge', nargs='*',
                                  help='Name of the challenge/s to be processed.')
+    challenges_args.add_argument(
+        '-i',
+        '--iterations',
+        type=int,
+        default=100,
+        help='Number of iterations to perform for each challenge with each candidate.'
+    )
 
     candidates_args = argparse.ArgumentParser(add_help=False)
-    candidates_args.add_argument('-t', '--tuners', action='store_true',
-                                 help='Use all the tuners as candidates.')
-    candidates_args.add_argument('tuner', nargs='*', help='Name of the tuner / tuners to use')
+    candidates_args.add_argument('-c', '--candidates', action='store_true',
+                                 help='Use all the available tuners as candidates.')
+    candidates_args.add_argument('candidate', nargs='*',
+                                 help='Name of the candidate / candidates to use')
 
     # Parser
     parser = argparse.ArgumentParser(
@@ -142,13 +209,20 @@ def _get_parser():
     parser.set_defaults(mode=None)
 
     # ATMChallenge Mode
-    atmchallenge_args = subparsers.add_parser('atm',
-                                              help='Perform benchmark with ATMChallenges.')
+    atmchallenge_args = subparsers.add_parser(
+        'atm',
+        parents=[report, challenges_args, candidates_args],
+        help='Perform benchmark with ATMChallenges.'
+    )
     atmchallenge_args.set_defaults(mode=_atmchallenge_benchmark)
 
     # Standard Mode
-    standard_mode = subparsers.add_parser('standard',
-                                          help='Perform benchmark with Challenges or MLChallenges')
+    standard_mode = subparsers.add_parser(
+        'standard',
+        parents=[report, challenges_args, candidates_args],
+        help='Perform benchmark with Challenges or MLChallenges'
+    )
+
     standard_mode.set_defaults(mode=_standard_benchmark)
 
     return parser
@@ -158,7 +232,7 @@ def main():
     parser = _get_parser()
     args = parser.parse_args()
     if not args.mode:
-        parser.pritn_help()
+        parser.print_help()
         parser.exit()
 
     args.mode(args)
