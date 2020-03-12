@@ -22,7 +22,7 @@ def perform_benchmark(args):
     if args.report is None:
         args.report = str(datetime.timestamp(datetime.now())) + '.csv'
 
-    LOGGER.info('Saving benchmar report to %s', args.report)
+    LOGGER.info('Saving benchmark report to %s', args.report)
 
     print('\n')
     print(tabulate.tabulate(
