@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-import argparse
 import logging
 
 import pandas as pd
-import tabulate
 
 from btb.benchmark.challenges import MATH_CHALLENGES, ML_CHALLENGES
-from btb.benchmark.challenges.challenge import ATMChallenge
-from btb.benchmark.tuners import get_all_tuning_functions
+from btb.benchmark.challenges.challenge import ATMChallenge  # noqa: F401
+from btb.benchmark.tuners import get_all_tuning_functions  # noqa: F401
 
 DEFAULT_CHALLENGES = MATH_CHALLENGES + ML_CHALLENGES
 LOGGER = logging.getLogger(__name__)
