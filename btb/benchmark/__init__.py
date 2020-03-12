@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import argparse
 import logging
 
 import pandas as pd
@@ -102,3 +103,66 @@ def benchmark(candidates, challenges=None, iterations=1000):
     del df.index.name
 
     return df
+
+
+def _atmchallenge_benchmark():
+    pass
+
+
+def _standard_benchmark():
+    pass
+
+
+def _get_parser():
+
+    # Common parsers
+    report = argparse.ArgumentParser(add_help=False)
+    report.add_argument('-r', '--report', type=str, required=False,
+                        help='Path to the CSV file where the report will be dumped')
+
+    challenges_args = argparse.ArgumentParser(add_help=False)
+    challenges_args.add_argument('-a', '--all', action='store_true',
+                                 help='Process all the challenges available for the given mode.')
+    challenges_args.add_argument('challenge', nargs='*',
+                                 help='Name of the challenge/s to be processed.')
+
+    candidates_args = argparse.ArgumentParser(add_help=False)
+    candidates_args.add_argument('-t', '--tuners', action='store_true',
+                                 help='Use all the tuners as candidates.')
+    candidates_args.add_argument('tuner', nargs='*', help='Name of the tuner / tuners to use')
+
+    # Parser
+    parser = argparse.ArgumentParser(
+        description='BTB Benchmark Command Line Interface',
+        parents=[report, challenges_args, candidates_args]
+    )
+    subparsers = parser.add_subparsers(title='mode', dest='mode', help='Mode of operation.')
+    subparsers.requiered = True
+
+    parser.set_defaults(mode=None)
+
+    # ATMChallenge Mode
+    atmchallenge_args = subparsers.add_parser('atm',
+                                              help='Perform benchmark with ATMChallenges.')
+    atmchallenge_args.set_defaults(mode=_atmchallenge_benchmark)
+
+    # Standard Mode
+    standard_mode = subparsers.add_parser('standard',
+                                          help='Perform benchmark with Challenges or MLChallenges')
+    standard_mode.set_defaults(mode=_standard_benchmark)
+
+    return parser
+
+
+def main():
+    parser = _get_parser()
+    args = parser.parse_args()
+    if not args.mode:
+        parser.pritn_help()
+        parser.exit()
+
+    args.mode(args)
+
+
+if __name__ == '__main__':
+    main()
