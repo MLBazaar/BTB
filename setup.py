@@ -23,7 +23,6 @@ except IOError:
 
 
 install_requires = [
-    'tabulate>=0.8.3,<0.9',
     'docutils>=0.10,<0.16',
     'boto3>=1.9.18,<1.10',
     'numpy>=1.14.0,<1.18.0',
@@ -96,11 +95,6 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     description='Bayesian Tuning and Bandits',
-    entry_points={
-        'console_scripts': [
-            'btb-benchmark=btb.benchmark.__init__:main',
-        ]
-    },
     extras_require={
         'examples': examples_require,
         'test': tests_require,
