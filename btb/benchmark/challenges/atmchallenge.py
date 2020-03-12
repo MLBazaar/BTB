@@ -113,7 +113,7 @@ class ATMChallenge(MLChallenge):
         loaded_challenges = []
         for dataset in datasets:
             try:
-                loaded_challenges.append(cls(dataset=dataset))
+                loaded_challenges.append(cls(dataset))
                 LOGGER.info('Dataset %s loaded', dataset)
             except Exception as ex:
                 LOGGER.warn('Dataset: %s could not be loaded. Error: %s', dataset, ex)
@@ -139,4 +139,4 @@ class ATMChallenge(MLChallenge):
         super().__init__(**kwargs)
 
     def __repr__(self):
-        return '{}({})'.format(self.__class__.__name__, self.dataset)
+        return "{}('{}')".format(self.__class__.__name__, self.dataset)
