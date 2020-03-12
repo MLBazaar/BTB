@@ -1,5 +1,6 @@
 import argparse
 import logging
+import random
 from datetime import datetime
 
 import tabulate
@@ -12,19 +13,26 @@ LOGGER = logging.getLogger(__name__)
 def perform_benchmark(args):
     candidates = get_all_tuning_functions()
 
-    if args.challenges:
+    if args.sample:
+        LOGGER.info('Randomly selecting %s datasets', args.sample)
+        challenges = ATMChallenge.get_available_datasets()
+        challenges = random.choices(challenges, k=args.sample)
+        challenges = ATMChallenge.get_all_challenges(challenges=challenges)
+
+    elif args.challenges:
         challenges = ATMChallenge.get_all_challenges(challenges=args.challenges)
+
     else:
+        LOGGER.info('Loading all the datasets available.')
         challenges = ATMChallenge.get_all_challenges()
 
     results = benchmark(candidates, challenges, args.iterations)
 
     if args.report is None:
-        args.report = str(datetime.timestamp(datetime.now())) + '.csv'
+        args.report = datetime.now().strftime('benchmark_%Y%m%d%H%M') + '.csv'
 
     LOGGER.info('Saving benchmark report to %s', args.report)
 
-    print('\n')
     print(tabulate.tabulate(
         results,
         tablefmt='github',
@@ -35,29 +43,18 @@ def perform_benchmark(args):
 
 
 def _get_parser():
-    # Common parsers
-    report = argparse.ArgumentParser(add_help=False)
-    report.add_argument('-v', '--verbose', action='count', default=0,
-                        help='Be verbose. Use -vv for increased verbosity.')
-    report.add_argument('-r', '--report', type=str, required=False,
-                        help='Path to the CSV file where the report will be dumped')
-
-    challenges_args = argparse.ArgumentParser(add_help=False)
-    challenges_args.add_argument('challenges', nargs='*',
-                                 help='Name of the challenge/s to be processed.')
-    challenges_args.add_argument(
-        '-i',
-        '--iterations',
-        type=int,
-        default=100,
-        help='Number of iterations to perform for each challenge with each candidate.'
-    )
-
     # Parser
-    parser = argparse.ArgumentParser(
-        description='BTB Benchmark Command Line Interface',
-        parents=[report, challenges_args]
-    )
+    parser = argparse.ArgumentParser(description='BTB Benchmark Command Line Interface')
+
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='Be verbose. Use -vv for increased verbosity.')
+    parser.add_argument('-r', '--report', type=str, required=False,
+                        help='Path to the CSV file where the report will be dumped')
+    parser.add_argument('-s', '--sample', type=int, help='Amount of random datasets to try.')
+
+    parser.add_argument('challenges', nargs='*', help='Name of the challenge/s to be processed.')
+    parser.add_argument('-i', '--iterations', type=int, default=100,
+                        help='Number of iterations to perform per challenge with each candidate.')
 
     return parser
 

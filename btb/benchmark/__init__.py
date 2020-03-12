@@ -4,7 +4,7 @@ import logging
 import pandas as pd
 
 from btb.benchmark.challenges import MATH_CHALLENGES, ML_CHALLENGES
-from btb.benchmark.challenges.challenge import ATMChallenge  # noqa: F401
+from btb.benchmark.challenges.atmchallenge import ATMChallenge  # noqa: F401
 from btb.benchmark.tuners import get_all_tuning_functions  # noqa: F401
 
 DEFAULT_CHALLENGES = MATH_CHALLENGES + ML_CHALLENGES
@@ -19,7 +19,8 @@ def evaluate_candidate(name, candidate, challenges, iterations):
 
     for challenge in challenges:
         tunable_hyperparameters = challenge.get_tunable_hyperparameters()
-
+        LOGGER.info('Evaluating candidate %s on challenge %s for %s iterations',
+                    name, challenge, iterations)
         try:
             score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
             result = {
@@ -89,6 +90,7 @@ def benchmark(candidates, challenges=None, iterations=1000):
     results = []
 
     for name, candidate in candidates.items():
+        LOGGER.info('Evaluating candidate %s', name)
 
         result = evaluate_candidate(name, candidate, challenges, iterations)
 
