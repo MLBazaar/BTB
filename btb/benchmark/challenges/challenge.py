@@ -3,6 +3,7 @@
 """Package where the Challenge class is defined."""
 
 import inspect
+import logging
 import os
 from abc import ABCMeta, abstractmethod
 from copy import deepcopy
@@ -14,6 +15,8 @@ from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import OneHotEncoder
 
 BTB_DATA_URL = 'https://btb-data.s3.amazonaws.com/'
+
+LOGGER = logging.getLogger(__name__)
 
 
 def _get_dataset_url(name):
@@ -116,7 +119,7 @@ class MLChallenge(Challenge):
     def __init__(self, model=None, dataset=None, target_column=None,
                  encode=None, tunable_hyperparameters=None, metric=None,
                  model_defaults=None, make_binary=None, stratified=None,
-                 cv_splits=5, cv_random_state=42, cv_shuffle=True):
+                 cv_splits=5, cv_random_state=42, cv_shuffle=True, metric_args={}):
 
         self.model = model or self.MODEL
         self.dataset = dataset or self.DATASET
@@ -127,15 +130,18 @@ class MLChallenge(Challenge):
 
         if metric:
             self.metric = metric
+            self.metric_args = metric_args
+
         else:
             # Allow to either write a metric method or assign a METRIC function
             self.metric = getattr(self, 'metric', self.__class__.METRIC)
+            self.metric_args = getattr(self, 'metric_args', self.__class__.METRIC_ARGS)
 
         self.stratified = self.STRATIFIED if stratified is None else stratified
         self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode
-        self.scorer = make_scorer(self.metric)
+        self.scorer = make_scorer(self.metric, **self.metric_args)
 
         if self.stratified:
             self.cv = StratifiedKFold(
@@ -151,7 +157,7 @@ class MLChallenge(Challenge):
             )
 
         if self.encode:
-            ohe = OneHotEncoder()
+            ohe = OneHotEncoder(categories='auto')
             self.X = ohe.fit_transform(self.X)
 
     def get_tunable_hyperparameters(self):

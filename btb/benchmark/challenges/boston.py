@@ -21,6 +21,7 @@ class BostonRFR(MLChallenge):
 
     # CROSS VALIDATE / SCORER
     METRIC = r2_score
+    METRIC_ARGS = {}
     ENCODE = True
     MAKE_BINARY = False
 
