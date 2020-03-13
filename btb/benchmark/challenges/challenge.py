@@ -119,7 +119,7 @@ class MLChallenge(Challenge):
     def __init__(self, model=None, dataset=None, target_column=None,
                  encode=None, tunable_hyperparameters=None, metric=None,
                  model_defaults=None, make_binary=None, stratified=None,
-                 cv_splits=5, cv_random_state=42, cv_shuffle=True):
+                 cv_splits=5, cv_random_state=42, cv_shuffle=True, metric_args={}):
 
         self.model = model or self.MODEL
         self.dataset = dataset or self.DATASET
@@ -130,15 +130,18 @@ class MLChallenge(Challenge):
 
         if metric:
             self.metric = metric
+            self.metric_args = metric_args
+
         else:
             # Allow to either write a metric method or assign a METRIC function
             self.metric = getattr(self, 'metric', self.__class__.METRIC)
+            self.metric_args = getattr(self, 'metric_args', self.__class__.METRIC_ARGS)
 
         self.stratified = self.STRATIFIED if stratified is None else stratified
         self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode
-        self.scorer = make_scorer(self.metric, average='macro')
+        self.scorer = make_scorer(self.metric, **self.metric_args)
 
         if self.stratified:
             self.cv = StratifiedKFold(

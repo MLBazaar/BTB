@@ -14,6 +14,7 @@ class WindRFC(MLChallenge):
 
     # CROSS VALIDATE / SCORER
     METRIC = f1_score
+    METRIC_ARGS = {'average': 'macro'}
     ENCODE = True
     MAKE_BINARY = True
     STRATIFIED = True

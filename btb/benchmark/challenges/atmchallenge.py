@@ -22,6 +22,7 @@ class ATMChallenge(MLChallenge):
 
     # CROSS VALIDATE / SCORER
     METRIC = f1_score
+    METRIC_ARGS = {'average': 'macro'}
     ENCODE = True
     STRATIFIED = True
 

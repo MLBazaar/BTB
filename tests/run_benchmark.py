@@ -5,19 +5,25 @@ from datetime import datetime
 
 import tabulate
 
-from btb.benchmark import ATMChallenge, benchmark, get_all_tuning_functions
+from btb.benchmark import DEFAULT_CHALLENGES, ATMChallenge, benchmark, get_all_tuning_functions
 
 LOGGER = logging.getLogger(__name__)
 
 
 def perform_benchmark(args):
     candidates = get_all_tuning_functions()
+    challenges = []
+
+    if args.more_challenges:
+        challenges = [challenge_class() for challenge_class in DEFAULT_CHALLENGES]
 
     if args.sample:
         LOGGER.info('Randomly selecting %s datasets', args.sample)
-        challenges = ATMChallenge.get_available_datasets()
+        available_datasets = ATMChallenge.get_available_datasets()
+        selected_datasets = random.choices(available_datasets, k=args.sample)
+        challenges.extend(ATMChallenge.get_all_challenges(challenges=selected_datasets))
+
         challenges = random.choices(challenges, k=args.sample)
-        challenges = ATMChallenge.get_all_challenges(challenges=challenges)
 
     elif args.challenges:
         challenges = ATMChallenge.get_all_challenges(challenges=args.challenges)
@@ -48,13 +54,15 @@ def _get_parser():
 
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Be verbose. Use -vv for increased verbosity.')
+    parser.add_argument('-m', '--more-challenges', action='store_true',
+                        help='Include all the challenges that are found in BTB.')
     parser.add_argument('-r', '--report', type=str, required=False,
                         help='Path to the CSV file where the report will be dumped')
-    parser.add_argument('-s', '--sample', type=int, help='Amount of random datasets to try.')
-
-    parser.add_argument('challenges', nargs='*', help='Name of the challenge/s to be processed.')
+    parser.add_argument('-s', '--sample', type=int,
+                        help='Limit the test to a sample of datasets for the given size.')
     parser.add_argument('-i', '--iterations', type=int, default=100,
                         help='Number of iterations to perform per challenge with each candidate.')
+    parser.add_argument('challenges', nargs='*', help='Name of the challenge/s to be processed.')
 
     return parser
 
