@@ -302,33 +302,16 @@
             
   <h1>Source code for btb.benchmark</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.bohachevsky</span> <span class="kn">import</span> <span class="n">Bohachevsky</span>
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.boston</span> <span class="kn">import</span> <span class="n">BostonABR</span><span class="p">,</span> <span class="n">BostonBR</span><span class="p">,</span> <span class="n">BostonRFR</span>
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.branin</span> <span class="kn">import</span> <span class="n">Branin</span>
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.census</span> <span class="kn">import</span> <span class="n">CensusABC</span><span class="p">,</span> <span class="n">CensusRFC</span><span class="p">,</span> <span class="n">CensusSGDC</span>
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.rosenbrock</span> <span class="kn">import</span> <span class="n">Rosenbrock</span>
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.wind</span> <span class="kn">import</span> <span class="n">WindABC</span><span class="p">,</span> <span class="n">WindRFC</span><span class="p">,</span> <span class="n">WindSGDC</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges</span> <span class="kn">import</span> <span class="n">MATH_CHALLENGES</span><span class="p">,</span> <span class="n">ML_CHALLENGES</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.atmchallenge</span> <span class="kn">import</span> <span class="n">ATMChallenge</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.tuners</span> <span class="kn">import</span> <span class="n">get_all_tuning_functions</span>  <span class="c1"># noqa: F401</span>
 
-<span class="n">DEFAULT_CHALLENGES</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="c1"># Simple</span>
-    <span class="n">Bohachevsky</span><span class="p">,</span>
-    <span class="n">Branin</span><span class="p">,</span>
-    <span class="n">Rosenbrock</span><span class="p">,</span>
-
-    <span class="c1"># ML</span>
-    <span class="n">BostonABR</span><span class="p">,</span>
-    <span class="n">BostonBR</span><span class="p">,</span>
-    <span class="n">BostonRFR</span><span class="p">,</span>
-    <span class="n">CensusABC</span><span class="p">,</span>
-    <span class="n">CensusRFC</span><span class="p">,</span>
-    <span class="n">CensusSGDC</span><span class="p">,</span>
-    <span class="n">WindABC</span><span class="p">,</span>
-    <span class="n">WindRFC</span><span class="p">,</span>
-    <span class="n">WindSGDC</span>
-<span class="p">]</span>
+<span class="n">DEFAULT_CHALLENGES</span> <span class="o">=</span> <span class="n">MATH_CHALLENGES</span> <span class="o">+</span> <span class="n">ML_CHALLENGES</span>
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="evaluate_candidate"><a class="viewcode-back" href="../../api/btb.benchmark.html#btb.benchmark.evaluate_candidate">[docs]</a><span class="k">def</span> <span class="nf">evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenges</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
@@ -339,14 +322,22 @@
 
     <span class="k">for</span> <span class="n">challenge</span> <span class="ow">in</span> <span class="n">challenges</span><span class="p">:</span>
         <span class="n">tunable_hyperparameters</span> <span class="o">=</span> <span class="n">challenge</span><span class="o">.</span><span class="n">get_tunable_hyperparameters</span><span class="p">()</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="n">candidate</span><span class="p">(</span><span class="n">challenge</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">tunable_hyperparameters</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
-            <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-            <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Evaluating candidate </span><span class="si">%s</span><span class="s1"> on challenge </span><span class="si">%s</span><span class="s1"> for </span><span class="si">%s</span><span class="s1"> iterations&#39;</span><span class="p">,</span>
+                    <span class="n">name</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="n">candidate</span><span class="p">(</span><span class="n">challenge</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">tunable_hyperparameters</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
+                <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+            <span class="p">}</span>
 
-        <span class="n">candidate_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s1">&#39;Could not score candidate </span><span class="si">%s</span><span class="s1"> with challenge </span><span class="si">%s</span><span class="s1">, error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">candidate_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">candidate_result</span></div>
 
@@ -402,17 +393,18 @@
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Evaluating candidate </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
         <span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenges</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;candidate&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
 
     <span class="k">del</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span>
     <span class="k">del</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span>
-
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span></div>
 </pre></div>

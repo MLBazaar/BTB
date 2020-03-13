@@ -6,6 +6,7 @@ Submodules
 
 .. toctree::
 
+   btb.benchmark.challenges.atmchallenge
    btb.benchmark.challenges.bohachevsky
    btb.benchmark.challenges.boston
    btb.benchmark.challenges.branin

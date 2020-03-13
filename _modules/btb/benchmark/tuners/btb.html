@@ -287,6 +287,8 @@
         
           <li><a href="../../benchmark.html">btb.benchmark</a> &raquo;</li>
         
+          <li><a href="../tuners.html">btb.benchmark.tuners</a> &raquo;</li>
+        
       <li>btb.benchmark.tuners.btb</li>
     
     
@@ -322,7 +324,7 @@
     <span class="k">return</span> <span class="n">best_score</span></div>
 
 
-<div class="viewcode-block" id="make_tuning_function"><a class="viewcode-back" href="../../../../api/btb.benchmark.tuners.btb.html#btb.benchmark.tuners.btb.make_tuning_function">[docs]</a><span class="k">def</span> <span class="nf">make_tuning_function</span><span class="p">(</span><span class="n">tuner_class</span><span class="p">,</span> <span class="o">**</span><span class="n">tuner_kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="make_btb_tuning_function"><a class="viewcode-back" href="../../../../api/btb.benchmark.tuners.btb.html#btb.benchmark.tuners.btb.make_btb_tuning_function">[docs]</a><span class="k">def</span> <span class="nf">make_btb_tuning_function</span><span class="p">(</span><span class="n">tuner_class</span><span class="p">,</span> <span class="o">**</span><span class="n">tuner_kwargs</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">tuning_function</span><span class="p">(</span><span class="n">scoring_function</span><span class="p">,</span> <span class="n">tunable_hyperparameters</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
         <span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">tunable_hyperparameters</span><span class="p">)</span>
         <span class="n">tuner</span> <span class="o">=</span> <span class="n">tuner_class</span><span class="p">(</span><span class="n">tunable</span><span class="p">,</span> <span class="o">**</span><span class="n">tuner_kwargs</span><span class="p">)</span>

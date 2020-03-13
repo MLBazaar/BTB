@@ -326,7 +326,7 @@
 </table>
 <dl class="class">
 <dt id="btb.benchmark.challenges.boston.BostonABR">
-<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonABR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonABR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonABR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em>, <em class="sig-param">metric_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonABR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR" title="btb.benchmark.challenges.boston.BostonRFR"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.boston.BostonRFR</span></code></a></p>
 <p><strong>Attributes</strong></p>
 <table class="longtable docutils align-default">
@@ -344,16 +344,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.MAKE_BINARY" title="btb.benchmark.challenges.boston.BostonABR.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.METRIC_ARGS" title="btb.benchmark.challenges.boston.BostonABR.METRIC_ARGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC_ARGS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonABR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonABR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
 <td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
 </tbody>
@@ -487,6 +490,11 @@ value if n_samples is less than two.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonABR.METRIC_ARGS">
+<code class="sig-name descname">METRIC_ARGS</code><em class="property"> = {}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.METRIC_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="btb.benchmark.challenges.boston.BostonABR.MODEL">
 <code class="sig-name descname">MODEL</code><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonABR.MODEL" title="Permalink to this definition">¶</a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.weight_boosting.AdaBoostRegressor</span></code></p>
@@ -545,7 +553,7 @@ value if n_samples is less than two.</p>
 
 <dl class="class">
 <dt id="btb.benchmark.challenges.boston.BostonBR">
-<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonBR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonBR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonBR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em>, <em class="sig-param">metric_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonBR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR" title="btb.benchmark.challenges.boston.BostonRFR"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.boston.BostonRFR</span></code></a></p>
 <p><strong>Attributes</strong></p>
 <table class="longtable docutils align-default">
@@ -563,16 +571,19 @@ value if n_samples is less than two.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.MAKE_BINARY" title="btb.benchmark.challenges.boston.BostonBR.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.METRIC_ARGS" title="btb.benchmark.challenges.boston.BostonBR.METRIC_ARGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC_ARGS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonBR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonBR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
 <td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
 </tbody>
@@ -706,6 +717,11 @@ value if n_samples is less than two.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonBR.METRIC_ARGS">
+<code class="sig-name descname">METRIC_ARGS</code><em class="property"> = {}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.METRIC_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="btb.benchmark.challenges.boston.BostonBR.MODEL">
 <code class="sig-name descname">MODEL</code><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonBR.MODEL" title="Permalink to this definition">¶</a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.bagging.BaggingRegressor</span></code></p>
@@ -764,7 +780,7 @@ value if n_samples is less than two.</p>
 
 <dl class="class">
 <dt id="btb.benchmark.challenges.boston.BostonRFR">
-<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonRFR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonRFR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.boston.</code><code class="sig-name descname">BostonRFR</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em>, <em class="sig-param">metric_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/boston.html#BostonRFR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.MLChallenge" title="btb.benchmark.challenges.challenge.MLChallenge"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.challenge.MLChallenge</span></code></a></p>
 <p>This dataset contains information collected by the U.S Census Service
 concerning housing in the area of Boston. It was obtained from the
@@ -787,16 +803,19 @@ location and other features that the dataset provides.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.MAKE_BINARY" title="btb.benchmark.challenges.boston.BostonRFR.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.METRIC_ARGS" title="btb.benchmark.challenges.boston.BostonRFR.METRIC_ARGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC_ARGS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonRFR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS" title="btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.STRATIFIED" title="btb.benchmark.challenges.boston.BostonRFR.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN" title="btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
 <td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
 </tbody>
@@ -928,6 +947,11 @@ value if n_samples is less than two.</p>
 </pre></div>
 </div>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.boston.BostonRFR.METRIC_ARGS">
+<code class="sig-name descname">METRIC_ARGS</code><em class="property"> = {}</em><a class="headerlink" href="#btb.benchmark.challenges.boston.BostonRFR.METRIC_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="btb.benchmark.challenges.boston.BostonRFR.MODEL">

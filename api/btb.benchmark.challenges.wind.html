@@ -326,7 +326,7 @@
 </table>
 <dl class="class">
 <dt id="btb.benchmark.challenges.wind.WindABC">
-<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.wind.</code><code class="sig-name descname">WindABC</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/wind.html#WindABC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.wind.WindABC" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.wind.</code><code class="sig-name descname">WindABC</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em>, <em class="sig-param">metric_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/wind.html#WindABC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.wind.WindABC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC" title="btb.benchmark.challenges.wind.WindRFC"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.wind.WindRFC</span></code></a></p>
 <p><strong>Attributes</strong></p>
 <table class="longtable docutils align-default">
@@ -344,16 +344,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.MAKE_BINARY" title="btb.benchmark.challenges.wind.WindABC.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.MODEL_DEFAULTS" title="btb.benchmark.challenges.wind.WindABC.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.METRIC_ARGS" title="btb.benchmark.challenges.wind.WindABC.METRIC_ARGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC_ARGS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.STRATIFIED" title="btb.benchmark.challenges.wind.WindABC.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.MODEL_DEFAULTS" title="btb.benchmark.challenges.wind.WindABC.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.STRATIFIED" title="btb.benchmark.challenges.wind.WindABC.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.TARGET_COLUMN" title="btb.benchmark.challenges.wind.WindABC.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.TARGET_COLUMN" title="btb.benchmark.challenges.wind.WindABC.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
 <td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.wind.WindABC.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindABC.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.wind.WindABC.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
 </tbody>
@@ -507,6 +510,11 @@ average of the F1 scores of each class for the multiclass task.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="btb.benchmark.challenges.wind.WindABC.METRIC_ARGS">
+<code class="sig-name descname">METRIC_ARGS</code><em class="property"> = {'average': 'macro'}</em><a class="headerlink" href="#btb.benchmark.challenges.wind.WindABC.METRIC_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="btb.benchmark.challenges.wind.WindABC.MODEL">
 <code class="sig-name descname">MODEL</code><a class="headerlink" href="#btb.benchmark.challenges.wind.WindABC.MODEL" title="Permalink to this definition">¶</a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.weight_boosting.AdaBoostClassifier</span></code></p>
@@ -565,7 +573,7 @@ average of the F1 scores of each class for the multiclass task.</p>
 
 <dl class="class">
 <dt id="btb.benchmark.challenges.wind.WindRFC">
-<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.wind.</code><code class="sig-name descname">WindRFC</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/wind.html#WindRFC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.wind.WindRFC" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.wind.</code><code class="sig-name descname">WindRFC</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em>, <em class="sig-param">metric_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/wind.html#WindRFC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.wind.WindRFC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.MLChallenge" title="btb.benchmark.challenges.challenge.MLChallenge"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.challenge.MLChallenge</span></code></a></p>
 <p><strong>Attributes</strong></p>
 <table class="longtable docutils align-default">
@@ -583,16 +591,19 @@ average of the F1 scores of each class for the multiclass task.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.MAKE_BINARY" title="btb.benchmark.challenges.wind.WindRFC.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.MODEL_DEFAULTS" title="btb.benchmark.challenges.wind.WindRFC.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.METRIC_ARGS" title="btb.benchmark.challenges.wind.WindRFC.METRIC_ARGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC_ARGS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.STRATIFIED" title="btb.benchmark.challenges.wind.WindRFC.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.MODEL_DEFAULTS" title="btb.benchmark.challenges.wind.WindRFC.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.STRATIFIED" title="btb.benchmark.challenges.wind.WindRFC.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.TARGET_COLUMN" title="btb.benchmark.challenges.wind.WindRFC.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.TARGET_COLUMN" title="btb.benchmark.challenges.wind.WindRFC.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
 <td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.wind.WindRFC.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.wind.WindRFC.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
 </tbody>
@@ -746,6 +757,11 @@ average of the F1 scores of each class for the multiclass task.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="btb.benchmark.challenges.wind.WindRFC.METRIC_ARGS">
+<code class="sig-name descname">METRIC_ARGS</code><em class="property"> = {'average': 'macro'}</em><a class="headerlink" href="#btb.benchmark.challenges.wind.WindRFC.METRIC_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="btb.benchmark.challenges.wind.WindRFC.MODEL">
 <code class="sig-name descname">MODEL</code><a class="headerlink" href="#btb.benchmark.challenges.wind.WindRFC.MODEL" title="Permalink to this definition">¶</a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.forest.RandomForestClassifier</span></code></p>
@@ -804,7 +820,7 @@ average of the F1 scores of each class for the multiclass task.</p>
 
 <dl class="class">
 <dt id="btb.benchmark.challenges.wind.WindSGDC">
-<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.wind.</code><code class="sig-name descname">WindSGDC</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/wind.html#WindSGDC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.wind.WindSGDC" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.benchmark.challenges.wind.</code><code class="sig-name descname">WindSGDC</code><span class="sig-paren">(</span><em class="sig-param">model=None</em>, <em class="sig-param">dataset=None</em>, <em class="sig-param">target_column=None</em>, <em class="sig-param">encode=None</em>, <em class="sig-param">tunable_hyperparameters=None</em>, <em class="sig-param">metric=None</em>, <em class="sig-param">model_defaults=None</em>, <em class="sig-param">make_binary=None</em>, <em class="sig-param">stratified=None</em>, <em class="sig-param">cv_splits=5</em>, <em class="sig-param">cv_random_state=42</em>, <em class="sig-param">cv_shuffle=True</em>, <em class="sig-param">metric_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/challenges/wind.html#WindSGDC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.challenges.wind.WindSGDC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.benchmark.challenges.wind.WindRFC" title="btb.benchmark.challenges.wind.WindRFC"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.benchmark.challenges.wind.WindRFC</span></code></a></p>
 <p><strong>Attributes</strong></p>
 <table class="longtable docutils align-default">
@@ -822,16 +838,19 @@ average of the F1 scores of each class for the multiclass task.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.MAKE_BINARY" title="btb.benchmark.challenges.wind.WindSGDC.MAKE_BINARY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAKE_BINARY</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.MODEL_DEFAULTS" title="btb.benchmark.challenges.wind.WindSGDC.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.METRIC_ARGS" title="btb.benchmark.challenges.wind.WindSGDC.METRIC_ARGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METRIC_ARGS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.STRATIFIED" title="btb.benchmark.challenges.wind.WindSGDC.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.MODEL_DEFAULTS" title="btb.benchmark.challenges.wind.WindSGDC.MODEL_DEFAULTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODEL_DEFAULTS</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.STRATIFIED" title="btb.benchmark.challenges.wind.WindSGDC.STRATIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STRATIFIED</span></code></a></p></td>
 <td><p>bool(x) -&gt; bool</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.TARGET_COLUMN" title="btb.benchmark.challenges.wind.WindSGDC.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.TARGET_COLUMN" title="btb.benchmark.challenges.wind.WindSGDC.TARGET_COLUMN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TARGET_COLUMN</span></code></a></p></td>
 <td><p>str(object=’’) -&gt; str</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.wind.WindSGDC.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.challenges.wind.WindSGDC.TUNABLE_HYPERPARAMETERS" title="btb.benchmark.challenges.wind.WindSGDC.TUNABLE_HYPERPARAMETERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TUNABLE_HYPERPARAMETERS</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
 </tbody>
@@ -983,6 +1002,11 @@ average of the F1 scores of each class for the multiclass task.</p>
 <code class="docutils literal notranslate"><span class="pre">true</span> <span class="pre">positive</span> <span class="pre">+</span> <span class="pre">false</span> <span class="pre">negative</span> <span class="pre">==</span> <span class="pre">0</span></code>, f-score returns 0 and raises
 <code class="docutils literal notranslate"><span class="pre">UndefinedMetricWarning</span></code>.</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="btb.benchmark.challenges.wind.WindSGDC.METRIC_ARGS">
+<code class="sig-name descname">METRIC_ARGS</code><em class="property"> = {'average': 'macro'}</em><a class="headerlink" href="#btb.benchmark.challenges.wind.WindSGDC.METRIC_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="btb.benchmark.challenges.wind.WindSGDC.MODEL">

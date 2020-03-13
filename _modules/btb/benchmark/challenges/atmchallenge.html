@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>btb.benchmark.challenges.boston &mdash; BTB 0.3.7.dev0 documentation</title>
+  <title>btb.benchmark.challenges.atmchallenge &mdash; BTB 0.3.7.dev0 documentation</title>
   
 
   
@@ -287,7 +287,7 @@
         
           <li><a href="../../benchmark.html">btb.benchmark</a> &raquo;</li>
         
-      <li>btb.benchmark.challenges.boston</li>
+      <li>btb.benchmark.challenges.atmchallenge</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -302,36 +302,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for btb.benchmark.challenges.boston</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostRegressor</span><span class="p">,</span> <span class="n">BaggingRegressor</span><span class="p">,</span> <span class="n">RandomForestRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+  <h1>Source code for btb.benchmark.challenges.atmchallenge</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">botocore</span> <span class="kn">import</span> <span class="n">UNSIGNED</span>
+<span class="kn">from</span> <span class="nn">botocore.client</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span>
 
 <span class="kn">from</span> <span class="nn">btb.benchmark.challenges.challenge</span> <span class="kn">import</span> <span class="n">MLChallenge</span>
 
+<span class="n">ATM_DATA_URL</span> <span class="o">=</span> <span class="s1">&#39;http://atm-data.s3.amazonaws.com/&#39;</span>
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BostonRFR"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.BostonRFR">[docs]</a><span class="k">class</span> <span class="nc">BostonRFR</span><span class="p">(</span><span class="n">MLChallenge</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This dataset contains information collected by the U.S Census Service</span>
-<span class="sd">    concerning housing in the area of Boston. It was obtained from the</span>
-<span class="sd">    StatLib archive http://lib.stat.cmu.edu/datasets/boston</span>
 
-<span class="sd">    The prediction task is to determine the price of a house based on the</span>
-<span class="sd">    location and other features that the dataset provides.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ATMChallenge"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.ATMChallenge">[docs]</a><span class="k">class</span> <span class="nc">ATMChallenge</span><span class="p">(</span><span class="n">MLChallenge</span><span class="p">):</span>
 
-    <span class="c1"># DATSET</span>
-    <span class="n">DATASET</span> <span class="o">=</span> <span class="s1">&#39;boston.csv&#39;</span>
-    <span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s1">&#39;medv&#39;</span>
-    <span class="n">STRATIFIED</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="c1"># CROSS VALIDATE / SCORER</span>
-    <span class="n">METRIC</span> <span class="o">=</span> <span class="n">r2_score</span>
-    <span class="n">METRIC_ARGS</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">ENCODE</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># TARGET</span>
+    <span class="n">TARGET_COLUMN</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span>
     <span class="n">MAKE_BINARY</span> <span class="o">=</span> <span class="kc">False</span>
 
+    <span class="c1"># CROSS VALIDATE / SCORER</span>
+    <span class="n">METRIC</span> <span class="o">=</span> <span class="n">f1_score</span>
+    <span class="n">METRIC_ARGS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;average&#39;</span><span class="p">:</span> <span class="s1">&#39;macro&#39;</span><span class="p">}</span>
+    <span class="n">ENCODE</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">STRATIFIED</span> <span class="o">=</span> <span class="kc">True</span>
+
     <span class="c1"># MODEL</span>
-    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span>
     <span class="n">MODEL_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
     <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -344,16 +345,16 @@
         <span class="p">},</span>
         <span class="s2">&quot;criterion&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;gini&quot;</span><span class="p">,</span>
             <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;mae&quot;</span>
+                <span class="s2">&quot;entropy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gini&quot;</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="kc">None</span><span class="p">,</span>
                 <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;log2&quot;</span><span class="p">,</span>
@@ -365,7 +366,7 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
             <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="mi">2</span><span class="p">,</span>
-                <span class="mi">1000</span>
+                <span class="mi">100</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -373,7 +374,7 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
             <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="mi">1</span><span class="p">,</span>
-                <span class="mi">1000</span>
+                <span class="mi">100</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="s2">&quot;min_weight_fraction_leaf&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -389,67 +390,62 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
             <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="mf">0.0</span><span class="p">,</span>
-                <span class="mf">10.0</span>
-            <span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">}</span></div>
-
-
-<div class="viewcode-block" id="BostonABR"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.BostonABR">[docs]</a><span class="k">class</span> <span class="nc">BostonABR</span><span class="p">(</span><span class="n">BostonRFR</span><span class="p">):</span>
-    <span class="c1"># MODEL</span>
-    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">AdaBoostRegressor</span>
-    <span class="n">MODEL_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
-    <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
-            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mi">1</span><span class="p">,</span>
-                <span class="mi">500</span>
+                <span class="mf">1000.0</span>
             <span class="p">]</span>
         <span class="p">},</span>
-        <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
-            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mf">1.0</span><span class="p">,</span>
-                <span class="mf">10.0</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;square&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;exponential&quot;</span>
-            <span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">}</span></div>
+    <span class="p">}</span>
 
+<div class="viewcode-block" id="ATMChallenge.get_atm_dataset_url"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.ATMChallenge.get_atm_dataset_url">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_atm_dataset_url</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span>
 
-<div class="viewcode-block" id="BostonBR"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.BostonBR">[docs]</a><span class="k">class</span> <span class="nc">BostonBR</span><span class="p">(</span><span class="n">BostonRFR</span><span class="p">):</span>
-    <span class="c1"># MODEL</span>
-    <span class="n">MODEL</span> <span class="o">=</span> <span class="n">BaggingRegressor</span>
-    <span class="n">MODEL_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bootstrap&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
-    <span class="n">TUNABLE_HYPERPARAMETERS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mi">1</span><span class="p">,</span>
-                <span class="mi">500</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;max_samples&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mi">1</span><span class="p">,</span>
-                <span class="mi">100</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-    <span class="p">}</span></div>
+        <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">ATM_DATA_URL</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ATMChallenge.get_available_datasets"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.ATMChallenge.get_available_datasets">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_available_datasets</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">))</span>
+        <span class="n">available_datasets</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">list_objects</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;atm-data&#39;</span><span class="p">)[</span><span class="s1">&#39;Contents&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;index.html&#39;</span>
+        <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">available_datasets</span></div>
+
+<div class="viewcode-block" id="ATMChallenge.get_all_challenges"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.ATMChallenge.get_all_challenges">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_all_challenges</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">challenges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">datasets</span> <span class="o">=</span> <span class="n">challenges</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_available_datasets</span><span class="p">()</span>
+        <span class="n">loaded_challenges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">loaded_challenges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Dataset </span><span class="si">%s</span><span class="s1"> loaded&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Dataset: </span><span class="si">%s</span><span class="s1"> could not be loaded. Error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> / </span><span class="si">%s</span><span class="s1"> datasets loaded.&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">loaded_challenges</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">loaded_challenges</span></div>
+
+<div class="viewcode-block" id="ATMChallenge.load_data"><a class="viewcode-back" href="../../../../api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.ATMChallenge.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load ``X`` and ``y`` over which to perform fit and evaluate.&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_atm_dataset_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_column</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_binary</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span>
+
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(&#39;</span><span class="si">{}</span><span class="s2">&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
