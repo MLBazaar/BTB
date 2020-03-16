@@ -104,7 +104,7 @@ setup(
         'examples': examples_require,
         'benchmark': benchmark_require,
         'test': tests_require,
-        'dev': development_requires + tests_require,
+        'dev': development_requires + tests_require + benchmark_require,
     },
     include_package_data=True,
     install_requires=install_requires,
