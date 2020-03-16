@@ -1,6 +1,7 @@
 import argparse
 import logging
 import random
+import warnings
 from datetime import datetime
 
 import tabulate
@@ -9,29 +10,31 @@ from btb.benchmark import DEFAULT_CHALLENGES, ATMChallenge, benchmark, get_all_t
 
 LOGGER = logging.getLogger(__name__)
 
+warnings.filterwarnings("ignore")
+
+
+def _get_challenges(args):
+    if args.challenges:
+        challenges = args.challenges
+    else:
+        challenges = ATMChallenge.get_available_datasets() + DEFAULT_CHALLENGES
+
+    if args.sample:
+        if args.sample > len(challenges):
+            raise ValueError("Sample cannot be greater than {}".format(len(challenges)))
+
+        challenges = random.sample(challenges, args.sample)
+
+    for challenge in challenges:
+        if isinstance(challenge, str):
+            yield ATMChallenge(challenge)
+        else:
+            yield challenge()
+
 
 def perform_benchmark(args):
     candidates = get_all_tuning_functions()
-    challenges = []
-
-    if args.more_challenges:
-        challenges = [challenge_class() for challenge_class in DEFAULT_CHALLENGES]
-
-    if args.sample:
-        LOGGER.info('Randomly selecting %s datasets', args.sample)
-        available_datasets = ATMChallenge.get_available_datasets()
-        selected_datasets = random.choices(available_datasets, k=args.sample)
-        challenges.extend(ATMChallenge.get_all_challenges(challenges=selected_datasets))
-
-        challenges = random.choices(challenges, k=args.sample)
-
-    elif args.challenges:
-        challenges = ATMChallenge.get_all_challenges(challenges=args.challenges)
-
-    else:
-        LOGGER.info('Loading all the datasets available.')
-        challenges = ATMChallenge.get_all_challenges()
-
+    challenges = list(_get_challenges(args))
     results = benchmark(candidates, challenges, args.iterations)
 
     if args.report is None:
@@ -54,8 +57,6 @@ def _get_parser():
 
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Be verbose. Use -vv for increased verbosity.')
-    parser.add_argument('-m', '--more-challenges', action='store_true',
-                        help='Include all the challenges that are found in BTB.')
     parser.add_argument('-r', '--report', type=str, required=False,
                         help='Path to the CSV file where the report will be dumped')
     parser.add_argument('-s', '--sample', type=int,
