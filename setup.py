@@ -23,7 +23,6 @@ except IOError:
 
 
 install_requires = [
-    'tabulate>=0.8.3,<0.9',
     'docutils>=0.10,<0.16',
     'boto3>=1.9.18,<1.10',
     'numpy>=1.14.0,<1.18.0',
@@ -31,6 +30,11 @@ install_requires = [
     'scipy>=1.0.1,<1.4.0',
     'pandas>=0.21.0,<0.26.0',
     'tqdm>=4.36.1,<4.50.0',
+]
+
+benchmark_require = [
+    'hyperopt>=0.2.3,<3',
+    'tabulate>=0.8.3,<0.9',
 ]
 
 
@@ -98,6 +102,7 @@ setup(
     description='Bayesian Tuning and Bandits',
     extras_require={
         'examples': examples_require,
+        'benchmark': benchmark_require,
         'test': tests_require,
         'dev': development_requires + tests_require,
     },
