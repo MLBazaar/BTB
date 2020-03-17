@@ -32,11 +32,6 @@ install_requires = [
     'tqdm>=4.36.1,<4.50.0',
 ]
 
-benchmark_require = [
-    'hyperopt>=0.2.3,<3',
-    'tabulate>=0.8.3,<0.9',
-]
-
 
 examples_require = [
     'jupyter>=1.0.0',
@@ -47,6 +42,8 @@ examples_require = [
 tests_require = [
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
+    'hyperopt>=0.2.3,<3',
+    'tabulate>=0.8.3,<0.9',
 ]
 
 
@@ -102,9 +99,8 @@ setup(
     description='Bayesian Tuning and Bandits',
     extras_require={
         'examples': examples_require,
-        'benchmark': benchmark_require,
-        'test': tests_require + benchmark_require,
-        'dev': development_requires + tests_require + benchmark_require,
+        'test': tests_require,
+        'dev': development_requires + tests_require,
     },
     include_package_data=True,
     install_requires=install_requires,

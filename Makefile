@@ -77,10 +77,6 @@ install: clean-build clean-pyc ## install the package to the active Python's sit
 install-examples: clean-build clean-pyc ## install the package and dependencies to run the examples
 	pip install .[examples]
 
-.PHONY: install-benchmark-additionals
-install-benchmark-additionals: clean-build clean-pyc ## install the package and dependencies to run the complete benchmark with other libraries
-	pip install .[benchmark]
-
 .PHONY: install-test
 install-test: clean-build clean-pyc ## install the package and test dependencies
 	pip install .[test]

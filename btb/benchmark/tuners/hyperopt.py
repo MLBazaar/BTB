@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from hyperopt import Trials, fmin, hp, tpe
+from hyperopt import Trials, fmin, hp
 
 
 def search_space_from_dict(dict_hyperparams):
@@ -36,24 +36,38 @@ def search_space_from_dict(dict_hyperparams):
     return hyperparams
 
 
-def sanitize_scoring_function(scoring_function):
-    def sanitized(args):
-        return -scoring_function(**args)
+def make_minimize_function(scoring_function):
+    """Convert scoring function to minimize the score.
 
-    return sanitized
+    As ``BTB`` works with maximization, we have created all our challenges to ``maximize`` the
+    score and ``HyperOpt`` works with minimization only.
+
+    Also ``hyperopt`` params are being passed as an python ``dict`` and we adapt those to be
+    passed as ``kwargs``.
+    """
+    def minimized_function(params):
+        return -scoring_function(**params)
+
+    return minimized_function
 
 
-def hyperopt_tuning_function(scoring_function, tunable_hyperparameters, iterations):
+def make_hyperopt_tuning_function(algo):
+    """Create a hyperopt minimize tuning function.
 
-    # convert scoring to minimize
-    sanitized_scorer = sanitize_scoring_function(scoring_function)
+    Args:
+        algo (hyperopt.algo):
+            Search Hyperopt Algorithm to be used with ``fmin`` function.
+    """
+    def hyperopt_tuning_function(scoring_function, tunable_hyperparameters, iterations):
 
-    search_space = search_space_from_dict(tunable_hyperparameters)
-    trials = Trials()
+        minimized_scoring = make_minimize_function(scoring_function)
+        search_space = search_space_from_dict(tunable_hyperparameters)
+        trials = Trials()
+        fmin(minimized_scoring, search_space, algo=algo, max_evals=iterations, trials=trials)
 
-    fmin(sanitized_scorer, search_space, algo=tpe.suggest, max_evals=iterations, trials=trials)
+        # normalize best score to match other tuners
+        best_score = -1 * trials.best_trial['result']['loss']
 
-    # normalize best score to match other tuners
-    best_score = -1 * trials.best_trial['result']['loss']
+        return best_score
 
-    return best_score
+    return hyperopt_tuning_function
