@@ -6,7 +6,9 @@ from datetime import datetime
 
 import tabulate
 
-from btb.benchmark import DEFAULT_CHALLENGES, ATMChallenge, benchmark, get_all_tuning_functions
+from btb.benchmark import DEFAULT_CHALLENGES, benchmark
+from btb.benchmark.challenges import ATMChallenge
+from btb.benchmark.tuners import get_all_tuning_functions
 
 LOGGER = logging.getLogger(__name__)
 

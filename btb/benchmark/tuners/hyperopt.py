@@ -37,13 +37,13 @@ def search_space_from_dict(dict_hyperparams):
 
 
 def make_minimize_function(scoring_function):
-    """Convert scoring function to minimize the score.
+    """Create a minimize function.
 
-    As ``BTB`` works with maximization, we have created all our challenges to ``maximize`` the
-    score and ``HyperOpt`` works with minimization only.
+    Given a maximization ``scoring_function`` convert it to minimize in order to work with
+    ``hyperopt``, as ``benchmark`` works with ``maximization``.
 
-    Also ``hyperopt`` params are being passed as an python ``dict`` and we adapt those to be
-    passed as ``kwargs``.
+    Also ``hyperopt`` params are being passed as a python ``dict``, we pass those as ``kwargs``
+    to the ``scoring_function``.
     """
     def minimized_function(params):
         return -scoring_function(**params)
@@ -52,11 +52,14 @@ def make_minimize_function(scoring_function):
 
 
 def make_hyperopt_tuning_function(algo):
-    """Create a hyperopt minimize tuning function.
+    """Create a tuning function that uses ``HyperOpt``.
+
+    With a given suggesting algorithm from the library ``HyperOpt``, create a tuning
+    function that maximize the score, using ``fmin``.
 
     Args:
         algo (hyperopt.algo):
-            Search Hyperopt Algorithm to be used with ``fmin`` function.
+            Search / Suggest ``HyperOpt`` algorithm to be used with ``fmin`` function.
     """
     def hyperopt_tuning_function(scoring_function, tunable_hyperparameters, iterations):
 
