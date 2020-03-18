@@ -44,7 +44,7 @@ tests_require = [
     'pytest-cov>=2.6.0',
     'hyperopt>=0.2.3,<3',
     'tabulate>=0.8.3,<0.9',
-    'dask>=2.12.0,<3',
+    'dask>=2.6.0,<3',
     'toolz>=0.10.0,<1',
 ]
 
