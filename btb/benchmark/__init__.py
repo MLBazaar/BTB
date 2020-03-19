@@ -1,14 +1,39 @@
 # -*- coding: utf-8 -*-
+import inspect
 import logging
 
+import dask
 import pandas as pd
 
 from btb.benchmark.challenges import MATH_CHALLENGES, ML_CHALLENGES
-from btb.benchmark.challenges.atmchallenge import ATMChallenge  # noqa: F401
-from btb.benchmark.tuners import get_all_tuning_functions  # noqa: F401
 
 DEFAULT_CHALLENGES = MATH_CHALLENGES + ML_CHALLENGES
 LOGGER = logging.getLogger(__name__)
+
+
+@dask.delayed
+def _evaluate_candidate(name, candidate, challenge, iterations):
+    tunable_hyperparameters = challenge.get_tunable_hyperparameters()
+    LOGGER.info('Evaluating candidate %s on challenge %s for %s iterations',
+                name, challenge, iterations)
+    try:
+        score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
+        result = {
+            'challenge': str(challenge),
+            'candidate': name,
+            'score': score,
+        }
+
+    except Exception as ex:
+        LOGGER.warn(
+            'Could not score candidate %s with challenge %s, error: %s', name, challenge, ex)
+        result = {
+            'challenge': str(challenge),
+            'candidate': name,
+            'score': None,
+        }
+
+    return result
 
 
 def evaluate_candidate(name, candidate, challenges, iterations):
@@ -18,23 +43,14 @@ def evaluate_candidate(name, candidate, challenges, iterations):
         challenges = [challenges]
 
     for challenge in challenges:
-        tunable_hyperparameters = challenge.get_tunable_hyperparameters()
-        LOGGER.info('Evaluating candidate %s on challenge %s for %s iterations',
-                    name, challenge, iterations)
-        try:
-            score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
-            result = {
-                'challenge': str(challenge),
-                'candidate': name,
-                'score': score,
-            }
+        if inspect.isclass(challenge):
+            try:
+                challenge = challenge()
+            except Exception as ex:
+                LOGGER.warn('Could not instantiate candidate %s', name, str(challenge), ex)
+                next
 
-        except Exception as ex:
-            LOGGER.warn(
-                'Could not score candidate %s with challenge %s, error: %s', name, challenge, ex)
-
-        if result:
-            candidate_result.append(result)
+        candidate_result.append(_evaluate_candidate(name, candidate, challenge, iterations))
 
     return candidate_result
 
@@ -94,11 +110,12 @@ def benchmark(candidates, challenges=None, iterations=1000):
 
         result = evaluate_candidate(name, candidate, challenges, iterations)
 
-        if result:
-            results.extend(result)
+        results.extend(result)
+
+    results = [result for result in dask.compute(*results)]
 
     df = pd.DataFrame.from_records(results)
-    df = df.pivot(index='candidate', columns='challenge', values='score')
+    df = df.pivot(index='challenge', columns='candidate', values='score')
 
     del df.columns.name
     del df.index.name

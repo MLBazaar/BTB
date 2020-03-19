@@ -43,6 +43,8 @@ examples_require = [
 tests_require = [
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
+    'dask>=2.6.0,<3',
+    'toolz>=0.10.0,<1',
 ]
 
 
