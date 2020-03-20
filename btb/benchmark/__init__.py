@@ -37,22 +37,24 @@ def _evaluate_candidate(name, candidate, challenge, iterations):
 
 
 def evaluate_candidate(name, candidate, challenges, iterations):
-    candidate_result = []
-
     if not isinstance(challenges, list):
         challenges = [challenges]
 
+    candidate_results = []
     for challenge in challenges:
-        if inspect.isclass(challenge):
-            try:
+        try:
+            if inspect.isclass(challenge):
                 challenge = challenge()
-            except Exception as ex:
-                LOGGER.warn('Could not instantiate candidate %s', name, str(challenge), ex)
-                next
 
-        candidate_result.append(_evaluate_candidate(name, candidate, challenge, iterations))
+            result = _evaluate_candidate(name, candidate, challenge, iterations)
+            candidate_results.append(result)
 
-    return candidate_result
+        except Exception as ex:
+            LOGGER.warn('Could not evaluate candidate %s on challenge %s: %s',
+                        name, str(challenge), ex)
+            continue
+
+    return candidate_results
 
 
 def benchmark(candidates, challenges=None, iterations=1000):
