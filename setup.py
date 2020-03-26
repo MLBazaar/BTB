@@ -23,7 +23,6 @@ except IOError:
 
 
 install_requires = [
-    'tabulate>=0.8.3,<0.9',
     'docutils>=0.10,<0.16',
     'boto3>=1.9.18,<1.10',
     'numpy>=1.14.0,<1.18.0',
@@ -43,6 +42,8 @@ examples_require = [
 tests_require = [
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
+    'hyperopt>=0.2.3,<3',
+    'tabulate>=0.8.3,<0.9',
 ]
 
 

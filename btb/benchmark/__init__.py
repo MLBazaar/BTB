@@ -4,8 +4,6 @@ import logging
 import pandas as pd
 
 from btb.benchmark.challenges import MATH_CHALLENGES, ML_CHALLENGES
-from btb.benchmark.challenges.atmchallenge import ATMChallenge  # noqa: F401
-from btb.benchmark.tuners import get_all_tuning_functions  # noqa: F401
 
 DEFAULT_CHALLENGES = MATH_CHALLENGES + ML_CHALLENGES
 LOGGER = logging.getLogger(__name__)
@@ -32,9 +30,13 @@ def evaluate_candidate(name, candidate, challenges, iterations):
         except Exception as ex:
             LOGGER.warn(
                 'Could not score candidate %s with challenge %s, error: %s', name, challenge, ex)
+            result = {
+                'challenge': str(challenge),
+                'candidate': name,
+                'score': None,
+            }
 
-        if result:
-            candidate_result.append(result)
+        candidate_result.append(result)
 
     return candidate_result
 
@@ -94,8 +96,7 @@ def benchmark(candidates, challenges=None, iterations=1000):
 
         result = evaluate_candidate(name, candidate, challenges, iterations)
 
-        if result:
-            results.extend(result)
+        results.extend(result)
 
     df = pd.DataFrame.from_records(results)
     df = df.pivot(index='candidate', columns='challenge', values='score')
