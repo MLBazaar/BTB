@@ -305,16 +305,21 @@
   <h1>Source code for btb.benchmark.tuners</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
+<span class="kn">from</span> <span class="nn">hyperopt</span> <span class="kn">import</span> <span class="n">rand</span><span class="p">,</span> <span class="n">tpe</span>
+
 <span class="kn">from</span> <span class="nn">btb.benchmark.tuners.btb</span> <span class="kn">import</span> <span class="n">make_btb_tuning_function</span>
+<span class="kn">from</span> <span class="nn">btb.benchmark.tuners.hyperopt</span> <span class="kn">import</span> <span class="n">make_hyperopt_tuning_function</span>
 <span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">GPEiTuner</span><span class="p">,</span> <span class="n">GPTuner</span><span class="p">,</span> <span class="n">UniformTuner</span>
 
 
 <div class="viewcode-block" id="get_all_tuning_functions"><a class="viewcode-back" href="../../../api/btb.benchmark.tuners.html#btb.benchmark.tuners.get_all_tuning_functions">[docs]</a><span class="k">def</span> <span class="nf">get_all_tuning_functions</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Return all the tuning functions ready to use with benchmark.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;GPTuner()&#39;</span><span class="p">:</span> <span class="n">make_btb_tuning_function</span><span class="p">(</span><span class="n">GPTuner</span><span class="p">),</span>
-        <span class="s1">&#39;GPEiTuner()&#39;</span><span class="p">:</span> <span class="n">make_btb_tuning_function</span><span class="p">(</span><span class="n">GPEiTuner</span><span class="p">),</span>
-        <span class="s1">&#39;UniformTuner()&#39;</span><span class="p">:</span> <span class="n">make_btb_tuning_function</span><span class="p">(</span><span class="n">UniformTuner</span><span class="p">),</span>
+        <span class="s1">&#39;BTB.GPTuner&#39;</span><span class="p">:</span> <span class="n">make_btb_tuning_function</span><span class="p">(</span><span class="n">GPTuner</span><span class="p">),</span>
+        <span class="s1">&#39;BTB.GPEiTuner&#39;</span><span class="p">:</span> <span class="n">make_btb_tuning_function</span><span class="p">(</span><span class="n">GPEiTuner</span><span class="p">),</span>
+        <span class="s1">&#39;BTB.UniformTuner&#39;</span><span class="p">:</span> <span class="n">make_btb_tuning_function</span><span class="p">(</span><span class="n">UniformTuner</span><span class="p">),</span>
+        <span class="s1">&#39;HyperOpt.tpe.suggest&#39;</span><span class="p">:</span> <span class="n">make_hyperopt_tuning_function</span><span class="p">(</span><span class="n">tpe</span><span class="o">.</span><span class="n">suggest</span><span class="p">),</span>
+        <span class="s1">&#39;HyperOpt.rand.suggest&#39;</span><span class="p">:</span> <span class="n">make_hyperopt_tuning_function</span><span class="p">(</span><span class="n">rand</span><span class="o">.</span><span class="n">suggest</span><span class="p">),</span>
     <span class="p">}</span></div>
 </pre></div>
 

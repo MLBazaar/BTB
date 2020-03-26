@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>btb.benchmark.tuners package &mdash; BTB 0.3.7.dev0 documentation</title>
+  <title>btb.benchmark.tuners.hyperopt module &mdash; BTB 0.3.7.dev0 documentation</title>
   
 
   
@@ -283,14 +283,14 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>btb.benchmark.tuners package</li>
+      <li>btb.benchmark.tuners.hyperopt module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/api/btb.benchmark.tuners.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/api/btb.benchmark.tuners.hyperopt.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -304,19 +304,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="btb-benchmark-tuners-package">
-<h1>btb.benchmark.tuners package<a class="headerlink" href="#btb-benchmark-tuners-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="btb.benchmark.tuners.btb.html">btb.benchmark.tuners.btb module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="btb.benchmark.tuners.hyperopt.html">btb.benchmark.tuners.hyperopt module</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="module-btb.benchmark.tuners">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-btb.benchmark.tuners" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-btb.benchmark.tuners.hyperopt">
+<span id="btb-benchmark-tuners-hyperopt-module"></span><h1>btb.benchmark.tuners.hyperopt module<a class="headerlink" href="#module-btb.benchmark.tuners.hyperopt" title="Permalink to this headline">¶</a></h1>
 <p><strong>Functions</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -324,18 +313,45 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.tuners.get_all_tuning_functions" title="btb.benchmark.tuners.get_all_tuning_functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_tuning_functions</span></code></a>()</p></td>
-<td><p>Return all the tuning functions ready to use with benchmark.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.tuners.hyperopt.make_hyperopt_tuning_function" title="btb.benchmark.tuners.hyperopt.make_hyperopt_tuning_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_hyperopt_tuning_function</span></code></a>(algo)</p></td>
+<td><p>Create a tuning function that uses <code class="docutils literal notranslate"><span class="pre">HyperOpt</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#btb.benchmark.tuners.hyperopt.make_minimize_function" title="btb.benchmark.tuners.hyperopt.make_minimize_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_minimize_function</span></code></a>(scoring_function)</p></td>
+<td><p>Create a minimize function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#btb.benchmark.tuners.hyperopt.search_space_from_dict" title="btb.benchmark.tuners.hyperopt.search_space_from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">search_space_from_dict</span></code></a>(dict_hyperparams)</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="function">
-<dt id="btb.benchmark.tuners.get_all_tuning_functions">
-<code class="sig-prename descclassname">btb.benchmark.tuners.</code><code class="sig-name descname">get_all_tuning_functions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/tuners.html#get_all_tuning_functions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.tuners.get_all_tuning_functions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return all the tuning functions ready to use with benchmark.</p>
+<dt id="btb.benchmark.tuners.hyperopt.make_hyperopt_tuning_function">
+<code class="sig-prename descclassname">btb.benchmark.tuners.hyperopt.</code><code class="sig-name descname">make_hyperopt_tuning_function</code><span class="sig-paren">(</span><em class="sig-param">algo</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/tuners/hyperopt.html#make_hyperopt_tuning_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.tuners.hyperopt.make_hyperopt_tuning_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tuning function that uses <code class="docutils literal notranslate"><span class="pre">HyperOpt</span></code>.</p>
+<p>With a given suggesting algorithm from the library <code class="docutils literal notranslate"><span class="pre">HyperOpt</span></code>, create a tuning
+function that maximize the score, using <code class="docutils literal notranslate"><span class="pre">fmin</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>algo</strong> (<em>hyperopt.algo</em>) – Search / Suggest <code class="docutils literal notranslate"><span class="pre">HyperOpt</span></code> algorithm to be used with <code class="docutils literal notranslate"><span class="pre">fmin</span></code> function.</p>
+</dd>
+</dl>
 </dd></dl>
 
-</div>
+<dl class="function">
+<dt id="btb.benchmark.tuners.hyperopt.make_minimize_function">
+<code class="sig-prename descclassname">btb.benchmark.tuners.hyperopt.</code><code class="sig-name descname">make_minimize_function</code><span class="sig-paren">(</span><em class="sig-param">scoring_function</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/tuners/hyperopt.html#make_minimize_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.tuners.hyperopt.make_minimize_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a minimize function.</p>
+<p>Given a maximization <code class="docutils literal notranslate"><span class="pre">scoring_function</span></code> convert it to minimize in order to work with
+<code class="docutils literal notranslate"><span class="pre">hyperopt</span></code>, as <code class="docutils literal notranslate"><span class="pre">benchmark</span></code> works with <code class="docutils literal notranslate"><span class="pre">maximization</span></code>.</p>
+<p>Also <code class="docutils literal notranslate"><span class="pre">hyperopt</span></code> params are being passed as a python <code class="docutils literal notranslate"><span class="pre">dict</span></code>, we pass those as <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>
+to the <code class="docutils literal notranslate"><span class="pre">scoring_function</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="btb.benchmark.tuners.hyperopt.search_space_from_dict">
+<code class="sig-prename descclassname">btb.benchmark.tuners.hyperopt.</code><code class="sig-name descname">search_space_from_dict</code><span class="sig-paren">(</span><em class="sig-param">dict_hyperparams</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/benchmark/tuners/hyperopt.html#search_space_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.benchmark.tuners.hyperopt.search_space_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 

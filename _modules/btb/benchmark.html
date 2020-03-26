@@ -307,8 +307,6 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">btb.benchmark.challenges</span> <span class="kn">import</span> <span class="n">MATH_CHALLENGES</span><span class="p">,</span> <span class="n">ML_CHALLENGES</span>
-<span class="kn">from</span> <span class="nn">btb.benchmark.challenges.atmchallenge</span> <span class="kn">import</span> <span class="n">ATMChallenge</span>  <span class="c1"># noqa: F401</span>
-<span class="kn">from</span> <span class="nn">btb.benchmark.tuners</span> <span class="kn">import</span> <span class="n">get_all_tuning_functions</span>  <span class="c1"># noqa: F401</span>
 
 <span class="n">DEFAULT_CHALLENGES</span> <span class="o">=</span> <span class="n">MATH_CHALLENGES</span> <span class="o">+</span> <span class="n">ML_CHALLENGES</span>
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -335,9 +333,13 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s1">&#39;Could not score candidate </span><span class="si">%s</span><span class="s1"> with challenge </span><span class="si">%s</span><span class="s1">, error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
+                <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="p">}</span>
 
-        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-            <span class="n">candidate_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">candidate_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">candidate_result</span></div>
 
@@ -397,8 +399,7 @@
 
         <span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenges</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-            <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;candidate&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>

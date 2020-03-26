@@ -7,6 +7,7 @@ Submodules
 .. toctree::
 
    btb.benchmark.tuners.btb
+   btb.benchmark.tuners.hyperopt
 
 Module contents
 ---------------
