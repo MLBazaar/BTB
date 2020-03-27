@@ -10,31 +10,6 @@ from btb.benchmark import benchmark
 
 class TestBenchmark(TestCase):
 
-    # def test__evaluate_candidate_challenge_is_instance(self):
-    #     # setup
-    #     candidate = MagicMock()
-    #     challenge = MagicMock()
-    #     challenge.__str__.return_value = 'test_challenge'
-
-    #     # run
-    #     result = _evaluate_candidate('test_candidate', candidate, challenge, 10)
-
-    #     # assert
-    #     challenge.get_tunable_hyperparameters.assert_called_once_with()
-    #     candidate.assert_called_once_with(
-    #         challenge.evaluate,
-    #         challenge.get_tunable_hyperparameters.return_value,
-    #         10
-    #     )
-
-    #     expected_result = {
-    #         'challenge': 'test_challenge',
-    #         'candidate': 'test_candidate',
-    #         'score': candidate.return_value
-    #     }
-
-    #     assert result == expected_result
-
     @patch('btb.benchmark.evaluate_candidate')
     def test_benchmark_challenges_callable(self, mock_evaluate_candidate):
         # setup
