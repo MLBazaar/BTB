@@ -37,9 +37,6 @@ def _evaluate_candidate(name, candidate, challenge, iterations):
 
 
 def evaluate_candidate(name, candidate, challenges, iterations):
-    if not isinstance(challenges, list):
-        challenges = [challenges]
-
     candidate_results = []
     for challenge in challenges:
         try:
@@ -93,20 +90,16 @@ def benchmark(candidates, challenges=None, iterations=1000):
             returned.
     """
     if challenges is None:
-        challenges = [challenge_class() for challenge_class in DEFAULT_CHALLENGES]
+        challenges = DEFAULT_CHALLENGES
+    elif not isinstance(challenges, list):
+        challenges = [challenges]
 
     if callable(candidates):
         candidates = {candidates.__name__: candidates}
-
     elif isinstance(candidates, (list, tuple)):
         candidates = {candidate.__name__: candidate for candidate in candidates}
-
     elif not isinstance(candidates, dict):
-        raise TypeError(
-            'Candidates can only be a callable, list of callables, tuple of callables or dict.')
-
-    if not isinstance(challenges, list):
-        challenges = [challenges]
+        raise TypeError('Candidates can only be a callable, list or dict.')
 
     results = []
 
