@@ -43,14 +43,11 @@ def evaluate_candidate(name, candidate, challenges, iterations):
             if inspect.isclass(challenge):
                 challenge = challenge()
 
+            result = _evaluate_candidate(name, candidate, challenge, iterations)
+
         except Exception as ex:
             LOGGER.warn(
                 'Could not score candidate %s with challenge %s, error: %s', name, challenge, ex)
-            result = {
-                'challenge': str(challenge),
-                'candidate': name,
-                'score': None,
-            }
 
         candidate_results.append(result)
 
