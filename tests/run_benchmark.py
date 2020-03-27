@@ -15,9 +15,51 @@ LOGGER = logging.getLogger(__name__)
 warnings.filterwarnings("ignore")
 
 
+def _get_candidates(args):
+    all_tuning_functions = get_all_tuning_functions()
+
+    if args.tuners is None:
+        LOGGER.info('Using all tuning functions.')
+
+        return all_tuning_functions
+
+    else:
+        selected_tuning_functions = {}
+
+        for name in args.tuners:
+            tuning_function = all_tuning_functions.get(name)
+
+            if tuning_function:
+                LOGGER.info('Loading tuning function: %s', name)
+                selected_tuning_functions[name] = tuning_function
+
+            else:
+                LOGGER.info('Could not load tuning function: %s', name)
+
+        if not selected_tuning_functions:
+            raise ValueError('No tunable function was loaded.')
+
+        return selected_tuning_functions
+
+
+def _update_challenges(challenges):
+    """Update the ``challenges`` list with the challenge class.
+
+    If a given challenge name is represented in ``DEFAULT_CHALLENGES``, replace it with
+    the given class so it's not used by ``ATMChallenge``.
+    """
+    for challenge in DEFAULT_CHALLENGES:
+        name = challenge.__name__
+        if name in challenges:
+            challenges[challenges.index(name)] = challenge
+
+    return challenges
+
+
 def _get_challenges(args):
     if args.challenges:
-        challenges = args.challenges
+        challenges = _update_challenges(args.challenges)
+
     else:
         challenges = ATMChallenge.get_available_datasets() + DEFAULT_CHALLENGES
 
@@ -35,7 +77,7 @@ def _get_challenges(args):
 
 
 def perform_benchmark(args):
-    candidates = get_all_tuning_functions()
+    candidates = _get_candidates(args)
     challenges = list(_get_challenges(args))
     results = benchmark(candidates, challenges, args.iterations)
 
@@ -54,7 +96,6 @@ def perform_benchmark(args):
 
 
 def _get_parser():
-    # Parser
     parser = argparse.ArgumentParser(description='BTB Benchmark Command Line Interface')
 
     parser.add_argument('-v', '--verbose', action='count', default=0,
@@ -65,7 +106,8 @@ def _get_parser():
                         help='Limit the test to a sample of datasets for the given size.')
     parser.add_argument('-i', '--iterations', type=int, default=100,
                         help='Number of iterations to perform per challenge with each candidate.')
-    parser.add_argument('challenges', nargs='*', help='Name of the challenge/s to be processed.')
+    parser.add_argument('--challenges', nargs='+', help='Name of the challenge/s to be processed.')
+    parser.add_argument('--tuners', nargs='+', help='Name of the tunables to be used.')
 
     return parser
 

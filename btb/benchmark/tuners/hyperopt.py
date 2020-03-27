@@ -66,7 +66,14 @@ def make_hyperopt_tuning_function(algo):
         minimized_scoring = make_minimize_function(scoring_function)
         search_space = search_space_from_dict(tunable_hyperparameters)
         trials = Trials()
-        fmin(minimized_scoring, search_space, algo=algo, max_evals=iterations, trials=trials)
+        fmin(
+            minimized_scoring,
+            search_space,
+            algo=algo,
+            max_evals=iterations,
+            trials=trials,
+            verbose=False
+        )
 
         # normalize best score to match other tuners
         best_score = -1 * trials.best_trial['result']['loss']

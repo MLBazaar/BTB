@@ -13,6 +13,6 @@ def test_benchmark_rosenbrock():
     df = benchmark(candidate, challenges=Rosenbrock(), iterations=1)
 
     # Assert
-    np.testing.assert_equal(df.columns.values, ['Rosenbrock()'])
-    np.testing.assert_equal(df.index.values, ['tuning_function'])
+    np.testing.assert_equal(df.columns.values, ['tuning_function'])
+    np.testing.assert_equal(df.index.values, ['Rosenbrock()'])
     np.testing.assert_equal(df.dtypes.values, [np.int])

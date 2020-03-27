@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import inspect
 import logging
 
+import dask
 import pandas as pd
 
 from btb.benchmark.challenges import MATH_CHALLENGES, ML_CHALLENGES
@@ -9,36 +11,47 @@ DEFAULT_CHALLENGES = MATH_CHALLENGES + ML_CHALLENGES
 LOGGER = logging.getLogger(__name__)
 
 
+@dask.delayed
+def _evaluate_candidate(name, candidate, challenge, iterations):
+    tunable_hyperparameters = challenge.get_tunable_hyperparameters()
+    LOGGER.info('Evaluating candidate %s on challenge %s for %s iterations',
+                name, challenge, iterations)
+    try:
+        score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
+        result = {
+            'challenge': str(challenge),
+            'candidate': name,
+            'score': score,
+        }
+
+    except Exception as ex:
+        LOGGER.warn(
+            'Could not score candidate %s with challenge %s, error: %s', name, challenge, ex)
+        result = {
+            'challenge': str(challenge),
+            'candidate': name,
+            'score': None,
+        }
+
+    return result
+
+
 def evaluate_candidate(name, candidate, challenges, iterations):
-    candidate_result = []
-
-    if not isinstance(challenges, list):
-        challenges = [challenges]
-
+    candidate_results = []
     for challenge in challenges:
-        tunable_hyperparameters = challenge.get_tunable_hyperparameters()
-        LOGGER.info('Evaluating candidate %s on challenge %s for %s iterations',
-                    name, challenge, iterations)
         try:
-            score = candidate(challenge.evaluate, tunable_hyperparameters, iterations)
-            result = {
-                'challenge': str(challenge),
-                'candidate': name,
-                'score': score,
-            }
+            if inspect.isclass(challenge):
+                challenge = challenge()
+
+            result = _evaluate_candidate(name, candidate, challenge, iterations)
 
         except Exception as ex:
             LOGGER.warn(
                 'Could not score candidate %s with challenge %s, error: %s', name, challenge, ex)
-            result = {
-                'challenge': str(challenge),
-                'candidate': name,
-                'score': None,
-            }
 
-        candidate_result.append(result)
+        candidate_results.append(result)
 
-    return candidate_result
+    return candidate_results
 
 
 def benchmark(candidates, challenges=None, iterations=1000):
@@ -74,20 +87,16 @@ def benchmark(candidates, challenges=None, iterations=1000):
             returned.
     """
     if challenges is None:
-        challenges = [challenge_class() for challenge_class in DEFAULT_CHALLENGES]
+        challenges = DEFAULT_CHALLENGES
+    elif not isinstance(challenges, list):
+        challenges = [challenges]
 
     if callable(candidates):
         candidates = {candidates.__name__: candidates}
-
     elif isinstance(candidates, (list, tuple)):
         candidates = {candidate.__name__: candidate for candidate in candidates}
-
     elif not isinstance(candidates, dict):
-        raise TypeError(
-            'Candidates can only be a callable, list of callables, tuple of callables or dict.')
-
-    if not isinstance(challenges, list):
-        challenges = [challenges]
+        raise TypeError('Candidates can only be a callable, list or dict.')
 
     results = []
 
@@ -98,8 +107,10 @@ def benchmark(candidates, challenges=None, iterations=1000):
 
         results.extend(result)
 
+    results = [result for result in dask.compute(*results)]
+
     df = pd.DataFrame.from_records(results)
-    df = df.pivot(index='candidate', columns='challenge', values='score')
+    df = df.pivot(index='challenge', columns='candidate', values='score')
 
     del df.columns.name
     del df.index.name
