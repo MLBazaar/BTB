@@ -373,7 +373,14 @@
         <span class="n">minimized_scoring</span> <span class="o">=</span> <span class="n">make_minimize_function</span><span class="p">(</span><span class="n">scoring_function</span><span class="p">)</span>
         <span class="n">search_space</span> <span class="o">=</span> <span class="n">search_space_from_dict</span><span class="p">(</span><span class="n">tunable_hyperparameters</span><span class="p">)</span>
         <span class="n">trials</span> <span class="o">=</span> <span class="n">Trials</span><span class="p">()</span>
-        <span class="n">fmin</span><span class="p">(</span><span class="n">minimized_scoring</span><span class="p">,</span> <span class="n">search_space</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">max_evals</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
+        <span class="n">fmin</span><span class="p">(</span>
+            <span class="n">minimized_scoring</span><span class="p">,</span>
+            <span class="n">search_space</span><span class="p">,</span>
+            <span class="n">algo</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span>
+            <span class="n">max_evals</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span>
+            <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
 
         <span class="c1"># normalize best score to match other tuners</span>
         <span class="n">best_score</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">trials</span><span class="o">.</span><span class="n">best_trial</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;loss&#39;</span><span class="p">]</span>

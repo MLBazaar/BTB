@@ -302,8 +302,10 @@
             
   <h1>Source code for btb.benchmark</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
+<span class="kn">import</span> <span class="nn">dask</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">btb.benchmark.challenges</span> <span class="kn">import</span> <span class="n">MATH_CHALLENGES</span><span class="p">,</span> <span class="n">ML_CHALLENGES</span>
@@ -312,36 +314,47 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
+<span class="nd">@dask</span><span class="o">.</span><span class="n">delayed</span>
+<span class="k">def</span> <span class="nf">_evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+    <span class="n">tunable_hyperparameters</span> <span class="o">=</span> <span class="n">challenge</span><span class="o">.</span><span class="n">get_tunable_hyperparameters</span><span class="p">()</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Evaluating candidate </span><span class="si">%s</span><span class="s1"> on challenge </span><span class="si">%s</span><span class="s1"> for </span><span class="si">%s</span><span class="s1"> iterations&#39;</span><span class="p">,</span>
+                <span class="n">name</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">candidate</span><span class="p">(</span><span class="n">challenge</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">tunable_hyperparameters</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
+            <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s1">&#39;Could not score candidate </span><span class="si">%s</span><span class="s1"> with challenge </span><span class="si">%s</span><span class="s1">, error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
+            <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+
 <div class="viewcode-block" id="evaluate_candidate"><a class="viewcode-back" href="../../api/btb.benchmark.html#btb.benchmark.evaluate_candidate">[docs]</a><span class="k">def</span> <span class="nf">evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenges</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
-    <span class="n">candidate_result</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">challenges</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">challenges</span> <span class="o">=</span> <span class="p">[</span><span class="n">challenges</span><span class="p">]</span>
-
+    <span class="n">candidate_results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">challenge</span> <span class="ow">in</span> <span class="n">challenges</span><span class="p">:</span>
-        <span class="n">tunable_hyperparameters</span> <span class="o">=</span> <span class="n">challenge</span><span class="o">.</span><span class="n">get_tunable_hyperparameters</span><span class="p">()</span>
-        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Evaluating candidate </span><span class="si">%s</span><span class="s1"> on challenge </span><span class="si">%s</span><span class="s1"> for </span><span class="si">%s</span><span class="s1"> iterations&#39;</span><span class="p">,</span>
-                    <span class="n">name</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">score</span> <span class="o">=</span> <span class="n">candidate</span><span class="p">(</span><span class="n">challenge</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">tunable_hyperparameters</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
-                <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-                <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
-            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">challenge</span><span class="p">):</span>
+                <span class="n">challenge</span> <span class="o">=</span> <span class="n">challenge</span><span class="p">()</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_evaluate_candidate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s1">&#39;Could not score candidate </span><span class="si">%s</span><span class="s1"> with challenge </span><span class="si">%s</span><span class="s1">, error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">challenge</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;challenge&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">challenge</span><span class="p">),</span>
-                <span class="s1">&#39;candidate&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-                <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="p">}</span>
 
-        <span class="n">candidate_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">candidate_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">candidate_result</span></div>
+    <span class="k">return</span> <span class="n">candidate_results</span></div>
 
 
 <div class="viewcode-block" id="benchmark"><a class="viewcode-back" href="../../api/btb.benchmark.html#btb.benchmark.benchmark">[docs]</a><span class="k">def</span> <span class="nf">benchmark</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">challenges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
@@ -377,20 +390,16 @@
 <span class="sd">            returned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">challenges</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">challenges</span> <span class="o">=</span> <span class="p">[</span><span class="n">challenge_class</span><span class="p">()</span> <span class="k">for</span> <span class="n">challenge_class</span> <span class="ow">in</span> <span class="n">DEFAULT_CHALLENGES</span><span class="p">]</span>
+        <span class="n">challenges</span> <span class="o">=</span> <span class="n">DEFAULT_CHALLENGES</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">challenges</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">challenges</span> <span class="o">=</span> <span class="p">[</span><span class="n">challenges</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">candidates</span><span class="p">):</span>
         <span class="n">candidates</span> <span class="o">=</span> <span class="p">{</span><span class="n">candidates</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">candidates</span><span class="p">}</span>
-
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
         <span class="n">candidates</span> <span class="o">=</span> <span class="p">{</span><span class="n">candidate</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">candidate</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">}</span>
-
     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s1">&#39;Candidates can only be a callable, list of callables, tuple of callables or dict.&#39;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">challenges</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">challenges</span> <span class="o">=</span> <span class="p">[</span><span class="n">challenges</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Candidates can only be a callable, list or dict.&#39;</span><span class="p">)</span>
 
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -401,8 +410,10 @@
 
         <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">dask</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="o">*</span><span class="n">results</span><span class="p">)]</span>
+
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;candidate&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;challenge&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;candidate&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
 
     <span class="k">del</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span>
     <span class="k">del</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span>
