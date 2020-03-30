@@ -42,7 +42,7 @@ def evaluate_tuner(name, tuner, challenges, iterations):
     tuner_results = []
     for challenge in challenges:
         try:
-            if issubclass(challenge, Challenge):
+            if not isinstance(challenge, Challenge) and issubclass(challenge, Challenge):
                 challenge = challenge()
 
             result = _evaluate_tuner(name, tuner, challenge, iterations)
