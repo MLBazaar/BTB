@@ -6,13 +6,24 @@ from datetime import datetime
 
 import tabulate
 
-from btb.benchmark import DEFAULT_CHALLENGES, benchmark
-from btb.benchmark.challenges import ATMChallenge
+from btb.benchmark import benchmark
+from btb.benchmark.challenges import MATH_CHALLENGES, RandomForestChallenge
 from btb.benchmark.tuners import get_all_tuning_functions
 
 LOGGER = logging.getLogger(__name__)
+ALL_TYPES = ['math', 'random_forest']
 
 warnings.filterwarnings("ignore")
+
+
+def _get_math_challenge(challenge):
+    if isinstance(challenge, str):
+        for math_challenge in MATH_CHALLENGES:
+            if str(challenge).lower() == str(math_challenge.__name__).lower():
+                return math_challenge
+
+    else:
+        return challenge()
 
 
 def _get_candidates(args):
@@ -42,44 +53,63 @@ def _get_candidates(args):
         return selected_tuning_functions
 
 
-def _update_challenges(challenges):
-    """Update the ``challenges`` list with the challenge class.
+CHALLENGES = {
+    'math': _get_math_challenge,
+    'random_forest': RandomForestChallenge,
+}
 
-    If a given challenge name is represented in ``DEFAULT_CHALLENGES``, replace it with
-    the given class so it's not used by ``ATMChallenge``.
-    """
-    for challenge in DEFAULT_CHALLENGES:
-        name = challenge.__name__
-        if name in challenges:
-            challenges[challenges.index(name)] = challenge
 
-    return challenges
+def _get_all_challenges(args):
+    all_challenges = []
+    if args.type is None:
+        return RandomForestChallenge.get_available_datasets() + MATH_CHALLENGES
+
+    if 'math' in args.type:
+        all_challenges = all_challenges + MATH_CHALLENGES
+    if 'random_forest' in args.type:
+        all_challenges = all_challenges + RandomForestChallenge.get_available_datasets()
+
+    return all_challenges
 
 
 def _get_challenges(args):
-    if args.challenges:
-        challenges = _update_challenges(args.challenges)
-
-    else:
-        challenges = ATMChallenge.get_available_datasets() + DEFAULT_CHALLENGES
+    challenges = args.challenges or _get_all_challenges(args)
+    selected = []
+    unknown = []
 
     if args.sample:
         if args.sample > len(challenges):
-            raise ValueError("Sample cannot be greater than {}".format(len(challenges)))
+            raise ValueError('Sample can not be greater than {}'.format(len(challenges)))
 
         challenges = random.sample(challenges, args.sample)
 
-    for challenge in challenges:
-        if isinstance(challenge, str):
-            yield ATMChallenge(challenge)
-        else:
-            yield challenge()
+    for challenge_name in challenges:
+        known = False
+        for challenge_type in args.type or ALL_TYPES:
+            try:
+                challenge = CHALLENGES[challenge_type](challenge_name)
+                if challenge:
+                    known = True
+                    selected.append(challenge)
+            except Exception:
+                pass
+
+        if not known:
+            unknown.append(challenge_name)
+
+    if unknown:
+        raise ValueError('Challenges {} not of type {}'.format(unknown, args.type))
+
+    if not selected:
+        raise ValueError('No challenges selected!')
+
+    return selected
 
 
 def perform_benchmark(args):
     candidates = _get_candidates(args)
     challenges = list(_get_challenges(args))
-    results = benchmark(candidates, challenges, args.iterations)
+    results = benchmark(candidates, challenges, args.iterations, args.complete_dataframe)
 
     if args.report is None:
         args.report = datetime.now().strftime('benchmark_%Y%m%d%H%M') + '.csv'
@@ -108,40 +138,28 @@ def _get_parser():
                         help='Number of iterations to perform per challenge with each candidate.')
     parser.add_argument('--challenges', nargs='+', help='Name of the challenge/s to be processed.')
     parser.add_argument('--tuners', nargs='+', help='Name of the tunables to be used.')
+    parser.add_argument('--type', nargs='+', help='Name of the tunables to be used.',
+                        choices=['math', 'random_forest'])
+    parser.add_argument('-c', '--complete-dataframe', action='store_true',
+                        help='Return the complete dataframe with additional information.')
 
     return parser
 
 
-def logging_setup(verbosity=1, logfile=None, logger_name=None, stdout=True):
-    logger = logging.getLogger(logger_name)
-    log_level = (3 - verbosity) * 10
-    fmt = '%(asctime)s - %(process)d - %(levelname)s - %(name)s - %(module)s - %(message)s'
-    formatter = logging.Formatter(fmt)
-    logger.setLevel(log_level)
-    logger.propagate = False
-
-    if logfile:
-        file_handler = logging.FileHandler(logfile)
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(formatter)
-        logger.addHandler(file_handler)
-
-    if stdout or not logfile:
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(log_level)
-        console_handler.setFormatter(formatter)
-        logger.addHandler(console_handler)
-
-    logging.getLogger("botocore").setLevel(logging.ERROR)
-    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-
-
 def main():
+    # Parse args
     parser = _get_parser()
     args = parser.parse_args()
 
-    logging_setup(args.verbose)
+    # Logger setup
+    log_level = (3 - args.verbose) * 10
+    fmt = '%(asctime)s - %(process)d - %(levelname)s - %(name)s - %(module)s - %(message)s'
+    logging.basicConfig(level=log_level, format=fmt)
+    logging.getLogger("botocore").setLevel(logging.ERROR)
+    logging.getLogger("hyperopt").setLevel(logging.ERROR)
+    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
 
+    # run
     perform_benchmark(args)
 
 
