@@ -1,11 +1,12 @@
 import argparse
 import logging
+import os
 import random
 import warnings
-from datetime import datetime
 
 import tabulate
 
+import btb
 from btb.benchmark import benchmark
 from btb.benchmark.challenges import MATH_CHALLENGES, RandomForestChallenge
 from btb.benchmark.tuners import get_all_tuning_functions
@@ -112,7 +113,11 @@ def perform_benchmark(args):
     results = benchmark(candidates, challenges, args.iterations, args.complete_dataframe)
 
     if args.report is None:
-        args.report = datetime.now().strftime('benchmark_%Y%m%d%H%M') + '.csv'
+        base_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'results')
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
+
+        args.report = os.path.join(base_dir, 'benchmark_{}.csv'.format(btb.__version__))
 
     LOGGER.info('Saving benchmark report to %s', args.report)
 
