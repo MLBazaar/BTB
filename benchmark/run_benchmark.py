@@ -17,16 +17,6 @@ ALL_TYPES = ['math', 'random_forest']
 warnings.filterwarnings("ignore")
 
 
-def _get_math_challenge(challenge):
-    if isinstance(challenge, str):
-        for math_challenge in MATH_CHALLENGES:
-            if str(challenge).lower() == str(math_challenge.__name__).lower():
-                return math_challenge
-
-    else:
-        return challenge()
-
-
 def _get_candidates(args):
     all_tuning_functions = get_all_tuning_functions()
 
@@ -54,27 +44,25 @@ def _get_candidates(args):
         return selected_tuning_functions
 
 
-CHALLENGES = {
-    'math': _get_math_challenge,
+CHALLENGE_GETTER = {
+    'math': MATH_CHALLENGES.get,
     'random_forest': RandomForestChallenge,
 }
 
 
-def _get_all_challenges(args):
-    all_challenges = []
-    if args.type is None:
-        return RandomForestChallenge.get_available_datasets() + MATH_CHALLENGES
+def _get_all_challenges_names(args):
+    all_challenge_names = []
+    types = args.type or ALL_TYPES
+    if 'math' in types:
+        all_challenge_names += list(MATH_CHALLENGES.keys())
+    if 'random_forest' in types:
+        all_challenge_names += RandomForestChallenge.get_available_dataset_names()
 
-    if 'math' in args.type:
-        all_challenges = all_challenges + MATH_CHALLENGES
-    if 'random_forest' in args.type:
-        all_challenges = all_challenges + RandomForestChallenge.get_available_datasets()
-
-    return all_challenges
+    return all_challenge_names
 
 
 def _get_challenges(args):
-    challenges = args.challenges or _get_all_challenges(args)
+    challenges = args.challenges or _get_all_challenges_names(args)
     selected = []
     unknown = []
 
@@ -88,7 +76,7 @@ def _get_challenges(args):
         known = False
         for challenge_type in args.type or ALL_TYPES:
             try:
-                challenge = CHALLENGES[challenge_type](challenge_name)
+                challenge = CHALLENGE_GETTER[challenge_type](challenge_name)
                 if challenge:
                     known = True
                     selected.append(challenge)
@@ -110,7 +98,7 @@ def _get_challenges(args):
 def perform_benchmark(args):
     candidates = _get_candidates(args)
     challenges = list(_get_challenges(args))
-    results = benchmark(candidates, challenges, args.iterations, args.complete_dataframe)
+    results = benchmark(candidates, challenges, args.iterations)
 
     if args.report is None:
         base_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'results')
@@ -145,8 +133,6 @@ def _get_parser():
     parser.add_argument('--tuners', nargs='+', help='Name of the tunables to be used.')
     parser.add_argument('--type', nargs='+', help='Name of the tunables to be used.',
                         choices=['math', 'random_forest'])
-    parser.add_argument('-c', '--complete-dataframe', action='store_true',
-                        help='Return the complete dataframe with additional information.')
 
     return parser
 

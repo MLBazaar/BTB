@@ -16,4 +16,8 @@ __all__ = (
     'Rosenbrock',
 )
 
-MATH_CHALLENGES = [Bohachevsky, Branin, Rosenbrock]
+MATH_CHALLENGES = {
+    'bohachevsky': Bohachevsky,
+    'branin': Branin,
+    'rosenbrock': Rosenbrock,
+}

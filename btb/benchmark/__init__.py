@@ -22,6 +22,7 @@ def _evaluate_tuner(name, tuner, challenge, iterations):
             'challenge': str(challenge),
             'tuner': name,
             'score': score,
+            'iterations': iterations,
             'elapsed': datetime.utcnow() - start
         }
 
@@ -56,7 +57,7 @@ def evaluate_tuner(name, tuner, challenges, iterations):
     return tuner_results
 
 
-def benchmark(tuners, challenges=None, iterations=1000, verbose_dataframe=False):
+def benchmark(tuners, challenges=None, iterations=1000):
     """Benchmark function.
 
     This benchmark function iterates over a collection of ``challenges`` and executes a
@@ -89,7 +90,7 @@ def benchmark(tuners, challenges=None, iterations=1000, verbose_dataframe=False)
             returned.
     """
     if challenges is None:
-        challenges = MATH_CHALLENGES
+        challenges = list(MATH_CHALLENGES.values())
     elif not isinstance(challenges, list):
         challenges = [challenges]
 
@@ -112,9 +113,6 @@ def benchmark(tuners, challenges=None, iterations=1000, verbose_dataframe=False)
     results = [result for result in dask.compute(*results)]
 
     df = pd.DataFrame.from_records(results)
-
-    if verbose_dataframe:
-        return df
 
     df = df.pivot(index='challenge', columns='tuner', values='score')
 

@@ -102,7 +102,7 @@ class MLChallenge(Challenge):
         return urljoin(BASE_DATASET_URL, name)
 
     @classmethod
-    def get_available_datasets(cls):
+    def get_available_dataset_names(cls):
         client = boto3.client('s3', config=Config(signature_version=UNSIGNED))
         available_datasets = [
             obj['Key']
@@ -115,7 +115,7 @@ class MLChallenge(Challenge):
     @classmethod
     def get_all_challenges(cls, challenges=None):
         """Return a list containing the instance of the datasets available."""
-        datasets = challenges or cls.get_available_datasets()
+        datasets = challenges or cls.get_available_dataset_names()
         loaded_challenges = []
         for dataset in datasets:
             try:
