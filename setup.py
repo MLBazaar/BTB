@@ -46,6 +46,7 @@ tests_require = [
     'toolz>=0.10.0,<1',
     'hyperopt>=0.2.3,<3',
     'tabulate>=0.8.3,<0.9',
+    'xgboost>=1.0.2,<1.1.0',
 ]
 
 

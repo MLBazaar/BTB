@@ -8,11 +8,12 @@ import tabulate
 
 import btb
 from btb.benchmark import benchmark
-from btb.benchmark.challenges import MATH_CHALLENGES, RandomForestChallenge
+from btb.benchmark.challenges import (
+    MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
 from btb.benchmark.tuners import get_all_tuning_functions
 
 LOGGER = logging.getLogger(__name__)
-ALL_TYPES = ['math', 'random_forest']
+ALL_TYPES = ['math', 'xgboost']
 
 warnings.filterwarnings("ignore")
 
@@ -47,6 +48,8 @@ def _get_candidates(args):
 CHALLENGE_GETTER = {
     'math': MATH_CHALLENGES.get,
     'random_forest': RandomForestChallenge,
+    'sgd': SGDChallenge,
+    'xgboost': XGBoostChallenge,
 }
 
 
@@ -55,8 +58,14 @@ def _get_all_challenges_names(args):
     types = args.type or ALL_TYPES
     if 'math' in types:
         all_challenge_names += list(MATH_CHALLENGES.keys())
-    if 'random_forest' in types:
-        all_challenge_names += RandomForestChallenge.get_available_dataset_names()
+
+    # Using elif as the datasets are the same
+    if 'sgd' in types:
+        all_challenge_names += SGDChallenge.get_available_dataset_names()
+    elif 'xgboost' in types:
+        all_challenge_names += SGDChallenge.get_available_dataset_names()
+    elif 'random_forest' in types:
+        all_challenge_names += SGDChallenge.get_available_dataset_names()
 
     return all_challenge_names
 
@@ -132,7 +141,7 @@ def _get_parser():
     parser.add_argument('--challenges', nargs='+', help='Name of the challenge/s to be processed.')
     parser.add_argument('--tuners', nargs='+', help='Name of the tunables to be used.')
     parser.add_argument('--type', nargs='+', help='Name of the tunables to be used.',
-                        choices=['math', 'random_forest'])
+                        choices=['math', 'sgd', 'random_forest', 'xgboost'])
 
     return parser
 
