@@ -114,7 +114,7 @@ def perform_benchmark(args):
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
-        args.report = os.path.join(base_dir, 'benchmark_{}.csv'.format(btb.__version__))
+        args.report = os.path.join(base_dir, '{}.csv'.format(btb.__version__))
 
     LOGGER.info('Saving benchmark report to %s', args.report)
 
