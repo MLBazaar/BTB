@@ -378,7 +378,7 @@ we want to try out, as well as the <code class="docutils literal notranslate"><s
 <span class="gp">   ....: </span>
 
 <span class="gp">In [20]: </span><span class="n">next_choice</span>
-<span class="gh">Out[20]: </span><span class="go">&#39;SVC&#39;</span>
+<span class="gh">Out[20]: </span><span class="go">&#39;RF&#39;</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -396,10 +396,13 @@ we want to try out, as well as the <code class="docutils literal notranslate"><s
 <blockquote>
 <div><div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [23]: </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="gh">Out[23]: </span><span class="go"></span>
-<span class="go">SVC(C=3.810974748076178, cache_size=200, class_weight=None, coef0=0.0,</span>
-<span class="go">    decision_function_shape=&#39;ovr&#39;, degree=3, gamma=9.169190113544438e-08,</span>
-<span class="go">    kernel=&#39;rbf&#39;, max_iter=-1, probability=False, random_state=None,</span>
-<span class="go">    shrinking=True, tol=0.001, verbose=False)</span>
+<span class="go">RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,</span>
+<span class="go">                       max_depth=3, max_features=&#39;auto&#39;, max_leaf_nodes=None,</span>
+<span class="go">                       min_impurity_decrease=0.0, min_impurity_split=None,</span>
+<span class="go">                       min_samples_leaf=1, min_samples_split=2,</span>
+<span class="go">                       min_weight_fraction_leaf=0.0, n_estimators=48,</span>
+<span class="go">                       n_jobs=None, oob_score=False, random_state=None,</span>
+<span class="go">                       verbose=0, warm_start=False)</span>
 
 <span class="gp">In [24]: </span><span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 
