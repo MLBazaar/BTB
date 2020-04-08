@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from btb_benchmark.tuners.btb import make_btb_tuning_function
+from btb_benchmark.tuners.hyperopt import make_hyperopt_tuning_function
 from hyperopt import rand, tpe
 
-from btb.benchmark.tuners.btb import make_btb_tuning_function
-from btb.benchmark.tuners.hyperopt import make_hyperopt_tuning_function
 from btb.tuning.tuners import GPEiTuner, GPTuner, UniformTuner
 
 
-def get_all_tuning_functions():
+def get_all_tuners():
     """Return all the tuning functions ready to use with benchmark."""
     return {
         'BTB.GPTuner': make_btb_tuning_function(GPTuner),

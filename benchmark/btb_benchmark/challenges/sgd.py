@@ -1,9 +1,8 @@
 import logging
 
+from btb_benchmark.challenges.challenge import MLChallenge
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import f1_score
-
-from btb.benchmark.challenges.challenge import MLChallenge
 
 LOGGER = logging.getLogger(__name__)
 

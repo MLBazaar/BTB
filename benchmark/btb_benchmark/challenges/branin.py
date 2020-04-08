@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-
-from btb.benchmark.challenges.challenge import Challenge
+from btb_benchmark.challenges.challenge import Challenge
 
 B = 5.1 / (4 * pow(np.pi, 2))
 C = 5 / np.pi
