@@ -146,8 +146,8 @@ best_proposal = session.run(20)
 For more details about **BTB** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/BTB/)!
 
-Also do not forget to have a look at the [notebook tutorials](
-https://github.com/HDI-Project/BTB/tree/master/examples/tutorials)!
+Also do not forget to have a look at the [notebook tutorials](notebooks) and the
+[benchmark](benchmark) framework that we use to evaluate the performance of our Tuners!
 
 # Citing BTB
 
