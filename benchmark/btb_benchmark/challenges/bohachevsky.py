@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+
 from btb_benchmark.challenges.challenge import Challenge
 
 

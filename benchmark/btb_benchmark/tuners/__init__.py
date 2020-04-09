@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from btb_benchmark.tuners.btb import make_btb_tuning_function
-from btb_benchmark.tuners.hyperopt import make_hyperopt_tuning_function
 from hyperopt import rand, tpe
 
 from btb.tuning.tuners import GPEiTuner, GPTuner, UniformTuner
+from btb_benchmark.tuners.btb import make_btb_tuning_function
+from btb_benchmark.tuners.hyperopt import make_hyperopt_tuning_function
 
 
 def get_all_tuners():

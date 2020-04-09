@@ -1,8 +1,9 @@
 import logging
 
-from btb_benchmark.challenges.challenge import MLChallenge
 from sklearn.metrics import f1_score
 from xgboost import XGBClassifier
+
+from btb_benchmark.challenges.challenge import MLChallenge
 
 LOGGER = logging.getLogger(__name__)
 
