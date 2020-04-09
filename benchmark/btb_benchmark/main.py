@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import argparse
 import logging
-import os
 import random
 import warnings
 from datetime import datetime
@@ -9,7 +8,6 @@ from datetime import datetime
 import dask
 import pandas as pd
 
-import btb
 from btb.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
     MATH_CHALLENGES, Challenge, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
@@ -19,14 +17,19 @@ from btb_benchmark.tuners.btb import make_btb_tuning_function
 LOGGER = logging.getLogger(__name__)
 ALL_TYPES = ['math', 'xgboost']
 
+warnings.filterwarnings("ignore")
+
+
+def get_math_challenge_instance(name):
+    return MATH_CHALLENGES.get(name)()
+
+
 CHALLENGE_GETTER = {
-    'math': MATH_CHALLENGES.get,
+    'math': get_math_challenge_instance,
     'random_forest': RandomForestChallenge,
     'sgd': SGDChallenge,
     'xgboost': XGBoostChallenge,
 }
-
-warnings.filterwarnings("ignore")
 
 
 @dask.delayed
@@ -62,11 +65,7 @@ def _evaluate_tuner_on_challenges(name, tuner, challenges, iterations):
     tuner_results = []
     for challenge in challenges:
         try:
-            if not isinstance(challenge, Challenge) and issubclass(challenge, Challenge):
-                challenge = challenge()
-
             result = _evaluate_tuner_on_challenge(name, tuner, challenge, iterations)
-
         except Exception as ex:
             LOGGER.warn(
                 'Could not score tuner %s with challenge %s, error: %s', name, challenge, ex)
@@ -76,17 +75,18 @@ def _evaluate_tuner_on_challenges(name, tuner, challenges, iterations):
     return tuner_results
 
 
-def benchmark(tuners, challenges=None, iterations=1000):
-    """Benchmark function.
+def benchmark(tuners, challenges, iterations):
+    """Score ``tuners`` against a list of ``challenges`` for the given amount of iterations.
 
-    This benchmark function iterates over a collection of ``challenges`` and executes a
-    ``tuner_function`` for each one of the ``challenges`` for a given amount of iterations.
+    This function scores a collection of ``tuners`` against a collection of ``challenges``
+    performing tuning iterations in order to obtain a better score. At the end, the best score
+    for each tuner / challenge is being returned. This data is returned as a ``pandas.DataFrame``.
 
     Args:
-        tuners (callable, list, tuple or dict):
-            Python callable function, list of callable functions, tuple with callable functions or
-            dictionary with the ``name`` of the function as ``key`` and the callable function that
-            returns the best score for a given ``scorer``. This function must have three arguments:
+        tuners (dict):
+            Python dictionary with the ``name`` of the function as ``key`` and the callable
+            function that returns the best score for a given ``scorer``.
+            This function must have three arguments:
 
                 * scorer (function):
                     A function that performs scoring over params.
@@ -95,29 +95,17 @@ def benchmark(tuners, challenges=None, iterations=1000):
                 * iterations (int):
                     Number of tuning iterations to perform.
 
-        challenges (single challenge or list):
-            A single ``challenge`` or a list of ``chalenges``. This challenges must inherit
-            from ``btb.challenges.challenge.Challenge``.
+        challenges (list):
+            A list of ``chalenges``. This challenges must inherit from
+            ``btb.challenges.challenge.Challenge``.
         iterations (int):
-            Amount of iterations to perform for the ``tuner_function``.
+            Amount of tuning iterations to perform for each tuner and each challenge.
 
     Returns:
         pandas.DataFrame:
             A ``pandas.DataFrame`` with the obtained scores for the given challenges is being
             returned.
     """
-    if challenges is None:
-        challenges = list(MATH_CHALLENGES.values())
-    elif not isinstance(challenges, list):
-        challenges = [challenges]
-
-    if callable(tuners):
-        tuners = {tuners.__name__: tuners}
-    elif isinstance(tuners, (list, tuple)):
-        tuners = {tuner.__name__: tuner for tuner in tuners}
-    elif not isinstance(tuners, dict):
-        raise TypeError('tuners can only be a callable, list or dict.')
-
     results = []
 
     for name, tuner in tuners.items():
@@ -135,17 +123,23 @@ def benchmark(tuners, challenges=None, iterations=1000):
     return df
 
 
-def _get_tuners(tuners=None):
+def _as_list(param):
+    """Make sure that param is either ``None`` or a ``list``."""
+    if param is None or isinstance(param, (list, tuple)):
+        return param
+
+    return [param]
+
+
+def _get_tuners_dict(tuners=None):
     all_tuners = get_all_tuners()
     if tuners is None:
         LOGGER.info('Using all tuning functions.')
         return all_tuners
     else:
         selected_tuning_functions = {}
-        tuners = _as_list(tuners)
-
-        for tuner in tuners:
-            if not isinstance(tuner, str) and issubclass(tuner, BaseTuner):
+        for tuner in _as_list(tuners):
+            if isinstance(tuner, type) and issubclass(tuner, BaseTuner):
                 selected_tuning_functions[tuner.__name__] = make_btb_tuning_function(tuner)
             else:
                 tuning_function = all_tuners.get(tuner)
@@ -163,18 +157,15 @@ def _get_tuners(tuners=None):
 
 def _get_all_challenge_names(types=None):
     all_challenge_names = []
-    types = types or ALL_TYPES
-
     if 'math' in types:
         all_challenge_names += list(MATH_CHALLENGES.keys())
-
     if any(name in types for name in ('sdg', 'xgboost', 'random_forest')):
         all_challenge_names += SGDChallenge.get_available_dataset_names()
 
     return all_challenge_names
 
 
-def _get_challenges(challenges=None, types=None, sample=None):
+def _get_challenges_list(challenges=None, types=None, sample=None):
     types = _as_list(types) or ALL_TYPES
     challenges = _as_list(challenges) or _get_all_challenge_names(types)
     selected = []
@@ -186,22 +177,22 @@ def _get_challenges(challenges=None, types=None, sample=None):
 
         challenges = random.sample(challenges, sample)
 
-    for challenge_name in challenges:
+    for challenge in challenges:
         known = False
-        if not isinstance(challenge_name, str) and issubclass(challenge_name, Challenge):
-            selected.append(challenge_name)
+        if isinstance(challenge, Challenge):
+            selected.append(challenge)
         else:
             for challenge_type in types:
                 try:
-                    challenge = CHALLENGE_GETTER[challenge_type](challenge_name)
-                    if challenge:
+                    challenge_instance = CHALLENGE_GETTER[challenge_type](challenge)
+                    if challenge_instance:
                         known = True
-                        selected.append(challenge)
+                        selected.append(challenge_instance)
                 except Exception:
                     pass
 
             if not known:
-                unknown.append(challenge_name)
+                unknown.append(challenge)
 
     if unknown:
         raise ValueError('Challenges {} not of type {}'.format(unknown, types))
@@ -212,24 +203,13 @@ def _get_challenges(challenges=None, types=None, sample=None):
     return selected
 
 
-def _as_list(param):
-    """If the param its a ``str`` return it as a ``list``, else return the param."""
-    if not isinstance(param, (list, tuple)) and param:
-        return [param]
-
-    return param
-
-
 def run_benchmark(types=None, tuners=None, challenges=None,
                   sample=None, iterations=100, output_path=None):
-    """Run Benchmark.
+    """Execute the benchmark function and optionally store the result as a ``CSV``.
 
-    The ``run_benchmark`` function provides a user friendly interface to launch a ``benchmark``
-    process that evaluates the performance of a ``tuner`` or a list of ``tuners`` against a
-    ``challenge`` or a list of ``challenges`` for a given amount of iterations.
-
-    This function also allows to export the results in a given ``output_path`` where it will
-    be saved as a ``csv`` file.
+    This function provides a user-friendly interface to interact with the ``benchmark``
+    function. It allows the user to specify an ``output_path`` where the results can be
+    stored. If this path is not provided, a ``pandas.DataFrame`` will be returned.
 
     Args:
         types (str or list):
@@ -244,8 +224,7 @@ def run_benchmark(types=None, tuners=None, challenges=None,
             previously described objects. If ``None`` will use ``types`` to determine which
             challenges to use.
         sample (int):
-            Amount of ``challenges`` to be benchmarked randomly. Defaults to ``None``. If
-            ``types`` is given, will randomly sample from those challenges.
+            Run only on a subset of the available datasets of the given size.
         iterations (int):
             Number of tuning iterations to perform per challenge and tuner.
         output_path (str):
@@ -256,15 +235,12 @@ def run_benchmark(types=None, tuners=None, challenges=None,
             If ``output_path`` is ``None`` it will return a ``pandas.DataFrame`` object,
             else it will dump the results in the specified ``output_path``.
     """
-    tuners = _get_tuners(tuners)
-    challenges = _get_challenges(challenges=challenges, types=types, sample=sample)
+    tuners = _get_tuners_dict(tuners)
+    challenges = _get_challenges_list(challenges=challenges, types=types, sample=sample)
     results = benchmark(tuners, challenges, iterations)
 
     if output_path:
         LOGGER.info('Saving benchmark report to %s', output_path)
-        if os.path.isdir(output_path):
-            output_path = os.path.join(output_path, '{}.csv'.format(btb.__version__))
-
         results.to_csv(output_path)
 
     else:
@@ -279,7 +255,7 @@ def _get_parser():
     parser.add_argument('-o', '--output-path', type=str, required=False,
                         help='Path to the CSV file where the report will be dumped')
     parser.add_argument('-s', '--sample', type=int,
-                        help='Limit the test to a sample of datasets for the given size.')
+                        help='Run only on a subset of the available datasets of the given size.')
     parser.add_argument('-i', '--iterations', type=int, default=100,
                         help='Number of iterations to perform per challenge with each candidate.')
     parser.add_argument('--challenges', nargs='+', help='Name of the challenge/s to be processed.')
@@ -302,9 +278,6 @@ def main():
     logging.getLogger("botocore").setLevel(logging.ERROR)
     logging.getLogger("hyperopt").setLevel(logging.ERROR)
     logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-
-    if args.output_path is None:
-        args.output_path = '{}.csv'.format(btb.__version__)
 
     # run
     run_benchmark(
