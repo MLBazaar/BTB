@@ -203,7 +203,7 @@ def _get_challenges_list(challenges=None, types=None, sample=None):
     return selected
 
 
-def run_benchmark(types=None, tuners=None, challenges=None,
+def run_benchmark(tuners=None, types=None, challenges=None,
                   sample=None, iterations=100, output_path=None):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
@@ -212,15 +212,15 @@ def run_benchmark(types=None, tuners=None, challenges=None,
     stored. If this path is not provided, a ``pandas.DataFrame`` will be returned.
 
     Args:
+        tuners (str, btb.tuning.tuners.base.BaseTuner or list):
+            Tuner name, ``btb.tuning.tuners.base.BaseTuner`` subclass or a list with the previously
+            described objects. If ``None`` all available ``tuners`` implemented in
+            ``btb_benchmark`` will be used.
         types (str or list):
             Type or list of types for challenges to be benchmarked, if ``None`` all available
             types will be used.
-        tuners (str, btb.tuners.base.BaseTuner or list):
-            Tuner name, ``btb.tuners.base.BaseTuner`` subclass or a list with the previously
-            described objects. If ``None`` all available ``tuners`` implemented in
-            ``btb_benchmark`` will be used.
         challenges (str, btb_benchmark.challenge.Challenge or list):
-            Challenge name, ``btb_benchmark.challenge.Challenge`` subclass or a list with the
+            Challenge name, ``btb_benchmark.challenge.Challenge`` instance or a list with the
             previously described objects. If ``None`` will use ``types`` to determine which
             challenges to use.
         sample (int):

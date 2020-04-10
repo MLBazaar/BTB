@@ -13,6 +13,6 @@ def get_all_tuners():
         'BTB.GPTuner': make_btb_tuning_function(GPTuner),
         'BTB.GPEiTuner': make_btb_tuning_function(GPEiTuner),
         'BTB.UniformTuner': make_btb_tuning_function(UniformTuner),
-        'HyperOpt.tpe.suggest': make_hyperopt_tuning_function(tpe.suggest),
-        'HyperOpt.rand.suggest': make_hyperopt_tuning_function(rand.suggest),
+        'HyperOpt.tpe': make_hyperopt_tuning_function(tpe.suggest),
+        'HyperOpt.rand': make_hyperopt_tuning_function(rand.suggest),
     }

@@ -14,13 +14,31 @@ def load_results(files):
 
 
 def get_wins(scores):
-    return (scores.T.rank(method='min', ascending=False) == 1).sum(axis=1)
+    is_winner = scores.T.rank(method='min', ascending=False) == 1
+    return is_winner.sum(axis=1)
 
 
-def get_summary(results):
+def get_exclusive_wins(scores):
+    is_winner = scores.T.rank(method='min', ascending=False) == 1
+    num_winners = is_winner.sum()
+    is_exclusive = num_winners == 1
+    is_exclusive_winner = is_winner & is_exclusive
+    num_exclusive_wins = is_exclusive_winner.sum(axis=1)
+
+    return num_exclusive_wins
+
+
+def get_z_scores(scores):
+    mean = scores.mean(axis=1)
+    std = scores.std(axis=1)
+
+    return ((scores.T - mean) / std).fillna(0).T.mean()
+
+
+def get_summary(results, summary_function):
     summary = {}
     for version, scores in results.items():
-        summary[version] = get_wins(scores)
+        summary[version] = summary_function(scores)
 
     summary_df = pd.DataFrame(summary)
     summary_df.index.name = 'tuner'
@@ -28,22 +46,39 @@ def get_summary(results):
     return summary_df[columns]
 
 
-def add_sheet(df, name, writer, cell_fmt, index_fmt, header_fmt):
-    df = df.reset_index()
-    df.to_excel(writer, sheet_name=name, startrow=1, index=False, header=False)
+def add_sheet(dfs, name, writer, cell_fmt, index_fmt, header_fmt):
+    startrow = 0
+    widths = [0]
+    if not isinstance(dfs, dict):
+        dfs = {None: dfs}
 
-    worksheet = writer.sheets[name]
+    for df_name, df in dfs.items():
+        df = df.reset_index()
+        startrow += bool(df_name)
+        df.to_excel(writer, sheet_name=name, startrow=startrow + 1, index=False, header=False)
 
-    for idx, column in enumerate(df.columns):
-        width = max(len(column), *df[column].astype(str).str.len()) + 1
-        worksheet.write(0, idx, column, header_fmt)
-        if idx:
-            worksheet.set_column(idx, idx, width, cell_fmt)
-        else:
-            worksheet.set_column(idx, idx, width, index_fmt)
+        worksheet = writer.sheets[name]
+
+        if df_name:
+            worksheet.write(startrow - 1, 0, df_name, index_fmt)
+            widths[0] = max(widths[0], len(df_name))
+
+        for idx, column in enumerate(df.columns):
+            worksheet.write(startrow, idx, column, header_fmt)
+            width = max(len(column), *df[column].astype(str).str.len()) + 1
+            if len(widths) > idx:
+                widths[idx] = max(widths[idx], width)
+            else:
+                widths.append(width)
+
+        startrow += len(df) + 2
+
+    for idx, width in enumerate(widths):
+        fmt = cell_fmt if idx else index_fmt
+        worksheet.set_column(idx, idx, width + 1, fmt)
 
 
-def write_summary(summary, results, output):
+def write_results(results, output):
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
     cell_fmt = writer.book.add_format({
         "font_name": "Arial",
@@ -61,9 +96,10 @@ def write_summary(summary, results, output):
         "bottom": 1
     })
 
-    add_sheet(summary, 'summary', writer, cell_fmt, index_fmt, header_fmt)
+    wins = get_summary(results, get_wins)
+    add_sheet(wins, 'Number of Wins', writer, cell_fmt, index_fmt, header_fmt)
 
-    for version in summary.columns:
+    for version in wins.columns:
         add_sheet(results[version], version, writer, cell_fmt, index_fmt, header_fmt)
 
     writer.save()
@@ -76,8 +112,7 @@ def main():
     args = parser.parse_args()
 
     results = load_results(args.input)
-    summary = get_summary(results)
-    write_summary(summary, results, args.output)
+    write_results(results, args.output)
 
 
 if __name__ == '__main__':
