@@ -50,9 +50,9 @@ The tuning functions have a very specific signature:
 
 ```python3
 def tuning_function(
-scoring_function: callable,
-tunable_hyperparameters: dict,
-iterations: int) -> score: float
+    scoring_function: callable,
+    tunable_hyperparameters: dict,
+    iterations: int) -> score: float
 ```
 
 #### Implemented Tuning Functions
@@ -73,7 +73,7 @@ The simplest usage is to execute the `run_benchmark` function without any argume
 ```python
 from btb_benchmark import run_benchmark
 
-df = run_benchmark()
+scores = run_benchmark()
 ```
 
 This will execute all the tuners that have been implemented in `btb_benchmark` on all the
