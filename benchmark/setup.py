@@ -34,6 +34,7 @@ install_requires = [
     'scipy>=1.0.1,<1.4.0',
     'pandas>=0.21.0,<0.26.0',
     'tqdm>=4.36.1,<4.50.0',
+    'XlsxWriter>=1.2.8,<1.3',
 ]
 
 

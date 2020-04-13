@@ -11,6 +11,7 @@ import pandas as pd
 from btb.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
     MATH_CHALLENGES, Challenge, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
+from btb_benchmark.results import load_results, write_results
 from btb_benchmark.tuners import get_all_tuners
 from btb_benchmark.tuners.btb import make_btb_tuning_function
 
@@ -247,30 +248,25 @@ def run_benchmark(tuners=None, types=None, challenges=None,
         return results
 
 
-def _get_parser():
-    parser = argparse.ArgumentParser(description='BTB Benchmark Command Line Interface')
+def summarize_results(input_paths, output_path):
+    """Load multiple benchmark results CSV files and compile a summary.
 
-    parser.add_argument('-v', '--verbose', action='count', default=0,
-                        help='Be verbose. Use -vv for increased verbosity.')
-    parser.add_argument('-o', '--output-path', type=str, required=False,
-                        help='Path to the CSV file where the report will be dumped')
-    parser.add_argument('-s', '--sample', type=int,
-                        help='Run only on a subset of the available datasets of the given size.')
-    parser.add_argument('-i', '--iterations', type=int, default=100,
-                        help='Number of iterations to perform per challenge with each candidate.')
-    parser.add_argument('--challenges', nargs='+', help='Name of the challenge/s to be processed.')
-    parser.add_argument('--tuners', nargs='+', help='Name of the tunables to be used.')
-    parser.add_argument('--types', nargs='+', help='Name of the tunables to be used.',
-                        choices=['math', 'sgd', 'random_forest', 'xgboost'])
+    The result is an Excel file with one tab for each results CSV file
+    and an additional Number of Wins tab with a summary of the number
+    of challenges in which each Tuner got the best score.
 
-    return parser
+    Args:
+        inputs_paths (list[str]):
+            List of paths to CSV files where the benchmarks results are stored.
+            These files must have one column per Tuner and one row per Challenge.
+        output_path (str):
+            Path, including the filename, where the Excel file will be created.
+    """
+    results = load_results(input_paths)
+    write_results(results, output_path)
 
 
-def main():
-    # Parse args
-    parser = _get_parser()
-    args = parser.parse_args()
-
+def _run(args):
     # Logger setup
     log_level = (3 - args.verbose) * 10
     fmt = '%(asctime)s - %(process)d - %(levelname)s - %(name)s - %(module)s - %(message)s'
@@ -288,6 +284,51 @@ def main():
         args.iterations,
         args.output_path,
     )
+
+
+def _summary(args):
+    summarize_results(args.input, args.output)
+
+
+def _get_parser():
+    parser = argparse.ArgumentParser(description='BTB Benchmark Command Line Interface')
+    parser.set_defaults(action=None)
+    action = parser.add_subparsers(title='action')
+    action.required = True
+
+    # Run action
+    run = action.add_parser('run', help='Run the BTB Benchmark')
+    run.set_defaults(action=_run)
+    run.set_defaults(user=None)
+
+    run.add_argument('-v', '--verbose', action='count', default=0,
+                     help='Be verbose. Use -vv for increased verbosity.')
+    run.add_argument('-o', '--output-path', type=str, required=False,
+                     help='Path to the CSV file where the report will be dumped')
+    run.add_argument('-s', '--sample', type=int,
+                     help='Run only on a subset of the available datasets of the given size.')
+    run.add_argument('-i', '--iterations', type=int, default=100,
+                     help='Number of iterations to perform per challenge with each candidate.')
+    run.add_argument('--challenges', nargs='+', help='Name of the challenge/s to be processed.')
+    run.add_argument('--tuners', nargs='+', help='Name of the tunables to be used.')
+    run.add_argument('--types', nargs='+', help='Name of the tunables to be used.',
+                     choices=['math', 'sgd', 'random_forest', 'xgboost'])
+
+    # Summarize action
+    summary = action.add_parser('summary', help='Summarize the BTB Benchmark results')
+    summary.set_defaults(action=_summary)
+    summary.add_argument('input', nargs='+', help='Input path with results.')
+    summary.add_argument('output', help='Output file.')
+
+    return parser
+
+
+def main():
+    # Parse args
+    parser = _get_parser()
+    args = parser.parse_args()
+
+    args.action(args)
 
 
 if __name__ == '__main__':
