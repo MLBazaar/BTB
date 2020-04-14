@@ -156,19 +156,19 @@ def _get_tuners_dict(tuners=None):
         return selected_tuning_functions
 
 
-def _get_all_challenge_names(types=None):
+def _get_all_challenge_names(challenge_types=None):
     all_challenge_names = []
-    if 'math' in types:
+    if 'math' in challenge_types:
         all_challenge_names += list(MATH_CHALLENGES.keys())
-    if any(name in types for name in ('sdg', 'xgboost', 'random_forest')):
+    if any(name in challenge_types for name in ('sdg', 'xgboost', 'random_forest')):
         all_challenge_names += SGDChallenge.get_available_dataset_names()
 
     return all_challenge_names
 
 
-def _get_challenges_list(challenges=None, types=None, sample=None):
-    types = _as_list(types) or ALL_TYPES
-    challenges = _as_list(challenges) or _get_all_challenge_names(types)
+def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
+    challenge_types = _as_list(challenge_types) or ALL_TYPES
+    challenges = _as_list(challenges) or _get_all_challenge_names(challenge_types)
     selected = []
     unknown = []
 
@@ -183,7 +183,7 @@ def _get_challenges_list(challenges=None, types=None, sample=None):
         if isinstance(challenge, Challenge):
             selected.append(challenge)
         else:
-            for challenge_type in types:
+            for challenge_type in challenge_types:
                 try:
                     challenge_instance = CHALLENGE_GETTER[challenge_type](challenge)
                     if challenge_instance:
@@ -196,7 +196,7 @@ def _get_challenges_list(challenges=None, types=None, sample=None):
                 unknown.append(challenge)
 
     if unknown:
-        raise ValueError('Challenges {} not of type {}'.format(unknown, types))
+        raise ValueError('Challenges {} not of type {}'.format(unknown, challenge_types))
 
     if not selected:
         raise ValueError('No challenges selected!')
@@ -204,7 +204,7 @@ def _get_challenges_list(challenges=None, types=None, sample=None):
     return selected
 
 
-def run_benchmark(tuners=None, types=None, challenges=None,
+def run_benchmark(tuners=None, challenge_types=None, challenges=None,
                   sample=None, iterations=100, output_path=None):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
@@ -217,13 +217,13 @@ def run_benchmark(tuners=None, types=None, challenges=None,
             Tuner name, ``btb.tuning.tuners.base.BaseTuner`` subclass or a list with the previously
             described objects. If ``None`` all available ``tuners`` implemented in
             ``btb_benchmark`` will be used.
-        types (str or list):
+        challenge_types (str or list):
             Type or list of types for challenges to be benchmarked, if ``None`` all available
             types will be used.
         challenges (str, btb_benchmark.challenge.Challenge or list):
             Challenge name, ``btb_benchmark.challenge.Challenge`` instance or a list with the
-            previously described objects. If ``None`` will use ``types`` to determine which
-            challenges to use.
+            previously described objects. If ``None`` will use ``challenge_types`` to determine
+            which challenges to use.
         sample (int):
             Run only on a subset of the available datasets of the given size.
         iterations (int):
@@ -237,7 +237,11 @@ def run_benchmark(tuners=None, types=None, challenges=None,
             else it will dump the results in the specified ``output_path``.
     """
     tuners = _get_tuners_dict(tuners)
-    challenges = _get_challenges_list(challenges=challenges, types=types, sample=sample)
+    challenges = _get_challenges_list(
+        challenges=challenges,
+        challenge_types=challenge_types,
+        sample=sample
+    )
     results = benchmark(tuners, challenges, iterations)
 
     if output_path:
@@ -277,8 +281,8 @@ def _run(args):
 
     # run
     run_benchmark(
-        args.types,
         args.tuners,
+        args.challenge_types,
         args.challenges,
         args.sample,
         args.iterations,
@@ -309,10 +313,13 @@ def _get_parser():
                      help='Run only on a subset of the available datasets of the given size.')
     run.add_argument('-i', '--iterations', type=int, default=100,
                      help='Number of iterations to perform per challenge with each candidate.')
-    run.add_argument('--challenges', nargs='+', help='Name of the challenge/s to be processed.')
-    run.add_argument('--tuners', nargs='+', help='Name of the tunables to be used.')
-    run.add_argument('--types', nargs='+', help='Name of the tunables to be used.',
-                     choices=['math', 'sgd', 'random_forest', 'xgboost'])
+    run.add_argument('-c', '--challenges', nargs='+',
+                     help='Challenge/s to be used. Accepts multiple names.')
+    run.add_argument('-t', '--tuners', nargs='+',
+                     help='Tuner/s to be benchmarked. Accepts multiple names.')
+    run.add_argument('-C', '--challenge-types', nargs='+',
+                     choices=['math', 'sgd', 'random_forest', 'xgboost'],
+                     help='Type of challenge/s to use. Accepts multiple names.')
 
     # Summarize action
     summary = action.add_parser('summary', help='Summarize the BTB Benchmark results')

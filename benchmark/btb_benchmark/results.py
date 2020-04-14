@@ -1,4 +1,3 @@
-import argparse
 import os
 
 import pandas as pd
@@ -97,23 +96,9 @@ def write_results(results, output):
     })
 
     wins = get_summary(results, get_wins)
-    add_sheet(wins, 'Number of Wins', writer, cell_fmt, index_fmt, header_fmt)
+    add_sheet({'Number of Wins': wins}, 'Number of Wins', writer, cell_fmt, index_fmt, header_fmt)
 
     for version in wins.columns:
         add_sheet(results[version], version, writer, cell_fmt, index_fmt, header_fmt)
 
     writer.save()
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('input', nargs='+', help='Input path with results.')
-    parser.add_argument('output', help='Output file.')
-    args = parser.parse_args()
-
-    results = load_results(args.input)
-    write_results(results, args.output)
-
-
-if __name__ == '__main__':
-    main()
