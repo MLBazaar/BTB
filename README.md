@@ -26,8 +26,8 @@ systems such as AutoML systems. It provides an easy-to-use interface for *tuning
 It is currently being used in several AutoML systems:
 - [ATM](https://github.com/HDI-Project/ATM), distributed, multi-tenant AutoML system for
 classifier tuning
-- MIT TA2, MIT's system for the DARPA [Data-driven discovery of models](
-https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
+- [mit-d3m-ta2](https://github.com/HDI-Project/mit-d3m-ta2/), MIT's system for the DARPA
+[Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
 - [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose
 AutoML system
 
@@ -35,7 +35,7 @@ AutoML system
 
 ## Requirements
 
-**BTB** has been developed and tested on [Python 3.5 and 3.6](https://www.python.org/downloads/)
+**BTB** has been developed and tested on [Python 3.5, 3.6 and 3.7](https://www.python.org/downloads/)
 
 Also, although it is not strictly required, the usage of a
 [virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
@@ -141,13 +141,38 @@ session = BTBSession(tunables, score_model)
 best_proposal = session.run(20)
 ```
 
+# How does BTB perform?
+
+We have a comprehensive [benchmarking framework](https://github.com/HDI-Project/BTB/tree/master/benchmark)
+that we use to evaluate the performance of our `Tuners`. For every release, we perform benchmarking
+against 100's of challenges, comparing tuners against each other in terms of number of wins.
+We present the latest leaderboard from latest release below:
+
+## Number of Wins per Version
+
+| tuner                 | v0.3.7 |
+|-----------------------|--------|
+| BTB.GPEiTuner         | 35     |
+| BTB.GPTuner           | 33     |
+| BTB.UniformTuner      | 29     |
+| HyperOpt.rand.suggest | 28     |
+| HyperOpt.tpe.suggest  | 32     |
+
+- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/).
+- If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).
+- If you have a proposal for tuner that we should include in our benchmarking get in touch
+with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
+
+Note: In release v0.3.7, we are currently only doing 50 ML challenges. Our next release for
+benchmarking will have results from 422 datasets and 3 optimization challenges. To check out what
+will be included in our benchmarking efforts - you can check [here](https://github.com/HDI-Project/BTB/projects).
+
 # What's next?
 
 For more details about **BTB** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/BTB/)!
 
-Also do not forget to have a look at the [notebook tutorials](notebooks) and the
-[benchmark](benchmark) framework that we use to evaluate the performance of our Tuners!
+Also do not forget to have a look at the [notebook tutorials](notebooks).
 
 # Citing BTB
 
