@@ -164,7 +164,7 @@ For example, if we want to run all the dataset on the XGBoost model, we can call
 function like this:
 
 ```python3
-results = run_benchmark(types=['xgboost'])
+results = run_benchmark(challenge_types=['xgboost'])
 ```
 
 Finally, if we want to further reduce the amount of challenges that are executed, we can run on a
@@ -173,7 +173,7 @@ random subsample of all the selected challenges using the `sample` argument.
 For example, if we want to run `XGBoost` only on 10 random datasets, we can use:
 
 ```python3
-results = run_benchmark(types=['xgboost'], sample=10)
+results = run_benchmark(challenge_types=['xgboost'], sample=10)
 ```
 
 #### Iterations
