@@ -152,7 +152,7 @@ We present the latest leaderboard from latest release below:
 
 | tuner                 | v0.3.7 |
 |-----------------------|--------|
-| BTB.GPEiTuner         | 35     |
+| BTB.GPEiTuner         | **35** |
 | BTB.GPTuner           | 33     |
 | BTB.UniformTuner      | 29     |
 | HyperOpt.rand.suggest | 28     |
@@ -163,7 +163,7 @@ We present the latest leaderboard from latest release below:
 - If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
 
-Note: In release v0.3.7, we are currently only doing 50 ML challenges. Our next release for
+> :warning: **Note**: In release v0.3.7, we are currently only doing 50 ML challenges. Our next release for
 benchmarking will have results from 422 datasets and 3 optimization challenges. To check out what
 will be included in our benchmarking efforts - you can check [here](https://github.com/HDI-Project/BTB/projects).
 
