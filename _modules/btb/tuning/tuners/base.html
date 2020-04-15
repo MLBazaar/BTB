@@ -101,6 +101,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../user_guides/tuners.html">Tuners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../user_guides/selectors.html">Selectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../user_guides/btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#our-latest-results">Our latest Results</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -354,7 +381,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span> <span class="o">=</span> <span class="n">maximize</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
             <span class="p">(</span><span class="s1">&#39;Creating </span><span class="si">%s</span><span class="s1"> instance with </span><span class="si">%s</span><span class="s1"> hyperparameters and cardinality </span><span class="si">%s</span><span class="s1">.&#39;</span><span class="p">),</span>
-            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">hyperparams</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">hyperparams</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_check_proposals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_proposals</span><span class="p">):</span>

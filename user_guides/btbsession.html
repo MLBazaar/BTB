@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="btb.session module" href="../api/btb.session.html" />
+    <link rel="next" title="Benchmarking BTB" href="../benchmark.html" />
     <link rel="prev" title="Selectors" href="selectors.html" /> 
 </head>
 
@@ -103,6 +103,33 @@
 <li class="toctree-l1"><a class="reference internal" href="tuners.html">Tuners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#our-latest-results">Our latest Results</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -421,13 +448,13 @@ order to evaluate wich of this two machine learning models will obtain a better 
 
 <span class="gp">In [13]: </span><span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gh">Out[13]: </span><span class="go"></span>
-<span class="go">{&#39;id&#39;: &#39;bae3e8f3bf4361a1dd767ea2cb1acffe&#39;,</span>
+<span class="go">{&#39;id&#39;: &#39;393070285b5b7a2574a2e28373a84dd7&#39;,</span>
 <span class="go"> &#39;name&#39;: &#39;extra_trees&#39;,</span>
-<span class="go"> &#39;config&#39;: {&#39;n_estimators&#39;: 715,</span>
-<span class="go">  &#39;max_features&#39;: &#39;auto&#39;,</span>
-<span class="go">  &#39;min_samples_split&#39;: 12,</span>
-<span class="go">  &#39;min_samples_leaf&#39;: 12},</span>
-<span class="go"> &#39;score&#39;: 0.8149314258919798}</span>
+<span class="go"> &#39;config&#39;: {&#39;n_estimators&#39;: 493,</span>
+<span class="go">  &#39;max_features&#39;: None,</span>
+<span class="go">  &#39;min_samples_split&#39;: 13,</span>
+<span class="go">  &#39;min_samples_leaf&#39;: 1},</span>
+<span class="go"> &#39;score&#39;: 0.8753385415599062}</span>
 </pre></div>
 </div>
 <p>Once this 10 iterations are done, our session will return the <code class="docutils literal notranslate"><span class="pre">best_proposal</span></code>, or we can access
@@ -443,7 +470,7 @@ the <code class="docutils literal notranslate"><span class="pre">score</span></c
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../api/btb.session.html" class="btn btn-neutral float-right" title="btb.session module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../benchmark.html" class="btn btn-neutral float-right" title="Benchmarking BTB" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="selectors.html" class="btn btn-neutral float-left" title="Selectors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

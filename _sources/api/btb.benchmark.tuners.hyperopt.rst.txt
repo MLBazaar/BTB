@@ -1,7 +1,0 @@
-btb.benchmark.tuners.hyperopt module
-====================================
-
-.. automodule:: btb.benchmark.tuners.hyperopt
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -101,6 +101,33 @@
 <li class="toctree-l1"><a class="reference internal" href="user_guides/tuners.html">Tuners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guides/selectors.html">Selectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guides/btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#our-latest-results">Our latest Results</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -315,7 +342,7 @@
 <a class="reference external image-reference" href="https://codecov.io/gh/HDI-Project/BTB"><img alt="Coverage Status" src="https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg" /></a>
 <a class="reference external image-reference" href="https://pepy.tech/project/baytune"><img alt="Downloads" src="https://pepy.tech/badge/baytune" /></a>
 <ul class="simple">
-<li><p>Free software: MIT license</p></li>
+<li><p>License: <a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/LICENSE">MIT</a></p></li>
 <li><p>Development Status: <a class="reference external" href="https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha">Pre-Alpha</a></p></li>
 <li><p>Documentation: <a class="reference external" href="https://HDI-Project.github.io/BTB">https://HDI-Project.github.io/BTB</a></p></li>
 <li><p>Homepage: <a class="reference external" href="https://github.com/HDI-Project/BTB">https://github.com/HDI-Project/BTB</a></p></li>
@@ -328,7 +355,8 @@ systems such as AutoML systems. It provides an easy-to-use interface for <em>tun
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/HDI-Project/ATM">ATM</a>, distributed, multi-tenant AutoML system for
 classifier tuning</p></li>
-<li><p>MIT TA2, MIT’s system for the DARPA <a class="reference external" href="https://www.darpa.mil/program/data-driven-discovery-of-models">Data-driven discovery of models</a> (D3M) program</p></li>
+<li><p><a class="reference external" href="https://github.com/HDI-Project/mit-d3m-ta2/">mit-d3m-ta2</a>, MIT’s system for the DARPA
+<a class="reference external" href="https://www.darpa.mil/program/data-driven-discovery-of-models">Data-driven discovery of models</a> (D3M) program</p></li>
 <li><p><a class="reference external" href="https://github.com/HDI-Project/AutoBazaar">AutoBazaar</a>, a flexible, general-purpose
 AutoML system</p></li>
 </ul>
@@ -337,7 +365,7 @@ AutoML system</p></li>
 <h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p><strong>BTB</strong> has been developed and tested on <a class="reference external" href="https://www.python.org/downloads/">Python 3.5 and 3.6</a></p>
+<p><strong>BTB</strong> has been developed and tested on <a class="reference external" href="https://www.python.org/downloads/">Python 3.5, 3.6 and 3.7</a></p>
 <p>Also, although it is not strictly required, the usage of a
 <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> is highly recommended in order to avoid
 interfering with other software installed in the system where <strong>BTB</strong> is run.</p>
@@ -355,114 +383,168 @@ interfering with other software installed in the system where <strong>BTB</stron
 </div>
 <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<p>Below there is a short example using <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> to perform tuning over
-<code class="docutils literal notranslate"><span class="pre">ExtraTreesRegressor</span></code> and <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> ensemblers from <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> and both of them are evaluated against the <a class="reference external" href="http://lib.stat.cmu.edu/datasets/boston">Boston dataset</a> regression problem.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span> <span class="k">as</span> <span class="n">load_dataset</span>
+<p>In this short tutorial we will guide you through the necessary steps to get started using BTB
+to select and tune the best model to solve a Machine Learning problem.</p>
+<p>In particular, in this example we will be using <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> to perform solve the <a class="reference external" href="http://lib.stat.cmu.edu/datasets/boston">Boston</a> regression problem by selecting between the
+<code class="docutils literal notranslate"><span class="pre">ExtraTreesRegressor</span></code> and the <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> models from <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> while also searching for their best Hyperparameter configuration.</p>
+<div class="section" id="prepare-a-scoring-function">
+<h2>Prepare a scoring function<a class="headerlink" href="#prepare-a-scoring-function" title="Permalink to this headline">¶</a></h2>
+<p>The first step in order to use the <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> class is to develop a scoring function.</p>
+<p>This is a Python function that, given a model name and a hyperparameter configuration,
+evaluates the performance of the model on your data and returns a score.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">ExtraTreesRegressor</span><span class="p">,</span> <span class="n">RandomForestRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">r2_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
 
-<span class="kn">from</span> <span class="nn">btb.session</span> <span class="kn">import</span> <span class="n">BTBSession</span>
-
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span>
 <span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="n">RandomForestRegressor</span><span class="p">,</span>
     <span class="s1">&#39;extra_trees&#39;</span><span class="p">:</span> <span class="n">ExtraTreesRegressor</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">):</span>
-    <span class="n">model_class</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">model_class</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">hyperparameters</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">score_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">)</span>
-    <span class="n">r2_scorer</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">r2_score</span><span class="p">)</span>
-    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">r2_scorer</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">scoring_function</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">hyperparameter_values</span><span class="p">):</span>
+    <span class="n">model_class</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span>
+    <span class="n">model_instance</span> <span class="o">=</span> <span class="n">model_class</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparameter_values</span><span class="p">)</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
+        <span class="n">estimator</span><span class="o">=</span><span class="n">model_instance</span><span class="p">,</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+        <span class="n">scoring</span><span class="o">=</span><span class="n">make_scorer</span><span class="p">(</span><span class="n">r2_score</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">()</span>
-
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-the-tunable-hyperparameters">
+<h2>Define the tunable hyperparameters<a class="headerlink" href="#define-the-tunable-hyperparameters" title="Permalink to this headline">¶</a></h2>
+<p>The second step is to define the hyperparameters that we want to tune for each model as <code class="docutils literal notranslate"><span class="pre">Tunables</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span><span class="p">,</span> <span class="n">IntHyperParam</span>
 
 <span class="n">tunables</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-        <span class="p">},</span>
-    <span class="p">},</span>
-    <span class="s1">&#39;extra_trees&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-        <span class="p">},</span>
-        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
+    <span class="s1">&#39;random_forest&#39;</span><span class="p">:</span> <span class="n">Tunable</span><span class="p">({</span>
+        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="n">CategoricalHyperParam</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">]),</span>
+        <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">}),</span>
+    <span class="s1">&#39;extra_trees&#39;</span><span class="p">:</span> <span class="n">Tunable</span><span class="p">({</span>
+        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="n">CategoricalHyperParam</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">]),</span>
+        <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">})</span>
 <span class="p">}</span>
-
-<span class="n">session</span> <span class="o">=</span> <span class="n">BTBSession</span><span class="p">(</span><span class="n">tunables</span><span class="p">,</span> <span class="n">score_model</span><span class="p">)</span>
-<span class="n">best_proposal</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="start-the-searching-process">
+<h2>Start the searching process<a class="headerlink" href="#start-the-searching-process" title="Permalink to this headline">¶</a></h2>
+<p>Once you have defined a scoring function and the tunable hyperparameters specification of your
+models, you can start the searching for the best model and hyperparameter configuration by using
+the <code class="docutils literal notranslate"><span class="pre">btb.BTBSession</span></code>.</p>
+<p>All you need to do is create an instance passing the tunable hyperparameters scpecification
+and the scoring function.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">btb</span> <span class="kn">import</span> <span class="n">BTBSession</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">BTBSession</span><span class="p">(</span>
+    <span class="n">tunables</span><span class="o">=</span><span class="n">tunables</span><span class="p">,</span>
+    <span class="n">scorer</span><span class="o">=</span><span class="n">scoring_function</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>And then call the <code class="docutils literal notranslate"><span class="pre">run</span></code> method indicating how many tunable iterations you want the Session to
+perform:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_proposal</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result will be a dictionary indicating the name of the best model that could be found
+and the hyperparameter configuration that was used:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>{
+    &#39;id&#39;: &#39;d85262197592bd00c8cd9e87164e18c8&#39;,
+    &#39;name&#39;: &#39;extra_trees&#39;,
+    &#39;config&#39;: {
+        &#39;max_features&#39;: None,
+        &#39;min_samples_split&#39;: 17,
+        &#39;min_samples_leaf&#39;: 1
+    },
+    &#39;score&#39;: 0.6056926625119803
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="how-does-btb-perform">
+<h1>How does BTB perform?<a class="headerlink" href="#how-does-btb-perform" title="Permalink to this headline">¶</a></h1>
+<p>We have a comprehensive <a class="reference external" href="https://github.com/HDI-Project/BTB/tree/master/benchmark">benchmarking framework</a>
+that we use to evaluate the performance of our <code class="docutils literal notranslate"><span class="pre">Tuners</span></code>. For every release, we perform benchmarking
+against 100’s of challenges, comparing tuners against each other in terms of number of wins.
+We present the latest leaderboard from latest release below:</p>
+<div class="section" id="number-of-wins-per-version">
+<h2>Number of Wins per Version<a class="headerlink" href="#number-of-wins-per-version" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>tuner</p></th>
+<th class="head"><p>with ties</p></th>
+<th class="head"><p>without ties</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.GPEiTuner</span></code></p></td>
+<td><p><strong>35</strong></p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.GPTuner</span></code></p></td>
+<td><p>33</p></td>
+<td><p><strong>8</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.UniformTuner</span></code></p></td>
+<td><p>29</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HyperOpt.rand.suggest</span></code></p></td>
+<td><p>28</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HyperOpt.tpe.suggest</span></code></p></td>
+<td><p>32</p></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>Detailed results from which this summary emerged are available <a class="reference external" href="https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/">here</a>.</p></li>
+<li><p>If you want to compare your own tuner, follow the steps in our benchmarking framework <a class="reference external" href="https://github.com/HDI-Project/BTB/tree/master/benchmark">here</a>.</p></li>
+<li><p>If you have a proposal for tuner that we should include in our benchmarking get in touch
+with us at <a class="reference external" href="mailto:dailabmit&#37;&#52;&#48;gmail&#46;com">dailabmit<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p></li>
+</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">warning</dt>
+<dd class="field-odd"><p><strong>Note</strong>: In release v0.3.7, we are currently only doing 50 ML challenges. Our next release for</p>
+</dd>
+</dl>
+<p>benchmarking will have results from 422 datasets and 3 optimization challenges. To check out what
+will be included in our benchmarking efforts - you can check <a class="reference external" href="https://github.com/HDI-Project/BTB/projects">here</a>.</p>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="what-s-next">
 <h1>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h1>
 <p>For more details about <strong>BTB</strong> and all its possibilities and features, please check the
 <a class="reference external" href="https://HDI-Project.github.io/BTB/">project documentation site</a>!</p>
-<p>Also do not forget to have a look at the <a class="reference external" href="https://github.com/HDI-Project/BTB/tree/master/examples/tutorials">notebook tutorials</a>!</p>
+<p>Also do not forget to have a look at the <a class="reference external" href="notebooks">notebook tutorials</a>.</p>
 </div>
 <div class="section" id="citing-btb">
 <h1>Citing BTB<a class="headerlink" href="#citing-btb" title="Permalink to this headline">¶</a></h1>
-<p>If you use BTB, please consider citing our related papers.</p>
-<ul>
-<li><p>For the initial design and implementation of BTB (v0.1):</p>
-<p>Laura Gustafson. Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML. Masters thesis, MIT EECS, June 2018. <a class="reference external" href="https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf">(pdf)</a></p>
-<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@MastersThesis</span><span class="p">{</span><span class="nl">Laura:2018</span><span class="p">,</span>
-  <span class="na">title</span> <span class="p">=</span> <span class="s">{Bayesian Tuning and Bandits: An Extensible, Open Source Library for AutoML}</span><span class="p">,</span>
-  <span class="na">author</span> <span class="p">=</span> <span class="s">{Laura Gustafson}</span><span class="p">,</span>
-  <span class="na">month</span> <span class="p">=</span> <span class="s">{May}</span><span class="p">,</span>
-  <span class="na">year</span> <span class="p">=</span> <span class="s">{2018}</span><span class="p">,</span>
-  <span class="na">url</span> <span class="p">=</span> <span class="s">{https://dai.lids.mit.edu/wp-content/uploads/2018/05/Laura_MEng_Final.pdf}</span><span class="p">,</span>
-  <span class="na">type</span> <span class="p">=</span> <span class="s">{M. Eng Thesis}</span><span class="p">,</span>
-  <span class="na">address</span> <span class="p">=</span> <span class="s">{Cambridge, MA}</span><span class="p">,</span>
-  <span class="na">school</span> <span class="p">=</span> <span class="s">{Massachusetts Institute of Technology}&quot;,</span>
-<span class="s">}</span>
-</pre></div>
-</div>
-</li>
-<li><p>For recent designs of BTB and its usage within the larger <em>ML Bazaar</em> project within the MIT Data to AI Lab:</p>
-<p>Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. <a class="reference external" href="https://arxiv.org/abs/1905.08942">“The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development.”</a> arXiv Preprint 1905.08942. 2019.</p>
+<p>If you use BTB, please consider citing our related paper:</p>
+<blockquote>
+<div><p>Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. <a class="reference external" href="https://arxiv.org/abs/1905.08942">“The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development.”</a> arXiv Preprint 1905.08942. 2019.</p>
+</div></blockquote>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">smith2019mlbazaar</span><span class="p">,</span>
   <span class="na">author</span> <span class="p">=</span> <span class="s">{Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan}</span><span class="p">,</span>
   <span class="na">title</span> <span class="p">=</span> <span class="s">{The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development}</span><span class="p">,</span>
@@ -475,8 +557,6 @@ interfering with other software installed in the system where <strong>BTB</stron
 <span class="p">}</span>
 </pre></div>
 </div>
-</li>
-</ul>
 </div>
 
 

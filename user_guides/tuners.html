@@ -103,6 +103,33 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tuners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#our-latest-results">Our latest Results</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -347,7 +374,7 @@ to obtain the best results.</p>
 <div><div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="n">parameters</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">()</span>
 
 <span class="gp">In [8]: </span><span class="n">parameters</span>
-<span class="gh">Out[8]: </span><span class="go">{&#39;n_estimators&#39;: 343, &#39;max_depth&#39;: 339}</span>
+<span class="gh">Out[8]: </span><span class="go">{&#39;n_estimators&#39;: 269, &#39;max_depth&#39;: 45}</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -359,10 +386,10 @@ to obtain the best results.</p>
 <span class="gp">In [10]: </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="gh">Out[10]: </span><span class="go"></span>
 <span class="go">RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,</span>
-<span class="go">                       max_depth=339, max_features=&#39;auto&#39;, max_leaf_nodes=None,</span>
+<span class="go">                       max_depth=45, max_features=&#39;auto&#39;, max_leaf_nodes=None,</span>
 <span class="go">                       min_impurity_decrease=0.0, min_impurity_split=None,</span>
 <span class="go">                       min_samples_leaf=1, min_samples_split=2,</span>
-<span class="go">                       min_weight_fraction_leaf=0.0, n_estimators=343,</span>
+<span class="go">                       min_weight_fraction_leaf=0.0, n_estimators=269,</span>
 <span class="go">                       n_jobs=None, oob_score=False, random_state=None,</span>
 <span class="go">                       verbose=0, warm_start=False)</span>
 

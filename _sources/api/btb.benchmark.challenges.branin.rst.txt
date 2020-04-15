@@ -1,7 +1,0 @@
-btb.benchmark.challenges.branin module
-======================================
-
-.. automodule:: btb.benchmark.challenges.branin
-   :members:
-   :undoc-members:
-   :show-inheritance:

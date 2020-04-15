@@ -1,7 +1,0 @@
-btb.benchmark.challenges.rosenbrock module
-==========================================
-
-.. automodule:: btb.benchmark.challenges.rosenbrock
-   :members:
-   :undoc-members:
-   :show-inheritance:

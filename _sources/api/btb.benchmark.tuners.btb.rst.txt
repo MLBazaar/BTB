@@ -1,7 +1,0 @@
-btb.benchmark.tuners.btb module
-===============================
-
-.. automodule:: btb.benchmark.tuners.btb
-   :members:
-   :undoc-members:
-   :show-inheritance:

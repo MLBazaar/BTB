@@ -102,6 +102,33 @@
 <li class="toctree-l1"><a class="reference internal" href="user_guides/tuners.html">Tuners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guides/selectors.html">Selectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guides/btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#our-latest-results">Our latest Results</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -319,8 +346,6 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
- | <a href="#L"><strong>L</strong></a>
- | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -365,14 +390,6 @@
 
       <ul>
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.StopTuning.args">(btb.tuning.tuners.base.StopTuning attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge">ATMChallenge (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge">(class in btb.benchmark.challenges.atmchallenge)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -429,8 +446,6 @@
 </li>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner">BaseTuner (class in btb.tuning.tuners.base)</a>
 </li>
-      <li><a href="api/btb.benchmark.html#btb.benchmark.benchmark">benchmark() (in module btb.benchmark)</a>
-</li>
       <li><a href="api/btb.html#btb.BTBSession.best_proposal">best_proposal (btb.BTBSession attribute)</a>, <a href="api/btb.html#btb.BTBSession.best_proposal">[1]</a>
 
       <ul>
@@ -455,12 +470,6 @@
         <li><a href="api/btb.selection.best.html#btb.selection.best.BestKVelocity">(class in btb.selection.best)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Bohachevsky">Bohachevsky (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.bohachevsky.html#btb.benchmark.challenges.bohachevsky.Bohachevsky">(class in btb.benchmark.challenges.bohachevsky)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam">BooleanHyperParam (class in btb.tuning)</a>
 
       <ul>
@@ -469,59 +478,9 @@
         <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam">(class in btb.tuning.hyperparams.boolean)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR">BostonABR (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR">(class in btb.benchmark.challenges.boston)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR">BostonBR (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR">(class in btb.benchmark.challenges.boston)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR">BostonRFR (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR">(class in btb.benchmark.challenges.boston)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Branin">Branin (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.branin.html#btb.benchmark.challenges.branin.Branin">(class in btb.benchmark.challenges.branin)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.html#module-btb">btb (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.html#module-btb.benchmark">btb.benchmark (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.html#module-btb.benchmark.challenges">btb.benchmark.challenges (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.atmchallenge.html#module-btb.benchmark.challenges.atmchallenge">btb.benchmark.challenges.atmchallenge (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.bohachevsky.html#module-btb.benchmark.challenges.bohachevsky">btb.benchmark.challenges.bohachevsky (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.boston.html#module-btb.benchmark.challenges.boston">btb.benchmark.challenges.boston (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.branin.html#module-btb.benchmark.challenges.branin">btb.benchmark.challenges.branin (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.census.html#module-btb.benchmark.challenges.census">btb.benchmark.challenges.census (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.challenge.html#module-btb.benchmark.challenges.challenge">btb.benchmark.challenges.challenge (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.rosenbrock.html#module-btb.benchmark.challenges.rosenbrock">btb.benchmark.challenges.rosenbrock (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.wind.html#module-btb.benchmark.challenges.wind">btb.benchmark.challenges.wind (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.tuners.html#module-btb.benchmark.tuners">btb.benchmark.tuners (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.tuners.btb.html#module-btb.benchmark.tuners.btb">btb.benchmark.tuners.btb (module)</a>
-</li>
-      <li><a href="api/btb.benchmark.tuners.hyperopt.html#module-btb.benchmark.tuners.hyperopt">btb.benchmark.tuners.hyperopt (module)</a>
 </li>
       <li><a href="api/btb.selection.html#module-btb.selection">btb.selection (module)</a>
 </li>
@@ -633,28 +592,8 @@
         <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam">(class in btb.tuning.hyperparams.categorical)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC">CensusABC (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC">(class in btb.benchmark.challenges.census)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC">CensusRFC (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC">(class in btb.benchmark.challenges.census)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC">CensusSGDC (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC">(class in btb.benchmark.challenges.census)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.Challenge">Challenge (class in btb.benchmark.challenges.challenge)</a>
-</li>
       <li><a href="api/btb.selection.best.html#btb.selection.best.BestKReward.compute_rewards">compute_rewards() (btb.selection.best.BestKReward method)</a>
 
       <ul>
@@ -701,44 +640,6 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.DATASET">DATASET (btb.benchmark.challenges.boston.BostonABR attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.DATASET">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.DATASET">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.DATASET">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.DATASET">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.DATASET">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.DATASET">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.DATASET">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.DATASET">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.DATASET">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.DATASET">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.DATASET">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.DATASET">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.DATASET">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.DATASET">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.DATASET">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.DATASET">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.DATASET">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.default">default (btb.tuning.BooleanHyperParam attribute)</a>
 
       <ul>
@@ -769,8 +670,6 @@
         <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.default">(btb.tuning.IntHyperParam attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.dimensions">dimensions (btb.tuning.BooleanHyperParam attribute)</a>
 
       <ul>
@@ -811,116 +710,14 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.ENCODE">ENCODE (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.ENCODE">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.ENCODE">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.ENCODE">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.ENCODE">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.ENCODE">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.ENCODE">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.ENCODE">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.ENCODE">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.ENCODE">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.ENCODE">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.ENCODE">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.ENCODE">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.ENCODE">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.ENCODE">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.ENCODE">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.ENCODE">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.ENCODE">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.ENCODE">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.ENCODE">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.html#btb.BTBSession.errors">errors (btb.BTBSession attribute)</a>, <a href="api/btb.html#btb.BTBSession.errors">[1]</a>
 
       <ul>
         <li><a href="api/btb.session.html#btb.session.BTBSession.errors">(btb.session.BTBSession attribute)</a>, <a href="api/btb.session.html#btb.session.BTBSession.errors">[1]</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.evaluate">evaluate() (btb.benchmark.challenges.ATMChallenge method)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.evaluate">(btb.benchmark.challenges.atmchallenge.ATMChallenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Bohachevsky.evaluate">(btb.benchmark.challenges.Bohachevsky method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.bohachevsky.html#btb.benchmark.challenges.bohachevsky.Bohachevsky.evaluate">(btb.benchmark.challenges.bohachevsky.Bohachevsky method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.evaluate">(btb.benchmark.challenges.boston.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.evaluate">(btb.benchmark.challenges.boston.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.evaluate">(btb.benchmark.challenges.boston.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.evaluate">(btb.benchmark.challenges.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.evaluate">(btb.benchmark.challenges.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.evaluate">(btb.benchmark.challenges.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Branin.evaluate">(btb.benchmark.challenges.Branin method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.branin.html#btb.benchmark.challenges.branin.Branin.evaluate">(btb.benchmark.challenges.branin.Branin method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.evaluate">(btb.benchmark.challenges.census.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.evaluate">(btb.benchmark.challenges.census.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.evaluate">(btb.benchmark.challenges.census.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.evaluate">(btb.benchmark.challenges.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.evaluate">(btb.benchmark.challenges.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.evaluate">(btb.benchmark.challenges.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.Challenge.evaluate">(btb.benchmark.challenges.challenge.Challenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.MLChallenge.evaluate">(btb.benchmark.challenges.challenge.MLChallenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Rosenbrock.evaluate">(btb.benchmark.challenges.Rosenbrock method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.rosenbrock.Rosenbrock.evaluate">(btb.benchmark.challenges.rosenbrock.Rosenbrock method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.evaluate">(btb.benchmark.challenges.wind.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.evaluate">(btb.benchmark.challenges.wind.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.evaluate">(btb.benchmark.challenges.wind.WindSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.evaluate">(btb.benchmark.challenges.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.evaluate">(btb.benchmark.challenges.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.evaluate">(btb.benchmark.challenges.WindSGDC method)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.html#btb.benchmark.evaluate_candidate">evaluate_candidate() (in module btb.benchmark)</a>
-</li>
       <li><a href="api/btb.tuning.acquisition.html#btb.tuning.acquisition.ExpectedImprovementAcquisition">ExpectedImprovementAcquisition (class in btb.tuning.acquisition)</a>
 
       <ul>
@@ -961,92 +758,12 @@
         <li><a href="api/btb.tuning.metamodels.gaussian_process.html#btb.tuning.metamodels.gaussian_process.GaussianProcessMetaModel">(class in btb.tuning.metamodels.gaussian_process)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.get_all_challenges">get_all_challenges() (btb.benchmark.challenges.ATMChallenge class method)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.get_all_challenges">(btb.benchmark.challenges.atmchallenge.ATMChallenge class method)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.tuners.html#btb.benchmark.tuners.get_all_tuning_functions">get_all_tuning_functions() (in module btb.benchmark.tuners)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.get_atm_dataset_url">get_atm_dataset_url() (btb.benchmark.challenges.ATMChallenge class method)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.get_atm_dataset_url">(btb.benchmark.challenges.atmchallenge.ATMChallenge class method)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.get_available_datasets">get_available_datasets() (btb.benchmark.challenges.ATMChallenge class method)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.get_available_datasets">(btb.benchmark.challenges.atmchallenge.ATMChallenge class method)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.tuning.html#btb.tuning.Tunable.get_defaults">get_defaults() (btb.tuning.Tunable method)</a>
 
       <ul>
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable.get_defaults">(btb.tuning.tunable.Tunable method)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.get_tunable_hyperparameters">get_tunable_hyperparameters() (btb.benchmark.challenges.ATMChallenge method)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.get_tunable_hyperparameters">(btb.benchmark.challenges.atmchallenge.ATMChallenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Bohachevsky.get_tunable_hyperparameters">(btb.benchmark.challenges.Bohachevsky method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.bohachevsky.html#btb.benchmark.challenges.bohachevsky.Bohachevsky.get_tunable_hyperparameters">(btb.benchmark.challenges.bohachevsky.Bohachevsky method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.get_tunable_hyperparameters">(btb.benchmark.challenges.boston.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.get_tunable_hyperparameters">(btb.benchmark.challenges.boston.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.get_tunable_hyperparameters">(btb.benchmark.challenges.boston.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.get_tunable_hyperparameters">(btb.benchmark.challenges.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.get_tunable_hyperparameters">(btb.benchmark.challenges.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.get_tunable_hyperparameters">(btb.benchmark.challenges.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Branin.get_tunable_hyperparameters">(btb.benchmark.challenges.Branin method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.branin.html#btb.benchmark.challenges.branin.Branin.get_tunable_hyperparameters">(btb.benchmark.challenges.branin.Branin method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.get_tunable_hyperparameters">(btb.benchmark.challenges.census.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.get_tunable_hyperparameters">(btb.benchmark.challenges.census.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.get_tunable_hyperparameters">(btb.benchmark.challenges.census.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.get_tunable_hyperparameters">(btb.benchmark.challenges.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.get_tunable_hyperparameters">(btb.benchmark.challenges.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.get_tunable_hyperparameters">(btb.benchmark.challenges.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.Challenge.get_tunable_hyperparameters">(btb.benchmark.challenges.challenge.Challenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.MLChallenge.get_tunable_hyperparameters">(btb.benchmark.challenges.challenge.MLChallenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Rosenbrock.get_tunable_hyperparameters">(btb.benchmark.challenges.Rosenbrock method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.rosenbrock.Rosenbrock.get_tunable_hyperparameters">(btb.benchmark.challenges.rosenbrock.Rosenbrock method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.get_tunable_hyperparameters">(btb.benchmark.challenges.wind.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.get_tunable_hyperparameters">(btb.benchmark.challenges.wind.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.get_tunable_hyperparameters">(btb.benchmark.challenges.wind.WindSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.get_tunable_hyperparameters">(btb.benchmark.challenges.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.get_tunable_hyperparameters">(btb.benchmark.challenges.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.get_tunable_hyperparameters">(btb.benchmark.challenges.WindSGDC method)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.html#btb.tuning.GPEiTuner">GPEiTuner (class in btb.tuning)</a>
 
       <ul>
@@ -1055,6 +772,8 @@
         <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPEiTuner">(class in btb.tuning.tuners.gaussian_process)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.html#btb.tuning.GPTuner">GPTuner (class in btb.tuning)</a>
 
       <ul>
@@ -1143,282 +862,6 @@
 
       <ul>
         <li><a href="api/btb.session.html#btb.session.BTBSession.iterations">(btb.session.BTBSession attribute)</a>, <a href="api/btb.session.html#btb.session.BTBSession.iterations">[1]</a>
-</li>
-      </ul></li>
-  </ul></td>
-</tr></table>
-
-<h2 id="L">L</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.load_data">load_data() (btb.benchmark.challenges.ATMChallenge method)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.load_data">(btb.benchmark.challenges.atmchallenge.ATMChallenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.load_data">(btb.benchmark.challenges.boston.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.load_data">(btb.benchmark.challenges.boston.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.load_data">(btb.benchmark.challenges.boston.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.load_data">(btb.benchmark.challenges.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.load_data">(btb.benchmark.challenges.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.load_data">(btb.benchmark.challenges.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.load_data">(btb.benchmark.challenges.census.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.load_data">(btb.benchmark.challenges.census.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.load_data">(btb.benchmark.challenges.census.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.load_data">(btb.benchmark.challenges.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.load_data">(btb.benchmark.challenges.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.load_data">(btb.benchmark.challenges.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.MLChallenge.load_data">(btb.benchmark.challenges.challenge.MLChallenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.load_data">(btb.benchmark.challenges.wind.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.load_data">(btb.benchmark.challenges.wind.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.load_data">(btb.benchmark.challenges.wind.WindSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.load_data">(btb.benchmark.challenges.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.load_data">(btb.benchmark.challenges.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.load_data">(btb.benchmark.challenges.WindSGDC method)</a>
-</li>
-      </ul></li>
-  </ul></td>
-</tr></table>
-
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.MAKE_BINARY">MAKE_BINARY (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.MAKE_BINARY">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.MAKE_BINARY">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.MAKE_BINARY">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.MAKE_BINARY">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.MAKE_BINARY">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.MAKE_BINARY">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.MAKE_BINARY">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.MAKE_BINARY">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.MAKE_BINARY">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.MAKE_BINARY">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.MAKE_BINARY">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.MAKE_BINARY">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.MAKE_BINARY">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.MAKE_BINARY">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.MAKE_BINARY">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.MAKE_BINARY">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.MAKE_BINARY">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.MAKE_BINARY">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.MAKE_BINARY">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.tuners.btb.html#btb.benchmark.tuners.btb.make_btb_tuning_function">make_btb_tuning_function() (in module btb.benchmark.tuners.btb)</a>
-</li>
-      <li><a href="api/btb.benchmark.tuners.hyperopt.html#btb.benchmark.tuners.hyperopt.make_hyperopt_tuning_function">make_hyperopt_tuning_function() (in module btb.benchmark.tuners.hyperopt)</a>
-</li>
-      <li><a href="api/btb.benchmark.tuners.hyperopt.html#btb.benchmark.tuners.hyperopt.make_minimize_function">make_minimize_function() (in module btb.benchmark.tuners.hyperopt)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.METRIC">METRIC() (btb.benchmark.challenges.ATMChallenge method)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.METRIC">(btb.benchmark.challenges.atmchallenge.ATMChallenge method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.METRIC">(btb.benchmark.challenges.boston.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.METRIC">(btb.benchmark.challenges.boston.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.METRIC">(btb.benchmark.challenges.boston.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.METRIC">(btb.benchmark.challenges.BostonABR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.METRIC">(btb.benchmark.challenges.BostonBR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.METRIC">(btb.benchmark.challenges.BostonRFR method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.METRIC">(btb.benchmark.challenges.census.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.METRIC">(btb.benchmark.challenges.census.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.METRIC">(btb.benchmark.challenges.census.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.METRIC">(btb.benchmark.challenges.CensusABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.METRIC">(btb.benchmark.challenges.CensusRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.METRIC">(btb.benchmark.challenges.CensusSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.METRIC">(btb.benchmark.challenges.wind.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.METRIC">(btb.benchmark.challenges.wind.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.METRIC">(btb.benchmark.challenges.wind.WindSGDC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.METRIC">(btb.benchmark.challenges.WindABC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.METRIC">(btb.benchmark.challenges.WindRFC method)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.METRIC">(btb.benchmark.challenges.WindSGDC method)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.METRIC_ARGS">METRIC_ARGS (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.METRIC_ARGS">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.METRIC_ARGS">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.METRIC_ARGS">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.METRIC_ARGS">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.METRIC_ARGS">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.METRIC_ARGS">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.METRIC_ARGS">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.METRIC_ARGS">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.METRIC_ARGS">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.METRIC_ARGS">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.METRIC_ARGS">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.METRIC_ARGS">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.METRIC_ARGS">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.METRIC_ARGS">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.METRIC_ARGS">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.METRIC_ARGS">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.METRIC_ARGS">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.METRIC_ARGS">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.METRIC_ARGS">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.challenge.html#btb.benchmark.challenges.challenge.MLChallenge">MLChallenge (class in btb.benchmark.challenges.challenge)</a>
-</li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.MODEL">MODEL (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.MODEL">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.MODEL">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.MODEL">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.MODEL">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.MODEL">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.MODEL">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.MODEL">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.MODEL">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.MODEL">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.MODEL">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.MODEL">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.MODEL">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.MODEL">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.MODEL">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.MODEL">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.MODEL">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.MODEL">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.MODEL">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.MODEL">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.MODEL_DEFAULTS">MODEL_DEFAULTS (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.MODEL_DEFAULTS">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.MODEL_DEFAULTS">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.MODEL_DEFAULTS">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.MODEL_DEFAULTS">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.MODEL_DEFAULTS">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.MODEL_DEFAULTS">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.MODEL_DEFAULTS">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.MODEL_DEFAULTS">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.MODEL_DEFAULTS">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.MODEL_DEFAULTS">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.MODEL_DEFAULTS">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.MODEL_DEFAULTS">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.MODEL_DEFAULTS">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.MODEL_DEFAULTS">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.MODEL_DEFAULTS">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.MODEL_DEFAULTS">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.MODEL_DEFAULTS">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.MODEL_DEFAULTS">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.MODEL_DEFAULTS">(btb.benchmark.challenges.WindSGDC attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1549,12 +992,6 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.Rosenbrock">Rosenbrock (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.rosenbrock.html#btb.benchmark.challenges.rosenbrock.Rosenbrock">(class in btb.benchmark.challenges.rosenbrock)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.html#btb.BTBSession.run">run() (btb.BTBSession method)</a>
 
       <ul>
@@ -1607,8 +1044,6 @@
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.scores">(btb.tuning.tuners.base.BaseTuner attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.tuners.hyperopt.html#btb.benchmark.tuners.hyperopt.search_space_from_dict">search_space_from_dict() (in module btb.benchmark.tuners.hyperopt)</a>
-</li>
       <li><a href="api/btb.selection.best.html#btb.selection.best.BestKReward.select">select() (btb.selection.best.BestKReward method)</a>
 
       <ul>
@@ -1653,96 +1088,12 @@
 </li>
       <li><a href="api/btb.tuning.html#btb.tuning.StopTuning">StopTuning</a>, <a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.StopTuning">[1]</a>
 </li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.STRATIFIED">STRATIFIED (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.STRATIFIED">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.STRATIFIED">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.STRATIFIED">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.STRATIFIED">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.STRATIFIED">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.STRATIFIED">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.STRATIFIED">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.STRATIFIED">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.STRATIFIED">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.STRATIFIED">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.STRATIFIED">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.STRATIFIED">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.STRATIFIED">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.STRATIFIED">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.STRATIFIED">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.STRATIFIED">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.STRATIFIED">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.STRATIFIED">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.STRATIFIED">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.TARGET_COLUMN">TARGET_COLUMN (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.TARGET_COLUMN">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.TARGET_COLUMN">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.TARGET_COLUMN">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.TARGET_COLUMN">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.TARGET_COLUMN">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.TARGET_COLUMN">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.TARGET_COLUMN">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.TARGET_COLUMN">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.TARGET_COLUMN">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.TARGET_COLUMN">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.TARGET_COLUMN">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.TARGET_COLUMN">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.TARGET_COLUMN">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.TARGET_COLUMN">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.TARGET_COLUMN">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.TARGET_COLUMN">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.TARGET_COLUMN">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.TARGET_COLUMN">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.TARGET_COLUMN">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.transform">transform() (btb.tuning.BooleanHyperParam method)</a>
 
       <ul>
@@ -1797,50 +1148,6 @@
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable">(class in btb.tuning.tunable)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.ATMChallenge.TUNABLE_HYPERPARAMETERS">TUNABLE_HYPERPARAMETERS (btb.benchmark.challenges.ATMChallenge attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.atmchallenge.html#btb.benchmark.challenges.atmchallenge.ATMChallenge.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.atmchallenge.ATMChallenge attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonABR.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.boston.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonBR.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.boston.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.boston.html#btb.benchmark.challenges.boston.BostonRFR.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.boston.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonABR.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.BostonABR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonBR.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.BostonBR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.BostonRFR.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.BostonRFR attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusABC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.census.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusRFC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.census.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.census.html#btb.benchmark.challenges.census.CensusSGDC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.census.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusABC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.CensusABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusRFC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.CensusRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.CensusSGDC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.CensusSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.wind.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.wind.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.wind.WindSGDC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.WindABC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.WindRFC attribute)</a>
-</li>
-        <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC.TUNABLE_HYPERPARAMETERS">(btb.benchmark.challenges.WindSGDC attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.tuners.btb.html#btb.benchmark.tuners.btb.tune">tune() (in module btb.benchmark.tuners.btb)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -1875,26 +1182,6 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindABC">WindABC (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindABC">(class in btb.benchmark.challenges.wind)</a>
-</li>
-      </ul></li>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindRFC">WindRFC (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindRFC">(class in btb.benchmark.challenges.wind)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.benchmark.challenges.html#btb.benchmark.challenges.WindSGDC">WindSGDC (class in btb.benchmark.challenges)</a>
-
-      <ul>
-        <li><a href="api/btb.benchmark.challenges.wind.html#btb.benchmark.challenges.wind.WindSGDC">(class in btb.benchmark.challenges.wind)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.tuning.html#btb.tuning.StopTuning.with_traceback">with_traceback() (btb.tuning.StopTuning method)</a>
 
       <ul>

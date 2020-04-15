@@ -74,6 +74,7 @@ was presented in 2019 as part of the Machine Learning Bazaar:
    user_guides/tuners
    user_guides/selectors
    user_guides/btbsession
+   benchmark
 
 .. toctree::
    :caption: Reference
