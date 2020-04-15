@@ -9,22 +9,17 @@ from abc import ABCMeta, abstractmethod
 from copy import deepcopy
 from urllib.parse import urljoin
 
+import boto3
 import pandas as pd
+from botocore import UNSIGNED
+from botocore.client import Config
 from sklearn.metrics import make_scorer
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import OneHotEncoder
 
-BTB_DATA_URL = 'https://btb-data.s3.amazonaws.com/'
-
+BASE_DATASET_URL = 'https://atm-data.s3.amazonaws.com/'
+BUCKET_NAME = 'atm-data'
 LOGGER = logging.getLogger(__name__)
-
-
-def _get_dataset_url(name):
-
-    if not name.endswith('.gz'):
-        name = name + '.gz'
-
-    return urljoin(BTB_DATA_URL, name)
 
 
 class Challenge(metaclass=ABCMeta):
@@ -99,6 +94,39 @@ class MLChallenge(Challenge):
             will be used in case there is otherwise the default that ``cross_val_score`` function
             offers will be used.
     """
+    @classmethod
+    def get_dataset_url(cls, name):
+        if not name.endswith('.csv'):
+            name = name + '.csv'
+
+        return urljoin(BASE_DATASET_URL, name)
+
+    @classmethod
+    def get_available_dataset_names(cls):
+        client = boto3.client('s3', config=Config(signature_version=UNSIGNED))
+        available_datasets = [
+            obj['Key']
+            for obj in client.list_objects(Bucket=BUCKET_NAME)['Contents']
+            if obj['Key'] != 'index.html'
+        ]
+
+        return available_datasets
+
+    @classmethod
+    def get_all_challenges(cls, challenges=None):
+        """Return a list containing the instance of the datasets available."""
+        datasets = challenges or cls.get_available_dataset_names()
+        loaded_challenges = []
+        for dataset in datasets:
+            try:
+                loaded_challenges.append(cls(dataset))
+                LOGGER.info('Dataset %s loaded', dataset)
+            except Exception as ex:
+                LOGGER.warn('Dataset: %s could not be loaded. Error: %s', dataset, ex)
+
+        LOGGER.info('%s / %s datasets loaded.', len(loaded_challenges), len(datasets))
+
+        return loaded_challenges
 
     def load_data(self):
         """Load ``X`` and ``y`` over which to perform fit and evaluate."""
@@ -106,8 +134,8 @@ class MLChallenge(Challenge):
             X = pd.read_csv(self.dataset)
 
         else:
-            url = _get_dataset_url(self.dataset)
-            X = pd.read_csv(url, compression='gzip')
+            url = self.get_dataset_url(self.dataset)
+            X = pd.read_csv(url)
 
         y = X.pop(self.target_column)
 
@@ -116,7 +144,7 @@ class MLChallenge(Challenge):
 
         return X, y
 
-    def __init__(self, model=None, dataset=None, target_column=None,
+    def __init__(self, dataset, model=None, target_column=None,
                  encode=None, tunable_hyperparameters=None, metric=None,
                  model_defaults=None, make_binary=None, stratified=None,
                  cv_splits=5, cv_random_state=42, cv_shuffle=True, metric_args={}):
@@ -179,4 +207,4 @@ class MLChallenge(Challenge):
         return cross_val_score(model, self.X, self.y, cv=self.cv, scoring=self.scorer).mean()
 
     def __repr__(self):
-        return '{}()'.format(self.__class__.__name__)
+        return "{}('{}')".format(self.__class__.__name__, self.dataset)

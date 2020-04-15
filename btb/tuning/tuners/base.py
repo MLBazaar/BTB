@@ -51,7 +51,7 @@ class BaseTuner:
         self.maximize = maximize
         LOGGER.debug(
             ('Creating %s instance with %s hyperparameters and cardinality %s.'),
-            len(self.tunable.hyperparams), self.__class__.__name__, self.tunable.cardinality
+            self.__class__.__name__, len(self.tunable.hyperparams), self.tunable.cardinality
         )
 
     def _check_proposals(self, num_proposals):

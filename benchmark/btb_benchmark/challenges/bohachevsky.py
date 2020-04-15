@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from btb.benchmark.challenges.challenge import Challenge
+from btb_benchmark.challenges.challenge import Challenge
 
 
 class Bohachevsky(Challenge):

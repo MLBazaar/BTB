@@ -83,15 +83,16 @@ install-test: clean-build clean-pyc ## install the package and test dependencies
 
 .PHONY: install-develop
 install-develop: clean-build clean-pyc ## install the package in editable mode and dependencies for development
-	pip install -e .[dev]
+	pip install -e .[dev] ./benchmark
 
 
 # LINT TARGETS
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 btb tests
+	flake8 btb tests benchmark
 	isort -c --recursive btb tests
+	isort -c --recursive -p btb_benchmark benchmark
 
 .PHONY: fix-lint
 fix-lint: ## fix lint issues using autoflake, autopep8, and isort

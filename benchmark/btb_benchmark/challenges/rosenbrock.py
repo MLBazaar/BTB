@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from btb.benchmark.challenges.challenge import Challenge
+from btb_benchmark.challenges.challenge import Challenge
 
 
 class Rosenbrock(Challenge):
