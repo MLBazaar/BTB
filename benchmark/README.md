@@ -202,7 +202,7 @@ run_benchmark(output_path='path/to/my_results.csv')
 ## Our latest Results
 
 All the results obtained by the different BTB releases can be found inside the
-[results](https://github.com/HDI-Project/BTB/tree/master/btb_benchmark/results) folder as CSV files.
+[results](https://github.com/HDI-Project/BTB/tree/master/benchmark/results) folder as CSV files.
 
 Additionally, all the previous results can be browsed and analyzed in the following [Google Sheets
 document](
