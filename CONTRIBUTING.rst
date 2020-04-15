@@ -60,18 +60,27 @@ Get Started!
 Ready to contribute? Here's how to set up `BTB` for local development.
 
 1. Fork the `BTB` repo on GitHub.
+
 2. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/BTB.git
+    $ cd BTB/
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed,
+3. Create a new [virtualenv](https://virtualenv.pypa.io/en/latest) for
+   development::
+
+    $ pip install virtualenv
+    $ virtualenv -p $(which python3.6) btb-venv
+    $ source btb-venv/bin/activate
+
+   Remember to activate your virtualenv before every development session!
+
+4. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed,
    this is how you set up your fork for local development::
 
-    $ mkvirtualenv btb
-    $ cd btb/
     $ make install-develop
 
-4. Create a branch for local development::
+5. Create a branch for local development::
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
@@ -82,7 +91,7 @@ Ready to contribute? Here's how to set up `BTB` for local development.
 
    Now you can make your changes locally.
 
-5. While hacking your changes, make sure to cover all your developments with the required
+6. While hacking your changes, make sure to cover all your developments with the required
    unit tests, and that none of the old tests fail as a consequence of your changes.
    For this, make sure to run the tests suite and check the code coverage::
 
@@ -90,25 +99,25 @@ Ready to contribute? Here's how to set up `BTB` for local development.
     $ make test       # Run the tests
     $ make coverage   # Get the coverage report
 
-6. When you're done making changes, check that your changes pass all the styling checks and
+7. When you're done making changes, check that your changes pass all the styling checks and
    tests, including other Python supported versions, using::
 
     $ make test-all
 
-7. Make also sure to include the necessary documentation in the code as docstrings following
+8. Make also sure to include the necessary documentation in the code as docstrings following
    the `Google docstrings style`_.
    If you want to view how your documentation will look like when it is published, you can
    generate and view the docs with this command::
 
     $ make view-docs
 
-8. Commit your changes and push your branch to GitHub::
+9. Commit your changes and push your branch to GitHub::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-9. Submit a pull request through the GitHub website.
+10. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------

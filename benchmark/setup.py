@@ -5,7 +5,6 @@
 
 from setuptools import find_packages, setup
 
-
 try:
     with open('README.md') as readme_file:
         readme = readme_file.read()
@@ -23,6 +22,11 @@ except IOError:
 
 
 install_requires = [
+    'dask>=2.6.0,<3',
+    'toolz>=0.10.0,<1',
+    'hyperopt>=0.2.3,<3',
+    'tabulate>=0.8.3,<0.9',
+    'xgboost>=1.0.2,<1.1.0',
     'docutils>=0.10,<0.16',
     'boto3>=1.9.18,<1.10',
     'numpy>=1.14.0,<1.18.0',
@@ -30,6 +34,7 @@ install_requires = [
     'scipy>=1.0.1,<1.4.0',
     'pandas>=0.21.0,<0.26.0',
     'tqdm>=4.36.1,<4.50.0',
+    'XlsxWriter>=1.2.8,<1.3',
 ]
 
 
@@ -106,8 +111,8 @@ setup(
     license='MIT license',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
-    name='baytune',
-    packages=find_packages(include=['btb', 'btb.*']),
+    name='btb_benchmark',
+    packages=find_packages(include=['btb_benchmark', 'btb_benchmark.*']),
     python_requires='>=3.5',
     setup_requires=setup_requires,
     test_suite='tests',

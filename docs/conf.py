@@ -37,6 +37,8 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'autodocsumm',
+    'IPython.sphinxext.ipython_console_highlighting',
+    'IPython.sphinxext.ipython_directive',
 ]
 
 autodoc_default_options = {
@@ -113,7 +115,7 @@ html_context = {
 # documentation.
 html_theme_options = {
     'collapse_navigation': False,
-    'display_version': False,
+    'display_version': True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
