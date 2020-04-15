@@ -96,7 +96,11 @@ def write_results(results, output):
     })
 
     wins = get_summary(results, get_wins)
-    add_sheet({'Number of Wins': wins}, 'Number of Wins', writer, cell_fmt, index_fmt, header_fmt)
+    summary = {
+        'Number of Wins (with ties)': wins,
+        'Number of Wins (exclusive)': get_summary(results, get_exclusive_wins)
+    }
+    add_sheet(summary, 'Number of Wins', writer, cell_fmt, index_fmt, header_fmt)
 
     for version in wins.columns:
         add_sheet(results[version], version, writer, cell_fmt, index_fmt, header_fmt)
