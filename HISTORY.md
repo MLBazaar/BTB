@@ -1,5 +1,21 @@
 # History
 
+## 0.3.7 - 2020-04-15
+
+This release brings a new `benchmark` framework with public leaderboard.
+As part of our benchmarking efforts we will run the framework at every release and make the results
+public. In each run we compare it to other tuners and optimizer libraries. We are constantly adding
+new libraries for comparison. If you have suggestions for a tuner library we should include in our
+compraison, please contact us via email at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
+
+
+### Resolved Issues
+
+* Issue #159: Implement more `MLChallenges` and generate a public leaderboard.
+* Issue #180: Update BTB Benchmarking module.
+* Issue #182: Integrate HyperOPT with benchmarking.
+* Issue #184: Integrate dask to bencharking.
+
 ## 0.3.6 - 2020-03-04
 
 This release improves `BTBSession` error handling and allows `Tunables` with cardinality
