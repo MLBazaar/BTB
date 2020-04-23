@@ -208,7 +208,7 @@ Additionally, all the previous results can be browsed and analyzed in the follow
 document](
  https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/).
 
-# Credits
+## Credits
 
 All the datasets used for the BTB benchmarking were downloaded from [openml.org](openml.org).
 
