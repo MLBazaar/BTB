@@ -69,26 +69,19 @@ was presented in 2019 as part of the Machine Learning Bazaar:
 
 .. toctree::
    :caption: User Guides
-   :maxdepth: 1
+   :maxdepth: 2
 
-   user_guides/tuners
-   user_guides/selectors
-   user_guides/btbsession
+   tutorials/01_Tuning
+   tutorials/02_Selection
+   tutorials/03_Session
    benchmark
 
+
 .. toctree::
-   :caption: Reference
+   :caption: Resources
    :titlesonly:
-   :maxdepth: 1
 
-   Session Reference <api/btb.session>
-   Tuning Reference <api/btb.tuning>
-   Selection Reference <api/btb.selection>
-
-.. toctree::
-   :caption: Development Notes
-   :hidden:
-
+   API Reference <api/btb>
    contributing
    history
    authors

@@ -23,8 +23,6 @@ except IOError:
 
 
 install_requires = [
-    'docutils>=0.10,<0.16',
-    'boto3>=1.9.18,<1.10',
     'numpy>=1.14.0,<1.18.0',
     'scikit-learn>=0.20.0,<0.22.0',
     'scipy>=1.0.1,<1.4.0',
@@ -52,32 +50,36 @@ setup_requires = [
 
 development_requires = [
     # general
-    'bumpversion>=0.5.3',
     'pip>=9.0.1',
-    'watchdog>=0.8.3',
+    'bumpversion>=0.5.3,<0.6',
+    'watchdog>=0.8.3,<0.11',
 
     # docs
-    'autodocsumm>=0.1.10',
-    'ipython>=6.5.0',
-    'm2r>=0.2.0',
-    'Sphinx>=1.7.1,<2.4',
-    'sphinx_rtd_theme>=0.2.4',
+    'm2r>=0.2.0,<0.3',
+    'nbsphinx>=0.5.0,<0.7',
+    'Sphinx>=1.7.1,<3',
+    'sphinx_rtd_theme>=0.2.4,<0.5',
 
     # style check
-    'flake8>=3.7.7',
-    'isort>=4.3.4',
+    'flake8>=3.7.7,<4',
+    'isort>=4.3.4,<5',
 
     # fix style issues
-    'autoflake>=1.2',
-    'autopep8>=1.4.3',
+    'autoflake>=1.1,<2',
+    'autopep8>=1.4.3,<2',
 
     # distribute on PyPI
-    'twine>=1.10.0',
+    'twine>=1.10.0,<4',
     'wheel>=0.30.0',
 
     # Advanced testing
-    'tox>=2.9.1',
-    'coverage>=4.5.1',
+    'coverage>=4.5.1,<6',
+    'tox>=2.9.1,<4',
+
+    # Documentation style
+    'doc8==0.8.0,<0.9',
+    'pydocstyle==3.0.0,<4',
+
 ]
 
 
