@@ -31,12 +31,6 @@ install_requires = [
 ]
 
 
-examples_require = [
-    'jupyter>=1.0.0',
-    'matplotlib>=3.1.1',
-]
-
-
 tests_require = [
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
@@ -80,6 +74,8 @@ development_requires = [
     'doc8==0.8.0,<0.9',
     'pydocstyle==3.0.0,<4',
 
+    # others
+    'jupyter>=1.0.0',
 ]
 
 
@@ -98,7 +94,6 @@ setup(
     ],
     description='Bayesian Tuning and Bandits',
     extras_require={
-        'examples': examples_require,
         'test': tests_require,
         'dev': development_requires + tests_require,
     },
