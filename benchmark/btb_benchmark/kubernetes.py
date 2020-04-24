@@ -1,3 +1,53 @@
+import importlib
+
+from dask.distributed import Client
+from dask_kubernetes import KubeCluster
+
+RUN_TEMPLATE = """
+/bin/bash <<'EOF'
+
+apt-get update
+apt-get install -y build-essential
+
+git clone {repository} repo
+cd repo
+git checkout {reference}
+{install_commands}
+
+/usr/bin/prepare.sh dask-worker --nthreads 2 --no-dashboard --memory-limit 6GB --death-timeout 60
+
+EOF
+"""
+
+
+def import_function(config):
+    function = config['function']
+    function = function.split('.')
+    function_name = function[-1]
+    package = '.'.join(function[:-1])
+    module = importlib.import_module(package)
+
+    return getattr(module, function_name)
+
+
+def generate_cluster_spec(config):
+    run_commands = RUN_TEMPLATE.format(**config)
+
+    spec = {
+        'metadata': {},
+        'spec': {
+            'containers': [{
+                'args': ['-c', run_commands],
+                'command': ['tini', '-g', '--', '/bin/sh'],
+                'image': 'daskdev/dask:latest',
+                'name': 'dask-worker',
+            }]
+        }
+    }
+
+    return spec
+
+
 def run_on_kubernetes(config):
     """Run benchmarking on a kubernetes cluster with the given configuration.
 
@@ -17,17 +67,15 @@ def run_on_kubernetes(config):
         * args:
             A dictionary containing the keyword args that will be used with the given function.
 
-    Within the `dask` section you can specify:
-        * workers:
-            The amount of workers to be run.
-        * worker_spec:
-            A dictionary containing the hardware specifications to be used.
+    Within the `install` section you can specify:
         * install:
             A dictionary containing the following keys:
                 * repository:
                     The link to the repository that has to be used by the workers.
                 * checkout:
                     The branch or commit to be used.
+                * install_commands:
+                    The command used to install the repository.
 
     This is an example of this dictionary in Yaml format::
 
@@ -36,16 +84,25 @@ def run_on_kubernetes(config):
             args:
                 iterations: 10
                 sample: 4
-        dask:
-            workers: 4
-            workers_spec:
-                memory_limit: 4G
-                cpu_limit: 2
         install:
             repository: https://github.com/HDI-Project/BTB
             checkout: stable
+            install_commands: make install-develop
 
     Args:
         config (dict):
             Config dictionary.
     """
+    cluster_spec = generate_cluster_spec(config['install'])
+    cluster = KubeCluster.from_dict(cluster_spec)
+    cluster.adapt()  # create and destroy workers dynamically based on workload
+    client = Client(cluster)
+
+    run = import_function(config['run'])
+    kwargs = config['run']['args']
+    results = run(**kwargs)
+
+    client.close()
+    cluster.close()
+
+    return results
