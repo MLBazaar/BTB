@@ -2,6 +2,7 @@
 import argparse
 import logging
 import random
+import socket
 import warnings
 from datetime import datetime
 
@@ -47,7 +48,8 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'tuner': name,
             'score': score,
             'iterations': iterations,
-            'elapsed': datetime.utcnow() - start
+            'elapsed': datetime.utcnow() - start,
+            'hostname':  socket.gethostname()
         }
 
     except Exception as ex:
@@ -57,7 +59,8 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'challenge': str(challenge),
             'tuner': name,
             'score': None,
-            'elapsed': datetime.utcnow() - start
+            'elapsed': datetime.utcnow() - start,
+            'hostname':  socket.gethostname()
         }
 
     return result
@@ -77,7 +80,7 @@ def _evaluate_tuner_on_challenges(name, tuner, challenges, iterations):
     return tuner_results
 
 
-def benchmark(tuners, challenges, iterations):
+def benchmark(tuners, challenges, iterations, detailed_output=False):
     """Score ``tuners`` against a list of ``challenges`` for the given amount of iterations.
 
     This function scores a collection of ``tuners`` against a collection of ``challenges``
@@ -102,6 +105,8 @@ def benchmark(tuners, challenges, iterations):
             ``btb.challenges.challenge.Challenge``.
         iterations (int):
             Amount of tuning iterations to perform for each tuner and each challenge.
+        detailed_output (bool):
+            If ``True`` a dataframe with the elapsed time, score and iterations will be returned.
 
     Returns:
         pandas.DataFrame:
@@ -126,6 +131,9 @@ def benchmark(tuners, challenges, iterations):
     results = dask.compute(*persisted)
 
     df = pd.DataFrame.from_records(results)
+    if detailed_output:
+        return df
+
     df = df.pivot(index='challenge', columns='tuner', values='score')
     del df.columns.name
     del df.index.name
@@ -216,7 +224,7 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
 
 
 def run_benchmark(tuners=None, challenge_types=None, challenges=None,
-                  sample=None, iterations=100, output_path=None):
+                  sample=None, iterations=100, output_path=None, detailed_output=False):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
     This function provides a user-friendly interface to interact with the ``benchmark``
@@ -241,6 +249,8 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
             Number of tuning iterations to perform per challenge and tuner.
         output_path (str):
             If an ``output_path`` is given, the final results will be saved in that location.
+        detailed_output (bool):
+            If ``True`` a dataframe with the elapsed time, score and iterations will be returned.
 
     Returns:
         pandas.DataFrame or None:
@@ -253,7 +263,8 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
         challenge_types=challenge_types,
         sample=sample
     )
-    results = benchmark(tuners, challenges, iterations)
+
+    results = benchmark(tuners, challenges, iterations, detailed_output)
 
     if output_path:
         LOGGER.info('Saving benchmark report to %s', output_path)
@@ -331,6 +342,8 @@ def _get_parser():
     run.add_argument('-C', '--challenge-types', nargs='+',
                      choices=['math', 'sgd', 'random_forest', 'xgboost'],
                      help='Type of challenge/s to use. Accepts multiple names.')
+    run.add_argument('-d', '--detailed-output', action='store_true',
+                     help='Output a detailed dataset with elapsed times.')
 
     # Summarize action
     summary = action.add_parser('summary', help='Summarize the BTB Benchmark results')

@@ -6,9 +6,9 @@ from dask_kubernetes import KubeCluster
 RUN_TEMPLATE = """
 /bin/bash <<'EOF'
 
-{extra_commands}
+{}
 
-/usr/bin/prepare.sh dask-worker --no-dashboard --memory-limit auto --death-timeout 600
+/usr/bin/prepare.sh dask-worker --no-dashboard --memory-limit 0 --death-timeout 0
 
 EOF
 """
@@ -23,21 +23,45 @@ def import_function(config):
 
     return getattr(module, function_name)
 
+def get_extra_setup(setup_dict):
+    extra_packages = []
 
-def generate_cluster_spec(install_config, dask_config):
-    repository = install_config.get('repository')
+    script = setup_dict.get('script')
+    if script:
+        extra_packages.append('exec {}'.format(script))
 
-    if repository:
-        repository = 'git clone {} repo && cd repo'.format(repository)
-        reference = install_config.get('reference', 'master')
-        reference = 'git checkout {}'.format(reference)
-        install_commands = install_config.get('install_commands', '')
+    apt_packages = setup_dict.get('apt_packages')
+    if apt_packages:
+        extra_packages.append('apt get install {}'.format(' '.join(apt_packages)))
 
-        extra_commands = '\n'.join([repository, reference, install_commands])
+    pip_packages = setup_dict.get('pip_packages')
+    if pip_packages:
+        extra_packages.append('pip install {}'.format(' '.join(pip_packages)))
 
-    run_commands = RUN_TEMPLATE.format(
-        extra_commands=(extra_commands or ''),
-    )
+    git_repository = setup_dict.get('git_repository')
+    if git_repository:
+        url = git_repository.get('url')
+        reference = git_repository.get('reference', 'master')
+        install = git_repostiroy.get('install')
+
+        git_clone = 'git clone {} repo && cd repo'.format(url)
+        git_checkout = 'git checkout {}'.format(reference)
+        extra_packages.append('\n '.join([git_clone, git_checkout, install]))
+
+    if len(extra_packages) > 1:
+        return '\n '.join(extra_packages)
+
+    return extra_packages[0]
+
+
+def generate_cluster_spec(dask_cluster):
+    extra_setup = ''
+
+    worker_config = dask_cluster.get('worker_config')
+    if worker_config.get('setup'):
+        extra_setup = get_extra_setup(worker_config['setup'])
+
+    run_commands = RUN_TEMPLATE.format(extra_setup)
 
     spec = {
         'metadata': {},
@@ -45,9 +69,9 @@ def generate_cluster_spec(install_config, dask_config):
             'containers': [{
                 'args': ['-c', run_commands],
                 'command': ['tini', '-g', '--', '/bin/sh'],
-                'image': dask_config.get('image', 'daskdev/dask:latest'),
+                'image': worker_config.get('image', 'daskdev/dask:latest'),
                 'name': 'dask-worker',
-                'resources': dask_config['resources']
+                'resources': worker_config.get('resources', {})
             }]
         }
     }
@@ -114,18 +138,19 @@ def run_on_kubernetes(config):
         config (dict):
             Config dictionary.
     """
-    install_config = config['install']
-    dask_config = config['dask']
-    cluster_spec = generate_cluster_spec(install_config, dask_config)
+    dask_cluster = config['dask_cluster']
+    cluster_spec = generate_cluster_spec(dask_cluster)
     cluster = KubeCluster.from_dict(cluster_spec)
-    cluster.scale(dask_config['workers'])
+    cluster.scale(dask_cluster['workers'])
     client = Client(cluster)
 
-    run = import_function(config['run'])
-    kwargs = config['run']['args']
-    results = run(**kwargs)
+    try:
+        run = import_function(config['run'])
+        kwargs = config['run']['args']
+        results = run(**kwargs)
 
-    client.close()
-    cluster.close()
+    finally:
+        client.close()
+        cluster.close()
 
     return results
