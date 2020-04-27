@@ -30,8 +30,15 @@ def import_function(config):
     return getattr(module, function_name)
 
 
-def generate_cluster_spec(config):
-    run_commands = RUN_TEMPLATE.format(**config)
+def generate_cluster_spec(install_config, dask_config):
+    repository = install_config['repository']
+    reference = install_config.get('reference', 'master')
+    install_commands = install_config.get('install_commands', 'make install-develop')
+    run_commands = RUN_TEMPLATE.format(
+        repository=repository,
+        reference=reference,
+        install_commands=install_commands
+    )
 
     spec = {
         'metadata': {},
@@ -41,6 +48,7 @@ def generate_cluster_spec(config):
                 'command': ['tini', '-g', '--', '/bin/sh'],
                 'image': 'daskdev/dask:latest',
                 'name': 'dask-worker',
+                'resources': dask_config['resources']
             }]
         }
     }
@@ -93,9 +101,11 @@ def run_on_kubernetes(config):
         config (dict):
             Config dictionary.
     """
-    cluster_spec = generate_cluster_spec(config['install'])
+    install_config = config['install']
+    dask_config = config['dask']
+    cluster_spec = generate_cluster_spec(install_config, dask_config)
     cluster = KubeCluster.from_dict(cluster_spec)
-    cluster.adapt()  # create and destroy workers dynamically based on workload
+    cluster.scale(dask_config['workers'])
     client = Client(cluster)
 
     run = import_function(config['run'])

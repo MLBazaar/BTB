@@ -78,9 +78,13 @@ install: clean-build clean-pyc ## install the package to the active Python's sit
 install-test: clean-build clean-pyc ## install the package and test dependencies
 	pip install .[test]
 
+.PHONY: install-benchmark
+install-benchmark: clean-build clean-pyc ## install the package and test dependencies
+	pip install ./benchmark
+
 .PHONY: install-develop
 install-develop: clean-build clean-pyc ## install the package in editable mode and dependencies for development
-	pip install -e .[dev] ./benchmark
+	pip install -e .[dev] -e ./benchmark
 
 
 # LINT TARGETS
