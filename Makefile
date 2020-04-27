@@ -50,6 +50,7 @@ clean-pyc: ## remove Python file artifacts
 .PHONY: clean-docs
 clean-docs: ## remove previously built docs
 	rm -f docs/api/*.rst
+	rm -rf docs/tutorials
 	-$(MAKE) -C docs clean 2>/dev/null  # this fails if sphinx is not yet installed
 
 .PHONY: clean-coverage
@@ -72,10 +73,6 @@ clean: clean-build clean-pyc clean-test clean-coverage clean-docs ## remove all 
 .PHONY: install
 install: clean-build clean-pyc ## install the package to the active Python's site-packages
 	pip install .
-
-.PHONY: install-examples
-install-examples: clean-build clean-pyc ## install the package and dependencies to run the examples
-	pip install .[examples]
 
 .PHONY: install-test
 install-test: clean-build clean-pyc ## install the package and test dependencies
@@ -127,7 +124,8 @@ coverage: ## check code coverage quickly with the default Python
 
 .PHONY: docs
 docs: clean-docs ## generate Sphinx HTML documentation, including API docs
-	sphinx-apidoc --separate --no-toc -o docs/api/ btb
+	cp -r tutorials docs/tutorials
+	sphinx-apidoc --separate -o docs/api/ btb
 	$(MAKE) -C docs html
 
 .PHONY: view-docs

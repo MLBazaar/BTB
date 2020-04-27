@@ -142,6 +142,8 @@ def _get_tuners_dict(tuners=None):
         for tuner in _as_list(tuners):
             if isinstance(tuner, type) and issubclass(tuner, BaseTuner):
                 selected_tuning_functions[tuner.__name__] = make_btb_tuning_function(tuner)
+            elif callable(tuner):
+                selected_tuning_functions[tuner.__name__] = tuner
             else:
                 tuning_function = all_tuners.get(tuner)
                 if tuning_function:

@@ -207,3 +207,16 @@ All the results obtained by the different BTB releases can be found inside the
 Additionally, all the previous results can be browsed and analyzed in the following [Google Sheets
 document](
  https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/).
+
+## Credits
+
+All the datasets used for the BTB benchmarking were downloaded from [openml.org](openml.org).
+
+Full details about their origin can be read the paper by Joaquin Vanschoren, Jan N. van Rijn,
+Bernd Bischl, and Luis Torgo. [OpenML: networked science in machine learning](
+http://arxiv.org/abs/1407.7722). SIGKDD Explorations 15(2), pp 49-60, 2013.
+
+After the download, the datasets went through a cleanup process in which the following
+modifications were applied:
+* Encode categorical columns with numerical values.
+* Rename the target column to `class` and make it the last column.
