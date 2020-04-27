@@ -24,11 +24,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -96,12 +98,75 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html#from-source">From source</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="user_guides/tuners.html">Tuners</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_guides/selectors.html">Selectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_guides/btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking BTB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="benchmark.html#challenges">Challenges</a><ul>
@@ -127,148 +192,57 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#credits">Credits</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Reference</span></p>
+<p class="caption"><span class="caption-text">Resources</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/btb.session.html">Session Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/btb.tuning.html">Tuning Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api/btb.selection.html">Selection Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Development Notes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="contributing.html#report-bugs">Report Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="contributing.html#fix-bugs">Fix Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="contributing.html#implement-features">Implement Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="contributing.html#write-documentation">Write Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.session.html">btb.session module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#release-workflow">Release Workflow</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="contributing.html#release-candidates">Release Candidates</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id1">0.3.7 - 2020-04-15</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#resolved-issues">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id2">0.3.6 - 2020-03-04</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#internal-improvements">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id3">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id4">0.3.5 - 2020-01-21</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id5">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id6">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id7">0.3.4 - 2019-12-24</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#new-features">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id8">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id9">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id10">0.3.3 - 2019-12-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id11">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id12">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id13">0.3.2 - 2019-12-10</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id14">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id15">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id16">0.3.1 - 2019-11-25</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id17">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id18">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id19">0.3.0 - 2019-11-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#new-project-structure">New project structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#new-api">New API</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id20">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id21">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id22">0.2.5</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#bug-fixes">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id23">0.2.4</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id24">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id25">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id26">0.2.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id27">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id28">0.2.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id29">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id30">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id31">0.2.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id32">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id33">0.2.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id34">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id35">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="history.html#id36">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id37">0.1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id38">0.1.1</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 </ul>
 
@@ -341,7 +315,6 @@
 
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
- | <a href="#A"><strong>A</strong></a>
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
@@ -356,7 +329,6 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
- | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -387,57 +359,15 @@
   </ul></td>
 </tr></table>
 
-<h2 id="A">A</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.tuning.html#btb.tuning.StopTuning.args">args (btb.tuning.StopTuning attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.StopTuning.args">(btb.tuning.tuners.base.StopTuning attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-</tr></table>
-
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.selection.best.html#btb.selection.best.BestKReward.bandit">bandit() (btb.selection.best.BestKReward method)</a>
+      <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.bandit">bandit() (btb.selection.selector.Selector method)</a>
 
       <ul>
-        <li><a href="api/btb.selection.best.html#btb.selection.best.BestKVelocity.bandit">(btb.selection.best.BestKVelocity method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.BestKReward.bandit">(btb.selection.BestKReward method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.BestKVelocity.bandit">(btb.selection.BestKVelocity method)</a>
-</li>
-        <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector.bandit">(btb.selection.custom_selector.CustomSelector method)</a>
-</li>
-        <li><a href="api/btb.selection.hierarchical.html#btb.selection.hierarchical.HierarchicalByAlgorithm.bandit">(btb.selection.hierarchical.HierarchicalByAlgorithm method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.HierarchicalByAlgorithm.bandit">(btb.selection.HierarchicalByAlgorithm method)</a>
-</li>
-        <li><a href="api/btb.selection.pure.html#btb.selection.pure.PureBestKVelocity.bandit">(btb.selection.pure.PureBestKVelocity method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.PureBestKVelocity.bandit">(btb.selection.PureBestKVelocity method)</a>
-</li>
-        <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKReward.bandit">(btb.selection.recent.RecentKReward method)</a>
-</li>
-        <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKVelocity.bandit">(btb.selection.recent.RecentKVelocity method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.RecentKReward.bandit">(btb.selection.RecentKReward method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.RecentKVelocity.bandit">(btb.selection.RecentKVelocity method)</a>
-</li>
-        <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.bandit">(btb.selection.selector.Selector method)</a>
-</li>
         <li><a href="api/btb.selection.html#btb.selection.UCB1.bandit">(btb.selection.UCB1 method)</a>
 </li>
         <li><a href="api/btb.selection.ucb1.html#btb.selection.ucb1.UCB1.bandit">(btb.selection.ucb1.UCB1 method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.Uniform.bandit">(btb.selection.Uniform method)</a>
-</li>
-        <li><a href="api/btb.selection.uniform.html#btb.selection.uniform.Uniform.bandit">(btb.selection.uniform.Uniform method)</a>
 </li>
       </ul></li>
       <li><a href="api/btb.tuning.acquisition.base.html#btb.tuning.acquisition.base.BaseAcquisition">BaseAcquisition (class in btb.tuning.acquisition.base)</a>
@@ -482,8 +412,6 @@
         <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam">(class in btb.tuning.hyperparams.boolean)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.html#module-btb">btb (module)</a>
 </li>
       <li><a href="api/btb.selection.html#module-btb.selection">btb.selection (module)</a>
@@ -496,6 +424,8 @@
 </li>
       <li><a href="api/btb.selection.pure.html#module-btb.selection.pure">btb.selection.pure (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.selection.recent.html#module-btb.selection.recent">btb.selection.recent (module)</a>
 </li>
       <li><a href="api/btb.selection.selector.html#module-btb.selection.selector">btb.selection.selector (module)</a>
@@ -557,8 +487,6 @@
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.cardinality">cardinality (btb.tuning.BooleanHyperParam attribute)</a>
 
       <ul>
-        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.cardinality">(btb.tuning.CategoricalHyperParam attribute)</a>
-</li>
         <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.cardinality">(btb.tuning.FloatHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.cardinality">(btb.tuning.hyperparams.base.BaseHyperParam attribute)</a>, <a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.cardinality">[1]</a>
@@ -567,21 +495,9 @@
 </li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.cardinality">(btb.tuning.hyperparams.BooleanHyperParam attribute)</a>
 </li>
-        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.cardinality">(btb.tuning.hyperparams.categorical.CategoricalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.cardinality">(btb.tuning.hyperparams.CategoricalHyperParam attribute)</a>
-</li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.cardinality">(btb.tuning.hyperparams.FloatHyperParam attribute)</a>
 </li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.cardinality">(btb.tuning.hyperparams.IntHyperParam attribute)</a>
-</li>
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality">(btb.tuning.hyperparams.numerical.FloatHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.cardinality">(btb.tuning.hyperparams.numerical.IntHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality">(btb.tuning.hyperparams.numerical.NumericalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.cardinality">(btb.tuning.IntHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.cardinality">(btb.tuning.Tunable attribute)</a>, <a href="api/btb.tuning.html#btb.tuning.Tunable.cardinality">[1]</a>
 </li>
@@ -607,12 +523,6 @@
 </li>
         <li><a href="api/btb.selection.html#btb.selection.BestKVelocity.compute_rewards">(btb.selection.BestKVelocity method)</a>
 </li>
-        <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector.compute_rewards">(btb.selection.custom_selector.CustomSelector method)</a>
-</li>
-        <li><a href="api/btb.selection.hierarchical.html#btb.selection.hierarchical.HierarchicalByAlgorithm.compute_rewards">(btb.selection.hierarchical.HierarchicalByAlgorithm method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.HierarchicalByAlgorithm.compute_rewards">(btb.selection.HierarchicalByAlgorithm method)</a>
-</li>
         <li><a href="api/btb.selection.pure.html#btb.selection.pure.PureBestKVelocity.compute_rewards">(btb.selection.pure.PureBestKVelocity method)</a>
 </li>
         <li><a href="api/btb.selection.html#btb.selection.PureBestKVelocity.compute_rewards">(btb.selection.PureBestKVelocity method)</a>
@@ -627,14 +537,6 @@
 </li>
         <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.compute_rewards">(btb.selection.selector.Selector method)</a>
 </li>
-        <li><a href="api/btb.selection.html#btb.selection.UCB1.compute_rewards">(btb.selection.UCB1 method)</a>
-</li>
-        <li><a href="api/btb.selection.ucb1.html#btb.selection.ucb1.UCB1.compute_rewards">(btb.selection.ucb1.UCB1 method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.Uniform.compute_rewards">(btb.selection.Uniform method)</a>
-</li>
-        <li><a href="api/btb.selection.uniform.html#btb.selection.uniform.Uniform.compute_rewards">(btb.selection.uniform.Uniform method)</a>
-</li>
       </ul></li>
       <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector">CustomSelector (class in btb.selection.custom_selector)</a>
 </li>
@@ -644,58 +546,18 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.default">default (btb.tuning.BooleanHyperParam attribute)</a>
-
-      <ul>
-        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.default">(btb.tuning.CategoricalHyperParam attribute)</a>
+      <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.default">default (btb.tuning.hyperparams.base.BaseHyperParam attribute)</a>
 </li>
-        <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.default">(btb.tuning.FloatHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.default">(btb.tuning.hyperparams.base.BaseHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam.default">(btb.tuning.hyperparams.boolean.BooleanHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.default">(btb.tuning.hyperparams.BooleanHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.default">(btb.tuning.hyperparams.categorical.CategoricalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.default">(btb.tuning.hyperparams.CategoricalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.default">(btb.tuning.hyperparams.FloatHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.default">(btb.tuning.hyperparams.IntHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.default">(btb.tuning.hyperparams.numerical.FloatHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.default">(btb.tuning.hyperparams.numerical.IntHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.default">(btb.tuning.hyperparams.numerical.NumericalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.default">(btb.tuning.IntHyperParam attribute)</a>
-</li>
-      </ul></li>
       <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.dimensions">dimensions (btb.tuning.BooleanHyperParam attribute)</a>
 
       <ul>
-        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.dimensions">(btb.tuning.CategoricalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.dimensions">(btb.tuning.FloatHyperParam attribute)</a>
-</li>
         <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.dimensions">(btb.tuning.hyperparams.base.BaseHyperParam attribute)</a>, <a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.dimensions">[1]</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam.dimensions">(btb.tuning.hyperparams.boolean.BooleanHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.dimensions">(btb.tuning.hyperparams.BooleanHyperParam attribute)</a>
 </li>
-        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.dimensions">(btb.tuning.hyperparams.categorical.CategoricalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.dimensions">(btb.tuning.hyperparams.CategoricalHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.dimensions">(btb.tuning.hyperparams.FloatHyperParam attribute)</a>
-</li>
         <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.dimensions">(btb.tuning.hyperparams.IntHyperParam attribute)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.dimensions">(btb.tuning.hyperparams.numerical.FloatHyperParam attribute)</a>
 </li>
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.dimensions">(btb.tuning.hyperparams.numerical.IntHyperParam attribute)</a>
 </li>
@@ -826,35 +688,9 @@
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam">(class in btb.tuning.hyperparams.numerical)</a>
 </li>
       </ul></li>
-      <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.inverse_transform">inverse_transform() (btb.tuning.BooleanHyperParam method)</a>
+      <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform">inverse_transform() (btb.tuning.hyperparams.base.BaseHyperParam method)</a>
 
       <ul>
-        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.inverse_transform">(btb.tuning.CategoricalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.inverse_transform">(btb.tuning.FloatHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.inverse_transform">(btb.tuning.hyperparams.base.BaseHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam.inverse_transform">(btb.tuning.hyperparams.boolean.BooleanHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.inverse_transform">(btb.tuning.hyperparams.BooleanHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.inverse_transform">(btb.tuning.hyperparams.categorical.CategoricalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.inverse_transform">(btb.tuning.hyperparams.CategoricalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.inverse_transform">(btb.tuning.hyperparams.FloatHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.inverse_transform">(btb.tuning.hyperparams.IntHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.inverse_transform">(btb.tuning.hyperparams.numerical.FloatHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.inverse_transform">(btb.tuning.hyperparams.numerical.IntHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.inverse_transform">(btb.tuning.hyperparams.numerical.NumericalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.inverse_transform">(btb.tuning.IntHyperParam method)</a>
-</li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.inverse_transform">(btb.tuning.Tunable method)</a>
 </li>
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable.inverse_transform">(btb.tuning.tunable.Tunable method)</a>
@@ -910,36 +746,16 @@
         <li><a href="api/btb.session.html#btb.session.BTBSession.proposals">(btb.session.BTBSession attribute)</a>, <a href="api/btb.session.html#btb.session.BTBSession.proposals">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.html#btb.BTBSession.propose">propose() (btb.BTBSession method)</a>
 
       <ul>
         <li><a href="api/btb.session.html#btb.session.BTBSession.propose">(btb.session.BTBSession method)</a>
 </li>
-        <li><a href="api/btb.tuning.html#btb.tuning.GPEiTuner.propose">(btb.tuning.GPEiTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.GPTuner.propose">(btb.tuning.GPTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.propose">(btb.tuning.tuners.base.BaseMetaModelTuner method)</a>
-</li>
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.propose">(btb.tuning.tuners.base.BaseTuner method)</a>
 </li>
-        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPEiTuner.propose">(btb.tuning.tuners.gaussian_process.GPEiTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPTuner.propose">(btb.tuning.tuners.gaussian_process.GPTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPEiTuner.propose">(btb.tuning.tuners.GPEiTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPTuner.propose">(btb.tuning.tuners.GPTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.uniform.html#btb.tuning.tuners.uniform.UniformTuner.propose">(btb.tuning.tuners.uniform.UniformTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.UniformTuner.propose">(btb.tuning.tuners.UniformTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.UniformTuner.propose">(btb.tuning.UniformTuner method)</a>
-</li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.selection.html#btb.selection.PureBestKVelocity">PureBestKVelocity (class in btb.selection)</a>
 
       <ul>
@@ -966,36 +782,18 @@
         <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKVelocity">(class in btb.selection.recent)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.html#btb.BTBSession.record">record() (btb.BTBSession method)</a>
 
       <ul>
         <li><a href="api/btb.session.html#btb.session.BTBSession.record">(btb.session.BTBSession method)</a>
 </li>
-        <li><a href="api/btb.tuning.html#btb.tuning.GPEiTuner.record">(btb.tuning.GPEiTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.GPTuner.record">(btb.tuning.GPTuner method)</a>
-</li>
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.record">(btb.tuning.tuners.base.BaseMetaModelTuner method)</a>
 </li>
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.record">(btb.tuning.tuners.base.BaseTuner method)</a>
 </li>
-        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPEiTuner.record">(btb.tuning.tuners.gaussian_process.GPEiTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.gaussian_process.html#btb.tuning.tuners.gaussian_process.GPTuner.record">(btb.tuning.tuners.gaussian_process.GPTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPEiTuner.record">(btb.tuning.tuners.GPEiTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.GPTuner.record">(btb.tuning.tuners.GPTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.uniform.html#btb.tuning.tuners.uniform.UniformTuner.record">(btb.tuning.tuners.uniform.UniformTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.UniformTuner.record">(btb.tuning.tuners.UniformTuner method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.UniformTuner.record">(btb.tuning.UniformTuner method)</a>
-</li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.html#btb.BTBSession.run">run() (btb.BTBSession method)</a>
 
       <ul>
@@ -1033,8 +831,6 @@
 </li>
         <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.sample">(btb.tuning.hyperparams.numerical.IntHyperParam method)</a>
 </li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.sample">(btb.tuning.hyperparams.numerical.NumericalHyperParam method)</a>
-</li>
         <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.sample">(btb.tuning.IntHyperParam method)</a>
 </li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.sample">(btb.tuning.Tunable method)</a>
@@ -1042,6 +838,8 @@
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable.sample">(btb.tuning.tunable.Tunable method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.scores">scores (btb.tuning.tuners.base.BaseMetaModelTuner attribute)</a>
 
       <ul>
@@ -1051,11 +849,7 @@
       <li><a href="api/btb.selection.best.html#btb.selection.best.BestKReward.select">select() (btb.selection.best.BestKReward method)</a>
 
       <ul>
-        <li><a href="api/btb.selection.best.html#btb.selection.best.BestKVelocity.select">(btb.selection.best.BestKVelocity method)</a>
-</li>
         <li><a href="api/btb.selection.html#btb.selection.BestKReward.select">(btb.selection.BestKReward method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.BestKVelocity.select">(btb.selection.BestKVelocity method)</a>
 </li>
         <li><a href="api/btb.selection.custom_selector.html#btb.selection.custom_selector.CustomSelector.select">(btb.selection.custom_selector.CustomSelector method)</a>
 </li>
@@ -1069,25 +863,15 @@
 </li>
         <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKReward.select">(btb.selection.recent.RecentKReward method)</a>
 </li>
-        <li><a href="api/btb.selection.recent.html#btb.selection.recent.RecentKVelocity.select">(btb.selection.recent.RecentKVelocity method)</a>
-</li>
         <li><a href="api/btb.selection.html#btb.selection.RecentKReward.select">(btb.selection.RecentKReward method)</a>
 </li>
-        <li><a href="api/btb.selection.html#btb.selection.RecentKVelocity.select">(btb.selection.RecentKVelocity method)</a>
-</li>
         <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector.select">(btb.selection.selector.Selector method)</a>
-</li>
-        <li><a href="api/btb.selection.html#btb.selection.UCB1.select">(btb.selection.UCB1 method)</a>
-</li>
-        <li><a href="api/btb.selection.ucb1.html#btb.selection.ucb1.UCB1.select">(btb.selection.ucb1.UCB1 method)</a>
 </li>
         <li><a href="api/btb.selection.html#btb.selection.Uniform.select">(btb.selection.Uniform method)</a>
 </li>
         <li><a href="api/btb.selection.uniform.html#btb.selection.uniform.Uniform.select">(btb.selection.uniform.Uniform method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.selection.selector.html#btb.selection.selector.Selector">Selector (class in btb.selection.selector)</a>
 </li>
       <li><a href="api/btb.tuning.html#btb.tuning.StopTuning">StopTuning</a>, <a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.StopTuning">[1]</a>
@@ -1098,48 +882,22 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.tuning.html#btb.tuning.BooleanHyperParam.transform">transform() (btb.tuning.BooleanHyperParam method)</a>
+      <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.transform">transform() (btb.tuning.hyperparams.base.BaseHyperParam method)</a>
 
       <ul>
-        <li><a href="api/btb.tuning.html#btb.tuning.CategoricalHyperParam.transform">(btb.tuning.CategoricalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.FloatHyperParam.transform">(btb.tuning.FloatHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.base.html#btb.tuning.hyperparams.base.BaseHyperParam.transform">(btb.tuning.hyperparams.base.BaseHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.boolean.html#btb.tuning.hyperparams.boolean.BooleanHyperParam.transform">(btb.tuning.hyperparams.boolean.BooleanHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.BooleanHyperParam.transform">(btb.tuning.hyperparams.BooleanHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.categorical.html#btb.tuning.hyperparams.categorical.CategoricalHyperParam.transform">(btb.tuning.hyperparams.categorical.CategoricalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.CategoricalHyperParam.transform">(btb.tuning.hyperparams.CategoricalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.FloatHyperParam.transform">(btb.tuning.hyperparams.FloatHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.html#btb.tuning.hyperparams.IntHyperParam.transform">(btb.tuning.hyperparams.IntHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.FloatHyperParam.transform">(btb.tuning.hyperparams.numerical.FloatHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.IntHyperParam.transform">(btb.tuning.hyperparams.numerical.IntHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.hyperparams.numerical.html#btb.tuning.hyperparams.numerical.NumericalHyperParam.transform">(btb.tuning.hyperparams.numerical.NumericalHyperParam method)</a>
-</li>
-        <li><a href="api/btb.tuning.html#btb.tuning.IntHyperParam.transform">(btb.tuning.IntHyperParam method)</a>
-</li>
         <li><a href="api/btb.tuning.html#btb.tuning.Tunable.transform">(btb.tuning.Tunable method)</a>
 </li>
         <li><a href="api/btb.tuning.tunable.html#btb.tuning.tunable.Tunable.transform">(btb.tuning.tunable.Tunable method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.trials">trials (btb.tuning.tuners.base.BaseMetaModelTuner attribute)</a>
 
       <ul>
         <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseTuner.trials">(btb.tuning.tuners.base.BaseTuner attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.BaseMetaModelTuner.tunable">tunable (btb.tuning.tuners.base.BaseMetaModelTuner attribute)</a>
 
       <ul>
@@ -1178,18 +936,6 @@
         <li><a href="api/btb.tuning.tuners.html#btb.tuning.tuners.UniformTuner">(class in btb.tuning.tuners)</a>
 </li>
         <li><a href="api/btb.tuning.tuners.uniform.html#btb.tuning.tuners.uniform.UniformTuner">(class in btb.tuning.tuners.uniform)</a>
-</li>
-      </ul></li>
-  </ul></td>
-</tr></table>
-
-<h2 id="W">W</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/btb.tuning.html#btb.tuning.StopTuning.with_traceback">with_traceback() (btb.tuning.StopTuning method)</a>
-
-      <ul>
-        <li><a href="api/btb.tuning.tuners.base.html#btb.tuning.tuners.base.StopTuning.with_traceback">(btb.tuning.tuners.base.StopTuning method)</a>
 </li>
       </ul></li>
   </ul></td>

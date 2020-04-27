@@ -30,15 +30,21 @@
 Overview
 ========
 
-* Free software: `MIT license <https://github.com/HDI-Project/BTB/blob/master/LICENSE>`_
+* License: `MIT <https://github.com/HDI-Project/BTB/blob/master/LICENSE>`_
+* Development Status: `Pre-Alpha <https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha>`_
 * Documentation: https://HDI-Project.github.io/BTB
 * Homepage: https://github.com/HDI-Project/BTB
 
-*BTB* ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning
-systems such as AutoML. It provides an easy-to-use interface for *tuning* and *selection*.
-This backend helps the tuning process of the hyperparameters for any given *objective_function*.
-*BTB* is meant to fit within a user's existing workflow naturally enough that integration does not
-requiere a lot of overhead.
+BTB ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning
+systems such as AutoML systems. It provides an easy-to-use interface for *tuning* and *selection*.
+
+It is currently being used in several AutoML systems:
+* `ATM <https://github.com/HDI-Project/ATM>`_, distributed, multi-tenant AutoML system for
+classifier tuning
+* `mit-d3m-ta2 <https://github.com/HDI-Project/mit-d3m-ta2/>`_, MIT's system for the DARPA
+`Data-driven discovery of models <https://www.darpa.mil/program/data-driven-discovery-of-models>`_ (D3M) program
+* `AutoBazaar <https://github.com/HDI-Project/AutoBazaar>`_, a flexible, general-purpose
+AutoML system
 
 History
 -------
@@ -62,33 +68,27 @@ was presented in 2019 as part of the Machine Learning Bazaar:
 
 .. toctree::
    :hidden:
-   :maxdepth: 2
+   :maxdepth: 1
 
    Overview<self>
    install
+   tutorials/00_Quickstart
 
 .. toctree::
    :caption: User Guides
    :maxdepth: 1
 
-   user_guides/tuners
-   user_guides/selectors
-   user_guides/btbsession
+   tutorials/01_Tuning
+   tutorials/02_Selection
+   tutorials/03_Session
    benchmark
 
 .. toctree::
-   :caption: Reference
-   :titlesonly:
+   :caption: Resources
    :maxdepth: 1
+   :titlesonly:
 
-   Session Reference <api/btb.session>
-   Tuning Reference <api/btb.tuning>
-   Selection Reference <api/btb.selection>
-
-.. toctree::
-   :caption: Development Notes
-   :hidden:
-
+   API Reference <api/btb>
    contributing
    history
    authors

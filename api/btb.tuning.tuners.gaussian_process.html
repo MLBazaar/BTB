@@ -23,11 +23,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -97,12 +99,75 @@
 <li class="toctree-l2"><a class="reference internal" href="../install.html#from-source">From source</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../user_guides/tuners.html">Tuners</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guides/selectors.html">Selectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guides/btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmark.html">Benchmarking BTB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../benchmark.html#challenges">Challenges</a><ul>
@@ -128,148 +193,57 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#credits">Credits</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Reference</span></p>
+<p class="caption"><span class="caption-text">Resources</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="btb.session.html">Session Reference</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="btb.tuning.html">Tuning Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.uniform.html">btb.selection.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="btb.tuning.tuners.html">btb.tuning.tuners package</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">btb.tuning.tuners.gaussian_process module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="btb.tuning.tuners.html">btb.tuning.tuners package</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="btb.selection.html">Selection Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.uniform.html">btb.selection.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Development Notes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#types-of-contributions">Types of Contributions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#report-bugs">Report Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#fix-bugs">Fix Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#implement-features">Implement Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#write-documentation">Write Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#submit-feedback">Submit Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.session.html">btb.session module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#get-started">Get Started!</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tips">Tips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#release-workflow">Release Workflow</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#release-candidates">Release Candidates</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id1">0.3.7 - 2020-04-15</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#resolved-issues">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id2">0.3.6 - 2020-03-04</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#internal-improvements">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id3">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id4">0.3.5 - 2020-01-21</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id5">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id6">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id7">0.3.4 - 2019-12-24</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#new-features">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id8">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id9">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id10">0.3.3 - 2019-12-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id11">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id12">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id13">0.3.2 - 2019-12-10</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id14">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id15">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id16">0.3.1 - 2019-11-25</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id17">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id18">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id19">0.3.0 - 2019-11-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#new-project-structure">New project structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#new-api">New API</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id20">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id21">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id22">0.2.5</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#bug-fixes">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id23">0.2.4</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id24">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id25">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id26">0.2.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id27">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id28">0.2.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id29">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id30">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id31">0.2.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id32">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id33">0.2.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id34">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id35">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id36">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id37">0.1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id38">0.1.1</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
 </ul>
 
@@ -316,6 +290,8 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="btb.html">btb package</a> &raquo;</li>
+        
           <li><a href="btb.tuning.html">btb.tuning package</a> &raquo;</li>
         
           <li><a href="btb.tuning.tuners.html">btb.tuning.tuners package</a> &raquo;</li>
@@ -341,24 +317,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-btb.tuning.tuners.gaussian_process">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-btb.tuning.tuners.gaussian_process">
 <span id="btb-tuning-tuners-gaussian-process-module"></span><h1>btb.tuning.tuners.gaussian_process module<a class="headerlink" href="#module-btb.tuning.tuners.gaussian_process" title="Permalink to this headline">¶</a></h1>
 <p>Package where the tuners based on GaussianProcessMetaModel are defined.</p>
-<p><strong>Classes</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tuners.gaussian_process.GPEiTuner" title="btb.tuning.tuners.gaussian_process.GPEiTuner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GPEiTuner</span></code></a>(tunable[, maximize, …])</p></td>
-<td><p>Gaussian Process Expected Improvement Tuner.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.tuners.gaussian_process.GPTuner" title="btb.tuning.tuners.gaussian_process.GPTuner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GPTuner</span></code></a>(tunable[, maximize, num_candidates, …])</p></td>
-<td><p>Gaussian Process Tuner.</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="class">
 <dt id="btb.tuning.tuners.gaussian_process.GPEiTuner">
 <em class="property">class </em><code class="sig-prename descclassname">btb.tuning.tuners.gaussian_process.</code><code class="sig-name descname">GPEiTuner</code><span class="sig-paren">(</span><em class="sig-param">tunable</em>, <em class="sig-param">maximize=True</em>, <em class="sig-param">num_candidates=1000</em>, <em class="sig-param">min_trials=2</em>, <em class="sig-param">length_scale=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tuners/gaussian_process.html#GPEiTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuners.gaussian_process.GPEiTuner" title="Permalink to this definition">¶</a></dt>
@@ -367,122 +352,6 @@
 <p>This class uses a <code class="docutils literal notranslate"><span class="pre">GaussianProcessRegressor</span></code> model from the <code class="docutils literal notranslate"><span class="pre">sklearn.gaussian_process</span></code>
 package, using an <code class="docutils literal notranslate"><span class="pre">ExpectedImprovement</span></code> function to return the better configurations
 predicted from the model.</p>
-<p><strong>Methods</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tuners.gaussian_process.GPEiTuner.propose" title="btb.tuning.tuners.gaussian_process.GPEiTuner.propose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">propose</span></code></a>([n, allow_duplicates])</p></td>
-<td><p>Propose one or more new hyperparameter configurations.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.tuners.gaussian_process.GPEiTuner.record" title="btb.tuning.tuners.gaussian_process.GPEiTuner.record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record</span></code></a>(trials, scores)</p></td>
-<td><p>Record one or more <code class="docutils literal notranslate"><span class="pre">trials</span></code> with the associated <code class="docutils literal notranslate"><span class="pre">scores</span></code> and re-fit the model.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="btb.tuning.tuners.gaussian_process.GPEiTuner.propose">
-<code class="sig-name descname">propose</code><span class="sig-paren">(</span><em class="sig-param">n=1</em>, <em class="sig-param">allow_duplicates=False</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.tuners.gaussian_process.GPEiTuner.propose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Propose one or more new hyperparameter configurations.</p>
-<p>Validate that the amount of proposals requested is valid when <code class="docutils literal notranslate"><span class="pre">allow_duplicates</span></code> is
-<code class="docutils literal notranslate"><span class="pre">False</span></code> and raise an exception in case there is any missmatch between <code class="docutils literal notranslate"><span class="pre">n</span></code>,
-unique <code class="docutils literal notranslate"><span class="pre">self.trials</span></code> and <code class="docutils literal notranslate"><span class="pre">self.tunable.cardinality</span></code>.
-Call the implemented <code class="docutils literal notranslate"><span class="pre">_propose</span></code> method and convert the returned data in to hyperparameter
-space values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<em>int</em>) – Number of candidates to create. Defaults to 1.</p></li>
-<li><p><strong>allow_duplicates</strong> (<em>bool</em>) – If it’s False, the tuner will propose trials that are not recorded. Otherwise
-will generate trials that can be repeated. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">n</span></code> is 1, a <code class="docutils literal notranslate"><span class="pre">dict</span></code> will be returned containing the
-hyperparameter names and values. Otherwise, if <code class="docutils literal notranslate"><span class="pre">n</span></code> is bigger than 1,
-a list of such dicts is returned.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict or list</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the amount of requested proposals
-    is bigger than the possible combinations and <code class="docutils literal notranslate"><span class="pre">allow_duplicates</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the unique amount of recorded
-    trials is the same as the amount of combinations available for <code class="docutils literal notranslate"><span class="pre">self.tunable</span></code>.</p></li>
-<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the unique amount of recorded
-    trials is the same as the amount of combinations available for <code class="docutils literal notranslate"><span class="pre">self.tunable</span></code>.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">UniformTuner</span></code> is being imported,
-instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method propose is being called
-three times, first with a single proposal, a second with two proposals forcing them to
-be different and once where the values can be repeated.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">UniformTuner</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">{&#39;bhp&#39;: True, &#39;chp&#39;: &#39;dog&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">[{&#39;bhp&#39;: True, &#39;chp&#39;: &#39;cat&#39;}, {&#39;bhp&#39;: True, &#39;chp&#39;: &#39;dog&#39;}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">[{&#39;bhp&#39;: False, &#39;chp&#39;: &#39;dog&#39;}, {&#39;bhp&#39;: False, &#39;chp&#39;: &#39;dog&#39;}]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.tuning.tuners.gaussian_process.GPEiTuner.record">
-<code class="sig-name descname">record</code><span class="sig-paren">(</span><em class="sig-param">trials</em>, <em class="sig-param">scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.tuners.gaussian_process.GPEiTuner.record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Record one or more <code class="docutils literal notranslate"><span class="pre">trials</span></code> with the associated <code class="docutils literal notranslate"><span class="pre">scores</span></code> and re-fit the model.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Trials</span></code> are recorded with the associated <code class="docutils literal notranslate"><span class="pre">scores</span></code> to them. The amount of trials
-must be equal to the amount of scores recived and vice versa. Once recorded, the <code class="docutils literal notranslate"><span class="pre">model</span></code>
-is being fitted with <code class="docutils literal notranslate"><span class="pre">self.trials</span></code> and <code class="docutils literal notranslate"><span class="pre">self.raw_scores</span></code> that contain any previous
-records and the ones that where just recorded.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trials</strong> (<em>pandas.DataFrame</em><em>, </em><em>pandas.Series</em><em>, </em><em>dict</em><em>, </em><em>list</em><em>(</em><em>dict</em><em>)</em><em>, </em><em>2D array-like</em>) – Values of shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">len(self.tunable.hyperparameters))</span></code> or dict with keys that
-are <code class="docutils literal notranslate"><span class="pre">self.tunable.names</span></code>.</p></li>
-<li><p><strong>scores</strong> (<em>single value</em><em> or </em><em>array-like</em>) – A single value or array-like of values representing the score achieved with the
-trials.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if <code class="docutils literal notranslate"><span class="pre">len(trials)</span></code> is not equal to
-    <code class="docutils literal notranslate"><span class="pre">len(scores)</span></code>.</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">UniformTuner</span></code> is being imported,
-instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method record is being called two times
-with valid trials and scores.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">UniformTuner</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="s1">&#39;cat&#39;</span><span class="p">},</span> <span class="mf">0.8</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">trials</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="s1">&#39;cat&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="s1">&#39;dog&#39;</span><span class="p">}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -493,122 +362,6 @@ with valid trials and scores.</p>
 <p>This class uses a <code class="docutils literal notranslate"><span class="pre">GaussianProcessRegressor</span></code> model from the <code class="docutils literal notranslate"><span class="pre">sklearn.gaussian_process</span></code>
 package, using a <code class="docutils literal notranslate"><span class="pre">numpy.argmax</span></code> function to return the better configurations predicted
 from the model.</p>
-<p><strong>Methods</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.tuners.gaussian_process.GPTuner.propose" title="btb.tuning.tuners.gaussian_process.GPTuner.propose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">propose</span></code></a>([n, allow_duplicates])</p></td>
-<td><p>Propose one or more new hyperparameter configurations.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.tuners.gaussian_process.GPTuner.record" title="btb.tuning.tuners.gaussian_process.GPTuner.record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record</span></code></a>(trials, scores)</p></td>
-<td><p>Record one or more <code class="docutils literal notranslate"><span class="pre">trials</span></code> with the associated <code class="docutils literal notranslate"><span class="pre">scores</span></code> and re-fit the model.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="btb.tuning.tuners.gaussian_process.GPTuner.propose">
-<code class="sig-name descname">propose</code><span class="sig-paren">(</span><em class="sig-param">n=1</em>, <em class="sig-param">allow_duplicates=False</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.tuners.gaussian_process.GPTuner.propose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Propose one or more new hyperparameter configurations.</p>
-<p>Validate that the amount of proposals requested is valid when <code class="docutils literal notranslate"><span class="pre">allow_duplicates</span></code> is
-<code class="docutils literal notranslate"><span class="pre">False</span></code> and raise an exception in case there is any missmatch between <code class="docutils literal notranslate"><span class="pre">n</span></code>,
-unique <code class="docutils literal notranslate"><span class="pre">self.trials</span></code> and <code class="docutils literal notranslate"><span class="pre">self.tunable.cardinality</span></code>.
-Call the implemented <code class="docutils literal notranslate"><span class="pre">_propose</span></code> method and convert the returned data in to hyperparameter
-space values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<em>int</em>) – Number of candidates to create. Defaults to 1.</p></li>
-<li><p><strong>allow_duplicates</strong> (<em>bool</em>) – If it’s False, the tuner will propose trials that are not recorded. Otherwise
-will generate trials that can be repeated. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">n</span></code> is 1, a <code class="docutils literal notranslate"><span class="pre">dict</span></code> will be returned containing the
-hyperparameter names and values. Otherwise, if <code class="docutils literal notranslate"><span class="pre">n</span></code> is bigger than 1,
-a list of such dicts is returned.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict or list</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the amount of requested proposals
-    is bigger than the possible combinations and <code class="docutils literal notranslate"><span class="pre">allow_duplicates</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the unique amount of recorded
-    trials is the same as the amount of combinations available for <code class="docutils literal notranslate"><span class="pre">self.tunable</span></code>.</p></li>
-<li><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if the unique amount of recorded
-    trials is the same as the amount of combinations available for <code class="docutils literal notranslate"><span class="pre">self.tunable</span></code>.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">UniformTuner</span></code> is being imported,
-instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method propose is being called
-three times, first with a single proposal, a second with two proposals forcing them to
-be different and once where the values can be repeated.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">UniformTuner</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">{&#39;bhp&#39;: True, &#39;chp&#39;: &#39;dog&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">[{&#39;bhp&#39;: True, &#39;chp&#39;: &#39;cat&#39;}, {&#39;bhp&#39;: True, &#39;chp&#39;: &#39;dog&#39;}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">allow_duplicates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">[{&#39;bhp&#39;: False, &#39;chp&#39;: &#39;dog&#39;}, {&#39;bhp&#39;: False, &#39;chp&#39;: &#39;dog&#39;}]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.tuning.tuners.gaussian_process.GPTuner.record">
-<code class="sig-name descname">record</code><span class="sig-paren">(</span><em class="sig-param">trials</em>, <em class="sig-param">scores</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.tuners.gaussian_process.GPTuner.record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Record one or more <code class="docutils literal notranslate"><span class="pre">trials</span></code> with the associated <code class="docutils literal notranslate"><span class="pre">scores</span></code> and re-fit the model.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Trials</span></code> are recorded with the associated <code class="docutils literal notranslate"><span class="pre">scores</span></code> to them. The amount of trials
-must be equal to the amount of scores recived and vice versa. Once recorded, the <code class="docutils literal notranslate"><span class="pre">model</span></code>
-is being fitted with <code class="docutils literal notranslate"><span class="pre">self.trials</span></code> and <code class="docutils literal notranslate"><span class="pre">self.raw_scores</span></code> that contain any previous
-records and the ones that where just recorded.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trials</strong> (<em>pandas.DataFrame</em><em>, </em><em>pandas.Series</em><em>, </em><em>dict</em><em>, </em><em>list</em><em>(</em><em>dict</em><em>)</em><em>, </em><em>2D array-like</em>) – Values of shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">len(self.tunable.hyperparameters))</span></code> or dict with keys that
-are <code class="docutils literal notranslate"><span class="pre">self.tunable.names</span></code>.</p></li>
-<li><p><strong>scores</strong> (<em>single value</em><em> or </em><em>array-like</em>) – A single value or array-like of values representing the score achieved with the
-trials.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – A <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception is being produced if <code class="docutils literal notranslate"><span class="pre">len(trials)</span></code> is not equal to
-    <code class="docutils literal notranslate"><span class="pre">len(scores)</span></code>.</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">UniformTuner</span></code> is being imported,
-instantiated with a <code class="docutils literal notranslate"><span class="pre">tunable</span></code> object and it’s method record is being called two times
-with valid trials and scores.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">BooleanHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams</span> <span class="kn">import</span> <span class="n">CategoricalHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.tuners</span> <span class="kn">import</span> <span class="n">UniformTuner</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bhp</span> <span class="o">=</span> <span class="n">BooleanHyperParam</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">chp</span> <span class="o">=</span> <span class="n">CategoricalHyperParam</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="n">bhp</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="n">chp</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">UniformTuner</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">({</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="s1">&#39;cat&#39;</span><span class="p">},</span> <span class="mf">0.8</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">trials</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="s1">&#39;cat&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;bhp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;chp&#39;</span><span class="p">:</span> <span class="s1">&#39;dog&#39;</span><span class="p">}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </dd></dl>
 
 </div>

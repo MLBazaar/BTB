@@ -23,11 +23,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -95,12 +97,75 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../install.html#from-source">From source</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../user_guides/tuners.html">Tuners</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../user_guides/selectors.html">Selectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../user_guides/btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmarking BTB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../benchmark.html#challenges">Challenges</a><ul>
@@ -126,148 +191,57 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmark.html#credits">Credits</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Reference</span></p>
+<p class="caption"><span class="caption-text">Resources</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/btb.session.html">Session Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/btb.tuning.html">Tuning Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/btb.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/btb.selection.html">Selection Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Development Notes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#types-of-contributions">Types of Contributions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#report-bugs">Report Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#fix-bugs">Fix Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#implement-features">Implement Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#write-documentation">Write Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#submit-feedback">Submit Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/btb.session.html">btb.session module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#tips">Tips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#release-workflow">Release Workflow</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../contributing.html#release-candidates">Release Candidates</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id1">0.3.7 - 2020-04-15</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#resolved-issues">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id2">0.3.6 - 2020-03-04</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#internal-improvements">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id3">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id4">0.3.5 - 2020-01-21</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id5">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id6">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id7">0.3.4 - 2019-12-24</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#new-features">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id8">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id9">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id10">0.3.3 - 2019-12-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id11">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id12">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id13">0.3.2 - 2019-12-10</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id14">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id15">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id16">0.3.1 - 2019-11-25</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id17">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id18">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id19">0.3.0 - 2019-11-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#new-project-structure">New project structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#new-api">New API</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id20">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id21">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id22">0.2.5</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#bug-fixes">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id23">0.2.4</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id24">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id25">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id26">0.2.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id27">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id28">0.2.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id29">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id30">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id31">0.2.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id32">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id33">0.2.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id34">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id35">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../history.html#id36">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id37">0.1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../history.html#id38">0.1.1</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
 </ul>
 
@@ -335,7 +309,7 @@
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="Selector"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.Selector">[docs]</a><span class="k">class</span> <span class="nc">Selector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Selector"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.selector.Selector">[docs]</a><span class="k">class</span> <span class="nc">Selector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base selector</span>
 
 <span class="sd">    Args:</span>
@@ -346,7 +320,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices</span>
 
-<div class="viewcode-block" id="Selector.compute_rewards"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.Selector.compute_rewards">[docs]</a>    <span class="k">def</span> <span class="nf">compute_rewards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
+<div class="viewcode-block" id="Selector.compute_rewards"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.selector.Selector.compute_rewards">[docs]</a>    <span class="k">def</span> <span class="nf">compute_rewards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compute rewards from choice&#39;s scores</span>
 
 <span class="sd">        Convert a list of scores associated with one choice into a list of rewards. Normally, the</span>
@@ -354,7 +328,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Selector.bandit"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.Selector.bandit">[docs]</a>    <span class="k">def</span> <span class="nf">bandit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choice_rewards</span><span class="p">):</span>
+<div class="viewcode-block" id="Selector.bandit"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.selector.Selector.bandit">[docs]</a>    <span class="k">def</span> <span class="nf">bandit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choice_rewards</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the choice to take next using multi-armed bandit</span>
 
 <span class="sd">        Multi-armed bandit method. Accepts a mapping of choices to rewards which indicate their</span>
@@ -371,7 +345,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">choice_rewards</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">choice_rewards</span><span class="p">[</span><span class="n">a</span><span class="p">]))</span></div>
 
-<div class="viewcode-block" id="Selector.select"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.Selector.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choice_scores</span><span class="p">):</span>
+<div class="viewcode-block" id="Selector.select"><a class="viewcode-back" href="../../../api/btb.selection.selector.html#btb.selection.selector.Selector.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choice_scores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Select the next best choice to make</span>
 
 <span class="sd">        Args:</span>

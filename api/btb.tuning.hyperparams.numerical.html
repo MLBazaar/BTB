@@ -23,11 +23,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -97,12 +99,75 @@
 <li class="toctree-l2"><a class="reference internal" href="../install.html#from-source">From source</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../user_guides/tuners.html">Tuners</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guides/selectors.html">Selectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user_guides/btbsession.html">BTBSession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmark.html">Benchmarking BTB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../benchmark.html#challenges">Challenges</a><ul>
@@ -128,148 +193,57 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark.html#credits">Credits</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Reference</span></p>
+<p class="caption"><span class="caption-text">Resources</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="btb.session.html">Session Reference</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="btb.tuning.html">Tuning Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="btb.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.selection.uniform.html">btb.selection.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">btb.tuning.hyperparams.numerical module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="btb.tuning.html">btb.tuning package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">btb.tuning.hyperparams.numerical module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="btb.selection.html">Selection Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="btb.selection.uniform.html">btb.selection.uniform module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Development Notes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#types-of-contributions">Types of Contributions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#report-bugs">Report Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#fix-bugs">Fix Bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#implement-features">Implement Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#write-documentation">Write Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#submit-feedback">Submit Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="btb.session.html">btb.session module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#get-started">Get Started!</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tips">Tips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../contributing.html#release-workflow">Release Workflow</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../contributing.html#release-candidates">Release Candidates</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id1">0.3.7 - 2020-04-15</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#resolved-issues">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id2">0.3.6 - 2020-03-04</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#internal-improvements">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id3">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id4">0.3.5 - 2020-01-21</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id5">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id6">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id7">0.3.4 - 2019-12-24</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#new-features">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id8">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id9">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id10">0.3.3 - 2019-12-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id11">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id12">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id13">0.3.2 - 2019-12-10</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id14">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id15">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id16">0.3.1 - 2019-11-25</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id17">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id18">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id19">0.3.0 - 2019-11-11</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#new-project-structure">New project structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#new-api">New API</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id20">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id21">Resolved Issues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id22">0.2.5</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#bug-fixes">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id23">0.2.4</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id24">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id25">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id26">0.2.3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id27">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id28">0.2.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id29">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id30">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id31">0.2.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id32">Bug fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id33">0.2.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id34">New Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id35">Internal Improvements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../history.html#id36">Bug Fixes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id37">0.1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../history.html#id38">0.1.1</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
 </ul>
 
@@ -316,6 +290,8 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="btb.html">btb package</a> &raquo;</li>
+        
           <li><a href="btb.tuning.html">btb.tuning package</a> &raquo;</li>
         
           <li><a href="btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a> &raquo;</li>
@@ -341,27 +317,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-btb.tuning.hyperparams.numerical">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-btb.tuning.hyperparams.numerical">
 <span id="btb-tuning-hyperparams-numerical-module"></span><h1>btb.tuning.hyperparams.numerical module<a class="headerlink" href="#module-btb.tuning.hyperparams.numerical" title="Permalink to this headline">¶</a></h1>
 <p>Package where the NumericalHyperParam class and it’s childs are defined.</p>
-<p><strong>Classes</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam" title="btb.tuning.hyperparams.numerical.FloatHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FloatHyperParam</span></code></a>([min, max, default, …])</p></td>
-<td><p>FloatHyperParam class.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam" title="btb.tuning.hyperparams.numerical.IntHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IntHyperParam</span></code></a>([min, max, default, …])</p></td>
-<td><p>IntHyperParam class.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam" title="btb.tuning.hyperparams.numerical.NumericalHyperParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumericalHyperParam</span></code></a></p></td>
-<td><p>NumericalHyperParam class.</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="class">
 <dt id="btb.tuning.hyperparams.numerical.FloatHyperParam">
 <em class="property">class </em><code class="sig-prename descclassname">btb.tuning.hyperparams.numerical.</code><code class="sig-name descname">FloatHyperParam</code><span class="sig-paren">(</span><em class="sig-param">min=None</em>, <em class="sig-param">max=None</em>, <em class="sig-param">default=None</em>, <em class="sig-param">include_min=True</em>, <em class="sig-param">include_max=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/hyperparams/numerical.html#FloatHyperParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam" title="Permalink to this definition">¶</a></dt>
@@ -376,39 +358,6 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 <dt>Search space:</dt><dd><p><span class="math notranslate nohighlight">\(s_1, s_2,... s_n\)</span> where <span class="math notranslate nohighlight">\(s_i = (i - min) / (max - min)\)</span></p>
 </dd>
 </dl>
-<p><strong>Attributes</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality" title="btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
-<td><p>float(x) -&gt; floating point number</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.dimensions" title="btb.tuning.hyperparams.numerical.FloatHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
-<td><p>int(x=0) -&gt; integer</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Methods</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.inverse_transform" title="btb.tuning.hyperparams.numerical.FloatHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
-<td><p>Invert one or more search space values.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.sample" title="btb.tuning.hyperparams.numerical.FloatHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
-<td><p>Generate sample values in the hyperparameter search space <span class="math notranslate nohighlight">\({0, 1}\)</span>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.transform" title="btb.tuning.hyperparams.numerical.FloatHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
-<td><p>Transform one or more hyperparameter values.</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -427,49 +376,6 @@ by default is <code class="docutils literal notranslate"><span class="pre">None<
 <dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality">
 <code class="sig-name descname">cardinality</code><em class="property"> = inf</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.default">
-<code class="sig-name descname">default</code><em class="property"> = None</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.default" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.dimensions">
-<code class="sig-name descname">dimensions</code><em class="property"> = 1</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.inverse_transform">
-<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Invert one or more search space values.</p>
-<p>Validates that the input values are within the search space and then transform them into
-hyperparameter values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
-instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
-called two times with a scalar from the search space and an array of two valid values
-from the search space.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
-<span class="go">array([[1]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
-<span class="go">array([[1],</span>
-<span class="go">       [2]])</span>
-</pre></div>
-</div>
-</dd></dl>
 
 <dl class="method">
 <dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.sample">
@@ -500,66 +406,6 @@ values from the search space is being returned.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="btb.tuning.hyperparams.numerical.FloatHyperParam.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.numerical.FloatHyperParam.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform one or more hyperparameter values.</p>
-<p>Validates that the input values are within the accepted dimensions and that they are within
-the hyperparameter space. Then transform one or more hyperparameter values from the
-original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
-The accepted value formats are:</p>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="simple">
-<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
-hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
-hyperparameter space to be converted into the search space.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
-search space values.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
-instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
-three times with a single scalar value, an array of two valid values and a 2D array
-with 1 dimension.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">array([[0.125]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">array([[0.125],</span>
-<span class="go">       [0.375]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
-<span class="go">array([[0.125],</span>
-<span class="go">       [0.375]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -576,39 +422,6 @@ having <code class="docutils literal notranslate"><span class="pre">min</span></
 <dt>Search space:</dt><dd><p><span class="math notranslate nohighlight">\(s_1, s_2,... s_n\)</span> where <span class="math notranslate nohighlight">\(s_i = \frac{interval}{2} + (i - 1) * interval\)</span></p>
 </dd>
 </dl>
-<p><strong>Attributes</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam.cardinality" title="btb.tuning.hyperparams.numerical.IntHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
-<td><p>int(x=0) -&gt; integer</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam.dimensions" title="btb.tuning.hyperparams.numerical.IntHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
-<td><p>int(x=0) -&gt; integer</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Methods</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam.inverse_transform" title="btb.tuning.hyperparams.numerical.IntHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
-<td><p>Invert one or more search space values.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam.sample" title="btb.tuning.hyperparams.numerical.IntHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
-<td><p>Generate sample values in the hyperparameter search space of [0, 1).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.IntHyperParam.transform" title="btb.tuning.hyperparams.numerical.IntHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
-<td><p>Transform one or more hyperparameter values.</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -625,52 +438,9 @@ by default is <code class="docutils literal notranslate"><span class="pre">None<
 </dd>
 </dl>
 <dl class="attribute">
-<dt id="btb.tuning.hyperparams.numerical.IntHyperParam.cardinality">
-<code class="sig-name descname">cardinality</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.tuning.hyperparams.numerical.IntHyperParam.default">
-<code class="sig-name descname">default</code><em class="property"> = None</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam.default" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="btb.tuning.hyperparams.numerical.IntHyperParam.dimensions">
 <code class="sig-name descname">dimensions</code><em class="property"> = 1</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="btb.tuning.hyperparams.numerical.IntHyperParam.inverse_transform">
-<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Invert one or more search space values.</p>
-<p>Validates that the input values are within the search space and then transform them into
-hyperparameter values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
-instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
-called two times with a scalar from the search space and an array of two valid values
-from the search space.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
-<span class="go">array([[1]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
-<span class="go">array([[1],</span>
-<span class="go">       [2]])</span>
-</pre></div>
-</div>
-</dd></dl>
 
 <dl class="method">
 <dt id="btb.tuning.hyperparams.numerical.IntHyperParam.sample">
@@ -701,66 +471,6 @@ values from the search space is being returned.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="btb.tuning.hyperparams.numerical.IntHyperParam.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.numerical.IntHyperParam.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform one or more hyperparameter values.</p>
-<p>Validates that the input values are within the accepted dimensions and that they are within
-the hyperparameter space. Then transform one or more hyperparameter values from the
-original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
-The accepted value formats are:</p>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="simple">
-<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
-hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
-hyperparameter space to be converted into the search space.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
-search space values.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
-instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
-three times with a single scalar value, an array of two valid values and a 2D array
-with 1 dimension.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">array([[0.125]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">array([[0.125],</span>
-<span class="go">       [0.375]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
-<span class="go">array([[0.125],</span>
-<span class="go">       [0.375]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -770,175 +480,10 @@ with 1 dimension.</p>
 <p>NumericalHyperParam class.</p>
 <p>The NumericalHyperParam class defines an abstraction to hyperparameters which ranges are
 defined by a numerical value and can take any number within that range.</p>
-<p><strong>Attributes</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality" title="btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
-<td><p>int(x=0) -&gt; integer</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.dimensions" title="btb.tuning.hyperparams.numerical.NumericalHyperParam.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
-<td><p>int(x=0) -&gt; integer</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Methods</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.inverse_transform" title="btb.tuning.hyperparams.numerical.NumericalHyperParam.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a>(values)</p></td>
-<td><p>Invert one or more search space values.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.sample" title="btb.tuning.hyperparams.numerical.NumericalHyperParam.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(n_samples)</p></td>
-<td><p>Generate an array of <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> random samples in the search space.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.transform" title="btb.tuning.hyperparams.numerical.NumericalHyperParam.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(values)</p></td>
-<td><p>Transform one or more hyperparameter values.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
-<dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality">
-<code class="sig-name descname">cardinality</code><em class="property"> = 0</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.cardinality" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.default">
-<code class="sig-name descname">default</code><em class="property"> = None</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.default" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="attribute">
 <dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.dimensions">
 <code class="sig-name descname">dimensions</code><em class="property"> = 1</em><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.dimensions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.inverse_transform">
-<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.inverse_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Invert one or more search space values.</p>
-<p>Validates that the input values are within the search space and then transform them into
-hyperparameter values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em> or </em><em>array-like</em>) – Scalar or array-like of values to be converted into the hyperparameter space.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> containing values from the original hyperparameter space.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
-instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> is being
-called two times with a scalar from the search space and an array of two valid values
-from the search space.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="mf">0.125</span><span class="p">)</span>
-<span class="go">array([[1]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">])</span>
-<span class="go">array([[1],</span>
-<span class="go">       [2]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.sample">
-<em class="property">abstract </em><code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">n_samples</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate an array of <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> random samples in the search space.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n_samples</strong> (<em>int</em>) – Number of values to sample.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> with a shape <cite>(n_samples, self.dimensions)</cite>.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
-instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">sample</span></code> is being called
-with a number of samples to be obtained. A <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> with values from the
-search space is being returned.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">array([[0.625],</span>
-<span class="go">       [0.375]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="btb.tuning.hyperparams.numerical.NumericalHyperParam.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#btb.tuning.hyperparams.numerical.NumericalHyperParam.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform one or more hyperparameter values.</p>
-<p>Validates that the input values are within the accepted dimensions and that they are within
-the hyperparameter space. Then transform one or more hyperparameter values from the
-original hyperparameter space into the normalized search space <span class="math notranslate nohighlight">\([0, 1]^K\)</span>.
-The accepted value formats are:</p>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="simple">
-<dt>Scalar:</dt><dd><p>A single scalar value from the original hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>List:</dt><dd><p>A list composed by values from the original hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>2D array-like:</dt><dd><p>Two dimensions array-like object that contains values from the original
-hyperparameter space.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>values</strong> (<em>scalar</em><em>, </em><em>list</em><em> or </em><em>array-like</em>) – Single scalar value, list of values or array-like of values from the
-hyperparameter space to be converted into the search space.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2D <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> of shape <cite>(len(values), self.dimensions)</cite> containing the
-search space values.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>The example below shows simple usage case where an <code class="docutils literal notranslate"><span class="pre">IntHyperParam</span></code> is being imported,
-instantiated with a range from 1 to 4, and its method <code class="docutils literal notranslate"><span class="pre">transform</span></code> is being called
-three times with a single scalar value, an array of two valid values and a 2D array
-with 1 dimension.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.numerical</span> <span class="kn">import</span> <span class="n">IntHyperParam</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span> <span class="o">=</span> <span class="n">IntHyperParam</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">array([[0.125]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">array([[0.125],</span>
-<span class="go">       [0.375]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ihp</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
-<span class="go">array([[0.125],</span>
-<span class="go">       [0.375]])</span>
-</pre></div>
-</div>
-</dd></dl>
 
 </dd></dl>
 
