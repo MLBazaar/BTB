@@ -32,20 +32,15 @@ import btb
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'm2r',
+    'nbsphinx',
     'sphinx.ext.autodoc',
     'sphinx.ext.githubpages',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
-    'autodocsumm',
-    'IPython.sphinxext.ipython_console_highlighting',
-    'IPython.sphinxext.ipython_directive',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax'
 ]
-
-autodoc_default_options = {
-    'autosummary': True,
-}
-
-autodoc_default_flags = ['members', 'inherited-members']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -56,6 +51,9 @@ source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
+
+# Jupyter Notebooks
+nbsphinx_execute = 'never'
 
 # General information about the project.
 project = 'BTB'
