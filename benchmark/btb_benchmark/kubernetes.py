@@ -6,13 +6,7 @@ from dask_kubernetes import KubeCluster
 RUN_TEMPLATE = """
 /bin/bash <<'EOF'
 
-apt-get update
-apt-get install -y build-essential
-
-git clone {repository} repo
-cd repo
-git checkout {reference}
-{install_commands}
+{extra_commands}
 
 /usr/bin/prepare.sh dask-worker --nthreads 2 --no-dashboard --memory-limit 6GB --death-timeout 60
 
@@ -31,13 +25,18 @@ def import_function(config):
 
 
 def generate_cluster_spec(install_config, dask_config):
-    repository = install_config['repository']
-    reference = install_config.get('reference', 'master')
-    install_commands = install_config.get('install_commands', 'make install-develop')
+    repository = install_config.get('repository')
+
+    if repository:
+        repository = 'git clone {} repo && cd repo'.format(repository)
+        reference = install_config.get('reference', 'master')
+        reference = 'git checkout {}'.format(reference)
+        install_commands = install_config.get('install_commands', '')
+
+        extra_commands = '\n'.join([repository, reference, install_commands])
+
     run_commands = RUN_TEMPLATE.format(
-        repository=repository,
-        reference=reference,
-        install_commands=install_commands
+        extra_commands=(extra_commands or ''),
     )
 
     spec = {
@@ -46,7 +45,7 @@ def generate_cluster_spec(install_config, dask_config):
             'containers': [{
                 'args': ['-c', run_commands],
                 'command': ['tini', '-g', '--', '/bin/sh'],
-                'image': 'daskdev/dask:latest',
+                'image': dask_config.get('image', 'daskdev/dask:latest'),
                 'name': 'dask-worker',
                 'resources': dask_config['resources']
             }]
@@ -84,6 +83,20 @@ def run_on_kubernetes(config):
                     The branch or commit to be used.
                 * install_commands:
                     The command used to install the repository.
+
+    Within the `dask` section you can specify:
+        * image:
+            The docker image that you would like to use.
+        * workers:
+            The amount of workers to use.
+        * resources:
+            A dictionary containig the following keys:
+                * limits:
+                    A dictionary containing the following keys:
+                        * memory:
+                            The amount of RAM memory.
+                        * cpu:
+                            The amount of cpu's to use.
 
     This is an example of this dictionary in Yaml format::
 
