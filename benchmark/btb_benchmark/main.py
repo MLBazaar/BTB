@@ -7,6 +7,7 @@ from datetime import datetime
 
 import dask
 import pandas as pd
+from dask.distributed import progress
 
 from btb.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
@@ -107,14 +108,22 @@ def benchmark(tuners, challenges, iterations):
             A ``pandas.DataFrame`` with the obtained scores for the given challenges is being
             returned.
     """
-    results = []
+    delayed = []
 
     for name, tuner in tuners.items():
         LOGGER.info('Evaluating tuner %s', name)
         result = _evaluate_tuner_on_challenges(name, tuner, challenges, iterations)
-        results.extend(result)
+        delayed.extend(result)
 
-    results = [result for result in dask.compute(*results)]
+    persisted = dask.persist(*delayed)
+
+    try:
+        progress(persisted, notebook=False)
+    except ValueError:
+        # Using local client. No progress bar needed.
+        pass
+
+    results = dask.compute(*persisted)
 
     df = pd.DataFrame.from_records(results)
     df = df.pivot(index='challenge', columns='tuner', values='score')
