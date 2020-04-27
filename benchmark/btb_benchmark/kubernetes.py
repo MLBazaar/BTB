@@ -8,7 +8,7 @@ RUN_TEMPLATE = """
 
 {extra_commands}
 
-/usr/bin/prepare.sh dask-worker --nthreads 2 --no-dashboard --memory-limit 6GB --death-timeout 60
+/usr/bin/prepare.sh dask-worker --no-dashboard --memory-limit auto --death-timeout 600
 
 EOF
 """
