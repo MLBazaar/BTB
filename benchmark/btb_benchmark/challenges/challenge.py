@@ -94,6 +94,9 @@ class MLChallenge(Challenge):
             will be used in case there is otherwise the default that ``cross_val_score`` function
             offers will be used.
     """
+
+    _data = None
+
     @classmethod
     def get_dataset_url(cls, name):
         if not name.endswith('.csv'):
@@ -142,7 +145,18 @@ class MLChallenge(Challenge):
         if self.make_binary:
             y = y.iloc[0] == y
 
+        if self.encode:
+            ohe = OneHotEncoder(categories='auto')
+            X = ohe.fit_transform(X)
+
         return X, y
+
+    @property
+    def data(self):
+        if self._data is None:
+            self._data = self.load_data()
+
+        return self._data
 
     def __init__(self, dataset, model=None, target_column=None,
                  encode=None, tunable_hyperparameters=None, metric=None,
@@ -166,7 +180,7 @@ class MLChallenge(Challenge):
             self.metric_args = getattr(self, 'metric_args', self.__class__.METRIC_ARGS)
 
         self.stratified = self.STRATIFIED if stratified is None else stratified
-        self.X, self.y = self.load_data()
+        # self.X, self.y = self.load_data()
 
         self.encode = self.ENCODE if encode is None else encode
         self.scorer = make_scorer(self.metric, **self.metric_args)
@@ -184,10 +198,6 @@ class MLChallenge(Challenge):
                 random_state=cv_random_state
             )
 
-        if self.encode:
-            ohe = OneHotEncoder(categories='auto')
-            self.X = ohe.fit_transform(self.X)
-
     def get_tunable_hyperparameters(self):
         return deepcopy(self.tunable_hyperparameters)
 
@@ -204,7 +214,9 @@ class MLChallenge(Challenge):
         """
         hyperparams.update((self.model_defaults or {}))
         model = self.model(**hyperparams)
-        return cross_val_score(model, self.X, self.y, cv=self.cv, scoring=self.scorer).mean()
+        X, y = self.data
+
+        return cross_val_score(model, X, y, cv=self.cv, scoring=self.scorer).mean()
 
     def __repr__(self):
         return "{}('{}')".format(self.__class__.__name__, self.dataset)

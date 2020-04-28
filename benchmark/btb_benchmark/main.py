@@ -49,7 +49,7 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'score': score,
             'iterations': iterations,
             'elapsed': datetime.utcnow() - start,
-            'hostname':  socket.gethostname()
+            'hostname': socket.gethostname()
         }
 
     except Exception as ex:
@@ -60,7 +60,7 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'tuner': name,
             'score': None,
             'elapsed': datetime.utcnow() - start,
-            'hostname':  socket.gethostname()
+            'hostname': socket.gethostname()
         }
 
     return result

@@ -23,6 +23,7 @@ def import_function(config):
 
     return getattr(module, function_name)
 
+
 def get_extra_setup(setup_dict):
     extra_packages = []
 
@@ -42,7 +43,7 @@ def get_extra_setup(setup_dict):
     if git_repository:
         url = git_repository.get('url')
         reference = git_repository.get('reference', 'master')
-        install = git_repostiroy.get('install')
+        install = git_repository.get('install')
 
         git_clone = 'git clone {} repo && cd repo'.format(url)
         git_checkout = 'git checkout {}'.format(reference)
