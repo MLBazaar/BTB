@@ -22,16 +22,11 @@ class RandomForestChallenge(MLChallenge):
 
     # MODEL
     MODEL = RandomForestClassifier
-    MODEL_DEFAULTS = {'random_state': 0}
+    MODEL_DEFAULTS = {
+        'random_state': 0,
+        'n_estimators': 100,
+    }
     TUNABLE_HYPERPARAMETERS = {
-        "n_estimators": {
-            "type": "int",
-            "default": 10,
-            "range": [
-                1,
-                500
-            ]
-        },
         "criterion": {
             "type": "str",
             "default": "gini",
