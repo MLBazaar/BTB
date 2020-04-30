@@ -11,4 +11,4 @@ COPY benchmark/notebooks /workdir/notebooks
 RUN pip install -e /workdir/btb[dev] -e /workdir/btb_benchmark
 
 WORKDIR /workdir/notebooks
-CMD jupyter notebook --ip 0.0.0.0 --allow-root
+CMD jupyter notebook --ip 0.0.0.0 --allow-root --NotebookApp.token=''
