@@ -66,18 +66,18 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
     return result
 
 
-def _evaluate_tuner_on_challenges(name, tuner, challenges, iterations):
-    tuner_results = []
-    for challenge in challenges:
+def _evaluate_tuners_on_challenge(tuners, challenge, iterations):
+    LOGGER.info('Evaluating challenge %s', challenge)
+    results = []
+    for name, tuner in tuners.items():
         try:
             result = _evaluate_tuner_on_challenge(name, tuner, challenge, iterations)
+            results.append(result)
         except Exception as ex:
             LOGGER.warn(
                 'Could not score tuner %s with challenge %s, error: %s', name, challenge, ex)
 
-        tuner_results.append(result)
-
-    return tuner_results
+    return results
 
 
 def benchmark(tuners, challenges, iterations, detailed_output=False):
@@ -115,9 +115,8 @@ def benchmark(tuners, challenges, iterations, detailed_output=False):
     """
     delayed = []
 
-    for name, tuner in tuners.items():
-        LOGGER.info('Evaluating tuner %s', name)
-        result = _evaluate_tuner_on_challenges(name, tuner, challenges, iterations)
+    for challenge in challenges:
+        result = _evaluate_tuners_on_challenge(tuners, challenge, iterations)
         delayed.extend(result)
 
     persisted = dask.persist(*delayed)
