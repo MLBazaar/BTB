@@ -5,7 +5,12 @@ import json
 import logging
 import sys
 import tabulate
+from io import StringIO
 
+import boto3
+from botocore import UNSIGNED
+from botocore.client import Config
+from botocore.exceptions import ClientError
 from dask.distributed import Client
 from dask_kubernetes import KubeCluster
 
@@ -84,6 +89,21 @@ def generate_cluster_spec(dask_cluster):
     }
 
     return spec
+
+
+def upload_to_s3(bucket, output_path, results, aws_key=None, aws_secret=None, public=False):
+    if public:
+        resource = boto3.resource('s3', config=Config(signature_version=UNSIGNED))
+    else:
+        resource = boto3.resource(
+            's3',
+            aws_access_key_id=aws_key,
+            aws_secret_access_key=aws_secret
+        )
+
+    data_object = StringIO()
+    results.to_csv(data_object)
+    _ = resource.Object(bucket, output_path).put(Body=data_object.getvalue())
 
 
 def run_on_kubernetes(config):
@@ -169,6 +189,18 @@ def run_on_kubernetes(config):
         client.close()
         cluster.close()
 
+    if config.get('s3'):
+        bucket = config['s3'].get('bucket')
+        output_path = config['s3'].get('output_path')
+        aws_key = config['s3'].get('key')
+        aws_secret = config['s3'].get('secret_key')
+        public = config['s3'].get('public')
+
+        try:
+            upload_to_s3(bucket, output_path, results, aws_key, aws_secret, public)
+        except ClientError as e:
+            print('An error occurred trying to upload to AWS3: ', e)
+
     return results
 
 
@@ -180,6 +212,14 @@ def _get_parser():
                         help='Path to the CSV file where the report will be dumped')
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Be verbose. Use -vv for increased verbosity.')
+    parser.add_argument('-k', '--aws-key', type=str, required=False, help='AWS access key.')
+    parser.add_argument('-s', '--aws-secret-key', type=str, required=False, help='AWS secret key')
+    parser.add_argument('-b', '--aws-bucket', type=str, required=False,
+                        help='AWS S3 bucket to store data')
+    parser.add_argument('-p', '--aws-path', type=str, required=False,
+                        help='AWS S3 path to store data')
+    parser.add_argument('public', action='store_true',
+                        help="If uploading to a public bucket that doesn't requiere credentials")
 
     return parser
 
@@ -203,8 +243,18 @@ def main():
 
     results = run_on_kubernetes(config)
 
+    if args.aws_bucket:
+        print('Uploading results at s3://{}/{}'.format(args.aws_bucket, args.aws_path))
+        upload_to_s3(
+            args.aws_bucket,
+            args.aws_path,
+            results,
+            args.aws_key,
+            args.aws_secret_key,
+            args.public
+        )
+
     if args.output_path:
-        # TODO: Add S3 uploading
         print('Writting results at {}'.format(args.output_path))
         results.to_csv(args.output_path)
     else:

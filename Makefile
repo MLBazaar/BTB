@@ -37,6 +37,7 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
+	rm -fr benchmark/.eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -fr {} +
 
@@ -91,7 +92,7 @@ install-develop: clean-build clean-pyc ## install the package in editable mode a
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 btb tests benchmark
+	flake8 btb tests benchmark/btb_benchmark
 	isort -c --recursive btb tests
 	isort -c --recursive -p btb_benchmark benchmark
 
