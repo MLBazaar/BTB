@@ -1,4 +1,10 @@
+# -*- coding: utf-8 -*-
+import argparse
 import importlib
+import json
+import logging
+import sys
+import tabulate
 
 from dask.distributed import Client
 from dask_kubernetes import KubeCluster
@@ -142,8 +148,17 @@ def run_on_kubernetes(config):
     dask_cluster = config['dask_cluster']
     cluster_spec = generate_cluster_spec(dask_cluster)
     cluster = KubeCluster.from_dict(cluster_spec)
-    cluster.scale(dask_cluster['workers'])
+
+    workers = dask_cluster.get('workers')
+    if not workers:
+        cluster.adapt()
+    elif isinstance(workers, int):
+        cluster.scale(workers)
+    else:
+        cluster.adapt(**workers)
+
     client = Client(cluster)
+    client.get_versions(check=True)
 
     try:
         run = import_function(config['run'])
@@ -155,3 +170,50 @@ def run_on_kubernetes(config):
         cluster.close()
 
     return results
+
+
+def _get_parser():
+    parser = argparse.ArgumentParser(description='Run on Kubernetes Command Line Interface')
+
+    parser.add_argument('config', help='Path to the JSON config file.')
+    parser.add_argument('-o', '--output-path', type=str, required=False,
+                        help='Path to the CSV file where the report will be dumped')
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='Be verbose. Use -vv for increased verbosity.')
+
+    return parser
+
+
+def main():
+    # Parse args
+    parser = _get_parser()
+    if len(sys.argv) < 2:
+        parser.print_help()
+        sys.exit(0)
+
+    args = parser.parse_args()
+
+    # Logger setup
+    log_level = (3 - args.verbose) * 10
+    fmt = '%(asctime)s - %(process)d - %(levelname)s - %(name)s - %(module)s - %(message)s'
+    logging.basicConfig(level=log_level, format=fmt)
+
+    with open(args.config) as config_file:
+        config = json.load(config_file)
+
+    results = run_on_kubernetes(config)
+
+    if args.output_path:
+        # TODO: Add S3 uploading
+        print('Writting results at {}'.format(args.output_path))
+        results.to_csv(args.output_path)
+    else:
+        print(tabulate.tabulate(
+            results,
+            tablefmt='github',
+            headers=results.columns
+        ))
+
+
+if __name__ == '__main__':
+    main()
