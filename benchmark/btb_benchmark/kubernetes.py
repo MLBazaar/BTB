@@ -4,10 +4,10 @@ import importlib
 import json
 import logging
 import sys
-import tabulate
 from io import StringIO
 
 import boto3
+import tabulate
 from botocore import UNSIGNED
 from botocore.client import Config
 from botocore.exceptions import ClientError

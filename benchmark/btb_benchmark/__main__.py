@@ -2,8 +2,9 @@
 import argparse
 import logging
 import sys
-import tabulate
 import warnings
+
+import tabulate
 
 from btb_benchmark.main import run_benchmark, summarize_results
 

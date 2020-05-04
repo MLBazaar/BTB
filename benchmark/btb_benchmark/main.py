@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 
 import dask
 import pandas as pd
-from distributed.diagnostics.progressbar import TextProgressBar
 from distributed.client import futures_of
+from distributed.diagnostics.progressbar import TextProgressBar
 
 from btb.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
