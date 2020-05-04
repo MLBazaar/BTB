@@ -109,22 +109,13 @@ def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_s
         * run
         * dask
         * install
+        * output
 
     Within the `run` section you need to specify:
         * function:
             The complete python path to the function to be run.
         * args:
             A dictionary containing the keyword args that will be used with the given function.
-
-    Within the `install` section you can specify:
-        * install:
-            A dictionary containing the following keys:
-                * repository:
-                    The link to the repository that has to be used by the workers.
-                * checkout:
-                    The branch or commit to be used.
-                * install_commands:
-                    The command used to install the repository.
 
     Within the `dask` section you can specify:
         * image:
@@ -139,6 +130,26 @@ def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_s
                             The amount of RAM memory.
                         * cpu:
                             The amount of cpu's to use.
+
+    Within the `install` section you can specify:
+        * install:
+            A dictionary containing the following keys:
+                * repository:
+                    The link to the repository that has to be used by the workers.
+                * checkout:
+                    The branch or commit to be used.
+                * install_commands:
+                    The command used to install the repository.
+
+    Within the `output` section you can specify:
+        * path:
+            The path to a local file or s3 were the file will be saved.
+        * bucket:
+            If given, the path specified previously will be saved as `s3://bucket/path`
+        * key:
+            AWS authentication key to access the bucket.
+        * secret_key:
+            AWS secrect authentication key to access the bucket.
 
     This is an example of this dictionary in Yaml format::
 
