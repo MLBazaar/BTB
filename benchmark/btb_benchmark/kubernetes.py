@@ -8,8 +8,6 @@ from io import StringIO
 
 import boto3
 import tabulate
-from botocore import UNSIGNED
-from botocore.client import Config
 from botocore.exceptions import ClientError
 from dask.distributed import Client
 from dask_kubernetes import KubeCluster
@@ -91,22 +89,15 @@ def generate_cluster_spec(dask_cluster):
     return spec
 
 
-def upload_to_s3(bucket, output_path, results, aws_key=None, aws_secret=None, public=False):
-    if public:
-        resource = boto3.resource('s3', config=Config(signature_version=UNSIGNED))
-    else:
-        resource = boto3.resource(
-            's3',
-            aws_access_key_id=aws_key,
-            aws_secret_access_key=aws_secret
-        )
+def upload_to_s3(bucket, output_path, results, aws_key=None, aws_secret=None):
+    client = boto3.client('s3', aws_access_key_id=aws_key, aws_secret_access_key=aws_secret)
 
-    data_object = StringIO()
-    results.to_csv(data_object)
-    _ = resource.Object(bucket, output_path).put(Body=data_object.getvalue())
+    with StringIO() as sio:
+        results.to_csv(sio)
+        client.put_object(Bucket=bucket, key=output_path, Body=sio.getvalue())
 
 
-def run_on_kubernetes(config):
+def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_secret=None):
     """Run benchmarking on a kubernetes cluster with the given configuration.
 
     Talks to kubernetes to create `n` amount of new `pods` with a dask worker inside of each
@@ -189,17 +180,24 @@ def run_on_kubernetes(config):
         client.close()
         cluster.close()
 
-    if config.get('s3'):
-        bucket = config['s3'].get('bucket')
-        output_path = config['s3'].get('output_path')
-        aws_key = config['s3'].get('key')
-        aws_secret = config['s3'].get('secret_key')
-        public = config['s3'].get('public')
+    output_conf = config.get('output')
+    if output_conf:
+        output_path = output_conf.get('output_path')
+        bucket = output_conf.get('bucket')
 
-        try:
-            upload_to_s3(bucket, output_path, results, aws_key, aws_secret, public)
-        except ClientError as e:
-            print('An error occurred trying to upload to AWS3: ', e)
+        if bucket:
+            aws_key = output_conf.get('key')
+            aws_secret = output_conf.get('secret_key')
+            try:
+                upload_to_s3(bucket, output_path, results, aws_key, aws_secret)
+            except ClientError as e:
+                print('An error occurred trying to upload to AWS3: ', e)
+
+        else:
+            try:
+                results.to_csv(output_path)
+            except Exception:
+                print('Could not save results to {} , does the path exist?'.format(output_path))
 
     return results
 
@@ -212,14 +210,6 @@ def _get_parser():
                         help='Path to the CSV file where the report will be dumped')
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Be verbose. Use -vv for increased verbosity.')
-    parser.add_argument('-k', '--aws-key', type=str, required=False, help='AWS access key.')
-    parser.add_argument('-s', '--aws-secret-key', type=str, required=False, help='AWS secret key')
-    parser.add_argument('-b', '--aws-bucket', type=str, required=False,
-                        help='AWS S3 bucket to store data')
-    parser.add_argument('-p', '--aws-path', type=str, required=False,
-                        help='AWS S3 path to store data')
-    parser.add_argument('public', action='store_true',
-                        help="If uploading to a public bucket that doesn't requiere credentials")
 
     return parser
 
@@ -242,17 +232,6 @@ def main():
         config = json.load(config_file)
 
     results = run_on_kubernetes(config)
-
-    if args.aws_bucket:
-        print('Uploading results at s3://{}/{}'.format(args.aws_bucket, args.aws_path))
-        upload_to_s3(
-            args.aws_bucket,
-            args.aws_path,
-            results,
-            args.aws_key,
-            args.aws_secret_key,
-            args.public
-        )
 
     if args.output_path:
         print('Writting results at {}'.format(args.output_path))
