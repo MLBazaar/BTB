@@ -1,4 +1,4 @@
-# Run btb_benchmark on kubernetes with the specified json structure below
+# Run the btb_benchmark passing the config.json as an argument.
 apiVersion: v1
 kind: Pod
 metadata:

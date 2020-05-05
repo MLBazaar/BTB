@@ -213,3 +213,17 @@ release-minor: check-release bumpversion-minor release
 
 .PHONY: release-major
 release-major: check-release bumpversion-major release
+
+
+# DOCKER TARGET
+.PHONY: login
+login:
+	docker login registry.hub.docker.com
+
+.PHONY: build
+build:
+	docker build -t mlbazaar/btb_benchmark:latest .
+
+.PHONY: push
+push: login build
+	docker push mlbazaar/btb_benchmark:latest

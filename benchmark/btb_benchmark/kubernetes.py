@@ -3,12 +3,12 @@ import argparse
 import importlib
 import json
 import logging
+import os
 import sys
 from io import StringIO
 
 import boto3
 import tabulate
-from botocore.exceptions import ClientError
 from dask.distributed import Client
 from dask_kubernetes import KubeCluster
 
@@ -89,15 +89,18 @@ def generate_cluster_spec(dask_cluster):
     return spec
 
 
+def df_to_csv_str(df):
+    with StringIO() as sio:
+        df.to_csv(sio)
+        return sio.getvalue()
+
+
 def upload_to_s3(bucket, output_path, results, aws_key=None, aws_secret=None):
     client = boto3.client('s3', aws_access_key_id=aws_key, aws_secret_access_key=aws_secret)
-
-    with StringIO() as sio:
-        results.to_csv(sio)
-        client.put_object(Bucket=bucket, key=output_path, Body=sio.getvalue())
+    client.put_object(Bucket=bucket, Key=output_path, Body=df_to_csv_str(results))
 
 
-def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_secret=None):
+def run_on_kubernetes(config):
     """Run benchmarking on a kubernetes cluster with the given configuration.
 
     Talks to kubernetes to create `n` amount of new `pods` with a dask worker inside of each
@@ -107,8 +110,7 @@ def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_s
 
     The config dict must contain the following sections:
         * run
-        * dask
-        * install
+        * dask_cluster
         * output
 
     Within the `run` section you need to specify:
@@ -117,29 +119,37 @@ def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_s
         * args:
             A dictionary containing the keyword args that will be used with the given function.
 
-    Within the `dask` section you can specify:
-        * image:
-            The docker image that you would like to use.
+    Within the `dask_cluster` section you can specify:
         * workers:
-            The amount of workers to use.
-        * resources:
-            A dictionary containig the following keys:
-                * limits:
-                    A dictionary containing the following keys:
-                        * memory:
-                            The amount of RAM memory.
-                        * cpu:
-                            The amount of cpu's to use.
-
-    Within the `install` section you can specify:
-        * install:
-            A dictionary containing the following keys:
-                * repository:
-                    The link to the repository that has to be used by the workers.
-                * checkout:
-                    The branch or commit to be used.
-                * install_commands:
-                    The command used to install the repository.
+            The amount of workers to use. If `int`, that amount of workers will be created. If
+            a python dict with `minimum` and `maximum` keywords or `workers` is not provided,
+            an adaptive cluster will be used.
+        * worker_config:
+            A dictionary with the following keys:
+            * resources:
+                A dictionary containig the following keys:
+                * memory:
+                    The amount of RAM memory.
+                * cpu:
+                    The amount of cpu's to use.
+            * image:
+                A docker image to be used (optional).
+            * setup:
+                A dictionary containing the following keys:
+                    * script:
+                        Location to bash script from the docker container to be run.
+                    * git_repository:
+                        A dictionary containing the following keys:
+                            * url:
+                                Link to the github repository to be cloned.
+                            * reference:
+                                A reference to the branch or commit to checkout at.
+                            * install:
+                                Command to install the repository.
+                    * pip_packages:
+                        A list of pip packages to be installed.
+                    * apt_packages:
+                        A list of apt packages to be installed.
 
     Within the `output` section you can specify:
         * path:
@@ -158,20 +168,30 @@ def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_s
             args:
                 iterations: 10
                 sample: 4
-        install:
-            repository: https://github.com/HDI-Project/BTB
-            checkout: stable
-            install_commands: make install-develop
+        dask_cluster:
+            workers: 1
+            worker_config:
+                resources:
+                    memory: 2G
+                    cpu: 1
+                image: mlbazaar/btb_benchmark:latest
 
     Args:
         config (dict):
             Config dictionary.
     """
+    output_conf = config.get('output')
+    if output_conf:
+        output_path = output_conf.get('output_path')
+        if not output_path:
+            raise ValueError('An output path must be provided when providing `output`.')
+
     dask_cluster = config['dask_cluster']
     cluster_spec = generate_cluster_spec(dask_cluster)
     cluster = KubeCluster.from_dict(cluster_spec)
 
     workers = dask_cluster.get('workers')
+
     if not workers:
         cluster.adapt()
     elif isinstance(workers, int):
@@ -191,34 +211,30 @@ def run_on_kubernetes(config, bucket=None, output_path=None, aws_key=None, aws_s
         client.close()
         cluster.close()
 
-    output_conf = config.get('output')
     if output_conf:
-        output_path = output_conf.get('output_path')
         bucket = output_conf.get('bucket')
 
-        if bucket:
-            aws_key = output_conf.get('key')
-            aws_secret = output_conf.get('secret_key')
-            try:
+        try:
+            if bucket:
+                aws_key = output_conf.get('key')
+                aws_secret = output_conf.get('secret_key')
+
                 upload_to_s3(bucket, output_path, results, aws_key, aws_secret)
-            except ClientError as e:
-                print('An error occurred trying to upload to AWS3: ', e)
-
-        else:
-            try:
+            else:
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
                 results.to_csv(output_path)
-            except Exception:
-                print('Could not save results to {} , does the path exist?'.format(output_path))
+        except Exception:
+            print('Error storing results. Falling back to console dump.')
+            print(df_to_csv_str(results))
 
-    return results
+    else:
+        return results
 
 
 def _get_parser():
     parser = argparse.ArgumentParser(description='Run on Kubernetes Command Line Interface')
 
     parser.add_argument('config', help='Path to the JSON config file.')
-    parser.add_argument('-o', '--output-path', type=str, required=False,
-                        help='Path to the CSV file where the report will be dumped')
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Be verbose. Use -vv for increased verbosity.')
 
@@ -244,10 +260,7 @@ def main():
 
     results = run_on_kubernetes(config)
 
-    if args.output_path:
-        print('Writting results at {}'.format(args.output_path))
-        results.to_csv(args.output_path)
-    else:
+    if results is not None:
         print(tabulate.tabulate(
             results,
             tablefmt='github',

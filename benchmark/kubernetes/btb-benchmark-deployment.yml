@@ -1,4 +1,4 @@
-# Create a jupyter notebook with btb-benchmark installed and forward its ports
+# Create a deployment that starts a jupyter notebook using the btb_benchmark image and expose the jupyter and dask dashboard ports using a service.
 apiVersion: v1
 kind: Service
 metadata:

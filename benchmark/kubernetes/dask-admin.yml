@@ -1,4 +1,4 @@
-# Authorize dask to create pods, delete pods and list those on the `default` user.
+# Create a ClusterRole and a ClusterRoleBinding to authorize the default user to create, list and delete pods.
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
