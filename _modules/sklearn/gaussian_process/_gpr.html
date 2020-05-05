@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sklearn.gaussian_process.gpr &mdash; BTB 0.3.8.dev0 documentation</title>
+  <title>sklearn.gaussian_process._gpr &mdash; BTB 0.3.8.dev0 documentation</title>
   
 
   
@@ -290,7 +290,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>sklearn.gaussian_process.gpr</li>
+      <li>sklearn.gaussian_process._gpr</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -305,7 +305,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for sklearn.gaussian_process.gpr</h1><div class="highlight"><pre>
+  <h1>Source code for sklearn.gaussian_process._gpr</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Gaussian processes regression. &quot;&quot;&quot;</span>
 
 <span class="c1"># Authors: Jan Hendrik Metzen &lt;jhm@informatik.uni-bremen.de&gt;</span>
@@ -317,18 +317,18 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">cholesky</span><span class="p">,</span> <span class="n">cho_solve</span><span class="p">,</span> <span class="n">solve_triangular</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fmin_l_bfgs_b</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span>
 
 <span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">clone</span>
 <span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">MultiOutputMixin</span>
 <span class="kn">from</span> <span class="nn">.kernels</span> <span class="kn">import</span> <span class="n">RBF</span><span class="p">,</span> <span class="n">ConstantKernel</span> <span class="k">as</span> <span class="n">C</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">check_random_state</span>
 <span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">check_X_y</span><span class="p">,</span> <span class="n">check_array</span>
-<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ConvergenceWarning</span>
+<span class="kn">from</span> <span class="nn">..utils.optimize</span> <span class="kn">import</span> <span class="n">_check_optimize_result</span>
 
 
-<span class="k">class</span> <span class="nc">GaussianProcessRegressor</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">,</span>
-                               <span class="n">MultiOutputMixin</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">GaussianProcessRegressor</span><span class="p">(</span><span class="n">MultiOutputMixin</span><span class="p">,</span>
+                               <span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gaussian process regression (GPR).</span>
 
 <span class="sd">    The implementation is based on Algorithm 2.1 of Gaussian Processes</span>
@@ -385,7 +385,7 @@
 <span class="sd">                # the corresponding value of the target function.</span>
 <span class="sd">                return theta_opt, func_min</span>
 
-<span class="sd">        Per default, the &#39;fmin_l_bfgs_b&#39; algorithm from scipy.optimize</span>
+<span class="sd">        Per default, the &#39;L-BGFS-B&#39; algorithm from scipy.optimize.minimize</span>
 <span class="sd">        is used. If None is passed, the kernel&#39;s parameters are kept fixed.</span>
 <span class="sd">        Available internal optimizers are::</span>
 
@@ -422,20 +422,22 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    X_train_ : array-like, shape = (n_samples, n_features)</span>
-<span class="sd">        Feature values in training data (also required for prediction)</span>
+<span class="sd">    X_train_ : sequence of length n_samples</span>
+<span class="sd">        Feature vectors or other representations of training data (also</span>
+<span class="sd">        required for prediction). Could either be array-like with shape =</span>
+<span class="sd">        (n_samples, n_features) or a list of objects.</span>
 
-<span class="sd">    y_train_ : array-like, shape = (n_samples, [n_output_dims])</span>
+<span class="sd">    y_train_ : array-like of shape (n_samples,) or (n_samples, n_targets)</span>
 <span class="sd">        Target values in training data (also required for prediction)</span>
 
 <span class="sd">    kernel_ : kernel object</span>
 <span class="sd">        The kernel used for prediction. The structure of the kernel is the</span>
 <span class="sd">        same as the one passed as parameter but with optimized hyperparameters</span>
 
-<span class="sd">    L_ : array-like, shape = (n_samples, n_samples)</span>
+<span class="sd">    L_ : array-like of shape (n_samples, n_samples)</span>
 <span class="sd">        Lower-triangular Cholesky decomposition of the kernel in ``X_train_``</span>
 
-<span class="sd">    alpha_ : array-like, shape = (n_samples,)</span>
+<span class="sd">    alpha_ : array-like of shape (n_samples,)</span>
 <span class="sd">        Dual coefficients of training data points in kernel space</span>
 
 <span class="sd">    log_marginal_likelihood_value_ : float</span>
@@ -450,9 +452,9 @@
 <span class="sd">    &gt;&gt;&gt; kernel = DotProduct() + WhiteKernel()</span>
 <span class="sd">    &gt;&gt;&gt; gpr = GaussianProcessRegressor(kernel=kernel,</span>
 <span class="sd">    ...         random_state=0).fit(X, y)</span>
-<span class="sd">    &gt;&gt;&gt; gpr.score(X, y) # doctest: +ELLIPSIS</span>
+<span class="sd">    &gt;&gt;&gt; gpr.score(X, y)</span>
 <span class="sd">    0.3680...</span>
-<span class="sd">    &gt;&gt;&gt; gpr.predict(X[:2,:], return_std=True) # doctest: +ELLIPSIS</span>
+<span class="sd">    &gt;&gt;&gt; gpr.predict(X[:2,:], return_std=True)</span>
 <span class="sd">    (array([653.0..., 592.1...]), array([316.6..., 316.6...]))</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -472,10 +474,12 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : array-like, shape = (n_samples, n_features)</span>
-<span class="sd">            Training data</span>
+<span class="sd">        X : sequence of length n_samples</span>
+<span class="sd">            Feature vectors or other representations of training data.</span>
+<span class="sd">            Could either be array-like with shape = (n_samples, n_features)</span>
+<span class="sd">            or a list of objects.</span>
 
-<span class="sd">        y : array-like, shape = (n_samples, [n_output_dims])</span>
+<span class="sd">        y : array-like of shape (n_samples,) or (n_samples, n_targets)</span>
 <span class="sd">            Target values</span>
 
 <span class="sd">        Returns</span>
@@ -490,7 +494,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
 
-        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">multi_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">y_numeric</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">requires_vector_input</span><span class="p">:</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">multi_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">y_numeric</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">multi_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">y_numeric</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># Normalize target value</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_y</span><span class="p">:</span>
@@ -518,10 +527,11 @@
             <span class="k">def</span> <span class="nf">obj_func</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">eval_gradient</span><span class="p">:</span>
                     <span class="n">lml</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span>
-                        <span class="n">theta</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                        <span class="n">theta</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                     <span class="k">return</span> <span class="o">-</span><span class="n">lml</span><span class="p">,</span> <span class="o">-</span><span class="n">grad</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span>
+                                                         <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="c1"># First optimize starting from theta specified in kernel</span>
             <span class="n">optima</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constrained_optimization</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span>
@@ -549,7 +559,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lml_values</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span> <span class="o">=</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">theta</span><span class="p">,</span>
+                                             <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Precompute quantities required for predictions which are independent</span>
         <span class="c1"># of actual query points</span>
@@ -579,8 +590,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : array-like, shape = (n_samples, n_features)</span>
-<span class="sd">            Query points where the GP is evaluated</span>
+<span class="sd">        X : sequence of length n_samples</span>
+<span class="sd">            Query points where the GP is evaluated.</span>
+<span class="sd">            Could either be array-like with shape = (n_samples, n_features)</span>
+<span class="sd">            or a list of objects.</span>
 
 <span class="sd">        return_std : bool, default: False</span>
 <span class="sd">            If True, the standard-deviation of the predictive distribution at</span>
@@ -608,7 +621,10 @@
                 <span class="s2">&quot;Not returning standard deviation of predictions when &quot;</span>
                 <span class="s2">&quot;returning full covariance.&quot;</span><span class="p">)</span>
 
-        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">requires_vector_input</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;X_train_&quot;</span><span class="p">):</span>  <span class="c1"># Unfitted;predict based on GP prior</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -663,8 +679,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : array-like, shape = (n_samples_X, n_features)</span>
-<span class="sd">            Query points where the GP samples are evaluated</span>
+<span class="sd">        X : sequence of length n_samples</span>
+<span class="sd">            Query points where the GP is evaluated.</span>
+<span class="sd">            Could either be array-like with shape = (n_samples, n_features)</span>
+<span class="sd">            or a list of objects.</span>
 
 <span class="sd">        n_samples : int, default: 1</span>
 <span class="sd">            The number of samples drawn from the Gaussian process</span>
@@ -694,12 +712,13 @@
             <span class="n">y_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">y_samples</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">y_samples</span>
 
-    <span class="k">def</span> <span class="nf">log_marginal_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">log_marginal_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns log-marginal likelihood of theta for training data.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        theta : array-like, shape = (n_kernel_params,) or None</span>
+<span class="sd">        theta : array-like of shape (n_kernel_params,) or None</span>
 <span class="sd">            Kernel hyperparameters for which the log-marginal likelihood is</span>
 <span class="sd">            evaluated. If None, the precomputed log_marginal_likelihood</span>
 <span class="sd">            of ``self.kernel_.theta`` is returned.</span>
@@ -708,6 +727,10 @@
 <span class="sd">            If True, the gradient of the log-marginal likelihood with respect</span>
 <span class="sd">            to the kernel hyperparameters at position theta is returned</span>
 <span class="sd">            additionally. If True, theta must not be None.</span>
+
+<span class="sd">        clone_kernel : bool, default=True</span>
+<span class="sd">            If True, the kernel attribute is copied. If False, the kernel</span>
+<span class="sd">            attribute is modified, but may result in a performance improvement.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -725,7 +748,11 @@
                     <span class="s2">&quot;Gradient can only be evaluated for theta!=None&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span>
 
-        <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">clone_with_theta</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clone_kernel</span><span class="p">:</span>
+            <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">clone_with_theta</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span>
+            <span class="n">kernel</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span>
 
         <span class="k">if</span> <span class="n">eval_gradient</span><span class="p">:</span>
             <span class="n">K</span><span class="p">,</span> <span class="n">K_gradient</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -769,12 +796,11 @@
 
     <span class="k">def</span> <span class="nf">_constrained_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_func</span><span class="p">,</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;fmin_l_bfgs_b&quot;</span><span class="p">:</span>
-            <span class="n">theta_opt</span><span class="p">,</span> <span class="n">func_min</span><span class="p">,</span> <span class="n">convergence_dict</span> <span class="o">=</span> \
-                <span class="n">fmin_l_bfgs_b</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">convergence_dict</span><span class="p">[</span><span class="s2">&quot;warnflag&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;fmin_l_bfgs_b terminated abnormally with the &quot;</span>
-                              <span class="s2">&quot; state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">convergence_dict</span><span class="p">,</span>
-                              <span class="n">ConvergenceWarning</span><span class="p">)</span>
+            <span class="n">opt_res</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+                <span class="n">obj_func</span><span class="p">,</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+            <span class="n">_check_optimize_result</span><span class="p">(</span><span class="s2">&quot;lbfgs&quot;</span><span class="p">,</span> <span class="n">opt_res</span><span class="p">)</span>
+            <span class="n">theta_opt</span><span class="p">,</span> <span class="n">func_min</span> <span class="o">=</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">fun</span>
         <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">):</span>
             <span class="n">theta_opt</span><span class="p">,</span> <span class="n">func_min</span> <span class="o">=</span> \
                 <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
@@ -782,6 +808,9 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown optimizer </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">theta_opt</span><span class="p">,</span> <span class="n">func_min</span>
+
+    <span class="k">def</span> <span class="nf">_more_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;requires_fit&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
 </pre></div>
 
            </div>
