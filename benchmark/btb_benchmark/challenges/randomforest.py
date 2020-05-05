@@ -3,7 +3,7 @@ import logging
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
 
-from btb_benchmark.challenges.challenge import MLChallenge
+from btb_benchmark.challenges.mlchallenge import MLChallenge
 
 LOGGER = logging.getLogger(__name__)
 
@@ -22,16 +22,11 @@ class RandomForestChallenge(MLChallenge):
 
     # MODEL
     MODEL = RandomForestClassifier
-    MODEL_DEFAULTS = {'random_state': 0}
+    MODEL_DEFAULTS = {
+        'random_state': 0,
+        'n_estimators': 100,
+    }
     TUNABLE_HYPERPARAMETERS = {
-        "n_estimators": {
-            "type": "int",
-            "default": 10,
-            "range": [
-                1,
-                500
-            ]
-        },
         "criterion": {
             "type": "str",
             "default": "gini",

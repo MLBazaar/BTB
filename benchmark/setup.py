@@ -21,20 +21,22 @@ except IOError:
     history = ''
 
 
+def github_dependency(user, name, commit):
+    return f'{name} @ git+https://github.com/{user}/{name}@{commit}#egg={name}'
+
+
 install_requires = [
     'dask>=2.6.0,<3',
-    'toolz>=0.10.0,<1',
     'hyperopt>=0.2.3,<3',
     'tabulate>=0.8.3,<0.9',
     'xgboost>=1.0.2,<1.1.0',
     'docutils>=0.10,<0.16',
     'boto3>=1.9.18,<1.10',
     'numpy>=1.14.0,<1.18.0',
-    'scikit-learn>=0.20.0,<0.22.0',
-    'scipy>=1.0.1,<1.4.0',
+    'scikit-learn>=0.20.0,<0.23',
     'pandas>=0.21.0,<0.26.0',
-    'tqdm>=4.36.1,<4.50.0',
     'XlsxWriter>=1.2.8,<1.3',
+    github_dependency('csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods')
 ]
 
 
@@ -100,6 +102,11 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     description='Bayesian Tuning and Bandits',
+    entry_points={
+        'console_scripts': [
+            'btb_benchmark=btb_benchmark.__main__:main'
+        ],
+    },
     extras_require={
         'examples': examples_require,
         'test': tests_require,
@@ -118,6 +125,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.7.dev0',
+    version='0.3.8.dev0',
     zip_safe=False,
 )

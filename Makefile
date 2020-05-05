@@ -37,8 +37,9 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
+	rm -fr benchmark/.eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+	find . -name '*.egg' -exec rm -fr {} +
 
 .PHONY: clean-pyc
 clean-pyc: ## remove Python file artifacts
@@ -78,16 +79,20 @@ install: clean-build clean-pyc ## install the package to the active Python's sit
 install-test: clean-build clean-pyc ## install the package and test dependencies
 	pip install .[test]
 
+.PHONY: install-benchmark
+install-benchmark: clean-build clean-pyc ## install the package and test dependencies
+	pip install ./benchmark
+
 .PHONY: install-develop
 install-develop: clean-build clean-pyc ## install the package in editable mode and dependencies for development
-	pip install -e .[dev] ./benchmark
+	pip install -e .[dev] -e ./benchmark
 
 
 # LINT TARGETS
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 btb tests benchmark
+	flake8 btb tests benchmark/btb_benchmark
 	isort -c --recursive btb tests
 	isort -c --recursive -p btb_benchmark benchmark
 
@@ -208,3 +213,16 @@ release-minor: check-release bumpversion-minor release
 
 .PHONY: release-major
 release-major: check-release bumpversion-major release
+
+# DOCKER TARGET
+.PHONY: login
+login:
+	docker login registry.hub.docker.com
+
+.PHONY: build
+build:
+	docker build -t mlbazaar/btb_benchmark:latest .
+
+.PHONY: push
+push: login build
+	docker push mlbazaar/btb_benchmark:latest

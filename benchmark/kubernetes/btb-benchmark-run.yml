@@ -1,0 +1,44 @@
+# Run the btb_benchmark passing the config.json as an argument.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: btb-benchmark-run
+spec:
+  restartPolicy: Never
+  containers:
+  - name: btb-benchmark
+    imagePullPolicy: Always
+    image: pythiac/btb_benchmark
+    command:
+      - sh
+    args:
+      - -c
+      - |
+        /bin/bash <<'EOF'
+
+        cat > config.json << JSON
+        {
+            "run": {
+                "function": "btb_benchmark.main.run_benchmark",
+                "args": {
+                    "sample": 1,
+                    "iterations": 1,
+                    "challenge_types": "xgboost"
+                }
+            },
+            "dask_cluster": {
+                "workers": 1,
+                "worker_config": {
+                    "resources": {
+                        "memory": "7G",
+                        "cpu": 1
+                    },
+                    "image": "pythiac/btb_benchmark:latest"
+                }
+            }
+        }
+        JSON
+
+        python -u -m btb_benchmark.kubernetes config.json
+
+        EOF
