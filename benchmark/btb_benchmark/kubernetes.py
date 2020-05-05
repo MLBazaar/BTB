@@ -218,11 +218,11 @@ def run_on_kubernetes(config):
             if bucket:
                 aws_key = output_conf.get('key')
                 aws_secret = output_conf.get('secret_key')
-
                 upload_to_s3(bucket, output_path, results, aws_key, aws_secret)
             else:
                 os.makedirs(os.path.dirname(output_path), exist_ok=True)
                 results.to_csv(output_path)
+
         except Exception:
             print('Error storing results. Falling back to console dump.')
             print(df_to_csv_str(results))

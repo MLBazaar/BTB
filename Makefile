@@ -214,7 +214,6 @@ release-minor: check-release bumpversion-minor release
 .PHONY: release-major
 release-major: check-release bumpversion-major release
 
-
 # DOCKER TARGET
 .PHONY: login
 login:
