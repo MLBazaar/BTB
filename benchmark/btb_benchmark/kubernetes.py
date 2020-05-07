@@ -10,6 +10,7 @@ from io import StringIO
 
 import boto3
 import tabulate
+import yaml
 from dask.distributed import Client
 from dask_kubernetes import KubeCluster
 from kubernetes.client import Configuration
@@ -120,9 +121,9 @@ def _df_to_csv_str(df):
         return sio.getvalue()
 
 
-def _upload_to_s3(bucket, output_path, results, aws_key=None, aws_secret=None):
+def _upload_to_s3(bucket, path, results, aws_key=None, aws_secret=None):
     client = boto3.client('s3', aws_access_key_id=aws_key, aws_secret_access_key=aws_secret)
-    client.put_object(Bucket=bucket, Key=output_path, Body=_df_to_csv_str(results))
+    client.put_object(Bucket=bucket, Key=path, Body=_df_to_csv_str(results))
 
 
 def run_dask_function(config):
@@ -144,8 +145,8 @@ def run_dask_function(config):
     """
     output_conf = config.get('output')
     if output_conf:
-        output_path = output_conf.get('output_path')
-        if not output_path:
+        path = output_conf.get('path')
+        if not path:
             raise ValueError('An output path must be provided when providing `output`.')
 
     cluster_spec = _generate_cluster_spec(config, kubernetes=False)
@@ -179,10 +180,10 @@ def run_dask_function(config):
             if bucket:
                 aws_key = output_conf.get('key')
                 aws_secret = output_conf.get('secret_key')
-                _upload_to_s3(bucket, output_path, results, aws_key, aws_secret)
+                _upload_to_s3(bucket, path, results, aws_key, aws_secret)
             else:
-                os.makedirs(os.path.dirname(output_path), exist_ok=True)
-                results.to_csv(output_path)
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                results.to_csv(path)
 
         except Exception:
             print('Error storing results. Falling back to console dump.')
@@ -245,7 +246,10 @@ def main():
     logging.basicConfig(level=log_level, format=fmt)
 
     with open(args.config) as config_file:
-        config = json.load(config_file)
+        if args.config.endswith('yaml') or args.config.endswith('yml'):
+            config = yaml.safe_load(config_file)
+        else:
+            config = json.load(config_file)
 
     if args.create_pod:
         run_on_kubernetes(config, args.namespace)

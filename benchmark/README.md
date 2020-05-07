@@ -206,7 +206,16 @@ All the results obtained by the different BTB releases can be found inside the
 
 Additionally, all the previous results can be browsed and analyzed in the following [Google Sheets
 document](
- https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/).
+ https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
+
+
+## Kubernetes
+
+Running the complete BTB Benchmarking suite can take a long time when executing against all our
+challenges. For this reason, it comes prepared to be executed distributedly over a dask cluster
+created using Kubernetes. Check our [documentation](https://hdi-project.github.io/BTB/kubernetes.html)
+on how to run on a kubernetes cluster.
+
 
 ## Credits
 
