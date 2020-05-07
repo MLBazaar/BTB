@@ -83,7 +83,7 @@ def _generate_cluster_spec(config, kubernetes=False):
 
     if kubernetes:
         name = worker_config.get('image', 'daskdev/dask:latest')
-        name = '{}-'.format(re.sub(r'[^\w]', '-', name))
+        name = '{}-'.format(re.sub(r'[\W_]', '-', name))
         metadata['generateName'] = name
 
         config_command = CONFIG_TEMPLATE.format(json.dumps(config))
@@ -98,8 +98,9 @@ def _generate_cluster_spec(config, kubernetes=False):
     run_commands = RUN_TEMPLATE.format(extra_setup)
 
     spec = {
-        'metadata': {},
+        'metadata': metadata,
         'spec': {
+            'restartPolicy': 'Never',
             'containers': [{
                 'args': ['-c', run_commands],
                 'command': ['tini', '-g', '--', '/bin/sh'],
@@ -220,7 +221,7 @@ def _get_parser():
     parser.add_argument('config', help='Path to the JSON config file.')
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Be verbose. Use -vv for increased verbosity.')
-    parser.add_argument('create-pod', action='store_true',
+    parser.add_argument('--create-pod', action='store_true',
                         help='Create a master pod and run the given `config` from there.')
     parser.add_argument('-n', '--namespace', default='default',
                         help='Namespace were the pod will be created.')
@@ -246,7 +247,7 @@ def main():
         config = json.load(config_file)
 
     if args.create_pod:
-        run_on_kubernetes(config)
+        run_on_kubernetes(config, args.namespace)
     else:
         results = run_dask_function(config)
 
