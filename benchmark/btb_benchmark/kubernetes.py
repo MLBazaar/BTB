@@ -91,7 +91,7 @@ def _generate_cluster_spec(config, kubernetes=False):
         extra_setup = '\n'.join([extra_setup, config_command, run_command])
 
     else:
-        run_command = ('/usr/bin/prepare.sh dask-worker --no-dashoboard'
+        run_command = ('/usr/bin/prepare.sh dask-worker --no-dashboard'
                        '--memory-limit 0 --death-timeout 0')
         extra_setup = '\n'.join([extra_setup, run_command])
 
@@ -213,6 +213,7 @@ def run_on_kubernetes(config, namespace='default'):
     core_v1 = core_v1_api.CoreV1Api()
     spec = _generate_cluster_spec(config, kubernetes=True)
     core_v1.create_namespaced_pod(body=spec, namespace=namespace)
+    print('Pod created.')
 
 
 def _get_parser():
