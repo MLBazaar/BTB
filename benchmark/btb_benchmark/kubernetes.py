@@ -4,6 +4,7 @@ import importlib
 import json
 import logging
 import os
+import re
 import sys
 from io import StringIO
 
@@ -11,19 +12,26 @@ import boto3
 import tabulate
 from dask.distributed import Client
 from dask_kubernetes import KubeCluster
+from kubernetes.client import Configuration
+from kubernetes.client.api import core_v1_api
+from kubernetes.config import load_kube_config
 
 RUN_TEMPLATE = """
 /bin/bash <<'EOF'
 
 {}
 
-/usr/bin/prepare.sh dask-worker --no-dashboard --memory-limit 0 --death-timeout 0
-
 EOF
 """
 
+CONFIG_TEMPLATE = """
+cat > config.json << JSON
+{}
+JSON
+"""
 
-def import_function(config):
+
+def _import_function(config):
     function = config['function']
     function = function.split('.')
     function_name = function[-1]
@@ -33,7 +41,7 @@ def import_function(config):
     return getattr(module, function_name)
 
 
-def get_extra_setup(setup_dict):
+def _get_extra_setup(setup_dict):
     extra_packages = []
 
     script = setup_dict.get('script')
@@ -64,12 +72,28 @@ def get_extra_setup(setup_dict):
     return extra_packages[0]
 
 
-def generate_cluster_spec(dask_cluster):
+def _generate_cluster_spec(config, kubernetes=False):
     extra_setup = ''
+    dask_cluster = config['dask_cluster']
+    metadata = {}
 
     worker_config = dask_cluster.get('worker_config')
     if worker_config.get('setup'):
-        extra_setup = get_extra_setup(worker_config['setup'])
+        extra_setup = _get_extra_setup(worker_config['setup'])
+
+    if kubernetes:
+        name = worker_config.get('image', 'daskdev/dask:latest')
+        name = '{}-'.format(re.sub(r'[^\w]', '-', name))
+        metadata['generateName'] = name
+
+        config_command = CONFIG_TEMPLATE.format(json.dumps(config))
+        run_command = 'python -u -m btb_benchmark.kubernetes config.json'
+        extra_setup = '\n'.join([extra_setup, config_command, run_command])
+
+    else:
+        run_command = ('/usr/bin/prepare.sh dask-worker --no-dashoboard'
+                       '--memory-limit 0 --death-timeout 0')
+        extra_setup = '\n'.join([extra_setup, run_command])
 
     run_commands = RUN_TEMPLATE.format(extra_setup)
 
@@ -89,19 +113,19 @@ def generate_cluster_spec(dask_cluster):
     return spec
 
 
-def df_to_csv_str(df):
+def _df_to_csv_str(df):
     with StringIO() as sio:
         df.to_csv(sio)
         return sio.getvalue()
 
 
-def upload_to_s3(bucket, output_path, results, aws_key=None, aws_secret=None):
+def _upload_to_s3(bucket, output_path, results, aws_key=None, aws_secret=None):
     client = boto3.client('s3', aws_access_key_id=aws_key, aws_secret_access_key=aws_secret)
-    client.put_object(Bucket=bucket, Key=output_path, Body=df_to_csv_str(results))
+    client.put_object(Bucket=bucket, Key=output_path, Body=_df_to_csv_str(results))
 
 
-def run_on_kubernetes(config):
-    """Run benchmarking on a kubernetes cluster with the given configuration.
+def run_dask_function(config):
+    """Start a Dask Cluster using dask-kubernetes and run a function.
 
     Talks to kubernetes to create `n` amount of new `pods` with a dask worker inside of each
     forming a `dask` cluster. Then, a function specified from `config` is being imported and
@@ -113,69 +137,6 @@ def run_on_kubernetes(config):
         * dask_cluster
         * output
 
-    Within the `run` section you need to specify:
-        * function:
-            The complete python path to the function to be run.
-        * args:
-            A dictionary containing the keyword args that will be used with the given function.
-
-    Within the `dask_cluster` section you can specify:
-        * workers:
-            The amount of workers to use. If `int`, that amount of workers will be created. If
-            a python dict with `minimum` and `maximum` keywords or `workers` is not provided,
-            an adaptive cluster will be used.
-        * worker_config:
-            A dictionary with the following keys:
-            * resources:
-                A dictionary containig the following keys:
-                * memory:
-                    The amount of RAM memory.
-                * cpu:
-                    The amount of cpu's to use.
-            * image:
-                A docker image to be used (optional).
-            * setup:
-                A dictionary containing the following keys:
-                    * script:
-                        Location to bash script from the docker container to be run.
-                    * git_repository:
-                        A dictionary containing the following keys:
-                            * url:
-                                Link to the github repository to be cloned.
-                            * reference:
-                                A reference to the branch or commit to checkout at.
-                            * install:
-                                Command to install the repository.
-                    * pip_packages:
-                        A list of pip packages to be installed.
-                    * apt_packages:
-                        A list of apt packages to be installed.
-
-    Within the `output` section you can specify:
-        * path:
-            The path to a local file or s3 were the file will be saved.
-        * bucket:
-            If given, the path specified previously will be saved as `s3://bucket/path`
-        * key:
-            AWS authentication key to access the bucket.
-        * secret_key:
-            AWS secrect authentication key to access the bucket.
-
-    This is an example of this dictionary in Yaml format::
-
-        run :
-            function: btb_benchmark.main.run_benchmark
-            args:
-                iterations: 10
-                sample: 4
-        dask_cluster:
-            workers: 1
-            worker_config:
-                resources:
-                    memory: 2G
-                    cpu: 1
-                image: mlbazaar/btb_benchmark:latest
-
     Args:
         config (dict):
             Config dictionary.
@@ -186,11 +147,10 @@ def run_on_kubernetes(config):
         if not output_path:
             raise ValueError('An output path must be provided when providing `output`.')
 
-    dask_cluster = config['dask_cluster']
-    cluster_spec = generate_cluster_spec(dask_cluster)
+    cluster_spec = _generate_cluster_spec(config, kubernetes=False)
     cluster = KubeCluster.from_dict(cluster_spec)
 
-    workers = dask_cluster.get('workers')
+    workers = config['dask_cluster'].get('workers')
 
     if not workers:
         cluster.adapt()
@@ -203,7 +163,7 @@ def run_on_kubernetes(config):
     client.get_versions(check=True)
 
     try:
-        run = import_function(config['run'])
+        run = _import_function(config['run'])
         kwargs = config['run']['args']
         results = run(**kwargs)
 
@@ -218,17 +178,40 @@ def run_on_kubernetes(config):
             if bucket:
                 aws_key = output_conf.get('key')
                 aws_secret = output_conf.get('secret_key')
-                upload_to_s3(bucket, output_path, results, aws_key, aws_secret)
+                _upload_to_s3(bucket, output_path, results, aws_key, aws_secret)
             else:
                 os.makedirs(os.path.dirname(output_path), exist_ok=True)
                 results.to_csv(output_path)
 
         except Exception:
             print('Error storing results. Falling back to console dump.')
-            print(df_to_csv_str(results))
+            print(_df_to_csv_str(results))
 
     else:
         return results
+
+
+def run_on_kubernetes(config, namespace='default'):
+    """Run dask function inside a pod using the given config.
+
+     Create a pod, using the local kubernetes configuration that starts a Dask Cluster
+     using dask-kubernetes and runs a function specified within the `config` dictionary.
+
+    Args:
+        config (dict):
+            Config dictionary.
+        namespace (str):
+            Kubernetes namespace were the pod will be created.
+    """
+    # read local config
+    load_kube_config()
+    c = Configuration()
+    Configuration.set_default(c)
+
+    # create client and create pod on default namespace
+    core_v1 = core_v1_api.CoreV1Api()
+    spec = _generate_cluster_spec(config, kubernetes=True)
+    core_v1.create_namespaced_pod(body=spec, namespace=namespace)
 
 
 def _get_parser():
@@ -237,6 +220,10 @@ def _get_parser():
     parser.add_argument('config', help='Path to the JSON config file.')
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Be verbose. Use -vv for increased verbosity.')
+    parser.add_argument('create-pod', action='store_true',
+                        help='Create a master pod and run the given `config` from there.')
+    parser.add_argument('-n', '--namespace', default='default',
+                        help='Namespace were the pod will be created.')
 
     return parser
 
@@ -258,14 +245,17 @@ def main():
     with open(args.config) as config_file:
         config = json.load(config_file)
 
-    results = run_on_kubernetes(config)
+    if args.create_pod:
+        run_on_kubernetes(config)
+    else:
+        results = run_dask_function(config)
 
-    if results is not None:
-        print(tabulate.tabulate(
-            results,
-            tablefmt='github',
-            headers=results.columns
-        ))
+        if results is not None:
+            print(tabulate.tabulate(
+                results,
+                tablefmt='github',
+                headers=results.columns
+            ))
 
 
 if __name__ == '__main__':

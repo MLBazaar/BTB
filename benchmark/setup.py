@@ -26,7 +26,9 @@ def github_dependency(user, name, commit):
 
 
 install_requires = [
-    'dask>=2.6.0,<3',
+    'dask>=2.6.0,<2.7',
+    'kubernetes>=11.0.0,<11.1',
+    'distributed>=2.15,<2.16',
     'hyperopt>=0.2.3,<3',
     'tabulate>=0.8.3,<0.9',
     'xgboost>=1.0.2,<1.1.0',

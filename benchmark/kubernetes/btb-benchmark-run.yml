@@ -8,7 +8,7 @@ spec:
   containers:
   - name: btb-benchmark
     imagePullPolicy: Always
-    image: pythiac/btb_benchmark
+    image: mlbazaar/btb_benchmark
     command:
       - sh
     args:
@@ -33,7 +33,7 @@ spec:
                         "memory": "7G",
                         "cpu": 1
                     },
-                    "image": "pythiac/btb_benchmark:latest"
+                    "image": "mlbazaar/btb_benchmark:latest"
                 }
             }
         }

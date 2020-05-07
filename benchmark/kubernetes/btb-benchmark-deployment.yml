@@ -31,7 +31,7 @@ spec:
         app: btb-benchmark-jupyter
     spec:
       containers:
-      - image: pythiac/btb_benchmark
+      - image: mlbazaar/btb_benchmark
         name: btb-benchmark-jupyter
         ports:
         - containerPort: 8888
