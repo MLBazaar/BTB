@@ -217,14 +217,14 @@ release-major: check-release bumpversion-major release
 # DOCKER TARGET
 .PHONY: docker-login
 docker-login:
-	docker login registry.hub.docker.com
+	docker login docker.pkg.github.com
 
 .PHONY: docker-build
 docker-build:
-	docker build -t mlbazaar/btb_benchmark .
+	docker build -t btb .
 
 .PHONY: docker-push
 docker-push: docker-login docker-build
 	@$(eval VERSION := $(shell python -c 'import btb; print(btb.__version__)'))
-	docker tag -t mlbazaar/btb mlbazaar/btb:$(VERSION)
-	docker push mlbazaar/btb:$(VERSION)
+	docker tag -t btb btb:$(VERSION)
+	docker push docker.pkg.github.com/hdi-project/btb/btb:$(VERSION)
