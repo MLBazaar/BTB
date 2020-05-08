@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Kubernetes &mdash; BTB 0.3.8.dev0 documentation</title>
+  <title>Kubernetes &mdash; BTB 0.3.9.dev0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.3.8.dev0
+                0.3.9.dev0
               </div>
             
           
@@ -563,7 +563,7 @@ config dictionary to indicate how to setup the cluster and what to run in it.</p
 <h3>Usage Example<a class="headerlink" href="#usage-example" title="Permalink to this headline">¶</a></h3>
 <p>In this usage example we will create a config dictionary that will run the <code class="docutils literal notranslate"><span class="pre">btb_benchmark.main.run_benchmark</span></code> function. For our <code class="docutils literal notranslate"><span class="pre">dask_cluster</span></code> we will be requesting 2 workers and giving them 4 cores / cpu’s to each one to work with and the docker image <code class="docutils literal notranslate"><span class="pre">mlbazaar/btb:latest</span></code>. Then we will call <code class="docutils literal notranslate"><span class="pre">run_on_benchmark</span></code> to create the pods and we will see the logs of the pod that created the workers.</p>
 <ol class="arabic simple">
-<li><p>First create a <code class="docutils literal notranslate"><span class="pre">config</span></code> similar to the one that we showed <a class="reference external" href="#Configuration-Examples">above</a>, replacing the output values according to your aws settings.</p></li>
+<li><p>First write your config dict following the <a class="reference external" href="#Configuration-Examples">instructions above</a></p></li>
 <li><p>Once you have your <em>config</em> dict you can import the <code class="docutils literal notranslate"><span class="pre">run_on_kubernetes</span></code> function to create the first pod.</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">btb_benchmark.kubernetes</span> <span class="kn">import</span> <span class="n">run_on_kubernetes</span>
