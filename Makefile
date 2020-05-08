@@ -203,10 +203,10 @@ endif
 check-release: check-master check-history ## Check if the release can be made
 
 .PHONY: release
-release: check-release bumpversion-release publish bumpversion-patch
+release: check-release bumpversion-release docker-push publish bumpversion-patch
 
 .PHONY: release-candidate
-release-candidate: check-master publish bumpversion-candidate
+release-candidate: check-master docker-push publish bumpversion-candidate
 
 .PHONY: release-minor
 release-minor: check-release bumpversion-minor release
@@ -215,14 +215,16 @@ release-minor: check-release bumpversion-minor release
 release-major: check-release bumpversion-major release
 
 # DOCKER TARGET
-.PHONY: login
-login:
-	docker login registry.hub.docker.com
+.PHONY: docker-login
+docker-login:
+	docker login
 
-.PHONY: build
-build:
-	docker build -t mlbazaar/btb_benchmark:latest .
+.PHONY: docker-build
+docker-build:
+	docker build -t btb .
 
-.PHONY: push
-push: login build
-	docker push mlbazaar/btb_benchmark:latest
+.PHONY: docker-push
+docker-push: docker-login docker-build
+	@$(eval VERSION := $(shell python -c 'import btb; print(btb.__version__)'))
+	docker tag btb mlbazaar/btb:$(VERSION)
+	docker push mlbazaar/btb:$(VERSION)

@@ -167,24 +167,20 @@ that we use to evaluate the performance of our `Tuners`. For every release, we p
 against 100's of challenges, comparing tuners against each other in terms of number of wins.
 We present the latest leaderboard from latest release below:
 
-## Number of Wins per Version
+## Number of Wins on latest Version
 
 | tuner                   | with ties | without ties |
 |-------------------------|-----------|--------------|
-| `BTB.GPEiTuner`         |    **35** |            7 |
-| `BTB.GPTuner`           |    33     |        **8** |
-| `BTB.UniformTuner`      |    29     |            2 |
-| `HyperOpt.rand.suggest` |    28     |            0 |
-| `HyperOpt.tpe.suggest`  |    32     |            5 |
+| `BTB.GPEiTuner`         |    278    |           66 |
+| `BTB.GPTuner`           |  **287**  |       **68** |
+| `BTB.UniformTuner`      |    204    |            8 |
+| `HyperOpt.rand.suggest` |    204    |           10 |
+| `HyperOpt.tpe.suggest`  |    250    |           47 |
 
-- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/).
+- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
 - If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).
 - If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
-
-> :warning: **Note**: In release v0.3.7, we are currently only doing 50 ML challenges. Our next release for
-benchmarking will have results from 422 datasets and 3 optimization challenges. To check out what
-will be included in our benchmarking efforts - you can check [here](https://github.com/HDI-Project/BTB/projects).
 
 # What's next?
 
