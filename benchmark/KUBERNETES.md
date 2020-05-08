@@ -208,7 +208,7 @@ Arguments:
 
 In this usage example we will create a config dictionary that will run the `btb_benchmark.main.run_benchmark` function. For our `dask_cluster` we will be requesting 2 workers and giving them 4 cores / cpu's to each one to work with and the docker image `mlbazaar/btb:latest`. Then we will call `run_on_benchmark` to create the pods and we will see the logs of the pod that created the workers.
 
-1. First create a `config` similar to the one that we showed [above](#Configuration-Examples), replacing the output values according to your aws settings.
+1. First write your config dict following the [instructions above](#Configuration-Examples)
 2. Once you have your *config* dict you can import the `run_on_kubernetes` function to create the first pod.
 
 ```python
