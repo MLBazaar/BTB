@@ -31,6 +31,8 @@ cat > config.json << JSON
 JSON
 """
 
+WORKER_COMM = '/usr/bin/prepare.sh dask-worker --no-dashboard --memory-limit 0 --death-timeout 0'
+
 
 def _import_function(config):
     function = config['function']
@@ -92,8 +94,7 @@ def _generate_cluster_spec(config, kubernetes=False):
         extra_setup = '\n'.join([extra_setup, config_command, run_command])
 
     else:
-        run_command = ('/usr/bin/prepare.sh dask-worker --no-dashboard '
-                       '--memory-limit 0 --death-timeout 0')
+        run_command = WORKER_COMM
         extra_setup = '\n'.join([extra_setup, run_command])
 
     run_commands = RUN_TEMPLATE.format(extra_setup)
