@@ -1,5 +1,21 @@
 # History
 
+## 0.3.8 - 2020-05-08
+
+This release brings a Kubernetes interface to allow users to run their benchmarking on a
+Kubernetes cluster and `EKS`. This process helps the benchmarking framework to generate
+the leaderboard on a distributed computation.
+
+### Internal improvements
+
+* `btb_benchmark.kubernetes.run_on_kubernetes`: Run dask function inside a pod using the given
+config.
+* `btb_benchmark.kubernetes.run_on_kubernetes`: Start a Dask Cluster using dask-kubernetes and
+run a function.
+* Documentation updated.
+* Jupyter notebooks with examples on how to run the benchmarking process and how to run it on
+kubernetes.
+
 ## 0.3.7 - 2020-04-15
 
 This release brings a new `benchmark` framework with public leaderboard.
@@ -7,7 +23,6 @@ As part of our benchmarking efforts we will run the framework at every release a
 public. In each run we compare it to other tuners and optimizer libraries. We are constantly adding
 new libraries for comparison. If you have suggestions for a tuner library we should include in our
 compraison, please contact us via email at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
-
 
 ### Resolved Issues
 

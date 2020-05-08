@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
-import argparse
 import logging
 import random
-import warnings
-from datetime import datetime
+import socket
+from datetime import datetime, timedelta
 
 import dask
 import pandas as pd
+from distributed.client import futures_of
+from distributed.diagnostics.progressbar import TextProgressBar
 
 from btb.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
-    MATH_CHALLENGES, Challenge, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
+    MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
+from btb_benchmark.challenges.challenge import Challenge
 from btb_benchmark.results import load_results, write_results
 from btb_benchmark.tuners import get_all_tuners
 from btb_benchmark.tuners.btb import make_btb_tuning_function
 
 LOGGER = logging.getLogger(__name__)
 ALL_TYPES = ['math', 'xgboost']
-
-warnings.filterwarnings("ignore")
 
 
 def get_math_challenge_instance(name):
@@ -46,7 +46,8 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'tuner': name,
             'score': score,
             'iterations': iterations,
-            'elapsed': datetime.utcnow() - start
+            'elapsed': datetime.utcnow() - start,
+            'hostname': socket.gethostname()
         }
 
     except Exception as ex:
@@ -56,27 +57,62 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'challenge': str(challenge),
             'tuner': name,
             'score': None,
-            'elapsed': datetime.utcnow() - start
+            'elapsed': datetime.utcnow() - start,
+            'hostname': socket.gethostname()
         }
 
     return result
 
 
-def _evaluate_tuner_on_challenges(name, tuner, challenges, iterations):
-    tuner_results = []
-    for challenge in challenges:
+def _evaluate_tuners_on_challenge(tuners, challenge, iterations):
+    LOGGER.info('Evaluating challenge %s', challenge)
+    results = []
+    for name, tuner in tuners.items():
         try:
             result = _evaluate_tuner_on_challenge(name, tuner, challenge, iterations)
+            results.append(result)
         except Exception as ex:
             LOGGER.warn(
                 'Could not score tuner %s with challenge %s, error: %s', name, challenge, ex)
 
-        tuner_results.append(result)
-
-    return tuner_results
+    return results
 
 
-def benchmark(tuners, challenges, iterations):
+class LogProgressBar(TextProgressBar):
+    last = 0
+    logger = logging.getLogger('distributed')
+
+    def _draw_bar(self, remaining, all, **kwargs):
+        frac = (1 - remaining / all) if all else 0
+
+        if frac > self.last + 0.01:
+            self.last = int(frac * 100) / 100
+            bar = "#" * int(self.width * frac)
+            percent = int(100 * frac)
+
+            time_per_task = self.elapsed / (all - remaining)
+            remaining_time = timedelta(seconds=time_per_task * remaining)
+            eta = datetime.utcnow() + remaining_time
+
+            elapsed = timedelta(seconds=self.elapsed)
+            msg = "[{0:<{1}}] | {2}% Completed | {3} | {4} | {5}".format(
+                bar, self.width, percent, elapsed, remaining_time, eta
+            )
+            self.logger.info(msg)
+
+    def _draw_stop(self, **kwargs):
+        pass
+
+
+def progress(*futures):
+    futures = futures_of(futures)
+    if not isinstance(futures, (set, list)):
+        futures = [futures]
+
+    LogProgressBar(futures)
+
+
+def benchmark(tuners, challenges, iterations, detailed_output=False):
     """Score ``tuners`` against a list of ``challenges`` for the given amount of iterations.
 
     This function scores a collection of ``tuners`` against a collection of ``challenges``
@@ -101,22 +137,34 @@ def benchmark(tuners, challenges, iterations):
             ``btb.challenges.challenge.Challenge``.
         iterations (int):
             Amount of tuning iterations to perform for each tuner and each challenge.
+        detailed_output (bool):
+            If ``True`` a dataframe with the elapsed time, score and iterations will be returned.
 
     Returns:
         pandas.DataFrame:
             A ``pandas.DataFrame`` with the obtained scores for the given challenges is being
             returned.
     """
-    results = []
+    delayed = []
 
-    for name, tuner in tuners.items():
-        LOGGER.info('Evaluating tuner %s', name)
-        result = _evaluate_tuner_on_challenges(name, tuner, challenges, iterations)
-        results.extend(result)
+    for challenge in challenges:
+        result = _evaluate_tuners_on_challenge(tuners, challenge, iterations)
+        delayed.extend(result)
 
-    results = [result for result in dask.compute(*results)]
+    persisted = dask.persist(*delayed)
+
+    try:
+        progress(persisted)
+    except ValueError:
+        # Using local client. No progress bar needed.
+        pass
+
+    results = dask.compute(*persisted)
 
     df = pd.DataFrame.from_records(results)
+    if detailed_output:
+        return df
+
     df = df.pivot(index='challenge', columns='tuner', values='score')
     del df.columns.name
     del df.index.name
@@ -142,6 +190,8 @@ def _get_tuners_dict(tuners=None):
         for tuner in _as_list(tuners):
             if isinstance(tuner, type) and issubclass(tuner, BaseTuner):
                 selected_tuning_functions[tuner.__name__] = make_btb_tuning_function(tuner)
+            elif callable(tuner):
+                selected_tuning_functions[tuner.__name__] = tuner
             else:
                 tuning_function = all_tuners.get(tuner)
                 if tuning_function:
@@ -205,7 +255,7 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
 
 
 def run_benchmark(tuners=None, challenge_types=None, challenges=None,
-                  sample=None, iterations=100, output_path=None):
+                  sample=None, iterations=100, output_path=None, detailed_output=False):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
     This function provides a user-friendly interface to interact with the ``benchmark``
@@ -230,6 +280,8 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
             Number of tuning iterations to perform per challenge and tuner.
         output_path (str):
             If an ``output_path`` is given, the final results will be saved in that location.
+        detailed_output (bool):
+            If ``True`` a dataframe with the elapsed time, score and iterations will be returned.
 
     Returns:
         pandas.DataFrame or None:
@@ -242,7 +294,8 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
         challenge_types=challenge_types,
         sample=sample
     )
-    results = benchmark(tuners, challenges, iterations)
+
+    results = benchmark(tuners, challenges, iterations, detailed_output)
 
     if output_path:
         LOGGER.info('Saving benchmark report to %s', output_path)
@@ -268,75 +321,3 @@ def summarize_results(input_paths, output_path):
     """
     results = load_results(input_paths)
     write_results(results, output_path)
-
-
-def _run(args):
-    # Logger setup
-    log_level = (3 - args.verbose) * 10
-    fmt = '%(asctime)s - %(process)d - %(levelname)s - %(name)s - %(module)s - %(message)s'
-    logging.basicConfig(level=log_level, format=fmt)
-    logging.getLogger("botocore").setLevel(logging.ERROR)
-    logging.getLogger("hyperopt").setLevel(logging.ERROR)
-    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-
-    # run
-    run_benchmark(
-        args.tuners,
-        args.challenge_types,
-        args.challenges,
-        args.sample,
-        args.iterations,
-        args.output_path,
-    )
-
-
-def _summary(args):
-    summarize_results(args.input, args.output)
-
-
-def _get_parser():
-    parser = argparse.ArgumentParser(description='BTB Benchmark Command Line Interface')
-    parser.set_defaults(action=None)
-    action = parser.add_subparsers(title='action')
-    action.required = True
-
-    # Run action
-    run = action.add_parser('run', help='Run the BTB Benchmark')
-    run.set_defaults(action=_run)
-    run.set_defaults(user=None)
-
-    run.add_argument('-v', '--verbose', action='count', default=0,
-                     help='Be verbose. Use -vv for increased verbosity.')
-    run.add_argument('-o', '--output-path', type=str, required=False,
-                     help='Path to the CSV file where the report will be dumped')
-    run.add_argument('-s', '--sample', type=int,
-                     help='Run only on a subset of the available datasets of the given size.')
-    run.add_argument('-i', '--iterations', type=int, default=100,
-                     help='Number of iterations to perform per challenge with each candidate.')
-    run.add_argument('-c', '--challenges', nargs='+',
-                     help='Challenge/s to be used. Accepts multiple names.')
-    run.add_argument('-t', '--tuners', nargs='+',
-                     help='Tuner/s to be benchmarked. Accepts multiple names.')
-    run.add_argument('-C', '--challenge-types', nargs='+',
-                     choices=['math', 'sgd', 'random_forest', 'xgboost'],
-                     help='Type of challenge/s to use. Accepts multiple names.')
-
-    # Summarize action
-    summary = action.add_parser('summary', help='Summarize the BTB Benchmark results')
-    summary.set_defaults(action=_summary)
-    summary.add_argument('input', nargs='+', help='Input path with results.')
-    summary.add_argument('output', help='Output file.')
-
-    return parser
-
-
-def main():
-    # Parse args
-    parser = _get_parser()
-    args = parser.parse_args()
-
-    args.action(args)
-
-
-if __name__ == '__main__':
-    main()

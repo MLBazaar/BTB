@@ -7,7 +7,7 @@ from collections import Counter, defaultdict
 from hashlib import md5
 
 import numpy as np
-from tqdm.autonotebook import trange
+from tqdm.auto import trange
 
 from btb.selection.ucb1 import UCB1
 from btb.tuning.tunable import Tunable

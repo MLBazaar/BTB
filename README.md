@@ -60,10 +60,11 @@ If you want to install from source or contribute to the project please read the
 In this short tutorial we will guide you through the necessary steps to get started using BTB
 to select and tune the best model to solve a Machine Learning problem.
 
-In particular, in this example we will be using ``BTBSession`` to perform solve the [Boston](
-http://lib.stat.cmu.edu/datasets/boston) regression problem by selecting between the
-`ExtraTreesRegressor` and the `RandomForestRegressor` models from [scikit-learn](
-https://scikit-learn.org/) while also searching for their best Hyperparameter configuration.
+In particular, in this example we will be using ``BTBSession`` to perform solve the [Wine](
+https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data) classification problem
+by selecting between the `DecisionTreeClassifier` and the `SGDClassifier` models from
+[scikit-learn](https://scikit-learn.org/) while also searching for their best hyperparameter
+configuration.
 
 ## Prepare a scoring function
 
@@ -73,15 +74,17 @@ This is a Python function that, given a model name and a hyperparameter configur
 evaluates the performance of the model on your data and returns a score.
 
 ```python3
-from sklearn.datasets import load_boston
-from sklearn.ensemble import ExtraTreesRegressor, RandomForestRegressor
-from sklearn.metrics import make_scorer, r2_score
+from sklearn.datasets import load_wine
+from sklearn.linear_model import SGDClassifier
+from sklearn.metrics import f1_score, make_scorer
 from sklearn.model_selection import cross_val_score
+from sklearn.tree import DecisionTreeClassifier
 
-dataset = load_boston()
+
+dataset = load_wine()
 models = {
-    'random_forest': RandomForestRegressor,
-    'extra_trees': ExtraTreesRegressor,
+    'DTC': DecisionTreeClassifier,
+    'SGDC': SGDClassifier,
 }
 
 def scoring_function(model_name, hyperparameter_values):
@@ -91,7 +94,7 @@ def scoring_function(model_name, hyperparameter_values):
         estimator=model_instance,
         X=dataset.data,
         y=dataset.target,
-        scoring=make_scorer(r2_score)
+        scoring=make_scorer(f1_score, average='macro')
     )
     return scores.mean()
 ```
@@ -102,18 +105,16 @@ The second step is to define the hyperparameters that we want to tune for each m
 
 ```python3
 from btb.tuning import Tunable
-from btb.tuning.hyperparams import CategoricalHyperParam, IntHyperParam
+from btb.tuning import hyperparams as hp
 
 tunables = {
-    'random_forest': Tunable({
-        'max_features': CategoricalHyperParam(choices=[None, 'auto', 'log2', 'sqrt']),
-        'min_samples_split': IntHyperParam(min=2, max=20, default=2),
-        'min_samples_leaf': IntHyperParam(min=1, max=20, default=2)
+    'DTC': Tunable({
+        'max_depth': hp.IntHyperParam(min=3, max=200),
+        'min_samples_split': hp.FloatHyperParam(min=0.01, max=1)
     }),
-    'extra_trees': Tunable({
-        'max_features': CategoricalHyperParam(choices=[None, 'auto', 'log2', 'sqrt']),
-        'min_samples_split': IntHyperParam(min=2, max=20, default=2),
-        'min_samples_leaf': IntHyperParam(min=1, max=20, default=2)
+    'SGDC': Tunable({
+        'max_iter': hp.IntHyperParam(min=1, max=5000, default=1000),
+        'tol': hp.FloatHyperParam(min=1e-3, max=1, default=1e-3),
     })
 }
 ```
@@ -149,14 +150,13 @@ and the hyperparameter configuration that was used:
 
 ```
 {
-    'id': 'd85262197592bd00c8cd9e87164e18c8',
-    'name': 'extra_trees',
+    'id': '826aedc2eff31635444e8104f0f3da43',
+    'name': 'DTC',
     'config': {
-        'max_features': None,
-        'min_samples_split': 17,
-        'min_samples_leaf': 1
+        'max_depth': 21,
+        'min_samples_split': 0.044010284821858835
     },
-    'score': 0.6056926625119803
+    'score': 0.907229308339589
 }
  ```
 
@@ -167,24 +167,20 @@ that we use to evaluate the performance of our `Tuners`. For every release, we p
 against 100's of challenges, comparing tuners against each other in terms of number of wins.
 We present the latest leaderboard from latest release below:
 
-## Number of Wins per Version
+## Number of Wins on latest Version
 
 | tuner                   | with ties | without ties |
 |-------------------------|-----------|--------------|
-| `BTB.GPEiTuner`         |    **35** |            7 |
-| `BTB.GPTuner`           |    33     |        **8** |
-| `BTB.UniformTuner`      |    29     |            2 |
-| `HyperOpt.rand.suggest` |    28     |            0 |
-| `HyperOpt.tpe.suggest`  |    32     |            5 |
+| `BTB.GPEiTuner`         |    278    |           66 |
+| `BTB.GPTuner`           |  **287**  |       **68** |
+| `BTB.UniformTuner`      |    204    |            8 |
+| `HyperOpt.rand.suggest` |    204    |           10 |
+| `HyperOpt.tpe.suggest`  |    250    |           47 |
 
-- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/).
+- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
 - If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).
 - If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
-
-> :warning: **Note**: In release v0.3.7, we are currently only doing 50 ML challenges. Our next release for
-benchmarking will have results from 422 datasets and 3 optimization challenges. To check out what
-will be included in our benchmarking efforts - you can check [here](https://github.com/HDI-Project/BTB/projects).
 
 # What's next?
 

@@ -37,8 +37,9 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
+	rm -fr benchmark/.eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+	find . -name '*.egg' -exec rm -fr {} +
 
 .PHONY: clean-pyc
 clean-pyc: ## remove Python file artifacts
@@ -50,6 +51,7 @@ clean-pyc: ## remove Python file artifacts
 .PHONY: clean-docs
 clean-docs: ## remove previously built docs
 	rm -f docs/api/*.rst
+	rm -rf docs/tutorials
 	-$(MAKE) -C docs clean 2>/dev/null  # this fails if sphinx is not yet installed
 
 .PHONY: clean-coverage
@@ -73,24 +75,24 @@ clean: clean-build clean-pyc clean-test clean-coverage clean-docs ## remove all 
 install: clean-build clean-pyc ## install the package to the active Python's site-packages
 	pip install .
 
-.PHONY: install-examples
-install-examples: clean-build clean-pyc ## install the package and dependencies to run the examples
-	pip install .[examples]
-
 .PHONY: install-test
 install-test: clean-build clean-pyc ## install the package and test dependencies
 	pip install .[test]
 
+.PHONY: install-benchmark
+install-benchmark: clean-build clean-pyc ## install the package and test dependencies
+	pip install ./benchmark
+
 .PHONY: install-develop
 install-develop: clean-build clean-pyc ## install the package in editable mode and dependencies for development
-	pip install -e .[dev] ./benchmark
+	pip install -e .[dev] -e ./benchmark
 
 
 # LINT TARGETS
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 btb tests benchmark
+	flake8 btb tests benchmark/btb_benchmark
 	isort -c --recursive btb tests
 	isort -c --recursive -p btb_benchmark benchmark
 
@@ -127,7 +129,8 @@ coverage: ## check code coverage quickly with the default Python
 
 .PHONY: docs
 docs: clean-docs ## generate Sphinx HTML documentation, including API docs
-	sphinx-apidoc --separate --no-toc -o docs/api/ btb
+	cp -r tutorials docs/tutorials
+	sphinx-apidoc --separate -o docs/api/ btb
 	$(MAKE) -C docs html
 
 .PHONY: view-docs
@@ -200,13 +203,28 @@ endif
 check-release: check-master check-history ## Check if the release can be made
 
 .PHONY: release
-release: check-release bumpversion-release publish bumpversion-patch
+release: check-release bumpversion-release docker-push publish bumpversion-patch
 
 .PHONY: release-candidate
-release-candidate: check-master publish bumpversion-candidate
+release-candidate: check-master docker-push publish bumpversion-candidate
 
 .PHONY: release-minor
 release-minor: check-release bumpversion-minor release
 
 .PHONY: release-major
 release-major: check-release bumpversion-major release
+
+# DOCKER TARGET
+.PHONY: docker-login
+docker-login:
+	docker login
+
+.PHONY: docker-build
+docker-build:
+	docker build -t btb .
+
+.PHONY: docker-push
+docker-push: docker-login docker-build
+	@$(eval VERSION := $(shell python -c 'import btb; print(btb.__version__)'))
+	docker tag btb mlbazaar/btb:$(VERSION)
+	docker push mlbazaar/btb:$(VERSION)

@@ -3,7 +3,7 @@ import logging
 from sklearn.metrics import f1_score
 from xgboost import XGBClassifier
 
-from btb_benchmark.challenges.challenge import MLChallenge
+from btb_benchmark.challenges.mlchallenge import MLChallenge
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,17 +21,12 @@ class XGBoostChallenge(MLChallenge):
     STRATIFIED = True
 
     # MODEL
-    MODEL_DEFAULTS = {'random_state': 0}
+    MODEL_DEFAULTS = {
+        'random_state': 0,
+        'n_estimators': 100
+    }
     MODEL = XGBClassifier
     TUNABLE_HYPERPARAMETERS = {
-        "n_estimators": {
-            "type": "int",
-            "default": 100,
-            "range": [
-                10,
-                1000
-            ]
-        },
         "max_depth": {
             "type": "int",
             "default": 3,

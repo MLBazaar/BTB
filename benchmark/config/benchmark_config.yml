@@ -1,0 +1,12 @@
+dask_cluster:
+  worker_config:
+    image: mlbazaar/btb:latest
+    resources:
+      cpu: 7
+      memory: 7G
+  workers: 52
+run:
+  args:
+    challenge_types: xgboost
+    iterations: 100
+  function: btb_benchmark.main.run_benchmark

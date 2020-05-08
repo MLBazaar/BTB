@@ -4,7 +4,6 @@
 
 from btb_benchmark.challenges.bohachevsky import Bohachevsky
 from btb_benchmark.challenges.branin import Branin
-from btb_benchmark.challenges.challenge import Challenge
 from btb_benchmark.challenges.randomforest import RandomForestChallenge
 from btb_benchmark.challenges.rosenbrock import Rosenbrock
 from btb_benchmark.challenges.sgd import SGDChallenge
@@ -13,7 +12,6 @@ from btb_benchmark.challenges.xgboost import XGBoostChallenge
 __all__ = (
     'Bohachevsky',
     'Branin',
-    'Challenge',
     'RandomForestChallenge',
     'Rosenbrock',
     'SGDChallenge',
