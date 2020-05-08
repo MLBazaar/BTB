@@ -151,7 +151,7 @@ config = {
                 'memory': '4G',
                 'cpu': 4
             },
-            'image': 'mlbazaar/btb_benchmark:latest',
+            'image': 'mlbazaar/btb:latest',
         },
     },
     'output': {
@@ -206,7 +206,7 @@ Arguments:
 
 ### Usage Example
 
-In this usage example we will create a config dictionary that will run the `btb_benchmark.main.run_benchmark` function. For our `dask_cluster` we will be requesting 2 workers and giving them 4 cores / cpu's to each one to work with and the docker image `mlbazaar/btb_benchmark:latest`. Then we will call `run_on_benchmark` to create the pods and we will see the logs of the pod that created the workers.
+In this usage example we will create a config dictionary that will run the `btb_benchmark.main.run_benchmark` function. For our `dask_cluster` we will be requesting 2 workers and giving them 4 cores / cpu's to each one to work with and the docker image `mlbazaar/btb:latest`. Then we will call `run_on_benchmark` to create the pods and we will see the logs of the pod that created the workers.
 
 1. First create a `config` similar to this one, replacing the output values according to your aws settings:
 
@@ -227,7 +227,7 @@ config = {
                 'memory': '4G',
                 'cpu': 4
             },
-            'image': 'mlbazaar/btb_benchmark:latest',
+            'image': 'mlbazaar/btb:latest',
         },
     },
     'output': {

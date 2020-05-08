@@ -1,4 +1,4 @@
-FROM mlbazaar/btb_benchmark:latest
+FROM mlbazaar/btb:latest
 
 RUN mkdir -p /workdir/btb && \
     mkdir -p /workdir/btb_benchmark && \

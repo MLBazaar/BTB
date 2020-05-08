@@ -92,7 +92,7 @@ def _generate_cluster_spec(config, kubernetes=False):
         extra_setup = '\n'.join([extra_setup, config_command, run_command])
 
     else:
-        run_command = ('/usr/bin/prepare.sh dask-worker --no-dashboard'
+        run_command = ('/usr/bin/prepare.sh dask-worker --no-dashboard '
                        '--memory-limit 0 --death-timeout 0')
         extra_setup = '\n'.join([extra_setup, run_command])
 

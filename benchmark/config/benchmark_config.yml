@@ -1,6 +1,6 @@
 dask_cluster:
   worker_config:
-    image: mlbazaar/btb_benchmark:latest
+    image: mlbazaar/btb:latest
     resources:
       cpu: 7
       memory: 4G
