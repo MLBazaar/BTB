@@ -191,7 +191,32 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#kubernetes">Kubernetes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kubernetes.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes.html#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes.html#kubernetes-cluster">Kubernetes Cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes.html#admin-access">Admin Access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes.html#dask-function">Dask Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes.html#config">Config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes.html#config-format">Config Format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kubernetes.html#run">run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kubernetes.html#dask-cluster">dask_cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kubernetes.html#output">output</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes.html#configuration-examples">Configuration Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes.html#run-a-function-on-kubernetes">Run a function on Kubernetes.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes.html#usage-example">Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes.html#results">Results</a></li>
 </ul>
 </li>
 </ul>
@@ -482,8 +507,8 @@ and the hyperparameter configuration that was used:</p>
 that we use to evaluate the performance of our <code class="docutils literal notranslate"><span class="pre">Tuners</span></code>. For every release, we perform benchmarking
 against 100’s of challenges, comparing tuners against each other in terms of number of wins.
 We present the latest leaderboard from latest release below:</p>
-<div class="section" id="number-of-wins-per-version">
-<h2>Number of Wins per Version<a class="headerlink" href="#number-of-wins-per-version" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="number-of-wins-on-latest-version">
+<h2>Number of Wins on latest Version<a class="headerlink" href="#number-of-wins-on-latest-version" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 33%" />
@@ -498,42 +523,33 @@ We present the latest leaderboard from latest release below:</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.GPEiTuner</span></code></p></td>
-<td><p><strong>35</strong></p></td>
-<td><p>7</p></td>
+<td><p>278</p></td>
+<td><p>66</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.GPTuner</span></code></p></td>
-<td><p>33</p></td>
-<td><p><strong>8</strong></p></td>
+<td><p><strong>287</strong></p></td>
+<td><p><strong>68</strong></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.UniformTuner</span></code></p></td>
-<td><p>29</p></td>
-<td><p>2</p></td>
+<td><p>204</p></td>
+<td><p>8</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HyperOpt.rand.suggest</span></code></p></td>
-<td><p>28</p></td>
-<td><p>0</p></td>
+<td><p>204</p></td>
+<td><p>10</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HyperOpt.tpe.suggest</span></code></p></td>
-<td><p>32</p></td>
-<td><p>5</p></td>
+<td><p>250</p></td>
+<td><p>47</p></td>
 </tr>
 </tbody>
 </table>
 <ul class="simple">
-<li><p>Detailed results from which this summary emerged are available <a class="reference external" href="https://docs.google.com/spreadsheets/d/1E0fSSfqOuDhazccdsx7eG1aLCJagdpj1OKYhdOohZOg/">here</a>.</p></li>
+<li><p>Detailed results from which this summary emerged are available <a class="reference external" href="https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/">here</a>.</p></li>
 <li><p>If you want to compare your own tuner, follow the steps in our benchmarking framework <a class="reference external" href="https://github.com/HDI-Project/BTB/tree/master/benchmark">here</a>.</p></li>
 <li><p>If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at <a class="reference external" href="mailto:dailabmit&#37;&#52;&#48;gmail&#46;com">dailabmit<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p></li>
 </ul>
-<blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">warning</dt>
-<dd class="field-odd"><p><strong>Note</strong>: In release v0.3.7, we are currently only doing 50 ML challenges. Our next release for</p>
-</dd>
-</dl>
-<p>benchmarking will have results from 422 datasets and 3 optimization challenges. To check out what
-will be included in our benchmarking efforts - you can check <a class="reference external" href="https://github.com/HDI-Project/BTB/projects">here</a>.</p>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="what-s-next">

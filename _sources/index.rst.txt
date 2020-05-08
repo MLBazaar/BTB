@@ -82,6 +82,7 @@ was presented in 2019 as part of the Machine Learning Bazaar:
    tutorials/02_Selection
    tutorials/03_Session
    benchmark
+   kubernetes
 
 .. toctree::
    :caption: Resources

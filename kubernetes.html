@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Kubernetes &mdash; BTB 0.3.8.dev0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="btb package" href="api/btb.html" />
+    <link rel="prev" title="Benchmarking BTB" href="benchmark.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BTB
+          
+
+          
+            
+            <img src="_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.8.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#stable-release">Stable Release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#from-source">From source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">User Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#kubernetes">Kubernetes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kubernetes-cluster">Kubernetes Cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#admin-access">Admin Access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dask-function">Dask Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#config">Config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#config-format">Config Format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#run">run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dask-cluster">dask_cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#output">output</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-examples">Configuration Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#run-a-function-on-kubernetes">Run a function on Kubernetes.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#results">Results</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/btb.session.html">btb.session module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Kubernetes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/kubernetes.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="kubernetes">
+<h1>Kubernetes<a class="headerlink" href="#kubernetes" title="Permalink to this headline">¶</a></h1>
+<p>Running the complete BTB Benchmarking suite can take a long time.</p>
+<p>For this reason, it comes prepared to be executed distributedly over a dask cluster created using Kubernetes.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="kubernetes-cluster">
+<h3>Kubernetes Cluster<a class="headerlink" href="#kubernetes-cluster" title="Permalink to this headline">¶</a></h3>
+<p>The current version of the BTB benchmark is only prepared to run on kubernetes clusters for which direct access is enabled from the system that is triggering the commands, such as self-hosted clusters or AWS EKS clusters created using <code class="docutils literal notranslate"><span class="pre">eksctl</span></code>.</p>
+<p>You can easily make sure of this by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl --version
+</pre></div>
+</div>
+<p>If the output does not show any errors, you should be good to go!</p>
+</div>
+<div class="section" id="admin-access">
+<h3>Admin Access<a class="headerlink" href="#admin-access" title="Permalink to this headline">¶</a></h3>
+<p>For the current version, you need to execute the BTB benchmark from a POD inside the cluster within a namespace for which admin access is granted.</p>
+<p>If you are running your benchmark POD inside the default workspace, you can create the necessary roles using the following yml config:</p>
+<div class="highlight-yaml= notranslate"><div class="highlight"><pre><span></span>kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dask-admin
+rules:
+- apiGroups:
+    - &quot;&quot;
+  resources:
+    - pods
+    - services
+  verbs:
+    - list
+    - create
+    - delete
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dask-admin
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: dask-admin
+  apiGroup: rbac.authorization.k8s.io
+</pre></div>
+</div>
+<p>NOTE: A yml file named <code class="docutils literal notranslate"><span class="pre">dask-admin.yml</span></code> with this configuration can be found inside the <code class="docutils literal notranslate"><span class="pre">benchmark/kubernetes</span></code> folder.</p>
+<p>Once you have downloaded or created this file, run <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">apply</span> <span class="pre">-f</span> <span class="pre">dask-admin.yml</span></code>.</p>
+</div>
+<div class="section" id="dask-function">
+<h3>Dask Function<a class="headerlink" href="#dask-function" title="Permalink to this headline">¶</a></h3>
+<p>The Kubernetes framework allows running any function on a distributed cluster, as far as it uses Dask to distribute its tasks and its output is a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.</p>
+<p>In particular, the <code class="docutils literal notranslate"><span class="pre">run_benchmark</span></code> function from the BTB Benchmarking framework already does it, so all you need to do is execute it.</p>
+</div>
+</div>
+<div class="section" id="config">
+<h2>Config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h2>
+<p>In order to run a dask function on Kubernetes you will need to create a
+config dictionary to indicate how to setup the cluster and what to run in it.</p>
+<div class="section" id="config-format">
+<h3>Config Format<a class="headerlink" href="#config-format" title="Permalink to this headline">¶</a></h3>
+<p>The config dict that needs to be provided to the <code class="docutils literal notranslate"><span class="pre">run_dask_function</span></code> function has the following entries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">run</span></code>: specification of what function needs to be run and its arguments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dask_cluster</span></code>: configuration to use when creating the dask cluster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output</span></code>: where to store the output from the executed function.</p></li>
+</ul>
+<div class="section" id="run">
+<h4>run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h4>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">run</span></code> section you need to specify:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">function</span></code>: The complete python path to the function to be run. When runing <code class="docutils literal notranslate"><span class="pre">BTB</span></code>, this value must be set to <code class="docutils literal notranslate"><span class="pre">btb_benchmark.main.run_benchmark</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: A dictionary containing the keyword args that will be used with the given function.</p></li>
+</ul>
+</div>
+<div class="section" id="dask-cluster">
+<h4>dask_cluster<a class="headerlink" href="#dask-cluster" title="Permalink to this headline">¶</a></h4>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">dask_cluster</span></code> section you can specify:</p>
+<ul class="simple">
+<li><p><cite>workers</cite>: The amount of workers to use. This can be specified as a fixed integer value or as a subdictionary specifying a range, so dask-kubernetes can adapt the cluster size to the work load:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimum</span></code>: minumum number of dask workers to create.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maximum</span></code>: maximum number of dask workers to create.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">worker_config</span></code>: specification about how to setup each worker</p></li>
+</ul>
+<div class="section" id="worker-config">
+<h5>worker_config<a class="headerlink" href="#worker-config" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><p><cite>resources</cite>: A dictionary containig the following keys:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code>: The amount of RAM memory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cpu</span></code>: The amount of cpu’s to use.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">image</span></code>: A docker image to be used. If not specified, you must specify the <code class="docutils literal notranslate"><span class="pre">git_repository</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setup</span></code>: (Optional) spectification of any additional things to install or run to initialize the container before starting the dask-cluster.</p></li>
+</ul>
+<div class="section" id="setup">
+<h6>setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h6>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">script</span></code>: Location to bash script from the docker container to be run.</p></li>
+<li><p><cite>git_repository</cite>: A dictionary containing the following keys:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">url</span></code>: Link to the github repository to be cloned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reference</span></code>: A reference to the branch or commit to checkout at.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install</span></code>: command run to install this repository.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip_packages</span></code>: A list of pip packages to be installed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apt_packages</span></code>: A list of apt packages to be installed.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="output">
+<h4>output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: The path to a local file or s3 were the file will be saved.</p></li>
+<li><p><cite>bucket</cite>: If given, the path specified previously will be saved as s3://bucket/path</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code>: AWS authentication key to access the bucket.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">secret_key</span></code>: AWS secrect authentication key to access the bucket.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="configuration-examples">
+<h3>Configuration Examples<a class="headerlink" href="#configuration-examples" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example of such a config dictionary that uses a custom image:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;run&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="s1">&#39;btb_benchmark.main.run_benchmark&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;iterations&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;challenge_types&#39;</span><span class="p">:</span> <span class="s1">&#39;xgboost&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sample&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;dask_cluster&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;workers&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;worker_config&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;resources&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;memory&#39;</span><span class="p">:</span> <span class="s1">&#39;4G&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">4</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;mlbazaar/btb:latest&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;results/my_results.csv&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bucket&#39;</span><span class="p">:</span> <span class="s1">&#39;my-s3-bucket&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;myawskey&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;secret_key&#39;</span><span class="p">:</span> <span class="s1">&#39;myawssecretkey&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And this one is using a github repository and some additional pip packages:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;run&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="s1">&#39;btb_benchmark.main.run_benchmark&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;iterations&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;challenge_types&#39;</span><span class="p">:</span> <span class="s1">&#39;xgboost&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sample&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;dask_cluster&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;workers&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s1">&#39;worker_config&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;resources&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;memory&#39;</span><span class="p">:</span> <span class="s1">&#39;4G&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">4</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;setup&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;git_repository&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://github.com/HDI-Project/BTB&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;reference&#39;</span><span class="p">:</span> <span class="s1">&#39;kubernetes&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;install&#39;</span><span class="p">:</span> <span class="s1">&#39;make install-develop&#39;</span>
+                <span class="p">},</span>
+                <span class="s1">&#39;pip_packages&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mlblocks&#39;</span><span class="p">,</span> <span class="s1">&#39;sdv&#39;</span><span class="p">]</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="run-a-function-on-kubernetes">
+<h2>Run a function on Kubernetes.<a class="headerlink" href="#run-a-function-on-kubernetes" title="Permalink to this headline">¶</a></h2>
+<p>Create a pod, using the local kubernetes configuration, that starts a Dask Cluster using dask-kubernetes and runs a function specified within the <code class="docutils literal notranslate"><span class="pre">config</span></code> dictionary. Then, this pod talks to kubernetes to create <code class="docutils literal notranslate"><span class="pre">n</span></code> amount of new <code class="docutils literal notranslate"><span class="pre">pods</span></code> with a dask worker inside of each forming a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster. Then, a function specified from <code class="docutils literal notranslate"><span class="pre">config</span></code> is being imported and run with the given arguments. The tasks created by this <code class="docutils literal notranslate"><span class="pre">function</span></code> are being run on the <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster for distributed computation.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code>: config dictionary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">namespace</span></code>: namespace where the dask cluster will be created.</p></li>
+</ul>
+<div class="section" id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Permalink to this headline">¶</a></h3>
+<p>In this usage example we will create a config dictionary that will run the <code class="docutils literal notranslate"><span class="pre">btb_benchmark.main.run_benchmark</span></code> function. For our <code class="docutils literal notranslate"><span class="pre">dask_cluster</span></code> we will be requesting 2 workers and giving them 4 cores / cpu’s to each one to work with and the docker image <code class="docutils literal notranslate"><span class="pre">mlbazaar/btb:latest</span></code>. Then we will call <code class="docutils literal notranslate"><span class="pre">run_on_benchmark</span></code> to create the pods and we will see the logs of the pod that created the workers.</p>
+<ol class="arabic simple">
+<li><p>First create a <code class="docutils literal notranslate"><span class="pre">config</span></code> similar to the one that we showed <a class="reference external" href="#Configuration-Examples">above</a>, replacing the output values according to your aws settings.</p></li>
+<li><p>Once you have your <em>config</em> dict you can import the <code class="docutils literal notranslate"><span class="pre">run_on_kubernetes</span></code> function to create the first pod.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">btb_benchmark.kubernetes</span> <span class="kn">import</span> <span class="n">run_on_kubernetes</span>
+
+
+<span class="n">run_on_kubernetes</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>If everything proceeded as expected, a message <code class="docutils literal notranslate"><span class="pre">Pod</span> <span class="pre">created</span></code> should be displayed on your end. Then, you can check the pod’s state or logs by runing the following commands in your console:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl get pods
+</pre></div>
+</div>
+<p><em>Note</em>: bear in mind that this pod will create more pods, with the config that we provided there should be a total of 3 pods (the one that launched the task and the two workers that we specified).</p>
+<ol class="arabic simple">
+<li><p>Once you have the name of the pod (it’s usually the name of the image used with a unique extension and with the lowest runing time if you run the command after your code finished executing) you can run the following command to see its logs:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl logs -f &lt;name-of-the-pod&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>The result generated by <code class="docutils literal notranslate"><span class="pre">run_on_kubernetes</span></code> is a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> with one row per Challenge and one column per Tuner, if <code class="docutils literal notranslate"><span class="pre">detailed_output</span></code> was <code class="docutils literal notranslate"><span class="pre">False</span></code> (by default), containing the best scores obtained by each combination. This results will be stored as specified by config’s <code class="docutils literal notranslate"><span class="pre">output</span></code>, if you decide to upload your results to <code class="docutils literal notranslate"><span class="pre">s3</span></code>, you can find them in the bucket that you specified. If those are not set-up correctly, a fallback print inside the <code class="docutils literal notranslate"><span class="pre">log</span></code> output of the pod will be generated.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>                                                       BTB.GPEiTuner  ...  HyperOpt.rand.suggest  HyperOpt.tpe.suggest
+0              XGBoostChallenge(&#39;PizzaCutter1_1.csv&#39;)       0.664602  ...               0.617456              0.658357
+1        XGBoostChallenge(&#39;analcatdata_apnea3_1.csv&#39;)       0.812482  ...               0.800539              0.821088
+2                       XGBoostChallenge(&#39;ar4_1.csv&#39;)       0.675651  ...               0.622220              0.633233
+3                       XGBoostChallenge(&#39;ar5_1.csv&#39;)       0.547937  ...               0.445195              0.445195
+4                     XGBoostChallenge(&#39;ecoli_1.csv&#39;)       0.728677  ...               0.705936              0.724864
+5             XGBoostChallenge(&#39;eye_movements_1.csv&#39;)       0.834001  ...               0.820084              0.824663
+</pre></div>
+</div>
+<p>Otherwise, if you have specified the <code class="docutils literal notranslate"><span class="pre">detailed_output</span></code> argument to <code class="docutils literal notranslate"><span class="pre">True</span></code>, a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will be returned with the following columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">challenge</span></code>: The name of the challenge that has been evaluated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tuner</span></code>: The name of the tuner that has been used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">score</span></code>: The best score obtained.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iterations</span></code>: The tuning iterations used to obtain such score.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">elapsed_time</span></code>: The total amount of time spent for the iterations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code>: The name of the host where this task has been run.</p></li>
+</ul>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>                                           challenge             tuner     score  iterations         elapsed hostname
+0              XGBoostChallenge(&#39;newton_hema_1.csv&#39;)       BTB.GPTuner  0.333333           1 00:00:01.573637      lgn
+1   XGBoostChallenge(&#39;Click_prediction_small_1.csv&#39;)       BTB.GPTuner  0.509740           1 00:02:18.636728      lgn
+2                   XGBoostChallenge(&#39;vinnie_1.csv&#39;)       BTB.GPTuner  0.587278           1 00:00:01.723117      lgn
+3              XGBoostChallenge(&#39;newton_hema_1.csv&#39;)     BTB.GPEiTuner  0.361667           1 00:00:00.741206      lgn
+4   XGBoostChallenge(&#39;Click_prediction_small_1.csv&#39;)     BTB.GPEiTuner  0.534609           1 00:01:47.558414      lgn
+5                   XGBoostChallenge(&#39;vinnie_1.csv&#39;)     BTB.GPEiTuner  0.817457           1 00:00:04.198422      lgn
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/btb.html" class="btn btn-neutral float-right" title="btb package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="benchmark.html" class="btn btn-neutral float-left" title="Benchmarking BTB" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
