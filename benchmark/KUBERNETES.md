@@ -14,7 +14,7 @@ For this reason, it comes prepared to be executed distributedly over a dask clus
     * [Config Format](#Config-Format)
     * [Configuration Examples](#Configuration-Examples)
 * [Run a function on Kubernetes](#Run-a-function-on-Kubernetes)
-    * [Usage Example](Usage-Example)
+    * [Usage Example](#Usage-Example)
 * [Results](#Results)
 
 ## Requirements
@@ -208,38 +208,8 @@ Arguments:
 
 In this usage example we will create a config dictionary that will run the `btb_benchmark.main.run_benchmark` function. For our `dask_cluster` we will be requesting 2 workers and giving them 4 cores / cpu's to each one to work with and the docker image `mlbazaar/btb:latest`. Then we will call `run_on_benchmark` to create the pods and we will see the logs of the pod that created the workers.
 
-1. First create a `config` similar to this one, replacing the output values according to your aws settings:
-
-```python
-config = {
-    'run': {
-        'function': 'btb_benchmark.main.run_benchmark',
-        'args': {
-            'iterations': 10,
-            'challenge_types': 'xgboost',
-            'sample': 10,
-        }
-    },
-    'dask_cluster': {
-        'workers': 8,
-        'worker_config': {
-            'resources': {
-                'memory': '4G',
-                'cpu': 4
-            },
-            'image': 'mlbazaar/btb:latest',
-        },
-    },
-    'output': {
-        'path': 'results/my_results.csv',
-        'bucket': 'my-s3-bucket',
-        'key': 'myawskey',
-        'secret_key': 'myawssecretkey'
-    }
-}
-```
-
-2. Now that we have our *config* dict we can import the `run_on_kubernetes` function to create the first pod.
+1. First create a `config` similar to the one that we showed [above](#Configuration-Examples), replacing the output values according to your aws settings.
+2. Once you have your *config* dict you can import the `run_on_kubernetes` function to create the first pod.
 
 ```python
 from btb_benchmark.kubernetes import run_on_kubernetes

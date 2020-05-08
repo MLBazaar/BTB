@@ -172,7 +172,7 @@ We present the latest leaderboard from latest release below:
 | tuner                   | with ties | without ties |
 |-------------------------|-----------|--------------|
 | `BTB.GPEiTuner`         |    278    |           66 |
-| `BTB.GPTuner`           |  **287**  |           68 |
+| `BTB.GPTuner`           |  **287**  |       **68** |
 | `BTB.UniformTuner`      |    204    |            8 |
 | `HyperOpt.rand.suggest` |    204    |           10 |
 | `HyperOpt.tpe.suggest`  |    250    |           47 |
@@ -181,10 +181,6 @@ We present the latest leaderboard from latest release below:
 - If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).
 - If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
-
-> :warning: **Note**: In release v0.3.7, we were doing only 50 ML challenges. Our following
-releases for benchmarking have results from 422 datasets. To check out what will be included in our
-benchmarking efforts - you can check [here](https://github.com/HDI-Project/BTB/projects).
 
 # What's next?
 

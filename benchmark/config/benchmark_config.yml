@@ -3,7 +3,7 @@ dask_cluster:
     image: mlbazaar/btb:latest
     resources:
       cpu: 7
-      memory: 4G
+      memory: 7G
   workers: 52
 run:
   args:
