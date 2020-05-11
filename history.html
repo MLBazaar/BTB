@@ -364,11 +364,13 @@
 <h1>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2>0.3.8 - 2020-05-08<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>This version adds a new functionality which allows running the benchmarking framework over a Kubernetes cluster. By doing this, the benchmarking can be executed distributedly, which reduces the time necessary to generate a new leaderboard. We also have added new documentation and usage examples.</p>
+<p>This version adds a new functionality which allows running the benchmarking framework on a
+Kubernetes cluster. By doing this, the benchmarking process can be executed distributedly, which
+reduces the time necessary to generate a new leaderboard.</p>
 <div class="section" id="internal-improvements">
 <h3>Internal improvements<a class="headerlink" href="#internal-improvements" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">btb_benchmark.kubernetes.run_on_kubernetes</span></code>: Run dask function inside a pod using the given
+<li><p><code class="docutils literal notranslate"><span class="pre">btb_benchmark.kubernetes.run_dask_function</span></code>: Run dask function inside a pod using the given
 config.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">btb_benchmark.kubernetes.run_on_kubernetes</span></code>: Start a Dask Cluster using dask-kubernetes and
 run a function.</p></li>
