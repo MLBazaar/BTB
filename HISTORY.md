@@ -2,13 +2,13 @@
 
 ## 0.3.8 - 2020-05-08
 
-This release brings a Kubernetes interface to allow users to run their benchmarking on a
-Kubernetes cluster and `EKS`. This process helps the benchmarking framework to generate
-the leaderboard on a distributed computation.
+This version adds a new functionality which allows running the benchmarking framework on a
+Kubernetes cluster. By doing this, the benchmarking process can be executed distributedly, which
+reduces the time necessary to generate a new leaderboard.
 
 ### Internal improvements
 
-* `btb_benchmark.kubernetes.run_on_kubernetes`: Run dask function inside a pod using the given
+* `btb_benchmark.kubernetes.run_dask_function`: Run dask function inside a pod using the given
 config.
 * `btb_benchmark.kubernetes.run_on_kubernetes`: Start a Dask Cluster using dask-kubernetes and
 run a function.
