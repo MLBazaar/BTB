@@ -38,7 +38,8 @@ install_requires = [
     'scikit-learn>=0.20.0,<0.23',
     'pandas>=0.21.0,<0.26.0',
     'XlsxWriter>=1.2.8,<1.3',
-    github_dependency('csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods')
+    github_dependency('csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods'),
+    'ax-platform>=0.1.9,<0.1.13',
 ]
 
 
