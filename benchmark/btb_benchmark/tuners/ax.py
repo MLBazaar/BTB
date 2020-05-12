@@ -57,7 +57,6 @@ def adapt_scoring_function(scoring_function):
     Ax's optimize function calls the scoring function with a dict object, however our challenges
     recieve them as kwargs.
     """
-
     def adapted_function(params):
         return scoring_function(**params)
 
@@ -78,7 +77,6 @@ def ax_tuning_function(scoring_function, tunable_hyperparameters, iterations):
         iterations (int):
             Number of tuning iterations to perform.
     """
-
     parameters = convert_hyperparameters(tunable_hyperparameters)
     evaluation_function = adapt_scoring_function(scoring_function)
 
