@@ -39,12 +39,13 @@ BTB ("Bayesian Tuning and Bandits") is a simple, extensible backend for developi
 systems such as AutoML systems. It provides an easy-to-use interface for *tuning* and *selection*.
 
 It is currently being used in several AutoML systems:
+
 * `ATM <https://github.com/HDI-Project/ATM>`_, distributed, multi-tenant AutoML system for
-classifier tuning
+  classifier tuning
 * `mit-d3m-ta2 <https://github.com/HDI-Project/mit-d3m-ta2/>`_, MIT's system for the DARPA
-`Data-driven discovery of models <https://www.darpa.mil/program/data-driven-discovery-of-models>`_ (D3M) program
+  `Data-driven discovery of models <https://www.darpa.mil/program/data-driven-discovery-of-models>`_ (D3M) program
 * `AutoBazaar <https://github.com/HDI-Project/AutoBazaar>`_, a flexible, general-purpose
-AutoML system
+  AutoML system
 
 History
 -------

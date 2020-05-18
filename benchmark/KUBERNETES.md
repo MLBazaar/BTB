@@ -10,8 +10,8 @@ For this reason, it comes prepared to be executed distributedly over a dask clus
     * [Kubernetes Cluster](#Kubernetes-Cluster)
     * [Admin Acces](#Admin-Access)
     * [Dask Function](#Dask-Function)
-* [Config](#Config)
-    * [Config Format](#Config-Format)
+* [Benchmark Configuration](#Benchmark-Configuration)
+    * [Configuration Format](#Configuration-Format)
     * [Configuration Examples](#Configuration-Examples)
 * [Run a function on Kubernetes](#Run-a-function-on-Kubernetes)
     * [Usage Example](#Usage-Example)
@@ -77,12 +77,12 @@ The Kubernetes framework allows running any function on a distributed cluster, a
 
 In particular, the `run_benchmark` function from the BTB Benchmarking framework already does it, so all you need to do is execute it.
 
-## Config
+## Benchmark Configuration
 
 In order to run a dask function on Kubernetes you will need to create a
 config dictionary to indicate how to setup the cluster and what to run in it.
 
-### Config Format
+### Configuration Format
 
 The config dict that needs to be provided to the `run_dask_function` function has the following entries:
 
@@ -208,7 +208,7 @@ Arguments:
 
 In this usage example we will create a config dictionary that will run the `btb_benchmark.main.run_benchmark` function. For our `dask_cluster` we will be requesting 2 workers and giving them 4 cores / cpu's to each one to work with and the docker image `mlbazaar/btb:latest`. Then we will call `run_on_benchmark` to create the pods and we will see the logs of the pod that created the workers.
 
-1. First write your config dict following the [instructions above](#Configuration-Examples)
+1. First write your config dict following the [instructions above](#benchmark-configuration).
 2. Once you have your *config* dict you can import the `run_on_kubernetes` function to create the first pod.
 
 ```python

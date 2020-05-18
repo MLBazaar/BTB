@@ -1,4 +1,4 @@
-FROM mlbazaar/btb:latest
+FROM daskdev/dask:latest
 
 RUN mkdir -p /workdir/btb && \
     mkdir -p /workdir/btb_benchmark && \

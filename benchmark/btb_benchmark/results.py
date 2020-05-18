@@ -7,7 +7,7 @@ def load_results(files):
     version_results = dict()
     for filename in files:
         version = os.path.basename(filename).replace('.csv', '')
-        version_results[version] = pd.read_csv(filename, index_col=0)
+        version_results[version] = pd.read_csv(filename, index_col=0).round(6)
 
     return version_results
 

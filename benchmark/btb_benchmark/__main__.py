@@ -16,6 +16,7 @@ def _run(args):
     logging.basicConfig(level=log_level, format=fmt)
     logging.getLogger("botocore").setLevel(logging.ERROR)
     logging.getLogger("hyperopt").setLevel(logging.ERROR)
+    logging.getLogger("ax").setLevel(logging.ERROR)
     logging.getLogger("urllib3").setLevel(logging.CRITICAL)
 
     # run
