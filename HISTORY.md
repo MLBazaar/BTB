@@ -1,5 +1,14 @@
 # History
 
+## 0.3.9 - 2020-05-18
+
+With this release we integrate a new tuning library, `Ax`, with our benchmarking process. A new
+leaderboard including this library has been generated.
+
+### Resolved Issues
+
+* Issue #194: Integrate `Ax` for benchmarking.
+
 ## 0.3.8 - 2020-05-08
 
 This version adds a new functionality which allows running the benchmarking framework on a

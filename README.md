@@ -171,11 +171,11 @@ We present the latest leaderboard from latest release below:
 
 | tuner                   | with ties | without ties |
 |-------------------------|-----------|--------------|
-| `BTB.GPEiTuner`         |    278    |           66 |
-| `BTB.GPTuner`           |  **287**  |       **68** |
-| `BTB.UniformTuner`      |    204    |            8 |
-| `HyperOpt.rand.suggest` |    204    |           10 |
-| `HyperOpt.tpe.suggest`  |    250    |           47 |
+| `Ax.optimize`           |    177    |            7 |
+| `BTB.GPEiTuner`         |    265    |           55 |
+| `BTB.GPTuner`           |  **296**  |       **86** |
+| `BTB.UniformTuner`      |    204    |           13 |
+| `HyperOpt.tpe.suggest`  |    241    |           44 |
 
 - Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
 - If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).

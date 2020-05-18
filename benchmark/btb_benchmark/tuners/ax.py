@@ -80,11 +80,11 @@ def ax_tuning_function(scoring_function, tunable_hyperparameters, iterations):
     parameters = convert_hyperparameters(tunable_hyperparameters)
     evaluation_function = adapt_scoring_function(scoring_function)
 
-    results = optimize(
+    best_params = optimize(
         parameters=parameters,
         evaluation_function=evaluation_function,
         total_trials=iterations,
         minimize=False
-    )
+    )[0]
 
-    return results[1][0]['objective']
+    return evaluation_function(best_params)

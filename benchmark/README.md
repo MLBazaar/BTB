@@ -63,8 +63,8 @@ Currently, benchmarking framework compares the following tuning functions from B
 
 And the following external tuning functions:
 
-- [HyperOpt.rand](https://github.com/hyperopt/hyperopt/blob/master/hyperopt/rand.py): Implements a random hyper parameter search.
 - [HyperOpt.tpe](https://github.com/hyperopt/hyperopt/blob/master/hyperopt/tpe.py): Implements a Tree-Structured Parzen Estimator for hyperparameter search.
+- [Ax.optimize](https://github.com/facebook/Ax): Implements Bayesian optimization and bandit optimization, powered by [BoTorch](https://github.com/pytorch/botorch).
 
 Note: In our future releases we will be adding the following:
 
