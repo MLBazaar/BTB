@@ -87,4 +87,4 @@ def ax_tuning_function(scoring_function, tunable_hyperparameters, iterations):
         minimize=False
     )[0]
 
-    return evaluation_function(best_params)
+    return scoring_function(best_params)

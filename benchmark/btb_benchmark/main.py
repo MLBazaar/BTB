@@ -9,13 +9,11 @@ import pandas as pd
 from distributed.client import futures_of
 from distributed.diagnostics.progressbar import TextProgressBar
 
-from btb.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
     MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
 from btb_benchmark.challenges.challenge import Challenge
 from btb_benchmark.results import load_results, write_results
 from btb_benchmark.tuners import get_all_tuners
-from btb_benchmark.tuners.btb import make_btb_tuning_function
 
 LOGGER = logging.getLogger(__name__)
 ALL_TYPES = ['math', 'xgboost']
@@ -188,9 +186,7 @@ def _get_tuners_dict(tuners=None):
     else:
         selected_tuning_functions = {}
         for tuner in _as_list(tuners):
-            if isinstance(tuner, type) and issubclass(tuner, BaseTuner):
-                selected_tuning_functions[tuner.__name__] = make_btb_tuning_function(tuner)
-            elif callable(tuner):
+            if callable(tuner):
                 selected_tuning_functions[tuner.__name__] = tuner
             else:
                 tuning_function = all_tuners.get(tuner)
