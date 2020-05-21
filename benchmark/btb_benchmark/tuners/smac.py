@@ -85,14 +85,10 @@ def smac_tuning_function(optimizer, scoring_function, tunable_hyperparameters, i
         'deterministic': 'true',
     })
 
-    smac = optimizer(scenario=scenario, tae_runner=tae_runner)
+    smac = optimizer(scenario=scenario, rng=42, tae_runner=tae_runner)
     best_config = smac.optimize()
 
     return scoring_function(**best_config)
-
-
-def smac_smac4bo_tuning_function(scoring_function, tunable_hyperparameters, iterations):
-    return smac_tuning_function(SMAC4BO, scoring_function, tunable_hyperparameters, iterations)
 
 
 def smac_smac4hpo_tuning_function(scoring_function, tunable_hyperparameters, iterations):
