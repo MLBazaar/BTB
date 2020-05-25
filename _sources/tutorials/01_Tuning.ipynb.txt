@@ -518,9 +518,11 @@
     "\n",
     "| tuner                   | with ties | without ties |\n",
     "|-------------------------|-----------|--------------|\n",
-    "| `BTB.GPEiTuner`         |    **35** |            7 |\n",
-    "| `BTB.GPTuner`           |    33     |        **8** |\n",
-    "| `BTB.UniformTuner`      |    29     |            2 |\n"
+    "| `Ax.optimize`           |    177    |            7 |\n",
+    "| `BTB.GPEiTuner`         |    265    |           55 |\n",
+    "| `BTB.GPTuner`           |  **296**  |       **86** |\n",
+    "| `BTB.UniformTuner`      |    204    |           13 |\n",
+    "| `HyperOpt.tpe.suggest`  |    241    |           44 |\n"
    ]
   }
  ],
@@ -541,7 +543,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.6.9"
+   "version": "3.6.10"
   }
  },
  "nbformat": 4,
