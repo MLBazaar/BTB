@@ -6,7 +6,8 @@ from btb.tuning.tuners import GPEiTuner, GPTuner, UniformTuner
 from btb_benchmark.tuners.ax import ax_tuning_function
 from btb_benchmark.tuners.btb import make_btb_tuning_function
 from btb_benchmark.tuners.hyperopt import make_hyperopt_tuning_function
-from btb_benchmark.tuners.smac import smac_smac4hpo_tuning_function
+from btb_benchmark.tuners.smac import (smac_hb4ac, smac_smac4hpo_ei,
+                                       smac_smac4hpo_lcb, smac_smac4hpo_pi)
 
 
 def get_all_tuners():
@@ -18,5 +19,8 @@ def get_all_tuners():
         'BTB.UniformTuner': make_btb_tuning_function(UniformTuner),
         'HyperOpt.tpe': make_hyperopt_tuning_function(tpe.suggest),
         'HyperOpt.rand': make_hyperopt_tuning_function(rand.suggest),
-        'SMAC.SMAC4HPO': smac_smac4hpo_tuning_function,
+        'SMAC.HB4AC': smac_hb4ac,
+        'SMAC.SMAC4HPO_EI': smac_smac4hpo_ei,
+        'SMAC.SMAC4HPO_LCB': smac_smac4hpo_lcb,
+        'SMAC.SMAC4HPO_PI': smac_smac4hpo_pi,
     }

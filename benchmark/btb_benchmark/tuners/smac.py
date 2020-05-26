@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 """SMAC: Sequential Model-based Algorithm Configuration"""
 
+import os
+from uuid import uuid4
+
 import ConfigSpace.hyperparameters as hp
 from smac.configspace import ConfigurationSpace
-from smac.facade.smac_bo_facade import SMAC4BO
+from smac.facade.hyperband_facade import HB4AC
 from smac.facade.smac_hpo_facade import SMAC4HPO
+from smac.optimizer import acquisition
 from smac.scenario.scenario import Scenario
 
+
+def generate_uid_path():
+    return os.path.join('smac3', str(uuid4()))
 
 def create_config_space(dict_hyperparams):
     """Create the hyperparameters hyperspace."""
@@ -62,7 +69,8 @@ def adapt_scoring_function(scoring_function):
     return adapted_function
 
 
-def smac_tuning_function(optimizer, scoring_function, tunable_hyperparameters, iterations):
+def smac_tuning_function(optimizer, scoring_function,
+                         tunable_hyperparameters, iterations, **kwargs):
     """Construct and run a full optimization loop.
 
     Convert the hyperparameters in to the configuration space that smac expects.
@@ -80,16 +88,66 @@ def smac_tuning_function(optimizer, scoring_function, tunable_hyperparameters, i
     tae_runner = adapt_scoring_function(scoring_function)
     scenario = Scenario({
         'run_obj': 'quality',
-        'runcount-limit': iterations,
+        'runcount_limit': iterations,
         'cs': config_space,
         'deterministic': 'true',
+        'output_dir': generate_uid_path(),
     })
 
-    smac = optimizer(scenario=scenario, rng=42, tae_runner=tae_runner)
+    optimizer_params = {
+        'scenario': scenario,
+        'rng': 42,
+        'tae_runner': tae_runner,
+    }
+
+    if kwargs:
+        optimizer_params.update(kwargs)
+
+    smac = optimizer(**optimizer_params)
     best_config = smac.optimize()
 
     return scoring_function(**best_config)
 
 
-def smac_smac4hpo_tuning_function(scoring_function, tunable_hyperparameters, iterations):
-    return smac_tuning_function(SMAC4HPO, scoring_function, tunable_hyperparameters, iterations)
+def smac_smac4hpo_ei(scoring_function, tunable_hyperparameters, iterations):
+    return smac_tuning_function(
+        SMAC4HPO,
+        scoring_function,
+        tunable_hyperparameters,
+        iterations,
+        acquisition_function=acquisition.EI
+    )
+
+
+def smac_smac4hpo_lcb(scoring_function, tunable_hyperparameters, iterations):
+    return smac_tuning_function(
+        SMAC4HPO,
+        scoring_function,
+        tunable_hyperparameters,
+        iterations,
+        acquisition_function=acquisition.LCB
+    )
+
+
+def smac_smac4hpo_pi(scoring_function, tunable_hyperparameters, iterations):
+    return smac_tuning_function(
+        SMAC4HPO,
+        scoring_function,
+        tunable_hyperparameters,
+        iterations,
+        acquisition_function=acquisition.PI
+    )
+
+def smac_hb4ac(scoring_function, tunable_hyperparameters, iterations):
+    intensifier_kwargs = {
+        'initial_budget': 1,
+        'max_budget': iterations
+    }
+
+    return smac_tuning_function(
+        HB4AC,
+        scoring_function,
+        tunable_hyperparameters,
+        iterations,
+        intensifier_kwargs=intensifier_kwargs
+    )
