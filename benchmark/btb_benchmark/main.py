@@ -14,8 +14,8 @@ from btb_benchmark.challenges import (
     MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
 from btb_benchmark.challenges.challenge import Challenge
 from btb_benchmark.results import load_results, write_results
-from btb_benchmark.tuners import get_all_tuners
-from btb_benchmark.tuners.btb import make_btb_tuning_function
+from btb_benchmark.tuning_functions import get_all_tuning_functions
+from btb_benchmark.tuning_functions.btb import make_btb_tuning_function
 
 LOGGER = logging.getLogger(__name__)
 ALL_TYPES = ['math', 'xgboost']
@@ -181,7 +181,7 @@ def _as_list(param):
 
 
 def _get_tuners_dict(tuners=None):
-    all_tuners = get_all_tuners()
+    all_tuners = get_all_tuning_functions()
     if tuners is None:
         LOGGER.info('Using all tuning functions.')
         return all_tuners
