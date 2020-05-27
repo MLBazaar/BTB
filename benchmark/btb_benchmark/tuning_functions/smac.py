@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """SMAC: Sequential Model-based Algorithm Configuration"""
 
-import os
 from tempfile import TemporaryDirectory
-from uuid import uuid4
 
 import ConfigSpace.hyperparameters as hp
 from smac.configspace import ConfigurationSpace
