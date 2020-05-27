@@ -63,7 +63,7 @@ def adapt_scoring_function(scoring_function):
     return adapted_function
 
 
-def ax_tuning_function(scoring_function, tunable_hyperparameters, iterations):
+def ax_optimize(scoring_function, tunable_hyperparameters, iterations):
     """Construct and run a full optimization loop.
 
     Convert the hyperparameters in to the accepted format by ``Ax`` and adapt the scoring
@@ -87,4 +87,4 @@ def ax_tuning_function(scoring_function, tunable_hyperparameters, iterations):
         minimize=False
     )[0]
 
-    return scoring_function(best_params)
+    return evaluation_function(best_params)
