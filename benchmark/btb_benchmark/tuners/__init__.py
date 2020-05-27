@@ -6,8 +6,8 @@ from btb.tuning.tuners import GPEiTuner, GPTuner, UniformTuner
 from btb_benchmark.tuners.ax import ax_tuning_function
 from btb_benchmark.tuners.btb import make_btb_tuning_function
 from btb_benchmark.tuners.hyperopt import make_hyperopt_tuning_function
-from btb_benchmark.tuners.smac import (smac_hb4ac, smac_smac4hpo_ei,
-                                       smac_smac4hpo_lcb, smac_smac4hpo_pi)
+from btb_benchmark.tuners.smac import (
+    smac_hb4ac, smac_smac4hpo_ei, smac_smac4hpo_lcb, smac_smac4hpo_pi)
 
 
 def get_all_tuners():

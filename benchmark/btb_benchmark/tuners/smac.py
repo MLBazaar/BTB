@@ -12,10 +12,11 @@ from smac.optimizer import acquisition
 from smac.scenario.scenario import Scenario
 
 
-def generate_uid_path():
+def _generate_uid_path():
     return os.path.join('smac3', str(uuid4()))
 
-def create_config_space(dict_hyperparams):
+
+def _create_config_space(dict_hyperparams):
     """Create the hyperparameters hyperspace."""
     config_space = ConfigurationSpace()
 
@@ -49,13 +50,14 @@ def create_config_space(dict_hyperparams):
         elif hp_type == 'str':
             hp_range = hyperparam.get('range') or hyperparam.get('values')
             hp_default = hyperparam.get('default') or hp_range[0]
-            config_space.add_hyperparameter(
-                hp.CategoricalHyperparameter(name, hp_range, default_value=hp_default))
+            if hp_default is not None:
+                config_space.add_hyperparameter(
+                    hp.CategoricalHyperparameter(name, hp_range, default_value=hp_default))
 
     return config_space
 
 
-def adapt_scoring_function(scoring_function):
+def _adapt_scoring_function(scoring_function):
     """Adapt the scoring function.
 
     SMAC optimize function calls the scoring function with a dict object, however our challenges
@@ -69,29 +71,40 @@ def adapt_scoring_function(scoring_function):
     return adapted_function
 
 
-def smac_tuning_function(optimizer, scoring_function,
-                         tunable_hyperparameters, iterations, **kwargs):
+def _smac_tuning_function(optimizer, scoring_function,
+                          tunable_hyperparameters, iterations, **kwargs):
     """Construct and run a full optimization loop.
 
-    Convert the hyperparameters in to the configuration space that smac expects.
+    Given an optimizer from ``smac.facade``, use it to perform a complete optimization for
+    a given ``scoring_function``. This is achieved by creating a ``config_space`` from the
+    tunable hyperparameters, adapting the scoring function to work with minimization, and
+    then, create an instace scenario that with the config space and the amount of iterations.
+
+    Finally we use the optimizer with the previously created sceneario and adapted scoring
+    function to optimize this and obtain the best configuration for the given iterations.
 
     Args:
+        optimizer (type):
+            A ``smac.facade`` class that represents a tuner.
         scoring_function (function):
             A function that performs scoring over params.
         tunable_hyperparameters (dict):
             A python dict with hyperparameters.
         iterations (int):
             Number of tuning iterations to perform.
+        kwargs (kwargs):
+            Any additional configuration used by the optimizer can be passed as
+            keyword args.
     """
-
-    config_space = create_config_space(tunable_hyperparameters)
-    tae_runner = adapt_scoring_function(scoring_function)
+    config_space = _create_config_space(tunable_hyperparameters)
+    tae_runner = _adapt_scoring_function(scoring_function)
     scenario = Scenario({
         'run_obj': 'quality',
         'runcount_limit': iterations,
         'cs': config_space,
         'deterministic': 'true',
-        'output_dir': generate_uid_path(),
+        'output_dir': _generate_uid_path(),
+        'limit_resources': False,
     })
 
     optimizer_params = {
@@ -110,7 +123,8 @@ def smac_tuning_function(optimizer, scoring_function,
 
 
 def smac_smac4hpo_ei(scoring_function, tunable_hyperparameters, iterations):
-    return smac_tuning_function(
+    """Use SMAC4HPO with Expected Improvement acquisition function."""
+    return _smac_tuning_function(
         SMAC4HPO,
         scoring_function,
         tunable_hyperparameters,
@@ -120,7 +134,8 @@ def smac_smac4hpo_ei(scoring_function, tunable_hyperparameters, iterations):
 
 
 def smac_smac4hpo_lcb(scoring_function, tunable_hyperparameters, iterations):
-    return smac_tuning_function(
+    """Use SMAC4HPO with Lower Confidence Bound acquisition function."""
+    return _smac_tuning_function(
         SMAC4HPO,
         scoring_function,
         tunable_hyperparameters,
@@ -130,7 +145,8 @@ def smac_smac4hpo_lcb(scoring_function, tunable_hyperparameters, iterations):
 
 
 def smac_smac4hpo_pi(scoring_function, tunable_hyperparameters, iterations):
-    return smac_tuning_function(
+    """Use SMAC4HPO with Probability of Improvement acquisition function."""
+    return _smac_tuning_function(
         SMAC4HPO,
         scoring_function,
         tunable_hyperparameters,
@@ -138,13 +154,15 @@ def smac_smac4hpo_pi(scoring_function, tunable_hyperparameters, iterations):
         acquisition_function=acquisition.PI
     )
 
+
 def smac_hb4ac(scoring_function, tunable_hyperparameters, iterations):
+    """Use HyperBand implementation from SMAC."""
     intensifier_kwargs = {
         'initial_budget': 1,
         'max_budget': iterations
     }
 
-    return smac_tuning_function(
+    return _smac_tuning_function(
         HB4AC,
         scoring_function,
         tunable_hyperparameters,
