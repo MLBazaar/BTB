@@ -3,7 +3,7 @@
 from btb_benchmark.tuning_functions.ax import ax_optimize
 from btb_benchmark.tuning_functions.btb import gpeituner, gptuner, uniformtuner
 from btb_benchmark.tuning_functions.hyperopt import hyperopt_tpe
-from btb_benchmark.tuners.smac import (
+from btb_benchmark.tuning_functions.smac import (
     smac_hb4ac, smac_smac4hpo_ei, smac_smac4hpo_lcb, smac_smac4hpo_pi)
 
 

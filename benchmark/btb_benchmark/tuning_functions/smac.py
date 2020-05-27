@@ -2,6 +2,7 @@
 """SMAC: Sequential Model-based Algorithm Configuration"""
 
 import os
+from tempfile import TemporaryDirectory
 from uuid import uuid4
 
 import ConfigSpace.hyperparameters as hp
@@ -13,7 +14,7 @@ from smac.scenario.scenario import Scenario
 
 
 def _generate_uid_path():
-    return os.path.join('smac3', str(uuid4()))
+    return TemporaryDirectory().name
 
 
 def _create_config_space(dict_hyperparams):
