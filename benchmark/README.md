@@ -88,6 +88,12 @@ Please see how we introduced `HyperOpt` with this [signature here](https://githu
 
 ## Running the Benchmarking
 
+> :warning: In order to run the benchmarking process you have to install `BTB` from sources in `development`.
+To achieve so, please follow the instructions in our [contributing guide](
+https://hdi-project.github.io/BTB/contributing.html#get-started).
+Also you will need to install an additional system requierement: `swig`. If you are running Ubuntu
+based machine you can install it with the following command: `sudo apt-get install swig`
+
 The user API for the BTB Benchmarking is the `btb_benchmark.main.run_benchmark` function.
 
 The simplest usage is to execute the `run_benchmark` function without any arguments:

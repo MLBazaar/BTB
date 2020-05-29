@@ -42,7 +42,7 @@ install_requires = [
     'ax-platform>=0.1.9,<0.1.13',
     'smac>=0.12.1,<0.13',
     'scikit-optimize>=0.7.4<0.8',
-    'emcee>=2.1.0',
+    'emcee>=2.1.0,<3',
 ]
 
 

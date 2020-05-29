@@ -10,9 +10,7 @@ from smac.facade.smac_hpo_facade import SMAC4HPO
 from smac.optimizer import acquisition
 from smac.scenario.scenario import Scenario
 
-
-def _generate_uid_path():
-    return TemporaryDirectory().name
+NONE = 'null'
 
 
 def _create_config_space(dict_hyperparams):
@@ -48,12 +46,24 @@ def _create_config_space(dict_hyperparams):
 
         elif hp_type == 'str':
             hp_range = hyperparam.get('range') or hyperparam.get('values')
+            hp_range = [NONE if hp is None else hp for hp in hp_range]
             hp_default = hyperparam.get('default') or hp_range[0]
-            if hp_default is not None:
-                config_space.add_hyperparameter(
-                    hp.CategoricalHyperparameter(name, hp_range, default_value=hp_default))
+            hp_default = NONE if hp_default is None else hp_default
+
+            config_space.add_hyperparameter(
+                hp.CategoricalHyperparameter(name, hp_range, default_value=hp_default))
 
     return config_space
+
+
+def _parse_params(params):
+    parsed_params = dict()
+    params = params if isinstance(params, dict) else params.get_dictionary()
+
+    for key, value in params.items():
+        parsed_params[key] = None if value == NONE else value
+
+    return parsed_params
 
 
 def _adapt_scoring_function(scoring_function):
@@ -65,9 +75,35 @@ def _adapt_scoring_function(scoring_function):
     """
 
     def adapted_function(params):
-        return -scoring_function(**params)
+        parsed_params = _parse_params(params)
+        return -scoring_function(**parsed_params)
 
     return adapted_function
+
+
+def _get_optimizer_params(scoring_function, tunable_hyperparameters,
+                          iterations, tmp_dir, **kwargs):
+    config_space = _create_config_space(tunable_hyperparameters)
+    tae_runner = _adapt_scoring_function(scoring_function)
+    scenario = Scenario({
+        'run_obj': 'quality',
+        'runcount_limit': iterations,
+        'cs': config_space,
+        'deterministic': 'true',
+        'output_dir': tmp_dir,
+        'limit_resources': False,
+    })
+
+    optimizer_params = {
+        'scenario': scenario,
+        'rng': 42,
+        'tae_runner': tae_runner,
+    }
+
+    if kwargs:
+        optimizer_params.update(kwargs)
+
+    return optimizer_params
 
 
 def _smac_tuning_function(optimizer, scoring_function,
@@ -95,30 +131,19 @@ def _smac_tuning_function(optimizer, scoring_function,
             Any additional configuration used by the optimizer can be passed as
             keyword args.
     """
-    config_space = _create_config_space(tunable_hyperparameters)
-    tae_runner = _adapt_scoring_function(scoring_function)
-    scenario = Scenario({
-        'run_obj': 'quality',
-        'runcount_limit': iterations,
-        'cs': config_space,
-        'deterministic': 'true',
-        'output_dir': _generate_uid_path(),
-        'limit_resources': False,
-    })
+    with TemporaryDirectory() as tmp_dir:
+        optimizer_params = _get_optimizer_params(
+            scoring_function,
+            tunable_hyperparameters,
+            iterations,
+            tmp_dir,
+            **kwargs
+        )
 
-    optimizer_params = {
-        'scenario': scenario,
-        'rng': 42,
-        'tae_runner': tae_runner,
-    }
+        smac = optimizer(**optimizer_params)
+        best_config = smac.optimize()
 
-    if kwargs:
-        optimizer_params.update(kwargs)
-
-    smac = optimizer(**optimizer_params)
-    best_config = smac.optimize()
-
-    return scoring_function(**best_config)
+    return scoring_function(**_parse_params(best_config))
 
 
 def smac_smac4hpo_ei(scoring_function, tunable_hyperparameters, iterations):
