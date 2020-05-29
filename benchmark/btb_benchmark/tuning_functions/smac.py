@@ -61,7 +61,7 @@ def _parse_params(params):
     params = params if isinstance(params, dict) else params.get_dictionary()
 
     for key, value in params.items():
-        parsed_params[key] = None if value == NONE else value
+        parsed_params[key] = None if value == _NONE else value
 
     return parsed_params
 
