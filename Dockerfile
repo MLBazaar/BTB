@@ -3,7 +3,7 @@ FROM daskdev/dask:latest
 RUN mkdir -p /workdir/btb && \
     mkdir -p /workdir/btb_benchmark && \
     apt-get update && \
-    apt-get install -y build-essential
+    apt-get install -y build-essential swig
 
 COPY setup.py MANIFEST.in /workdir/btb/
 COPY benchmark/setup.py /workdir/btb_benchmark/
