@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Benchmarking BTB &mdash; BTB 0.3.10.dev0 documentation</title>
+  <title>Benchmarking BTB &mdash; BTB 0.3.11.dev0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.3.10.dev0
+                0.3.11.dev0
               </div>
             
           
@@ -426,11 +426,11 @@ been implemented using third party libraries to be able to compare their perform
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/hyperopt/hyperopt/blob/master/hyperopt/tpe.py">HyperOpt.tpe</a>: Implements a Tree-Structured Parzen Estimator for hyperparameter search.</p></li>
 <li><p><a class="reference external" href="https://github.com/facebook/Ax">Ax.optimize</a>: Implements Bayesian optimization and bandit optimization, powered by <a class="reference external" href="https://github.com/pytorch/botorch">BoTorch</a>.</p></li>
-<li><p><a class="reference external" href="https://github.com/automl/SMAC3/blob/master/smac/facade/smac_hpo_facade.py">SMAC.SMAC4HPO</a>: Use sequential model-based algorithm configuration for optimizing hyperparameters.</p></li>
+<li><p><a class="reference external" href="https://github.com/automl/SMAC3/blob/master/smac/facade/smac_hpo_facade.py">SMAC.SMAC4HPO</a>: Bayesian optimization using a Random Forest model of <em>pyrfr</em>.</p></li>
+<li><p><a class="reference external" href="https://github.com/automl/SMAC3/blob/master/smac/facade/hyperband_facade.py">SMAC.HB4AC</a>: Uses Successive Halving for proposals.</p></li>
 </ul>
 <p>Note: In our future releases we will be adding the following:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/ray-project/ray/tree/master/python/ray/tune">Ray.Tune</a>.</p></li>
 <li><p><a class="reference external" href="https://github.com/sherpa-ai/sherpa/">Sherpa</a>.</p></li>
 <li><p><a class="reference external" href="https://github.com/SheffieldML/GPyOpt">GPyOpt</a>.</p></li>
 </ul>

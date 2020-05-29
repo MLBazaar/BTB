@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tuning &mdash; BTB 0.3.10.dev0 documentation</title>
+  <title>Tuning &mdash; BTB 0.3.11.dev0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.3.10.dev0
+                0.3.11.dev0
               </div>
             
           
@@ -981,9 +981,9 @@ SGDClassifier(alpha=0.784797005036952, average=False, class_weight=None,
 <p>Currently we have a <a class="reference external" href="https://github.com/HDI-Project/BTB/tree/master/benchmark">Benchmarking</a> process that evaluates the <code class="docutils literal notranslate"><span class="pre">tuners</span></code> performance against each other this are the latest results that we obtained for the <code class="docutils literal notranslate"><span class="pre">BTB</span></code> tuners.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 49%" />
-<col style="width: 23%" />
-<col style="width: 28%" />
+<col style="width: 46%" />
+<col style="width: 24%" />
+<col style="width: 30%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>tuner</p></th>
@@ -993,24 +993,40 @@ SGDClassifier(alpha=0.784797005036952, average=False, class_weight=None,
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Ax.optimize</span></code></p></td>
-<td><p>177</p></td>
-<td><p>7</p></td>
+<td><p>185</p></td>
+<td><p>5</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.GPEiTuner</span></code></p></td>
-<td><p>265</p></td>
-<td><p>55</p></td>
+<td><p>233</p></td>
+<td><p>29</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.GPTuner</span></code></p></td>
-<td><p><strong>296</strong></p></td>
-<td><p><strong>86</strong></p></td>
+<td><p>232</p></td>
+<td><p>27</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BTB.UniformTuner</span></code></p></td>
-<td><p>204</p></td>
-<td><p>13</p></td>
+<td><p>200</p></td>
+<td><p>9</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HyperOpt.tpe.suggest</span></code></p></td>
-<td><p>241</p></td>
-<td><p>44</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HyperOpt.tpe</span></code></p></td>
+<td><p>213</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SMAC.HB4AC</span></code></p></td>
+<td><p>187</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SMAC.SMAC4HPO_EI</span></code></p></td>
+<td><p><strong>246</strong></p></td>
+<td><p><strong>43</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SMAC.SMAC4HPO_LCB</span></code></p></td>
+<td><p>229</p></td>
+<td><p>28</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SMAC.SMAC4HPO_PI</span></code></p></td>
+<td><p>238</p></td>
+<td><p>41</p></td>
 </tr>
 </tbody>
 </table>
