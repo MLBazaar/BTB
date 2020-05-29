@@ -40,6 +40,9 @@ install_requires = [
     'XlsxWriter>=1.2.8,<1.3',
     github_dependency('csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods'),
     'ax-platform>=0.1.9,<0.1.13',
+    'smac>=0.12.1,<0.13',
+    'scikit-optimize>=0.7.4,<0.8',
+    'emcee>=2.1.0,<3',
 ]
 
 
@@ -128,6 +131,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.9',
+    version='0.3.10.dev0',
     zip_safe=False,
 )

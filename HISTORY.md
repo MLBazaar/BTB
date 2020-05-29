@@ -1,5 +1,22 @@
 # History
 
+## 0.3.10 - 2020-05-29
+
+With this release we integrate a new tuning library, `SMAC`, with our benchmarking process. A new
+leaderboard including this library has been generated. The following two tuners from this library
+have been added:
+* `SMAC4HPO`: Bayesian optimization using a Random Forest model of *pyrfr*.
+* `HB4AC`: Uses Successive Halving for proposals.
+
+### Internal improvements
+
+* Renamed `btb_benchmark/tuners` to `btb_benchmark/tuning_functions`.
+* Ready to use tuning functions from `btb_benchmark/tuning_functions`.
+
+### Resolved Issues
+
+* Issue #195: Integrate `SMAC` for benchmarking.
+
 ## 0.3.9 - 2020-05-18
 
 With this release we integrate a new tuning library, `Ax`, with our benchmarking process. A new

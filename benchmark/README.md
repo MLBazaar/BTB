@@ -65,10 +65,11 @@ And the following external tuning functions:
 
 - [HyperOpt.tpe](https://github.com/hyperopt/hyperopt/blob/master/hyperopt/tpe.py): Implements a Tree-Structured Parzen Estimator for hyperparameter search.
 - [Ax.optimize](https://github.com/facebook/Ax): Implements Bayesian optimization and bandit optimization, powered by [BoTorch](https://github.com/pytorch/botorch).
+- [SMAC.SMAC4HPO](https://github.com/automl/SMAC3/blob/master/smac/facade/smac_hpo_facade.py): Bayesian optimization using a Random Forest model of *pyrfr*.
+- [SMAC.HB4AC](https://github.com/automl/SMAC3/blob/master/smac/facade/hyperband_facade.py): Uses Successive Halving for proposals.
 
 Note: In our future releases we will be adding the following:
 
-- [Ray.Tune](https://github.com/ray-project/ray/tree/master/python/ray/tune).
 - [Sherpa](https://github.com/sherpa-ai/sherpa/).
 - [GPyOpt](https://github.com/SheffieldML/GPyOpt).
 
@@ -86,6 +87,33 @@ def tuning_function(
 Please see how we introduced `HyperOpt` with this [signature here](https://github.com/HDI-Project/BTB/blob/master/benchmark/btb_benchmark/tuners/hyperopt.py).
 
 ## Running the Benchmarking
+
+### Install
+
+Before running the benchmarking process, you will have to follow this two steps in order to
+install the package:
+
+#### System Requierements
+
+`BTB` benchmark has a system requierement of `swig (>=3.0,<4.0)` as build dependency. To install
+it on a Ubuntu based machine you can run the following command:
+
+```bash
+sudo apt-get install swig
+```
+
+#### Python installation
+
+You will have to install `BTB` from sources for development in order to use the benchmarking
+package. To do so, clone the repository and run `make install-develop`:
+
+```bash
+git clone git@github.com:HDI-Project/BTB.git
+cd BTB
+make install-develop
+```
+
+### Runnig the Benchmarking using python
 
 The user API for the BTB Benchmarking is the `btb_benchmark.main.run_benchmark` function.
 
@@ -110,7 +138,6 @@ containing the best scores obtained by each combination:
 4                     XGBoostChallenge('ecoli_1.csv')       0.728677  ...               0.705936              0.724864
 5             XGBoostChallenge('eye_movements_1.csv')       0.834001  ...               0.820084              0.824663
 ```
-
 
 ### Benchmark Arguments
 

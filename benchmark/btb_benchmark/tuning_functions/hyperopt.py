@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from hyperopt import Trials, fmin, hp
+from hyperopt import Trials, fmin, hp, tpe
 
 
-def search_space_from_dict(dict_hyperparams):
+def _search_space_from_dict(dict_hyperparams):
     hyperparams = {}
 
     if not isinstance(dict_hyperparams, dict):
@@ -36,7 +36,7 @@ def search_space_from_dict(dict_hyperparams):
     return hyperparams
 
 
-def make_minimize_function(scoring_function):
+def _make_minimize_function(scoring_function):
     """Create a minimize function.
 
     Given a maximization ``scoring_function`` convert it to minimize in order to work with
@@ -51,7 +51,7 @@ def make_minimize_function(scoring_function):
     return minimized_function
 
 
-def make_hyperopt_tuning_function(algo):
+def _hyperopt_tuning_function(algo, scoring_function, tunable_hyperparameters, iterations):
     """Create a tuning function that uses ``HyperOpt``.
 
     With a given suggesting algorithm from the library ``HyperOpt``, create a tuning
@@ -61,23 +61,30 @@ def make_hyperopt_tuning_function(algo):
         algo (hyperopt.algo):
             Search / Suggest ``HyperOpt`` algorithm to be used with ``fmin`` function.
     """
-    def hyperopt_tuning_function(scoring_function, tunable_hyperparameters, iterations):
 
-        minimized_scoring = make_minimize_function(scoring_function)
-        search_space = search_space_from_dict(tunable_hyperparameters)
-        trials = Trials()
-        fmin(
-            minimized_scoring,
-            search_space,
-            algo=algo,
-            max_evals=iterations,
-            trials=trials,
-            verbose=False
-        )
+    minimized_scoring = _make_minimize_function(scoring_function)
+    search_space = _search_space_from_dict(tunable_hyperparameters)
+    trials = Trials()
+    fmin(
+        minimized_scoring,
+        search_space,
+        algo=algo,
+        max_evals=iterations,
+        trials=trials,
+        verbose=False
+    )
 
-        # normalize best score to match other tuners
-        best_score = -1 * trials.best_trial['result']['loss']
+    # normalize best score to match other tuners
+    best_score = -1 * trials.best_trial['result']['loss']
 
-        return best_score
+    return best_score
 
-    return hyperopt_tuning_function
+
+def hyperopt_tpe(scoring_function, tunable_hyperparameters, iterations):
+    """Tree-structured Parzen Estimator"""
+    return _hyperopt_tuning_function(
+        tpe.suggest,
+        scoring_function,
+        tunable_hyperparameters,
+        iterations
+    )
