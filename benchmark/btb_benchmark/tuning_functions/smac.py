@@ -10,7 +10,7 @@ from smac.facade.smac_hpo_facade import SMAC4HPO
 from smac.optimizer import acquisition
 from smac.scenario.scenario import Scenario
 
-NONE = 'null'
+_NONE = '__NONE__'
 
 
 def _create_config_space(dict_hyperparams):
@@ -46,9 +46,9 @@ def _create_config_space(dict_hyperparams):
 
         elif hp_type == 'str':
             hp_range = hyperparam.get('range') or hyperparam.get('values')
-            hp_range = [NONE if hp is None else hp for hp in hp_range]
+            hp_range = [_NONE if hp is None else hp for hp in hp_range]
             hp_default = hyperparam.get('default') or hp_range[0]
-            hp_default = NONE if hp_default is None else hp_default
+            hp_default = _NONE if hp_default is None else hp_default
 
             config_space.add_hyperparameter(
                 hp.CategoricalHyperparameter(name, hp_range, default_value=hp_default))

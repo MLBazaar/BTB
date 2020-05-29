@@ -88,11 +88,32 @@ Please see how we introduced `HyperOpt` with this [signature here](https://githu
 
 ## Running the Benchmarking
 
-> :warning: In order to run the benchmarking process you have to install `BTB` from sources in `development`.
-To achieve so, please follow the instructions in our [contributing guide](
-https://hdi-project.github.io/BTB/contributing.html#get-started).
-Also you will need to install an additional system requierement: `swig`. If you are running Ubuntu
-based machine you can install it with the following command: `sudo apt-get install swig`
+### Install
+
+Before running the benchmarking process, you will have to follow this two steps in order to
+install the package:
+
+#### System Requierements
+
+`BTB` benchmark has a system requierement of `swig (>=3.0,<4.0)` as build dependency. To install
+it on a Ubuntu based machine you can run the following command:
+
+```bash
+sudo apt-get install swig
+```
+
+#### Python installation
+
+You will have to install `BTB` from sources for development in order to use the benchmarking
+package. To do so, clone the repository and run `make install-develop`:
+
+```bash
+git clone git@github.com:HDI-Project/BTB.git
+cd BTB
+make install-develop
+```
+
+### Runnig the Benchmarking using python
 
 The user API for the BTB Benchmarking is the `btb_benchmark.main.run_benchmark` function.
 
@@ -117,7 +138,6 @@ containing the best scores obtained by each combination:
 4                     XGBoostChallenge('ecoli_1.csv')       0.728677  ...               0.705936              0.724864
 5             XGBoostChallenge('eye_movements_1.csv')       0.834001  ...               0.820084              0.824663
 ```
-
 
 ### Benchmark Arguments
 
