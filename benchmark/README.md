@@ -65,11 +65,11 @@ And the following external tuning functions:
 
 - [HyperOpt.tpe](https://github.com/hyperopt/hyperopt/blob/master/hyperopt/tpe.py): Implements a Tree-Structured Parzen Estimator for hyperparameter search.
 - [Ax.optimize](https://github.com/facebook/Ax): Implements Bayesian optimization and bandit optimization, powered by [BoTorch](https://github.com/pytorch/botorch).
-- [SMAC.SMAC4HPO](https://github.com/automl/SMAC3/blob/master/smac/facade/smac_hpo_facade.py): Use sequential model-based algorithm configuration for optimizing hyperparameters.
+- [SMAC.SMAC4HPO](https://github.com/automl/SMAC3/blob/master/smac/facade/smac_hpo_facade.py): Bayesian optimization using a Random Forest model of *pyrfr*.
+- [SMAC.HB4AC](https://github.com/automl/SMAC3/blob/master/smac/facade/hyperband_facade.py): Uses Successive Halving for proposals.
 
 Note: In our future releases we will be adding the following:
 
-- [Ray.Tune](https://github.com/ray-project/ray/tree/master/python/ray/tune).
 - [Sherpa](https://github.com/sherpa-ai/sherpa/).
 - [GPyOpt](https://github.com/SheffieldML/GPyOpt).
 
