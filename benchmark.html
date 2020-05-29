@@ -183,6 +183,12 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install">Install</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#system-requierements">System Requierements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-installation">Python installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#runnig-the-benchmarking-using-python">Runnig the Benchmarking using python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#benchmark-arguments">Benchmark Arguments</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#tuners">Tuners</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id1">Challenges</a></li>
@@ -420,6 +426,7 @@ been implemented using third party libraries to be able to compare their perform
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/hyperopt/hyperopt/blob/master/hyperopt/tpe.py">HyperOpt.tpe</a>: Implements a Tree-Structured Parzen Estimator for hyperparameter search.</p></li>
 <li><p><a class="reference external" href="https://github.com/facebook/Ax">Ax.optimize</a>: Implements Bayesian optimization and bandit optimization, powered by <a class="reference external" href="https://github.com/pytorch/botorch">BoTorch</a>.</p></li>
+<li><p><a class="reference external" href="https://github.com/automl/SMAC3/blob/master/smac/facade/smac_hpo_facade.py">SMAC.SMAC4HPO</a>: Use sequential model-based algorithm configuration for optimizing hyperparameters.</p></li>
 </ul>
 <p>Note: In our future releases we will be adding the following:</p>
 <ul class="simple">
@@ -443,6 +450,31 @@ been implemented using third party libraries to be able to compare their perform
 </div>
 <div class="section" id="running-the-benchmarking">
 <h2>Running the Benchmarking<a class="headerlink" href="#running-the-benchmarking" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install">
+<h3>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
+<p>Before running the benchmarking process, you will have to follow this two steps in order to
+install the package:</p>
+<div class="section" id="system-requierements">
+<h4>System Requierements<a class="headerlink" href="#system-requierements" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">BTB</span></code> benchmark has a system requierement of <code class="docutils literal notranslate"><span class="pre">swig</span> <span class="pre">(&gt;=3.0,&lt;4.0)</span></code> as build dependency. To install
+it on a Ubuntu based machine you can run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install swig
+</pre></div>
+</div>
+</div>
+<div class="section" id="python-installation">
+<h4>Python installation<a class="headerlink" href="#python-installation" title="Permalink to this headline">¶</a></h4>
+<p>You will have to install <code class="docutils literal notranslate"><span class="pre">BTB</span></code> from sources for development in order to use the benchmarking
+package. To do so, clone the repository and run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install-develop</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:HDI-Project/BTB.git
+<span class="nb">cd</span> BTB
+make install-develop
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="runnig-the-benchmarking-using-python">
+<h3>Runnig the Benchmarking using python<a class="headerlink" href="#runnig-the-benchmarking-using-python" title="Permalink to this headline">¶</a></h3>
 <p>The user API for the BTB Benchmarking is the <code class="docutils literal notranslate"><span class="pre">btb_benchmark.main.run_benchmark</span></code> function.</p>
 <p>The simplest usage is to execute the <code class="docutils literal notranslate"><span class="pre">run_benchmark</span></code> function without any arguments:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">btb_benchmark</span> <span class="kn">import</span> <span class="n">run_benchmark</span>
@@ -461,6 +493,7 @@ containing the best scores obtained by each combination:</p>
 4                     XGBoostChallenge(&#39;ecoli_1.csv&#39;)       0.728677  ...               0.705936              0.724864
 5             XGBoostChallenge(&#39;eye_movements_1.csv&#39;)       0.834001  ...               0.820084              0.824663
 </pre></div>
+</div>
 </div>
 <div class="section" id="benchmark-arguments">
 <h3>Benchmark Arguments<a class="headerlink" href="#benchmark-arguments" title="Permalink to this headline">¶</a></h3>
