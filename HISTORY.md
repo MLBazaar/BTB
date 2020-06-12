@@ -1,5 +1,14 @@
 # History
 
+## 0.3.11 - 2020-06-12
+
+With this release we fix the `AX.optimize` tuning function by casting the values of the
+hyperparameters to the type of value that they represent.
+
+### Resolved Issues
+
+* Issue #201: Fix AX.optimize malfunction.
+
 ## 0.3.10 - 2020-05-29
 
 With this release we integrate a new tuning library, `SMAC`, with our benchmarking process. A new
