@@ -43,6 +43,7 @@ install_requires = [
     'smac>=0.12.1,<0.13',
     'scikit-optimize>=0.7.4,<0.8',
     'emcee>=2.1.0,<3',
+    'pyDOE>=0.3.8<0.4',
 ]
 
 
@@ -131,6 +132,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.10',
+    version='0.3.11.dev0',
     zip_safe=False,
 )
