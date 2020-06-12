@@ -1,4 +1,4 @@
-FROM daskdev/dask:latest
+FROM daskdev/dask:2.8.0
 
 RUN mkdir -p /workdir/btb && \
     mkdir -p /workdir/btb_benchmark && \
