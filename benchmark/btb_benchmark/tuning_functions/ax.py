@@ -15,8 +15,8 @@ def convert_hyperparameters(dict_hyperparams):
 
         if hp_type == 'int':
             hp_range = hyperparam.get('range') or hyperparam.get('values')
-            hp_min = min(hp_range)
-            hp_max = max(hp_range)
+            hp_min = int(min(hp_range))
+            hp_max = int(max(hp_range))
             hyperparams.append({
                 'name': name,
                 'type': 'range',
@@ -25,8 +25,8 @@ def convert_hyperparameters(dict_hyperparams):
 
         elif hp_type == 'float':
             hp_range = hyperparam.get('range') or hyperparam.get('values')
-            hp_min = min(hp_range)
-            hp_max = max(hp_range)
+            hp_min = float(min(hp_range))
+            hp_max = float(max(hp_range))
             hyperparams.append({
                 'name': name,
                 'type': 'range',

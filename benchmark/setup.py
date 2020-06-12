@@ -43,6 +43,7 @@ install_requires = [
     'smac>=0.12.1,<0.13',
     'scikit-optimize>=0.7.4,<0.8',
     'emcee>=2.1.0,<3',
+    'pyDOE>=0.3.8<0.4',
 ]
 
 
