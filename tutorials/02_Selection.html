@@ -597,9 +597,13 @@ div.rendered_html tbody tr:hover {
 <h2>What is a Selector ?<a class="headerlink" href="#What-is-a-Selector-?" title="Permalink to this headline">¶</a></h2>
 <p>In BTB, the selection problem is solved using the Selector family of classes.</p>
 <p>These classes have to be used in combination with multiple tuning problems, represented as multiple Tuner instances, each one of them created using a different Tunable, and the corresponding functions or Machine Learning algorithms.</p>
-<p>Currently, BTB implements the following Selectors: - <code class="docutils literal notranslate"><span class="pre">UCB1</span></code>: uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection. - <code class="docutils literal notranslate"><span class="pre">BestKReward</span></code>: computes the average reward from the past scores by using only the highest k scores. - <code class="docutils literal notranslate"><span class="pre">BestKVelocity</span></code>: compute the velocity of the best scores. The velocities are the <span class="math notranslate nohighlight">\(k\)</span> distances between the <span class="math notranslate nohighlight">\(k+1\)</span> best scores. - <code class="docutils literal notranslate"><span class="pre">PureBestKVelocity</span></code>: returns the choice with the best best-K velocity. - <code class="docutils literal notranslate"><span class="pre">RecentKReward</span></code>: recent <span class="math notranslate nohighlight">\(k\)</span> reward
-selector, where <span class="math notranslate nohighlight">\(k\)</span> is the number of best scores to consider.</p>
+<p>Currently, BTB implements the following Selectors:</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UCB1</span></code>: uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BestKReward</span></code>: computes the average reward from the past scores by using only the highest k scores.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BestKVelocity</span></code>: compute the velocity of the best scores. The velocities are the <span class="math notranslate nohighlight">\(k\)</span> distances between the <span class="math notranslate nohighlight">\(k+1\)</span> best scores.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PureBestKVelocity</span></code>: returns the choice with the best best-K velocity.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RecentKReward</span></code>: recent <span class="math notranslate nohighlight">\(k\)</span> reward selector, where <span class="math notranslate nohighlight">\(k\)</span> is the number of best scores to consider.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">RecentKVelocity</span></code>: compute the velocity of the <span class="math notranslate nohighlight">\(k+1\)</span> most recent scores.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Uniform</span></code>: selects a choice uniformly at random.</p></li>
 </ul>
