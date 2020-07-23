@@ -181,7 +181,7 @@ def _as_list(param):
     return [param]
 
 
-def _as_challenges_list(param):
+def _challenges_as_list(param):
     """Make sure that param is either ``None`` or a ``list``."""
     if param is None or isinstance(param, (list, tuple)):
         return param
@@ -227,7 +227,7 @@ def _get_all_challenge_names(challenge_types=None):
 
 def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
     challenge_types = _as_list(challenge_types) or ALL_TYPES
-    challenges = _as_challenges_list(challenges) or _get_all_challenge_names(challenge_types)
+    challenges = _challenges_as_list(challenges) or _get_all_challenge_names(challenge_types)
 
     selected = []
     unknown = []
@@ -280,10 +280,11 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
         challenge_types (str or list):
             Type or list of types for challenges to be benchmarked, if ``None`` all available
             types will be used.
-        challenges (str, btb_benchmark.challenge.Challenge or list):
-            Challenge name, ``btb_benchmark.challenge.Challenge`` instance or a list with the
-            previously described objects. If ``None`` will use ``challenge_types`` to determine
-            which challenges to use.
+        challenges (str or list):
+            If ``str`` it will be interpreted as ``collection`` of datasets (currently: all or
+            openml100). A list containing: challenge name, ``btb_benchmark.challenge.Challenge``
+            instance or a list with the previously described objects. If ``None`` will use
+            ``challenge_types`` to determine which challenges to use.
         sample (int):
             Run only on a subset of the available datasets of the given size.
         iterations (int):

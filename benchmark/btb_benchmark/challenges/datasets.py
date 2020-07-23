@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 
+"""
+Datasets module.
+
+This module contains collections of datsets from our ``S3``
+https://atm-data.s3.amazonaws.com . There is also a function
+that filters over this collections and returns the requested
+one as a copy.
+"""
+
 # Available datasets sorted by execution time, slowest first
 ALL_DATASETS_BY_TIME = [
     'BNG(cmc)_1.csv',
@@ -582,4 +591,8 @@ AVAILABLE_CHALLENGES = {
 
 
 def get_dataset_names(collection):
-    return AVAILABLE_CHALLENGES[collection.lower()]
+    try:
+        return AVAILABLE_CHALLENGES[collection.lower()]
+    except KeyError:
+        collections = ', '.join(AVAILABLE_CHALLENGES.keys())
+        raise ValueError('Currently the available collections are: {}'.format(collections))

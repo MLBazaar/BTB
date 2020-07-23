@@ -65,10 +65,25 @@ class MLChallenge(Challenge):
         return urljoin(BASE_DATASET_URL, name)
 
     @classmethod
-    def get_all_challenges(cls, challenges=None):
-        """Return a list containing the instance of the datasets available."""
+    def get_all_challenges(cls, challenges='all'):
+        """Return a list containing the instance of the datasets available.
+
+        If ``challenges`` is provided, filter by those. Challenges can be a string
+        representing the collection desired, all or openml100.
+
+        Args:
+            challenges (str or list):
+                If string, a collection of datasets will be loaded from the module
+                ``btb_benchmark.challenges.datasets``. If it's a list those will be
+                the challenges attempted to be loaded.
+
+        Returns:
+            loaded_challenges (list):
+                A list of ``btb_benchmark.challenges.mlchallenge.MLChallenge`` instances
+                with the specified ``challenges``.
+        """
         if isinstance(challenges, str):
-            datasets = get_dataset_names('challenges')
+            datasets = get_dataset_names(challenges)
         else:
             datasets = challenges
 
