@@ -13,6 +13,7 @@ from btb.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
     MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
 from btb_benchmark.challenges.challenge import Challenge
+from btb_benchmark.challenges.datasets import get_dataset_names
 from btb_benchmark.results import load_results, write_results
 from btb_benchmark.tuning_functions import get_all_tuning_functions
 from btb_benchmark.tuning_functions.btb import make_btb_tuning_function
@@ -180,6 +181,14 @@ def _as_list(param):
     return [param]
 
 
+def _as_challenges_list(param):
+    """Make sure that param is either ``None`` or a ``list``."""
+    if param is None or isinstance(param, (list, tuple)):
+        return param
+
+    return get_dataset_names(param)
+
+
 def _get_tuners_dict(tuners=None):
     all_tuners = get_all_tuning_functions()
     if tuners is None:
@@ -211,14 +220,15 @@ def _get_all_challenge_names(challenge_types=None):
     if 'math' in challenge_types:
         all_challenge_names += list(MATH_CHALLENGES.keys())
     if any(name in challenge_types for name in ('sdg', 'xgboost', 'random_forest')):
-        all_challenge_names += SGDChallenge.get_available_dataset_names()
+        all_challenge_names += get_dataset_names('all')
 
     return all_challenge_names
 
 
 def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
     challenge_types = _as_list(challenge_types) or ALL_TYPES
-    challenges = _as_list(challenges) or _get_all_challenge_names(challenge_types)
+    challenges = _as_challenges_list(challenges) or _get_all_challenge_names(challenge_types)
+
     selected = []
     unknown = []
 
