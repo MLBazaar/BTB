@@ -4,7 +4,8 @@
 
 from btb.tuning.acquisition.expected_improvement import ExpectedImprovementAcquisition
 from btb.tuning.acquisition.predicted_score import PredictedScoreAcquisition
-from btb.tuning.metamodels.gaussian_process import GaussianProcessMetaModel
+from btb.tuning.metamodels.gaussian_process import (
+    GaussianCopulaProcessMetaModel, GaussianProcessMetaModel)
 from btb.tuning.tuners.base import BaseMetaModelTuner
 
 
@@ -81,3 +82,11 @@ class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMe
         return ('GPTuner(tunable={}, maximize={},'
                 'num_candidates={}, min_trials={},'
                 'length_scale={})').format(*args)
+
+
+class GCPTuner(GaussianCopulaProcessMetaModel, GPTuner):
+    pass
+
+
+class GCPEiTuner(GaussianCopulaProcessMetaModel, GPEiTuner):
+    pass
