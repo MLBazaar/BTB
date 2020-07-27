@@ -18,6 +18,10 @@
     :target: https://pepy.tech/project/baytune
     :alt: Downloads Shield
 
+.. image:: https://mybinder.org/badge_logo.svg
+    :target: https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials
+    :alt: My Binder Shield
+
 |
 
 .. image:: images/BTB-Icon-small.png

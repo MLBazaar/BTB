@@ -12,6 +12,7 @@ A simple, extensible backend for developing auto-tuning systems.
 [![Travis CI Shield](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
 [![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials)
 
 * License: [MIT](https://github.com/HDI-Project/BTB/blob/master/LICENSE)
 * Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
@@ -32,6 +33,12 @@ classifier tuning
 [Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
 - [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose
 AutoML system
+
+## Try it out now!
+
+If you want to quickly discover **BTB**, simply click the button below and follow the tutorials!
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials)
 
 # Install
 
