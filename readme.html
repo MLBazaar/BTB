@@ -374,6 +374,7 @@
 <a class="reference external image-reference" href="https://travis-ci.org/HDI-Project/BTB"><img alt="Travis CI Shield" src="https://travis-ci.org/HDI-Project/BTB.svg?branch=master" /></a>
 <a class="reference external image-reference" href="https://codecov.io/gh/HDI-Project/BTB"><img alt="Coverage Status" src="https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg" /></a>
 <a class="reference external image-reference" href="https://pepy.tech/project/baytune"><img alt="Downloads" src="https://pepy.tech/badge/baytune" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a>
 <ul class="simple">
 <li><p>License: <a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/LICENSE">MIT</a></p></li>
 <li><p>Development Status: <a class="reference external" href="https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha">Pre-Alpha</a></p></li>
@@ -383,16 +384,22 @@
 <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <p>BTB (“Bayesian Tuning and Bandits”) is a simple, extensible backend for developing auto-tuning
-systems such as AutoML systems. It provides an easy-to-use interface for <em>tuning</em> and <em>selection</em>.</p>
+systems such as AutoML systems. It provides an easy-to-use interface for <em>tuning</em> models and
+<em>selecting</em> between models.</p>
 <p>It is currently being used in several AutoML systems:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/HDI-Project/ATM">ATM</a>, distributed, multi-tenant AutoML system for
+<li><p><a class="reference external" href="https://github.com/HDI-Project/ATM">ATM</a>, a distributed, multi-tenant AutoML system for
 classifier tuning</p></li>
-<li><p><a class="reference external" href="https://github.com/HDI-Project/mit-d3m-ta2/">mit-d3m-ta2</a>, MIT’s system for the DARPA
+<li><p><a class="reference external" href="https://github.com/HDI-Project/mit-d3m-ta2/">MIT’s system</a> for the DARPA
 <a class="reference external" href="https://www.darpa.mil/program/data-driven-discovery-of-models">Data-driven discovery of models</a> (D3M) program</p></li>
 <li><p><a class="reference external" href="https://github.com/HDI-Project/AutoBazaar">AutoBazaar</a>, a flexible, general-purpose
 AutoML system</p></li>
 </ul>
+<div class="section" id="try-it-out-now">
+<h2>Try it out now!<a class="headerlink" href="#try-it-out-now" title="Permalink to this headline">¶</a></h2>
+<p>If you want to quickly discover <strong>BTB</strong>, simply click the button below and follow the tutorials!</p>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a>
+</div>
 </div>
 <div class="section" id="install">
 <h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
@@ -417,15 +424,15 @@ interfering with other software installed in the system where <strong>BTB</stron
 <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
 <p>In this short tutorial we will guide you through the necessary steps to get started using BTB
-to select and tune the best model to solve a Machine Learning problem.</p>
+to <code class="docutils literal notranslate"><span class="pre">select</span></code> between models and <code class="docutils literal notranslate"><span class="pre">tune</span></code> a model to solve a Machine Learning problem.</p>
 <p>In particular, in this example we will be using <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> to perform solve the <a class="reference external" href="https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data">Wine</a> classification problem
 by selecting between the <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> and the <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> models from
-<a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> while also searching for their best hyperparameter
+<a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> while also searching for their best <code class="docutils literal notranslate"><span class="pre">hyperparameter</span></code>
 configuration.</p>
 <div class="section" id="prepare-a-scoring-function">
 <h2>Prepare a scoring function<a class="headerlink" href="#prepare-a-scoring-function" title="Permalink to this headline">¶</a></h2>
-<p>The first step in order to use the <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> class is to develop a scoring function.</p>
-<p>This is a Python function that, given a model name and a hyperparameter configuration,
+<p>The first step in order to use the <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> class is to develop a <code class="docutils literal notranslate"><span class="pre">scoring</span></code> function.</p>
+<p>This is a Python function that, given a model name and a <code class="docutils literal notranslate"><span class="pre">hyperparameter</span></code> configuration,
 evaluates the performance of the model on your data and returns a score.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_wine</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
@@ -455,7 +462,8 @@ evaluates the performance of the model on your data and returns a score.</p>
 </div>
 <div class="section" id="define-the-tunable-hyperparameters">
 <h2>Define the tunable hyperparameters<a class="headerlink" href="#define-the-tunable-hyperparameters" title="Permalink to this headline">¶</a></h2>
-<p>The second step is to define the hyperparameters that we want to tune for each model as <code class="docutils literal notranslate"><span class="pre">Tunables</span></code>.</p>
+<p>The second step is to define the <code class="docutils literal notranslate"><span class="pre">hyperparameters</span></code> that we want to <code class="docutils literal notranslate"><span class="pre">tune</span></code> for each model as
+<code class="docutils literal notranslate"><span class="pre">Tunables</span></code>.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="kn">import</span> <span class="n">Tunable</span>
 <span class="kn">from</span> <span class="nn">btb.tuning</span> <span class="kn">import</span> <span class="n">hyperparams</span> <span class="k">as</span> <span class="n">hp</span>
 
@@ -474,10 +482,10 @@ evaluates the performance of the model on your data and returns a score.</p>
 </div>
 <div class="section" id="start-the-searching-process">
 <h2>Start the searching process<a class="headerlink" href="#start-the-searching-process" title="Permalink to this headline">¶</a></h2>
-<p>Once you have defined a scoring function and the tunable hyperparameters specification of your
-models, you can start the searching for the best model and hyperparameter configuration by using
+<p>Once you have defined a <code class="docutils literal notranslate"><span class="pre">scoring</span></code> function and the tunable <code class="docutils literal notranslate"><span class="pre">hyperparameters</span></code> specification of your
+models, you can start the searching for the best model and <code class="docutils literal notranslate"><span class="pre">hyperparameter</span></code> configuration by using
 the <code class="docutils literal notranslate"><span class="pre">btb.BTBSession</span></code>.</p>
-<p>All you need to do is create an instance passing the tunable hyperparameters scpecification
+<p>All you need to do is create an instance passing the tunable <code class="docutils literal notranslate"><span class="pre">hyperparameters</span></code> scpecification
 and the scoring function.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">btb</span> <span class="kn">import</span> <span class="n">BTBSession</span>
 
@@ -487,13 +495,13 @@ and the scoring function.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>And then call the <code class="docutils literal notranslate"><span class="pre">run</span></code> method indicating how many tunable iterations you want the Session to
+<p>And then call the <code class="docutils literal notranslate"><span class="pre">run</span></code> method indicating how many tunable iterations you want the <code class="docutils literal notranslate"><span class="pre">BTBSession</span></code> to
 perform:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_proposal</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The result will be a dictionary indicating the name of the best model that could be found
-and the hyperparameter configuration that was used:</p>
+and the <code class="docutils literal notranslate"><span class="pre">hyperparameter</span></code> configuration that was used:</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>{
     &#39;id&#39;: &#39;826aedc2eff31635444e8104f0f3da43&#39;,
     &#39;name&#39;: &#39;DTC&#39;,
@@ -574,28 +582,35 @@ with us at <a class="reference external" href="mailto:dailabmit&#37;&#52;&#48;gm
 </ul>
 </div>
 </div>
-<div class="section" id="what-s-next">
-<h1>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="more-tutorials">
+<h1>More tutorials<a class="headerlink" href="#more-tutorials" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p>To just <code class="docutils literal notranslate"><span class="pre">tune</span></code> <code class="docutils literal notranslate"><span class="pre">hyperparameters</span></code> - see our <code class="docutils literal notranslate"><span class="pre">tuning</span></code> tutorial <a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/tutorials/01_Tuning.ipynb">here</a> and
+<a class="reference external" href="https://hdi-project.github.io/BTB/tutorials/01_Tuning.html">documentation here</a>.</p></li>
+<li><p>To see the <cite>types of ``hyperparameters`</cite> &lt;<a class="reference external" href="https://hdi-project.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter">https://hdi-project.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter</a>?&gt;`_ we support
+see our <a class="reference external" href="https://hdi-project.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter?">documentation here</a>.</p></li>
+<li><p>You can read about <a class="reference external" href="https://hdi-project.github.io/BTB/benchmark.html#">our benchmarking framework here</a>.</p></li>
+<li><p>See our <cite>tutorial on ``selection`</cite> here &lt;<a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/tutorials/02_Selection.ipynb">https://github.com/HDI-Project/BTB/blob/master/tutorials/02_Selection.ipynb</a>&gt;`_
+and <a class="reference external" href="https://hdi-project.github.io/BTB/tutorials/02_Selection.html">documentation here</a>.</p></li>
+</ol>
 <p>For more details about <strong>BTB</strong> and all its possibilities and features, please check the
 <a class="reference external" href="https://HDI-Project.github.io/BTB/">project documentation site</a>!</p>
-<p>Also do not forget to have a look at the <a class="reference external" href="notebooks">notebook tutorials</a>.</p>
+<p>Also do not forget to have a look at the <a class="reference external" href="tutorials">notebook tutorials</a>.</p>
 </div>
 <div class="section" id="citing-btb">
 <h1>Citing BTB<a class="headerlink" href="#citing-btb" title="Permalink to this headline">¶</a></h1>
-<p>If you use BTB, please consider citing our related paper:</p>
-<blockquote>
-<div><p>Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. <a class="reference external" href="https://arxiv.org/abs/1905.08942">“The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development.”</a> arXiv Preprint 1905.08942. 2019.</p>
-</div></blockquote>
-<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">smith2019mlbazaar</span><span class="p">,</span>
-  <span class="na">author</span> <span class="p">=</span> <span class="s">{Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan}</span><span class="p">,</span>
-  <span class="na">title</span> <span class="p">=</span> <span class="s">{The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development}</span><span class="p">,</span>
-  <span class="na">journal</span> <span class="p">=</span> <span class="s">{arXiv e-prints}</span><span class="p">,</span>
-  <span class="na">year</span> <span class="p">=</span> <span class="s">{2019}</span><span class="p">,</span>
-  <span class="na">eid</span> <span class="p">=</span> <span class="s">{arXiv:1905.08942}</span><span class="p">,</span>
-  <span class="na">pages</span> <span class="p">=</span> <span class="s">{arXiv:1905.08942}</span><span class="p">,</span>
-  <span class="na">archivePrefix</span> <span class="p">=</span> <span class="s">{arXiv}</span><span class="p">,</span>
-  <span class="na">eprint</span> <span class="p">=</span> <span class="s">{1905.08942}</span><span class="p">,</span>
-<span class="p">}</span>
+<p>If you use <strong>BTB</strong>, please consider citing the following <a class="reference external" href="https://arxiv.org/pdf/1905.08942.pdf">paper</a>:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>@article{smith2019mlbazaar,
+  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+  journal = {arXiv e-prints},
+  year = {2019},
+  eid = {arXiv:1905.08942},
+  pages = {arxiv:1904.09535},
+  archivePrefix = {arXiv},
+  eprint = {1905.08942},
+}
+``
 </pre></div>
 </div>
 </div>
