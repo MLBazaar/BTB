@@ -221,7 +221,7 @@ docker-login:
 
 .PHONY: docker-build
 docker-build:
-	docker build -t btb .
+	docker build -t btb -f benchmark/Dockerfile .
 
 .PHONY: docker-push
 docker-push: docker-login docker-build
