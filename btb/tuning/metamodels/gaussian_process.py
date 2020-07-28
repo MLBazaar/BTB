@@ -42,7 +42,30 @@ class GaussianProcessMetaModel(BaseMetaModel):
 
 
 class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
+    """GaussianCopulaProcessMetaModel class.
 
+    This class represents a meta-model using an underlying ``GaussianProcessRegressor`` from
+    ``sklearn.gaussian_process`` applying ``copulas.univariate.Univariate`` transformations
+    to the input data and afterwards reverts it for the predictions.
+
+    During the ``fit`` process, this metamodel trains a univariate coupling for each
+    hyperparameter to then compute the cumulative distribution of these. Once the cumulative
+    distribution has been calculated, we calculate the inverse of the normal cumulative
+    distribution using ``scipy.stats.norm`` and use these transformations to train the
+    ``GaussianProcessRegressor`` model.
+
+    When predicting the output value, an inverse of the normal cumulative distribution is
+    computed to the normal cumulative distribution, using the previously trained univariate
+    copula with the input data of the score.
+
+    Attributes:
+        _MODEL_KWARGS (dict):
+            Dictionary with the default ``kwargs`` for the ``GaussianProcessRegressor``
+            instantiation.
+        _MODEL_CLASS (type):
+            Class to be instantiated and used for the ``self._model`` instantiation. In
+            this case ``sklearn.gaussian_process.GaussainProcessRegressor``
+    """
     def _transform(self, trials):
         transformed = []
         for column, distribution in zip(trials.T, self._distributions):
