@@ -432,7 +432,7 @@ ALL_DATASETS_BY_TIME = [
     'arsenic-male-lung_1.csv',
     'sleuth_ex2016_2.csv',
     'sleuth_ex2015_2.csv',
-    'analcatdata_japansolvent_1.csv'
+    'analcatdata_japansolvent_1.csv',
     'Australian_4.csv',
     'Bioresponse_1.csv',
     'GesturePhaseSegmentationProcessed_1.csv',
@@ -441,7 +441,8 @@ ALL_DATASETS_BY_TIME = [
     'KDDCup09_upselling_1.csv',
     'LED-display-domain-7digit_1.csv',
     'MiceProtein_1.csv',
-    'SpeedDating_1.csvadult_2.csv',
+    'SpeedDating_1.csv',
+    'adult_2.csv',
     'artificial-characters_1.csv',
     'breast-w_1.csv',
     'cjs_3.csv',
@@ -579,7 +580,7 @@ OPENML100 = [
     'higgs_2.csv',
     'LED-display-domain-7digit_1.csv',
     'texture_1.csv',
-    'SpeedDating_1.csv'
+    'SpeedDating_1.csv',
     'adult_2.csv',
 ]
 
