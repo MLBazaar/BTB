@@ -17,7 +17,7 @@ class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModel
     from the model.
     """
     def __init__(self, tunable, maximize=True, num_candidates=1000,
-                 min_trials=2, length_scale=0.1):
+                 min_trials=5, length_scale=0.1):
         """Create an instance of ``GPTuner``.
 
         Args:
@@ -41,8 +41,8 @@ class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModel
     def __repr__(self):
         length_scale = self._metamodel_kwargs.get('length_scale')
         args = (self.tunable, self.maximize, self.num_candidates, self.min_trials, length_scale)
-        return ('GPTuner(tunable={}, maximize={},'
-                'num_candidates={}, min_trials={},'
+        return ('GPTuner(tunable={}, maximize={}, '
+                'num_candidates={}, min_trials={}, '
                 'length_scale={})').format(*args)
 
 
@@ -54,7 +54,7 @@ class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMe
     predicted from the model.
     """
     def __init__(self, tunable, maximize=True, num_candidates=1000,
-                 min_trials=2, length_scale=0.1):
+                 min_trials=5, length_scale=0.1):
         """Create an instance of ``GPEiTuner``.
 
         Args:
@@ -79,8 +79,8 @@ class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMe
     def __repr__(self):
         length_scale = self._metamodel_kwargs.get('length_scale')
         args = (self.tunable, self.maximize, self.num_candidates, self.min_trials, length_scale)
-        return ('GPTuner(tunable={}, maximize={},'
-                'num_candidates={}, min_trials={},'
+        return ('GPEiTuner(tunable={}, maximize={}, '
+                'num_candidates={}, min_trials={}, '
                 'length_scale={})').format(*args)
 
 
@@ -91,7 +91,12 @@ class GCPTuner(GaussianCopulaProcessMetaModel, GPTuner):
     package, using a ``numpy.argmax`` function to return the better configurations predicted
     from the meta model that converts the input data using a ``Univariate`` copula.
     """
-    pass
+    def __repr__(self):
+        length_scale = self._metamodel_kwargs.get('length_scale')
+        args = (self.tunable, self.maximize, self.num_candidates, self.min_trials, length_scale)
+        return ('GCPTuner(tunable={}, maximize={}, '
+                'num_candidates={}, min_trials={}, '
+                'length_scale={})').format(*args)
 
 
 class GCPEiTuner(GaussianCopulaProcessMetaModel, GPEiTuner):
@@ -101,4 +106,9 @@ class GCPEiTuner(GaussianCopulaProcessMetaModel, GPEiTuner):
     package, using an ``ExpectedImprovement`` function to return the better configurations
     predicted from the meta model that converts the input data using a ``Univariate`` copula.
     """
-    pass
+    def __repr__(self):
+        length_scale = self._metamodel_kwargs.get('length_scale')
+        args = (self.tunable, self.maximize, self.num_candidates, self.min_trials, length_scale)
+        return ('GCPEiTuner(tunable={}, maximize={}, '
+                'num_candidates={}, min_trials={}, '
+                'length_scale={})').format(*args)

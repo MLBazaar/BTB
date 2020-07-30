@@ -87,7 +87,7 @@ class TestGaussianCopulaProcessMetaModel(TestCase):
             [0.7, 0.8, 0.9],
             [0.2, 0.3, 0.4]
         ])
-        scores = np.array([0.1, 0.4, 0.8, 0.9])
+        scores = np.array([0.1, 0.4, 0.6, 0.8, 0.9])
 
         # run
         instance._fit(trials, scores)
@@ -100,13 +100,76 @@ class TestGaussianCopulaProcessMetaModel(TestCase):
             [0.78865964, 0.72584367, 1.82607428],
             [-0.60472608, -0.66069297, 0.3732126]
         ])
-        expected_scores = np.array([
-            -0.98370794,
-            -0.33734483,
-            0.50839651,
-            0.75551369
-        ])
+        expected_scores = np.array([-1.15916747, -0.43719902, 0.0415104, 0.57965234, 0.87915571])
 
         mock_fit_call = mock_super.return_value._fit.call_args_list
         np.testing.assert_allclose(expected_trials, mock_fit_call[0][0][0])
-        np.testing.assert_allclose(expected_scores, mock_fit_call[0][0][1])
+        np.testing.assert_allclose(expected_scores, mock_fit_call[0][0][1], rtol=1e-06)
+
+    def test__fit_inconsistent_numbers_of_samples(self):
+        """Fitting the GP model with inconsistent number of samples raises ValueError."""
+        # setup
+        instance = GaussianCopulaProcessMetaModel()
+        trials = np.array([
+            [0.1, 0.8, 0.2],
+            [0.7, 0.6, 0.4],
+            [0.4, 0.2, 0.3],
+            [0.7, 0.8, 0.9],
+            [0.2, 0.3, 0.4]
+        ])
+        scores = np.array([0.1, 0.6, 0.8, 0.9])
+
+        # run
+        with self.assertRaises(ValueError):
+            instance._fit(trials, scores)
+
+    def test__predict_one_candidate(self):
+        """Test the prediction of one candidate."""
+        # setup
+        instance = GaussianCopulaProcessMetaModel()
+        trials = np.array([
+            [0.1, 0.8, 0.2],
+            [0.7, 0.6, 0.4],
+            [0.4, 0.2, 0.3],
+            [0.7, 0.8, 0.9],
+            [0.2, 0.3, 0.4]
+        ])
+        scores = np.array([0.1, 0.4, 0.6, 0.8, 0.9])
+
+        candidates = np.array([[0.2, 0.8, 0.4]])
+        instance._fit(trials, scores)
+
+        # run
+        predicted_scores = instance._predict(candidates)
+
+        # assert
+        expected_scores = np.array([0.54393124])
+
+        np.testing.assert_allclose(expected_scores, predicted_scores)
+
+    def test__predict_candidate_gt_one(self):
+        """Test the prediction of multiple candidates."""
+        # setup
+        instance = GaussianCopulaProcessMetaModel()
+        trials = np.array([
+            [0.1, 0.8, 0.2],
+            [0.7, 0.6, 0.4],
+            [0.4, 0.2, 0.3],
+            [0.7, 0.8, 0.9],
+            [0.2, 0.3, 0.4]
+        ])
+        scores = np.array([0.1, 0.4, 0.6, 0.8, 0.9])
+
+        candidates = np.array([
+            [0.2, 0.8, 0.4],
+            [0.1, 0.8, 0.2]
+        ])
+        instance._fit(trials, scores)
+
+        # run
+        predicted_scores = instance._predict(candidates)
+
+        # assert
+        expected_scores = np.array([0.54393124, 0.1])
+
+        np.testing.assert_allclose(expected_scores, predicted_scores)
