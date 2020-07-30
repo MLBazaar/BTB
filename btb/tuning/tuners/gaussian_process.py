@@ -85,8 +85,20 @@ class GPEiTuner(GaussianProcessMetaModel, ExpectedImprovementAcquisition, BaseMe
 
 
 class GCPTuner(GaussianCopulaProcessMetaModel, GPTuner):
+    """Gaussian Copula Process Tuner.
+
+    This class uses a ``GaussianProcessRegressor`` model from the ``sklearn.gaussian_process``
+    package, using a ``numpy.argmax`` function to return the better configurations predicted
+    from the meta model that converts the input data using a ``Univariate`` copula.
+    """
     pass
 
 
 class GCPEiTuner(GaussianCopulaProcessMetaModel, GPEiTuner):
+    """Gaussian Copula Process Expected Improvement Tuner.
+
+    This class uses a ``GaussianProcessRegressor`` model from the ``sklearn.gaussian_process``
+    package, using an ``ExpectedImprovement`` function to return the better configurations
+    predicted from the meta model that converts the input data using a ``Univariate`` copula.
+    """
     pass
