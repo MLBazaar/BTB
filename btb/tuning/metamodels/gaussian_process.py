@@ -48,7 +48,7 @@ class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
     ``sklearn.gaussian_process`` applying ``copulas.univariate.Univariate`` transformations
     to the input data and afterwards reverts it for the predictions.
 
-    During the ``fit`` process, this metamodel trains a univariate coupling for each
+    During the ``fit`` process, this metamodel trains a univariate copula for each
     hyperparameter to then compute the cumulative distribution of these. Once the cumulative
     distribution has been calculated, we calculate the inverse of the normal cumulative
     distribution using ``scipy.stats.norm`` and use these transformations to train the
