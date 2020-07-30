@@ -23,8 +23,8 @@ except IOError:
 
 
 install_requires = [
-    'numpy>=1.14.0,<1.18.0',
     'copulas>=0.3.1,<0.4',
+    'numpy>=1.14.0',
     'scikit-learn>0.20.0,<0.23',
     'scipy>=1.2,<1.3',
     'pandas>=0.22.0,<0.25',
