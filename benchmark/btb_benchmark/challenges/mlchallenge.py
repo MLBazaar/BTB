@@ -108,6 +108,14 @@ class MLChallenge(Challenge):
             url = self.get_dataset_url(self.dataset)
             X = pd.read_csv(url)
 
+        if self.sample:
+            if X.shape[0] > self.sample:
+                LOGGER.info('Sampling dataset: %s using: %s records.', self.dataset, self.sample)
+                X = X.sample(self.sample, random_state=0)
+            else:
+                LOGGER.info('Dataset: %s cant be sampled for %s.', self.dataset, self.sample)
+                self.sample = X.shape[0]
+
         y = X.pop(self.target_column)
 
         if self.make_binary:
@@ -129,7 +137,7 @@ class MLChallenge(Challenge):
     def __init__(self, dataset, model=None, target_column=None,
                  encode=None, tunable_hyperparameters=None, metric=None,
                  model_defaults=None, make_binary=None, stratified=None,
-                 cv_splits=5, cv_random_state=42, cv_shuffle=True, metric_args={}):
+                 cv_splits=5, cv_random_state=42, cv_shuffle=True, metric_args={}, sample=5000):
 
         self.model = model or self.MODEL
         self.dataset = dataset or self.DATASET
@@ -137,6 +145,7 @@ class MLChallenge(Challenge):
         self.model_defaults = model_defaults or self.MODEL_DEFAULTS
         self.make_binary = make_binary or self.MAKE_BINARY
         self.tunable_hyperparameters = tunable_hyperparameters or self.TUNABLE_HYPERPARAMETERS
+        self.sample = sample
 
         if metric:
             self.metric = metric
