@@ -47,7 +47,6 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'challenge': str(challenge),
             'tuner': name,
             'score': score,
-            'samples': challenge.sample,
             'iterations': iterations,
             'elapsed': datetime.utcnow() - start,
             'hostname': socket.gethostname()
@@ -60,7 +59,6 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'challenge': str(challenge),
             'tuner': name,
             'score': None,
-            'samples': challenge.sample,
             'elapsed': datetime.utcnow() - start,
             'hostname': socket.gethostname()
         }
