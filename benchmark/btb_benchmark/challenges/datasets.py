@@ -432,7 +432,7 @@ ALL_DATASETS_BY_TIME = [
     'arsenic-male-lung_1.csv',
     'sleuth_ex2016_2.csv',
     'sleuth_ex2015_2.csv',
-    'analcatdata_japansolvent_1.csv'
+    'analcatdata_japansolvent_1.csv',
     'Australian_4.csv',
     'Bioresponse_1.csv',
     'GesturePhaseSegmentationProcessed_1.csv',
