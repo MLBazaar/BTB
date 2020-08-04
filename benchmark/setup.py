@@ -40,6 +40,7 @@ install_requires = [
     'XlsxWriter>=1.2.8,<1.3',
     github_dependency('csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods'),
     'ax-platform>=0.1.9,<0.1.13',
+    'configspace==0.4.12',
     'smac>=0.12.1,<0.13',
     'scikit-optimize>=0.7.4,<0.8',
     'emcee>=2.1.0,<3',
