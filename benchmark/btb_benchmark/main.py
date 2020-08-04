@@ -14,7 +14,6 @@ from btb_benchmark.challenges import (
     MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
 from btb_benchmark.challenges.challenge import Challenge
 from btb_benchmark.challenges.datasets import get_dataset_names
-from btb_benchmark.challenges.mlchallenge import MLChallenge
 from btb_benchmark.results import load_results, write_results
 from btb_benchmark.tuning_functions import get_all_tuning_functions
 from btb_benchmark.tuning_functions.btb import make_btb_tuning_function
@@ -23,7 +22,7 @@ LOGGER = logging.getLogger(__name__)
 ALL_TYPES = ['math', 'xgboost']
 
 
-def get_math_challenge_instance(name):
+def get_math_challenge_instance(name, *args, **kwargs):
     return MATH_CHALLENGES.get(name)()
 
 
@@ -51,6 +50,8 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'elapsed': datetime.utcnow() - start,
             'hostname': socket.gethostname()
         }
+        if hasattr(challenge, 'data'):
+            result['rows'] = challenge.data[0].shape[0]
 
     except Exception as ex:
         LOGGER.warn(
@@ -226,7 +227,7 @@ def _get_all_challenge_names(challenge_types=None):
     return all_challenge_names
 
 
-def _get_challenges_list(challenges=None, challenge_types=None, sample=None, rows=None):
+def _get_challenges_list(challenges=None, challenge_types=None, sample=None, max_rows=None):
     challenge_types = _as_list(challenge_types) or ALL_TYPES
     challenges = _challenges_as_list(challenges) or _get_all_challenge_names(challenge_types)
 
@@ -247,8 +248,7 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None, row
             for challenge_type in challenge_types:
                 try:
                     challenge_class = CHALLENGE_GETTER[challenge_type]
-                    if issubclass(challenge_class, MLChallenge):
-                        challenge_instance = challenge_class(challenge, sample=rows)
+                    challenge_instance = challenge_class(challenge, max_rows=max_rows)
 
                     if challenge_instance:
                         known = True
@@ -269,7 +269,7 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None, row
 
 
 def run_benchmark(tuners=None, challenge_types=None, challenges=None,
-                  sample=None, iterations=100, rows=5000,
+                  sample=None, iterations=100, max_rows=5000,
                   output_path=None, detailed_output=False):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
@@ -294,9 +294,9 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
             Run only on a subset of the available datasets of the given size.
         iterations (int):
             Number of tuning iterations to perform per challenge and tuner.
-        rows (int):
-            Number of rows from the dataframe to be used (MLChallenges only). Defaults to 5000.
-            If None or the dataset is too small, all the rows will be used.
+        max_rows (int):
+            Number of max rows to use from the dataframe (MLChallenges only). Defaults to ``None``.
+            If ``None`` or the dataset is too small, all the rows will be used.
         output_path (str):
             If an ``output_path`` is given, the final results will be saved in that location.
         detailed_output (bool):
@@ -312,7 +312,7 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
         challenges=challenges,
         challenge_types=challenge_types,
         sample=sample,
-        rows=rows
+        max_rows=max_rows
     )
 
     results = benchmark(tuners, challenges, iterations, detailed_output)
