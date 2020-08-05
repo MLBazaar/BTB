@@ -104,8 +104,8 @@ class MLChallenge(Challenge):
             url = self.get_dataset_url(self.dataset)
             X = pd.read_csv(url)
 
-        if self._max_rows:
-            X = X.sample(min(len(X), self._max_rows))
+        if self.max_rows:
+            X = X.sample(min(len(X), self.max_rows))
 
         y = X.pop(self.target_column)
 
@@ -125,10 +125,10 @@ class MLChallenge(Challenge):
 
         return self._data
 
-    def __init__(self, dataset, model=None, target_column=None,
-                 encode=None, tunable_hyperparameters=None, metric=None,
-                 model_defaults=None, make_binary=None, stratified=None,
-                 cv_splits=5, cv_random_state=42, cv_shuffle=True, metric_args={}, max_rows=None):
+    def __init__(self, dataset, model=None, target_column=None, encode=None,
+                 tunable_hyperparameters=None, metric=None, model_defaults=None,
+                 make_binary=None, stratified=None, cv_splits=5, cv_random_state=42,
+                 cv_shuffle=True, metric_args={}, max_rows=None):
 
         self.model = model or self.MODEL
         self.dataset = dataset or self.DATASET
@@ -136,7 +136,7 @@ class MLChallenge(Challenge):
         self.model_defaults = model_defaults or self.MODEL_DEFAULTS
         self.make_binary = make_binary or self.MAKE_BINARY
         self.tunable_hyperparameters = tunable_hyperparameters or self.TUNABLE_HYPERPARAMETERS
-        self._max_rows = max_rows
+        self.max_rows = max_rows
 
         if metric:
             self.metric = metric
