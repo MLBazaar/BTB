@@ -268,9 +268,8 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None, max
     return selected
 
 
-def run_benchmark(tuners=None, challenge_types=None, challenges=None,
-                  sample=None, iterations=100, max_rows=5000,
-                  output_path=None, detailed_output=False):
+def run_benchmark(tuners=None, challenge_types=None, challenges=None, sample=None,
+                  iterations=100, max_rows=5000, output_path=None, detailed_output=False):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
     This function provides a user-friendly interface to interact with the ``benchmark``
