@@ -3,7 +3,7 @@
 import numpy as np
 
 from btb.tuning.tunable import Tunable
-from btb.tuning.tuners import GPEiTuner, GPTuner, UniformTuner
+from btb.tuning.tuners import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner, UniformTuner
 
 
 def _tuning_function(tuner_class, scoring_function, tunable_hyperparameters, iterations):
@@ -43,6 +43,14 @@ def gptuner(scoring_function, tunable_hyperparameters, iterations):
 
 def gpeituner(scoring_function, tunable_hyperparameters, iterations):
     return _tuning_function(GPEiTuner, scoring_function, tunable_hyperparameters, iterations)
+
+
+def gcptuner(scoring_function, tunable_hyperparameters, iterations):
+    return _tuning_function(GCPTuner, scoring_function, tunable_hyperparameters, iterations)
+
+
+def gcpeituner(scoring_function, tunable_hyperparameters, iterations):
+    return _tuning_function(GCPEiTuner, scoring_function, tunable_hyperparameters, iterations)
 
 
 def uniformtuner(scoring_function, tunable_hyperparameters, iterations):
