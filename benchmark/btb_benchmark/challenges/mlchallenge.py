@@ -47,8 +47,9 @@ class MLChallenge(Challenge):
             will be used in case there is otherwise the default that ``cross_val_score`` function
             offers will be used.
         max_rows (int):
-            Number of rows to use from the datasets. Defaults to ``None``. If ``None`` or the
-            amount of ``max_rows`` is bigger, use all the rows available.
+            Maximum number of rows to use from each dataset. If ``None``, or if the
+            given number is higher than the number of rows in the dataset, the entire
+            dataset is used. Defaults to ``None``.
     """
 
     _data = None

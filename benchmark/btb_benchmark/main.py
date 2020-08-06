@@ -269,7 +269,7 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None, max
 
 
 def run_benchmark(tuners=None, challenge_types=None, challenges=None, sample=None,
-                  iterations=100, max_rows=5000, output_path=None, detailed_output=False):
+                  iterations=100, max_rows=None, output_path=None, detailed_output=False):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
     This function provides a user-friendly interface to interact with the ``benchmark``
@@ -294,8 +294,9 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None, sample=Non
         iterations (int):
             Number of tuning iterations to perform per challenge and tuner.
         max_rows (int):
-            Number of max rows to use from the dataframe (MLChallenges only). Defaults to ``None``.
-            If ``None`` or the dataset is too small, all the rows will be used.
+            Maximum number of rows to use from each dataset. If ``None``, or if the
+            given number is higher than the number of rows in the dataset, the entire
+            dataset is used. Defaults to ``None``.
         output_path (str):
             If an ``output_path`` is given, the final results will be saved in that location.
         detailed_output (bool):
