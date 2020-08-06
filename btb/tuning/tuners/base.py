@@ -299,13 +299,13 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
             the smaller is better. Defaults to ``True``.
         min_trials (int):
             Number of recorded ``trials`` needed to perform a fitting over the model.
-            Defaults to 2.
+            Defaults to 5.
     """
 
     _metamodel_kwargs = None
     _acquisition_kwargs = None
 
-    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=2):
+    def __init__(self, tunable, maximize=True, num_candidates=1000, min_trials=5):
         self.num_candidates = num_candidates
         self.min_trials = min_trials
         super().__init__(tunable, maximize)

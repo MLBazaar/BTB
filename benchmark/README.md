@@ -60,6 +60,8 @@ Currently, benchmarking framework compares the following tuning functions from B
 - [BTB.Uniform](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/uniform.py): Uses a Tuner that samples proposals randomly using a uniform distribution.
 - [BTB.GPTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel.
 - [BTB.GPEiTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.
+- [BTB.GCPTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel.
+- [BTB.GCPEiTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel and an Expected Improvement acquisition function.
 
 And the following external tuning functions:
 
