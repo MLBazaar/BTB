@@ -22,7 +22,7 @@ LOGGER = logging.getLogger(__name__)
 ALL_TYPES = ['math', 'xgboost']
 
 
-def get_math_challenge_instance(name):
+def get_math_challenge_instance(name, *args, **kwargs):
     return MATH_CHALLENGES.get(name)()
 
 
@@ -50,6 +50,8 @@ def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
             'elapsed': datetime.utcnow() - start,
             'hostname': socket.gethostname()
         }
+        if hasattr(challenge, 'data'):
+            result['rows'] = challenge.data[0].shape[0]
 
     except Exception as ex:
         LOGGER.warn(
@@ -225,7 +227,7 @@ def _get_all_challenge_names(challenge_types=None):
     return all_challenge_names
 
 
-def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
+def _get_challenges_list(challenges=None, challenge_types=None, sample=None, max_rows=None):
     challenge_types = _as_list(challenge_types) or ALL_TYPES
     challenges = _challenges_as_list(challenges) or _get_all_challenge_names(challenge_types)
 
@@ -245,7 +247,9 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
         else:
             for challenge_type in challenge_types:
                 try:
-                    challenge_instance = CHALLENGE_GETTER[challenge_type](challenge)
+                    challenge_class = CHALLENGE_GETTER[challenge_type]
+                    challenge_instance = challenge_class(challenge, max_rows=max_rows)
+
                     if challenge_instance:
                         known = True
                         selected.append(challenge_instance)
@@ -264,8 +268,8 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None):
     return selected
 
 
-def run_benchmark(tuners=None, challenge_types=None, challenges=None,
-                  sample=None, iterations=100, output_path=None, detailed_output=False):
+def run_benchmark(tuners=None, challenge_types=None, challenges=None, sample=None,
+                  iterations=100, max_rows=None, output_path=None, detailed_output=False):
     """Execute the benchmark function and optionally store the result as a ``CSV``.
 
     This function provides a user-friendly interface to interact with the ``benchmark``
@@ -289,6 +293,10 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
             Run only on a subset of the available datasets of the given size.
         iterations (int):
             Number of tuning iterations to perform per challenge and tuner.
+        max_rows (int):
+            Maximum number of rows to use from each dataset. If ``None``, or if the
+            given number is higher than the number of rows in the dataset, the entire
+            dataset is used. Defaults to ``None``.
         output_path (str):
             If an ``output_path`` is given, the final results will be saved in that location.
         detailed_output (bool):
@@ -303,7 +311,8 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None,
     challenges = _get_challenges_list(
         challenges=challenges,
         challenge_types=challenge_types,
-        sample=sample
+        sample=sample,
+        max_rows=max_rows
     )
 
     results = benchmark(tuners, challenges, iterations, detailed_output)

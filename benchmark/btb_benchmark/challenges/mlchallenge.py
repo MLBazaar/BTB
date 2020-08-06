@@ -29,30 +29,27 @@ class MLChallenge(Challenge):
     Args:
         model (class):
             Class of a machine learning estimator.
-
         dataset (str):
             Name or path to a dataset. If it's a name it will try to read it from
-            https://btb-data.s3.amazonaws.com/
-
+            https://atm-data.s3.amazonaws.com/
         target_column (str):
             Name of the target column in the dataset.
-
         encode (bool):
             Either or not to encode the dataset using ``sklearn.preprocessing.OneHotEncoder``.
-
         model_defaults (dict):
             Dictionary with default keyword args for the model instantiation.
-
         make_binary (bool):
             Either or not to make the target column binary.
-
         tunable_hyperparameters (dict):
             Dictionary representing the tunable hyperparameters for the challenge.
-
         metric (callable):
             Metric function. If ``None``, then the estimator's metric function
             will be used in case there is otherwise the default that ``cross_val_score`` function
             offers will be used.
+        max_rows (int):
+            Maximum number of rows to use from each dataset. If ``None``, or if the
+            given number is higher than the number of rows in the dataset, the entire
+            dataset is used. Defaults to ``None``.
     """
 
     _data = None
@@ -108,6 +105,9 @@ class MLChallenge(Challenge):
             url = self.get_dataset_url(self.dataset)
             X = pd.read_csv(url)
 
+        if self.max_rows:
+            X = X.sample(min(len(X), self.max_rows))
+
         y = X.pop(self.target_column)
 
         if self.make_binary:
@@ -126,10 +126,10 @@ class MLChallenge(Challenge):
 
         return self._data
 
-    def __init__(self, dataset, model=None, target_column=None,
-                 encode=None, tunable_hyperparameters=None, metric=None,
-                 model_defaults=None, make_binary=None, stratified=None,
-                 cv_splits=5, cv_random_state=42, cv_shuffle=True, metric_args={}):
+    def __init__(self, dataset, model=None, target_column=None, encode=None,
+                 tunable_hyperparameters=None, metric=None, model_defaults=None,
+                 make_binary=None, stratified=None, cv_splits=5, cv_random_state=42,
+                 cv_shuffle=True, metric_args={}, max_rows=None):
 
         self.model = model or self.MODEL
         self.dataset = dataset or self.DATASET
@@ -137,6 +137,7 @@ class MLChallenge(Challenge):
         self.model_defaults = model_defaults or self.MODEL_DEFAULTS
         self.make_binary = make_binary or self.MAKE_BINARY
         self.tunable_hyperparameters = tunable_hyperparameters or self.TUNABLE_HYPERPARAMETERS
+        self.max_rows = max_rows
 
         if metric:
             self.metric = metric

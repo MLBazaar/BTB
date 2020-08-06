@@ -26,7 +26,9 @@ def _run(args):
         args.challenges,
         args.sample,
         args.iterations,
+        args.max_rows,
         args.output_path,
+        args.detailed_output,
     )
 
     if not args.output_path:
@@ -67,6 +69,8 @@ def _get_parser():
     run.add_argument('-C', '--challenge-types', nargs='+',
                      choices=['math', 'sgd', 'random_forest', 'xgboost'],
                      help='Type of challenge/s to use. Accepts multiple names.')
+    run.add_argument('-m', '--max-rows', type=int,
+                     help='Max amount of rows to use for each dataset.')
     run.add_argument('-d', '--detailed-output', action='store_true',
                      help='Output a detailed dataset with elapsed times.')
 

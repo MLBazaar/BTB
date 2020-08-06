@@ -150,6 +150,7 @@ The `run_benchmark` function has the following arguments:
 - `challenges`: list of names of challenges that will be benchmarked (optional).
 - `sample`: if specified, run the benchmark on a subset of the available challenges of the given size (optional).
 - `iterations`: the number of tuning iterations to perform per challenge and tuner.
+- `max_rows`: Number of rows from the dataframe to be used (MLChallenges only). Defaults to `None`.
 - `output_path`: If given, store the benchmark results in the given path as a CSV file.
 
 #### Tuners
