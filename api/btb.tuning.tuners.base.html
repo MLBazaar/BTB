@@ -377,7 +377,7 @@
 <p>Package where the BaseTuner class and BaseMetaModelTuner are defined.</p>
 <dl class="class">
 <dt id="btb.tuning.tuners.base.BaseMetaModelTuner">
-<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.tuners.base.</code><code class="sig-name descname">BaseMetaModelTuner</code><span class="sig-paren">(</span><em class="sig-param">tunable</em>, <em class="sig-param">maximize=True</em>, <em class="sig-param">num_candidates=1000</em>, <em class="sig-param">min_trials=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tuners/base.html#BaseMetaModelTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuners.base.BaseMetaModelTuner" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">btb.tuning.tuners.base.</code><code class="sig-name descname">BaseMetaModelTuner</code><span class="sig-paren">(</span><em class="sig-param">tunable</em>, <em class="sig-param">maximize=True</em>, <em class="sig-param">num_candidates=1000</em>, <em class="sig-param">min_trials=5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/btb/tuning/tuners/base.html#BaseMetaModelTuner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#btb.tuning.tuners.base.BaseMetaModelTuner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#btb.tuning.tuners.base.BaseTuner" title="btb.tuning.tuners.base.BaseTuner"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.tuners.base.BaseTuner</span></code></a>, <a class="reference internal" href="btb.tuning.metamodels.base.html#btb.tuning.metamodels.base.BaseMetaModel" title="btb.tuning.metamodels.base.BaseMetaModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.metamodels.base.BaseMetaModel</span></code></a>, <a class="reference internal" href="btb.tuning.acquisition.base.html#btb.tuning.acquisition.base.BaseAcquisition" title="btb.tuning.acquisition.base.BaseAcquisition"><code class="xref py py-class docutils literal notranslate"><span class="pre">btb.tuning.acquisition.base.BaseAcquisition</span></code></a></p>
 <p>BaseMetaModelTuner class.</p>
 <p>BaseMetaModelTuner class is the abstract representation of a tuner that is based
@@ -427,7 +427,7 @@ number of trials recorded.</p>
 <li><p><strong>maximize</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> the model will understand that the score bigger is better, if <code class="docutils literal notranslate"><span class="pre">False</span></code>
 the smaller is better. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
 <li><p><strong>min_trials</strong> (<em>int</em>) – Number of recorded <code class="docutils literal notranslate"><span class="pre">trials</span></code> needed to perform a fitting over the model.
-Defaults to 2.</p></li>
+Defaults to 5.</p></li>
 </ul>
 </dd>
 </dl>

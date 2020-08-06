@@ -974,8 +974,14 @@ SGDClassifier(alpha=0.784797005036952, average=False, class_weight=None,
 </div>
 <div class="section" id="Implemented-tuners">
 <h2>Implemented tuners<a class="headerlink" href="#Implemented-tuners" title="Permalink to this headline">¶</a></h2>
-<p><strong>BTB</strong> has the following three tuners available: - <a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/uniform.py">UniformTuner</a>: Uses a Tuner that samples proposals randomly using a uniform distribution. - <a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">GPTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel. -
-<a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">GPEiTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.</p>
+<p><strong>BTB</strong> has the following three tuners available:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/uniform.py">UniformTuner</a>: Uses a Tuner that samples proposals randomly using a uniform distribution.</p></li>
+<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">GPTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel.</p></li>
+<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">GPEiTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.</p></li>
+<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">GCPTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel.</p></li>
+<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">GCPEiTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel and an Expected Improvement acquisition function.</p></li>
+</ul>
 <div class="section" id="Leaderboard">
 <h3>Leaderboard<a class="headerlink" href="#Leaderboard" title="Permalink to this headline">¶</a></h3>
 <p>Currently we have a <a class="reference external" href="https://github.com/HDI-Project/BTB/tree/master/benchmark">Benchmarking</a> process that evaluates the <code class="docutils literal notranslate"><span class="pre">tuners</span></code> performance against each other this are the latest results that we obtained for the <code class="docutils literal notranslate"><span class="pre">BTB</span></code> tuners.</p>

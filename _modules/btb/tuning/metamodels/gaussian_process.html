@@ -339,7 +339,10 @@
   <h1>Source code for btb.tuning.metamodels.gaussian_process</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">copulas</span> <span class="kn">import</span> <span class="n">EPSILON</span>
+<span class="kn">from</span> <span class="nn">copulas.univariate</span> <span class="kn">import</span> <span class="n">Univariate</span>
 <span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.gaussian_process.kernels</span> <span class="kn">import</span> <span class="n">RBF</span>
 
@@ -374,7 +377,66 @@
 
     <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">):</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_instance</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">return_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">column_stack</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GaussianCopulaProcessMetaModel"><a class="viewcode-back" href="../../../../api/btb.tuning.metamodels.gaussian_process.html#btb.tuning.metamodels.GaussianCopulaProcessMetaModel">[docs]</a><span class="k">class</span> <span class="nc">GaussianCopulaProcessMetaModel</span><span class="p">(</span><span class="n">GaussianProcessMetaModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;GaussianCopulaProcessMetaModel class.</span>
+
+<span class="sd">    This class represents a meta-model using an underlying ``GaussianProcessRegressor`` from</span>
+<span class="sd">    ``sklearn.gaussian_process`` applying ``copulas.univariate.Univariate`` transformations</span>
+<span class="sd">    to the input data and afterwards reverts it for the predictions.</span>
+
+<span class="sd">    During the ``fit`` process, this metamodel trains a univariate copula for each</span>
+<span class="sd">    hyperparameter to then compute the cumulative distribution of these. Once the cumulative</span>
+<span class="sd">    distribution has been calculated, we calculate the inverse of the normal cumulative</span>
+<span class="sd">    distribution using ``scipy.stats.norm`` and use these transformations to train the</span>
+<span class="sd">    ``GaussianProcessRegressor`` model.</span>
+
+<span class="sd">    When predicting the output value, an inverse of the normal cumulative distribution is</span>
+<span class="sd">    computed to the normal cumulative distribution, using the previously trained univariate</span>
+<span class="sd">    copula with the input data of the score.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _MODEL_KWARGS (dict):</span>
+<span class="sd">            Dictionary with the default ``kwargs`` for the ``GaussianProcessRegressor``</span>
+<span class="sd">            instantiation.</span>
+<span class="sd">        _MODEL_CLASS (type):</span>
+<span class="sd">            Class to be instantiated and used for the ``self._model`` instantiation. In</span>
+<span class="sd">            this case ``sklearn.gaussian_process.GaussainProcessRegressor``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trials</span><span class="p">):</span>
+        <span class="n">transformed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">distribution</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distributions</span><span class="p">):</span>
+            <span class="n">transformed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">distribution</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">column</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span> <span class="o">+</span> <span class="n">EPSILON</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">EPSILON</span><span class="p">))</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">column_stack</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">scores</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distributions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">trials</span><span class="o">.</span><span class="n">T</span><span class="p">:</span>
+            <span class="n">distribution</span> <span class="o">=</span> <span class="n">Univariate</span><span class="p">()</span>
+            <span class="n">distribution</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_distributions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span>
+
+        <span class="n">distribution</span> <span class="o">=</span> <span class="n">Univariate</span><span class="p">()</span>
+        <span class="n">distribution</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_score_distribution</span> <span class="o">=</span> <span class="n">distribution</span>
+
+        <span class="n">trans_trials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">trials</span><span class="p">)</span>
+        <span class="n">trans_scores</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_score_distribution</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span> <span class="o">+</span> <span class="n">EPSILON</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">EPSILON</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_fit</span><span class="p">(</span><span class="n">trans_trials</span><span class="p">,</span> <span class="n">trans_scores</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">):</span>
+        <span class="n">trans_candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+        <span class="n">predicted</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">trans_candidates</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score_distribution</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">predicted</span><span class="p">))</span></div>
 </pre></div>
 
            </div>

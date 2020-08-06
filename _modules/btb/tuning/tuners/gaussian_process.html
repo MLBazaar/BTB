@@ -343,7 +343,8 @@
 
 <span class="kn">from</span> <span class="nn">btb.tuning.acquisition.expected_improvement</span> <span class="kn">import</span> <span class="n">ExpectedImprovementAcquisition</span>
 <span class="kn">from</span> <span class="nn">btb.tuning.acquisition.predicted_score</span> <span class="kn">import</span> <span class="n">PredictedScoreAcquisition</span>
-<span class="kn">from</span> <span class="nn">btb.tuning.metamodels.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessMetaModel</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.metamodels.gaussian_process</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GaussianCopulaProcessMetaModel</span><span class="p">,</span> <span class="n">GaussianProcessMetaModel</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">btb.tuning.tuners.base</span> <span class="kn">import</span> <span class="n">BaseMetaModelTuner</span>
 
 
@@ -355,7 +356,7 @@
 <span class="sd">    from the model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable</span><span class="p">,</span> <span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_candidates</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-                 <span class="n">min_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">length_scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+                 <span class="n">min_trials</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">length_scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create an instance of ``GPTuner``.</span>
 
 <span class="sd">        Args:</span>
@@ -379,8 +380,8 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">length_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metamodel_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;length_scale&#39;</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_candidates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;GPTuner(tunable=</span><span class="si">{}</span><span class="s1">, maximize=</span><span class="si">{}</span><span class="s1">,&#39;</span>
-                <span class="s1">&#39;num_candidates=</span><span class="si">{}</span><span class="s1">, min_trials=</span><span class="si">{}</span><span class="s1">,&#39;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;GPTuner(tunable=</span><span class="si">{}</span><span class="s1">, maximize=</span><span class="si">{}</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;num_candidates=</span><span class="si">{}</span><span class="s1">, min_trials=</span><span class="si">{}</span><span class="s1">, &#39;</span>
                 <span class="s1">&#39;length_scale=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
 
@@ -392,7 +393,7 @@
 <span class="sd">    predicted from the model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable</span><span class="p">,</span> <span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_candidates</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-                 <span class="n">min_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">length_scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+                 <span class="n">min_trials</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">length_scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create an instance of ``GPEiTuner``.</span>
 
 <span class="sd">        Args:</span>
@@ -417,8 +418,38 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">length_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metamodel_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;length_scale&#39;</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_candidates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;GPTuner(tunable=</span><span class="si">{}</span><span class="s1">, maximize=</span><span class="si">{}</span><span class="s1">,&#39;</span>
-                <span class="s1">&#39;num_candidates=</span><span class="si">{}</span><span class="s1">, min_trials=</span><span class="si">{}</span><span class="s1">,&#39;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;GPEiTuner(tunable=</span><span class="si">{}</span><span class="s1">, maximize=</span><span class="si">{}</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;num_candidates=</span><span class="si">{}</span><span class="s1">, min_trials=</span><span class="si">{}</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;length_scale=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GCPTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.gaussian_process.html#btb.tuning.GCPTuner">[docs]</a><span class="k">class</span> <span class="nc">GCPTuner</span><span class="p">(</span><span class="n">GaussianCopulaProcessMetaModel</span><span class="p">,</span> <span class="n">GPTuner</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gaussian Copula Process Tuner.</span>
+
+<span class="sd">    This class uses a ``GaussianProcessRegressor`` model from the ``sklearn.gaussian_process``</span>
+<span class="sd">    package, using a ``numpy.argmax`` function to return the better configurations predicted</span>
+<span class="sd">    from the meta model that converts the input data using a ``Univariate`` copula.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">length_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metamodel_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;length_scale&#39;</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_candidates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;GCPTuner(tunable=</span><span class="si">{}</span><span class="s1">, maximize=</span><span class="si">{}</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;num_candidates=</span><span class="si">{}</span><span class="s1">, min_trials=</span><span class="si">{}</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;length_scale=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GCPEiTuner"><a class="viewcode-back" href="../../../../api/btb.tuning.tuners.gaussian_process.html#btb.tuning.GCPEiTuner">[docs]</a><span class="k">class</span> <span class="nc">GCPEiTuner</span><span class="p">(</span><span class="n">GaussianCopulaProcessMetaModel</span><span class="p">,</span> <span class="n">GPEiTuner</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gaussian Copula Process Expected Improvement Tuner.</span>
+
+<span class="sd">    This class uses a ``GaussianProcessRegressor`` model from the ``sklearn.gaussian_process``</span>
+<span class="sd">    package, using an ``ExpectedImprovement`` function to return the better configurations</span>
+<span class="sd">    predicted from the meta model that converts the input data using a ``Univariate`` copula.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">length_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metamodel_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;length_scale&#39;</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tunable</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_candidates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_trials</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;GCPEiTuner(tunable=</span><span class="si">{}</span><span class="s1">, maximize=</span><span class="si">{}</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;num_candidates=</span><span class="si">{}</span><span class="s1">, min_trials=</span><span class="si">{}</span><span class="s1">, &#39;</span>
                 <span class="s1">&#39;length_scale=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 </pre></div>
 
