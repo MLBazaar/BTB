@@ -337,7 +337,7 @@ class TestBaseMetaModelTuner(TestCase):
 
         # assert
         assert instance.num_candidates == 1000
-        assert instance.min_trials == 2
+        assert instance.min_trials == 5
         instance.__init_metamodel__.assert_called_once_with()
         instance.__init_acquisition__.assert_called_once_with()
 

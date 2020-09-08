@@ -111,7 +111,7 @@ fix-lint: ## fix lint issues using autoflake, autopep8, and isort
 
 .PHONY: test
 test: ## run tests quickly with the default Python
-	python -m pytest --basetemp=${ENVTMPDIR} --cov=btb
+	python -m pytest --cov=btb
 
 .PHONY: test-all
 test-all: ## run tests on every Python version with tox
@@ -221,7 +221,7 @@ docker-login:
 
 .PHONY: docker-build
 docker-build:
-	docker build -t btb .
+	docker build -t btb -f benchmark/Dockerfile .
 
 .PHONY: docker-push
 docker-push: docker-login docker-build

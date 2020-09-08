@@ -12,6 +12,7 @@ A simple, extensible backend for developing auto-tuning systems.
 [![Travis CI Shield](https://travis-ci.org/HDI-Project/BTB.svg?branch=master)](https://travis-ci.org/HDI-Project/BTB)
 [![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials)
 
 * License: [MIT](https://github.com/HDI-Project/BTB/blob/master/LICENSE)
 * Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
@@ -21,15 +22,23 @@ A simple, extensible backend for developing auto-tuning systems.
 # Overview
 
 BTB ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning
-systems such as AutoML systems. It provides an easy-to-use interface for *tuning* and *selection*.
+systems such as AutoML systems. It provides an easy-to-use interface for *tuning* models and
+*selecting* between models.
 
 It is currently being used in several AutoML systems:
-- [ATM](https://github.com/HDI-Project/ATM), distributed, multi-tenant AutoML system for
+
+- [ATM](https://github.com/HDI-Project/ATM), a distributed, multi-tenant AutoML system for
 classifier tuning
-- [mit-d3m-ta2](https://github.com/HDI-Project/mit-d3m-ta2/), MIT's system for the DARPA
+- [MIT's system](https://github.com/HDI-Project/mit-d3m-ta2/) for the DARPA
 [Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
 - [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose
 AutoML system
+
+## Try it out now!
+
+If you want to quickly discover **BTB**, simply click the button below and follow the tutorials!
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials)
 
 # Install
 
@@ -58,19 +67,19 @@ If you want to install from source or contribute to the project please read the
 # Quickstart
 
 In this short tutorial we will guide you through the necessary steps to get started using BTB
-to select and tune the best model to solve a Machine Learning problem.
+to `select` between models and `tune` a model to solve a Machine Learning problem.
 
 In particular, in this example we will be using ``BTBSession`` to perform solve the [Wine](
 https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data) classification problem
 by selecting between the `DecisionTreeClassifier` and the `SGDClassifier` models from
-[scikit-learn](https://scikit-learn.org/) while also searching for their best hyperparameter
+[scikit-learn](https://scikit-learn.org/) while also searching for their best `hyperparameter`
 configuration.
 
 ## Prepare a scoring function
 
-The first step in order to use the `BTBSession` class is to develop a scoring function.
+The first step in order to use the `BTBSession` class is to develop a `scoring` function.
 
-This is a Python function that, given a model name and a hyperparameter configuration,
+This is a Python function that, given a model name and a `hyperparameter` configuration,
 evaluates the performance of the model on your data and returns a score.
 
 ```python3
@@ -101,7 +110,8 @@ def scoring_function(model_name, hyperparameter_values):
 
 ## Define the tunable hyperparameters
 
-The second step is to define the hyperparameters that we want to tune for each model as `Tunables`.
+The second step is to define the `hyperparameters` that we want to `tune` for each model as
+`Tunables`.
 
 ```python3
 from btb.tuning import Tunable
@@ -121,11 +131,11 @@ tunables = {
 
 ## Start the searching process
 
-Once you have defined a scoring function and the tunable hyperparameters specification of your
-models, you can start the searching for the best model and hyperparameter configuration by using
+Once you have defined a `scoring` function and the tunable `hyperparameters` specification of your
+models, you can start the searching for the best model and `hyperparameter` configuration by using
 the `btb.BTBSession`.
 
-All you need to do is create an instance passing the tunable hyperparameters scpecification
+All you need to do is create an instance passing the tunable `hyperparameters` scpecification
 and the scoring function.
 
 ```python3
@@ -137,7 +147,7 @@ session = BTBSession(
 )
 ```
 
-And then call the `run` method indicating how many tunable iterations you want the Session to
+And then call the `run` method indicating how many tunable iterations you want the `BTBSession` to
 perform:
 
 
@@ -146,7 +156,7 @@ best_proposal = session.run(20)
 ```
 
 The result will be a dictionary indicating the name of the best model that could be found
-and the hyperparameter configuration that was used:
+and the `hyperparameter` configuration that was used:
 
 ```
 {
@@ -171,43 +181,54 @@ We present the latest leaderboard from latest release below:
 
 | tuner                   | with ties | without ties |
 |-------------------------|-----------|--------------|
-| `Ax.optimize`           |    185    |            5 |
-| `BTB.GPEiTuner`         |    233    |           29 |
-| `BTB.GPTuner`           |    232    |           27 |
-| `BTB.UniformTuner`      |    200    |            9 |
-| `HyperOpt.tpe`          |    213    |           15 |
-| `SMAC.HB4AC`            |    187    |            2 |
-| `SMAC.SMAC4HPO_EI`      |  **246**  |       **43** |
-| `SMAC.SMAC4HPO_LCB`     |    229    |           28 |
-| `SMAC.SMAC4HPO_PI`      |    238    |           41 |
+| `Ax.optimize`           |    220    |           32 |
+| `BTB.GCPEiTuner`        |    139    |            2 |
+| `BTB.GCPTuner`          |  **252**  |       **90** |
+| `BTB.GPEiTuner`         |    208    |           16 |
+| `BTB.GPTuner`           |    213    |           24 |
+| `BTB.UniformTuner`      |    177    |            1 |
+| `HyperOpt.tpe`          |    186    |            6 |
+| `SMAC.HB4AC`            |    180    |            4 |
+| `SMAC.SMAC4HPO_EI`      |    220    |           31 |
+| `SMAC.SMAC4HPO_LCB`     |    205    |           16 |
+| `SMAC.SMAC4HPO_PI`      |    221    |           35 |
 
-- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
+- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/15a-pAV_t7CCDvqDyloYmdVNFhiKJFOJ7bbgpmYIpyTs/edit?usp=sharing).
 - If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).
 - If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
 
-# What's next?
+# More tutorials
+
+1. To just `tune` `hyperparameters` - see our `tuning` tutorial [here](
+https://github.com/HDI-Project/BTB/blob/master/tutorials/01_Tuning.ipynb) and
+[documentation here](https://hdi-project.github.io/BTB/tutorials/01_Tuning.html).
+2. To see the [types of `hyperparameters`](
+https://hdi-project.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter?) we support
+see our [documentation here](https://hdi-project.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter?).
+3. You can read about [our benchmarking framework here](https://hdi-project.github.io/BTB/benchmark.html#).
+4. See our [tutorial on `selection` here](https://github.com/HDI-Project/BTB/blob/master/tutorials/02_Selection.ipynb)
+and [documentation here](https://hdi-project.github.io/BTB/tutorials/02_Selection.html).
 
 For more details about **BTB** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/BTB/)!
 
-Also do not forget to have a look at the [notebook tutorials](notebooks).
+Also do not forget to have a look at the [notebook tutorials](tutorials).
 
 # Citing BTB
 
-If you use BTB, please consider citing our related paper:
+If you use **BTB**, please consider citing the following [paper](
+https://arxiv.org/pdf/1905.08942.pdf):
 
-  Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. ["The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development."](https://arxiv.org/abs/1905.08942) arXiv Preprint 1905.08942. 2019.
-
-  ```bibtex
-  @article{smith2019mlbazaar,
-    author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
-    title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
-    journal = {arXiv e-prints},
-    year = {2019},
-    eid = {arXiv:1905.08942},
-    pages = {arXiv:1905.08942},
-    archivePrefix = {arXiv},
-    eprint = {1905.08942},
-  }
-  ```
+```
+@article{smith2019mlbazaar,
+  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+  journal = {arXiv e-prints},
+  year = {2019},
+  eid = {arXiv:1905.08942},
+  pages = {arxiv:1904.09535},
+  archivePrefix = {arXiv},
+  eprint = {1905.08942},
+}
+`````

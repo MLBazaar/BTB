@@ -60,6 +60,8 @@ Currently, benchmarking framework compares the following tuning functions from B
 - [BTB.Uniform](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/uniform.py): Uses a Tuner that samples proposals randomly using a uniform distribution.
 - [BTB.GPTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel.
 - [BTB.GPEiTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.
+- [BTB.GCPTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel.
+- [BTB.GCPEiTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel and an Expected Improvement acquisition function.
 
 And the following external tuning functions:
 
@@ -148,6 +150,7 @@ The `run_benchmark` function has the following arguments:
 - `challenges`: list of names of challenges that will be benchmarked (optional).
 - `sample`: if specified, run the benchmark on a subset of the available challenges of the given size (optional).
 - `iterations`: the number of tuning iterations to perform per challenge and tuner.
+- `max_rows`: Number of rows from the dataframe to be used (MLChallenges only). Defaults to `None`.
 - `output_path`: If given, store the benchmark results in the given path as a CSV file.
 
 #### Tuners
@@ -233,7 +236,7 @@ All the results obtained by the different BTB releases can be found inside the
 
 Additionally, all the previous results can be browsed and analyzed in the following [Google Sheets
 document](
- https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
+https://docs.google.com/spreadsheets/d/15a-pAV_t7CCDvqDyloYmdVNFhiKJFOJ7bbgpmYIpyTs/edit?usp=sharing).
 
 
 ## Kubernetes

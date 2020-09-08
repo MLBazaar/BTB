@@ -1,5 +1,18 @@
 # History
 
+## 0.3.12 - 2020-09-08
+
+In this release BTB includes two new tuners, `GCP` and `GCPEi`. which use a
+`GaussianProcessRegressor` meta-model from `sklearn.gaussian_process` applying
+`copulas.univariate.Univariate` transformations to the input data and afterwards reverts it for
+the predictions.
+
+### Resolved Issues
+
+* Issue #15: Implement a `GaussianCopulaProcessRegressor`.
+* Issue #205: Separate datasets from `MLChallenge`.
+* Issue #208: Implement `GaussianCopulaProcessMetaModel`.
+
 ## 0.3.11 - 2020-06-12
 
 With this release we fix the `AX.optimize` tuning function by casting the values of the

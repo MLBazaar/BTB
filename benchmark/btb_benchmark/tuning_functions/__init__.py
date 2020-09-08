@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from btb_benchmark.tuning_functions.ax import ax_optimize
-from btb_benchmark.tuning_functions.btb import gpeituner, gptuner, uniformtuner
+from btb_benchmark.tuning_functions.btb import (
+    gcpeituner, gcptuner, gpeituner, gptuner, uniformtuner)
 from btb_benchmark.tuning_functions.hyperopt import hyperopt_tpe
 from btb_benchmark.tuning_functions.smac import (
     smac_hb4ac, smac_smac4hpo_ei, smac_smac4hpo_lcb, smac_smac4hpo_pi)
@@ -12,7 +13,9 @@ def get_all_tuning_functions():
     return {
         'Ax.optimize': ax_optimize,
         'BTB.GPTuner': gptuner,
+        'BTB.GCPTuner': gcptuner,
         'BTB.GPEiTuner': gpeituner,
+        'BTB.GCPEiTuner': gcpeituner,
         'BTB.UniformTuner': uniformtuner,
         'HyperOpt.tpe': hyperopt_tpe,
         'SMAC.HB4AC': smac_hb4ac,

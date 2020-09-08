@@ -23,10 +23,11 @@ except IOError:
 
 
 install_requires = [
-    'numpy>=1.14.0,<1.18.0',
+    'copulas>=0.3.2.dev0,<0.4',
+    'numpy>=1.14.0',
     'scikit-learn>0.20.0,<0.23',
-    'scipy>=1.0.1,<1.4.0',
-    'pandas>=0.21.0,<0.26.0',
+    'scipy>=1.2,<2',
+    'pandas>=0.22.0,<0.25',
     'tqdm>=4.36.1,<4.50.0',
 ]
 
@@ -106,6 +107,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.11',
+    version='0.3.12.dev1',
     zip_safe=False,
 )
