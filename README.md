@@ -181,17 +181,19 @@ We present the latest leaderboard from latest release below:
 
 | tuner                   | with ties | without ties |
 |-------------------------|-----------|--------------|
-| `Ax.optimize`           |    237    |       **39** |
-| `BTB.GPEiTuner`         |    233    |           19 |
-| `BTB.GPTuner`           |    235    |           25 |
-| `BTB.UniformTuner`      |    197    |            2 |
-| `HyperOpt.tpe`          |    206    |           11 |
-| `SMAC.HB4AC`            |    192    |            1 |
-| `SMAC.SMAC4HPO_EI`      |  **241**  |           36 |
-| `SMAC.SMAC4HPO_LCB`     |    222    |           17 |
-| `SMAC.SMAC4HPO_PI`      |  **241**  |           37 |
+| `Ax.optimize`           |    220    |           32 |
+| `BTB.GCPEiTuner`        |    139    |            2 |
+| `BTB.GCPTuner`          |  **252**  |       **90** |
+| `BTB.GPEiTuner`         |    208    |           16 |
+| `BTB.GPTuner`           |    213    |           24 |
+| `BTB.UniformTuner`      |    177    |            1 |
+| `HyperOpt.tpe`          |    186    |            6 |
+| `SMAC.HB4AC`            |    180    |            4 |
+| `SMAC.SMAC4HPO_EI`      |    220    |           31 |
+| `SMAC.SMAC4HPO_LCB`     |    205    |           16 |
+| `SMAC.SMAC4HPO_PI`      |    221    |           35 |
 
-- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
+- Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/15a-pAV_t7CCDvqDyloYmdVNFhiKJFOJ7bbgpmYIpyTs/edit?usp=sharing).
 - If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).
 - If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).

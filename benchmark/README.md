@@ -236,7 +236,7 @@ All the results obtained by the different BTB releases can be found inside the
 
 Additionally, all the previous results can be browsed and analyzed in the following [Google Sheets
 document](
- https://docs.google.com/spreadsheets/d/1npsvf97W8HrayVmehc-ph_Vsrq_Lcn_d/).
+https://docs.google.com/spreadsheets/d/15a-pAV_t7CCDvqDyloYmdVNFhiKJFOJ7bbgpmYIpyTs/edit?usp=sharing).
 
 
 ## Kubernetes
