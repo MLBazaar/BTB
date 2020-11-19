@@ -23,12 +23,12 @@ except IOError:
 
 
 install_requires = [
-    'copulas>=0.3.2.dev0,<0.4',
+    'copulas>=0.3.2,<0.4',
     'numpy>=1.14.0',
-    'scikit-learn>0.20.0,<0.23',
+    'scikit-learn>=0.20.0',
     'scipy>=1.2,<2',
-    'pandas>=0.22.0,<0.25',
-    'tqdm>=4.36.1,<4.50.0',
+    'pandas>=1,<2',
+    'tqdm>=4.36.1,<5',
 ]
 
 
@@ -85,9 +85,9 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     description='Bayesian Tuning and Bandits',
     extras_require={
@@ -102,7 +102,7 @@ setup(
     long_description_content_type='text/markdown',
     name='baytune',
     packages=find_packages(include=['btb', 'btb.*']),
-    python_requires='>=3.5',
+    python_requires='>=3.6,<3.9',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
