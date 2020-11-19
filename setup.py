@@ -35,6 +35,9 @@ install_requires = [
 tests_require = [
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
+    'pytest-rerunfailures>=9.1.1,<10',
+    'jupyter>=1.0.0,<2',
+    'rundoc>=0.4.3,<0.5',
 ]
 
 
@@ -57,7 +60,11 @@ development_requires = [
 
     # style check
     'flake8>=3.7.7,<4',
+    'flake8-absolute-import>=1.0,<2',
+    # 'flake8-docstrings>=1.5.0,<2',
+    # 'flake8-sfs>=0.0.3,<0.1',
     'isort>=4.3.4,<5',
+    'pylint>=2.5.3,<3',
 
     # fix style issues
     'autoflake>=1.1,<2',
@@ -70,9 +77,7 @@ development_requires = [
     # Advanced testing
     'coverage>=4.5.1,<6',
     'tox>=2.9.1,<4',
-
-    # others
-    'jupyter>=1.0.0',
+    'importlib-metadata<2.0.0,>=0.12'
 ]
 
 

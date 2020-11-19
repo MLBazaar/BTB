@@ -24,6 +24,8 @@ except IOError:
 def github_dependency(user, name, commit):
     return f'{name} @ git+https://github.com/{user}/{name}@{commit}#egg={name}'
 
+github_req =  github_dependency(
+    'csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods')
 
 install_requires = [
     'dask>=2.15.0,<3',
@@ -39,7 +41,7 @@ install_requires = [
     'scikit-learn>=0.20.0',
     'pandas>=1,<2',
     'XlsxWriter>=1.2.8,<1.3',
-    github_dependency('csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods'),
+    github_req,
     'ax-platform>=0.1.9,<0.1.13',
     'configspace==0.4.12',
     'smac>=0.12.1,<0.13',
