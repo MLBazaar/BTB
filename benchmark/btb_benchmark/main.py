@@ -169,8 +169,8 @@ def benchmark(tuners, challenges, iterations, detailed_output=False):
         return df
 
     df = df.pivot(index='challenge', columns='tuner', values='score')
-    del df.columns.name
-    del df.index.name
+    df.index.rename(None, inplace=True)
+    df.columns.rename(None, inplace=True)
 
     return df
 

@@ -45,7 +45,7 @@ install_requires = [
     'ax-platform>=0.1.9,<0.1.13',
     'configspace==0.4.12',
     'smac>=0.12.1,<0.13',
-    'scikit-optimize>=0.7.4,<0.8',
+    'scikit-optimize>=0.7.4,<0.9',
     'emcee>=2.1.0,<3',
     'pyDOE>=0.3.8<0.4',
 ]
@@ -94,8 +94,9 @@ development_requires = [
     'wheel>=0.30.0',
 
     # Advanced testing
-    'tox>=2.9.1',
     'coverage>=4.5.1',
+    'tox>=2.9.1,<4',
+    'importlib-metadata<2.0.0,>=0.12'
 ]
 
 
