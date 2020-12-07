@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import json
+import os
+from datetime import datetime
+
 import numpy
 import scipy
 from copulas import EPSILON
@@ -27,7 +31,7 @@ class GaussianProcessMetaModel(BaseMetaModel):
     _MODEL_CLASS = GaussianProcessRegressor
 
     _MODEL_KWARGS_DEFAULT = {
-        'normalize_y': True
+        'normalize_y': False
     }
 
     def __init_metamodel__(self, length_scale=1):
@@ -61,11 +65,11 @@ class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
     Attributes:
         _MODEL_KWARGS (dict):
             Dictionary with the default ``kwargs`` for the ``GaussianProcessRegressor``
-            instantiation.
-        _MODEL_CLASS (type):
+            instantiation.  _MODEL_CLASS (type):
             Class to be instantiated and used for the ``self._model`` instantiation. In
             this case ``sklearn.gaussian_process.GaussainProcessRegressor``
     """
+
     def _transform(self, trials):
         transformed = []
         for column, distribution in zip(trials.T, self._distributions):
@@ -77,19 +81,38 @@ class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
 
     def _fit(self, trials, scores):
         self._distributions = []
-        for column in trials.T:
+        distribution_dicts = []
+        for idx, column in enumerate(trials.T):
             distribution = Univariate()
+            fit_start = datetime.utcnow()
             distribution.fit(column)
+            distribution_dicts.append({
+                'distribution': distribution.to_dict(),
+                'values': column.tolist(),
+                'fit_time': (datetime.utcnow() - fit_start).total_seconds()
+            })
             self._distributions.append(distribution)
 
         distribution = Univariate()
+        fit_start = datetime.utcnow()
         distribution.fit(scores)
+        distribution_dicts.append({
+            'distribution': distribution.to_dict(),
+            'values': scores.tolist(),
+            'fit_time': (datetime.utcnow() - fit_start).total_seconds()
+        })
         self._score_distribution = distribution
 
         trans_trials = self._transform(trials)
         trans_scores = scipy.stats.norm.ppf(
             self._score_distribution.cdf(scores).clip(0 + EPSILON, 1 - EPSILON)
         )
+
+        debug_path = getattr(self, 'debug_path', None)
+        if debug_path:
+            output_path = os.path.join(debug_path, f'{len(trials)}.json')
+            with open(output_path, 'w') as output_file:
+                json.dump(distribution_dicts, output_file, indent=4)
 
         super()._fit(trans_trials, trans_scores)
 

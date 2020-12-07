@@ -107,8 +107,24 @@ def _generate_cluster_spec(config, kubernetes=False):
                 'args': ['-c', run_commands],
                 'command': ['tini', '-g', '--', '/bin/sh'],
                 'image': worker_config.get('image', 'daskdev/dask:latest'),
+                'env': [{
+                    'name': 'GCP_DEBUG_PATH',
+                    'value': '/output/GCP'
+                }],
                 'name': 'dask-worker',
-                'resources': worker_config.get('resources', {})
+                'resources': worker_config.get('resources', {}),
+                'volumeMounts': [{
+                    'name': 'output',
+                    'mountPath': '/output',
+                    'readOnly': False
+                }],
+            }],
+            'volumes': [{
+                'name': 'output',
+                'nfs': {
+                    'server': 'nfs.dailab.ml',
+                    'path': '/srv/d3m-output',
+                },
             }]
         }
     }

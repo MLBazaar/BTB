@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 import numpy as np
 
 from btb.tuning.tunable import Tunable
@@ -9,6 +11,12 @@ from btb.tuning.tuners import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner, UniformT
 def _tuning_function(tuner_class, scoring_function, tunable_hyperparameters, iterations):
     tunable = Tunable.from_dict(tunable_hyperparameters)
     tuner = tuner_class(tunable)
+    gcp_debug_path = os.environ.get('GCP_DEBUG_PATH')
+    if gcp_debug_path:
+        debug_path = os.path.join(gcp_debug_path, f'{scoring_function.__self__}')
+        tuner.debug_path = debug_path
+        os.makedirs(debug_path, exist_ok=True)
+
     best_score = -np.inf
 
     for _ in range(iterations):
