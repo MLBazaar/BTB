@@ -6,8 +6,8 @@
     :target: https://pypi.python.org/pypi/baytune
     :alt: PyPI Shield
 
-.. image:: https://travis-ci.org/MLBazaar/BTB.svg?branch=master
-    :target: https://travis-ci.org/MLBazaar/BTB
+.. image:: https://travis-ci.com/MLBazaar/BTB.svg?branch=master
+    :target: https://travis-ci.com/MLBazaar/BTB
     :alt: Travis CI Shield
 
 .. image:: https://codecov.io/gh/MLBazaar/BTB/branch/master/graph/badge.svg

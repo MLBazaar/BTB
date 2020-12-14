@@ -242,5 +242,5 @@ or in command line::
 
 
 .. _GitHub issues page: https://github.com/MLBazaar/BTB/issues
-.. _Travis Build Status page: https://travis-ci.org/MLBazaar/BTB/pull_requests
+.. _Travis Build Status page: https://travis-ci.com/MLBazaar/BTB/pull_requests
 .. _Google docstrings style: https://google.github.io/styleguide/pyguide.html?showone=Comments#Comments
