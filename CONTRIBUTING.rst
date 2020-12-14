@@ -241,6 +241,6 @@ or in command line::
     pip install 'baytune>=X.Y.Z.dev'
 
 
-.. _GitHub issues page: https://github.com/HDI-Project/BTB/issues
-.. _Travis Build Status page: https://travis-ci.org/HDI-Project/BTB/pull_requests
+.. _GitHub issues page: https://github.com/MLBazaar/BTB/issues
+.. _Travis Build Status page: https://travis-ci.org/MLBazaar/BTB/pull_requests
 .. _Google docstrings style: https://google.github.io/styleguide/pyguide.html?showone=Comments#Comments

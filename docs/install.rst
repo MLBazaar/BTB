@@ -32,7 +32,7 @@ You can clone the repository and install with the following command in your term
 
 .. code-block:: console
 
-    git clone git://github.com/HDI-Project/BTB
+    git clone git://github.com/MLBazaar/BTB
     cd BTB
     make install
 
@@ -44,4 +44,4 @@ can be found in the `Contributing guide`_.
 .. _Contributing guide: ../contributing.html#get-started
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
-.. _Github repository: https://github.com/HDI-Project/BTB
+.. _Github repository: https://github.com/MLBazaar/BTB

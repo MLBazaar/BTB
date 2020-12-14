@@ -3,21 +3,21 @@
 <i>An open source project from Data to AI Lab at MIT.</i>
 </p>
 
-![](https://raw.githubusercontent.com/HDI-Project/BTB/master/docs/images/BTB-Icon-small.png)
+![](https://raw.githubusercontent.com/MLBazaar/BTB/master/docs/images/BTB-Icon-small.png)
 
 A simple, extensible backend for developing auto-tuning systems.
 
 [![Development Status](https://img.shields.io/badge/Development%20Status-2%20--%20Pre--Alpha-yellow)](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 [![PyPi Shield](https://img.shields.io/pypi/v/baytune.svg)](https://pypi.python.org/pypi/baytune)
-[![Travis CI Shield](https://travis-ci.com/HDI-Project/BTB.svg?branch=master)](https://travis-ci.com/HDI-Project/BTB)
-[![Coverage Status](https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/HDI-Project/BTB)
+[![Travis CI Shield](https://travis-ci.com/MLBazaar/BTB.svg?branch=master)](https://travis-ci.com/MLBazaar/BTB)
+[![Coverage Status](https://codecov.io/gh/MLBazaar/BTB/branch/master/graph/badge.svg)](https://codecov.io/gh/MLBazaar/BTB)
 [![Downloads](https://pepy.tech/badge/baytune)](https://pepy.tech/project/baytune)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/MLBazaar/BTB/master?filepath=tutorials)
 
-* License: [MIT](https://github.com/HDI-Project/BTB/blob/master/LICENSE)
+* License: [MIT](https://github.com/MLBazaar/BTB/blob/master/LICENSE)
 * Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
-* Documentation: https://HDI-Project.github.io/BTB
-* Homepage: https://github.com/HDI-Project/BTB
+* Documentation: https://mlbazaar.github.io/BTB
+* Homepage: https://github.com/MLBazaar/BTB
 
 # Overview
 
@@ -31,14 +31,14 @@ It is currently being used in several AutoML systems:
 classifier tuning
 - [MIT's system](https://github.com/HDI-Project/mit-d3m-ta2/) for the DARPA
 [Data-driven discovery of models](https://www.darpa.mil/program/data-driven-discovery-of-models) (D3M) program
-- [AutoBazaar](https://github.com/HDI-Project/AutoBazaar), a flexible, general-purpose
+- [AutoBazaar](https://github.com/MLBazaar/AutoBazaar), a flexible, general-purpose
 AutoML system
 
 ## Try it out now!
 
 If you want to quickly discover **BTB**, simply click the button below and follow the tutorials!
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/MLBazaar/BTB/master?filepath=tutorials)
 
 # Install
 
@@ -62,7 +62,7 @@ pip install baytune
 This will pull and install the latest stable release from [PyPi](https://pypi.org/).
 
 If you want to install from source or contribute to the project please read the
-[Contributing Guide](https://hdi-project.github.io/BTB/contributing.html#get-started).
+[Contributing Guide](https://mlbazaar.github.io/BTB/contributing.html#get-started).
 
 # Quickstart
 
@@ -172,7 +172,7 @@ and the `hyperparameter` configuration that was used:
 
 # How does BTB perform?
 
-We have a comprehensive [benchmarking framework](https://github.com/HDI-Project/BTB/tree/master/benchmark)
+We have a comprehensive [benchmarking framework](https://github.com/MLBazaar/BTB/tree/master/benchmark)
 that we use to evaluate the performance of our `Tuners`. For every release, we perform benchmarking
 against 100's of challenges, comparing tuners against each other in terms of number of wins.
 We present the latest leaderboard from latest release below:
@@ -194,24 +194,24 @@ We present the latest leaderboard from latest release below:
 | `SMAC.SMAC4HPO_PI`      |    221    |           35 |
 
 - Detailed results from which this summary emerged are available [here](https://docs.google.com/spreadsheets/d/15a-pAV_t7CCDvqDyloYmdVNFhiKJFOJ7bbgpmYIpyTs/edit?usp=sharing).
-- If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/HDI-Project/BTB/tree/master/benchmark).
+- If you want to compare your own tuner, follow the steps in our benchmarking framework [here](https://github.com/MLBazaar/BTB/tree/master/benchmark).
 - If you have a proposal for tuner that we should include in our benchmarking get in touch
 with us at [dailabmit@gmail.com](mailto:dailabmit@gmail.com).
 
 # More tutorials
 
 1. To just `tune` `hyperparameters` - see our `tuning` tutorial [here](
-https://github.com/HDI-Project/BTB/blob/master/tutorials/01_Tuning.ipynb) and
-[documentation here](https://hdi-project.github.io/BTB/tutorials/01_Tuning.html).
+https://github.com/MLBazaar/BTB/blob/master/tutorials/01_Tuning.ipynb) and
+[documentation here](https://mlbazaar.github.io/BTB/tutorials/01_Tuning.html).
 2. To see the [types of `hyperparameters`](
-https://hdi-project.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter?) we support
-see our [documentation here](https://hdi-project.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter?).
-3. You can read about [our benchmarking framework here](https://hdi-project.github.io/BTB/benchmark.html#).
-4. See our [tutorial on `selection` here](https://github.com/HDI-Project/BTB/blob/master/tutorials/02_Selection.ipynb)
-and [documentation here](https://hdi-project.github.io/BTB/tutorials/02_Selection.html).
+https://mlbazaar.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter?) we support
+see our [documentation here](https://mlbazaar.github.io/BTB/tutorials/01_Tuning.html#What-is-a-Hyperparameter?).
+3. You can read about [our benchmarking framework here](https://mlbazaar.github.io/BTB/benchmark.html#).
+4. See our [tutorial on `selection` here](https://github.com/MLBazaar/BTB/blob/master/tutorials/02_Selection.ipynb)
+and [documentation here](https://mlbazaar.github.io/BTB/tutorials/02_Selection.html).
 
 For more details about **BTB** and all its possibilities and features, please check the
-[project documentation site](https://HDI-Project.github.io/BTB/)!
+[project documentation site](https://mlbazaar.github.io/BTB/)!
 
 Also do not forget to have a look at the [notebook tutorials](tutorials).
 
