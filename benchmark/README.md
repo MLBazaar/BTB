@@ -57,11 +57,11 @@ been implemented using third party libraries to be able to compare their perform
 
 Currently, benchmarking framework compares the following tuning functions from BTB:
 
-- [BTB.Uniform](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/uniform.py): Uses a Tuner that samples proposals randomly using a uniform distribution.
-- [BTB.GPTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel.
-- [BTB.GPEiTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.
-- [BTB.GCPTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel.
-- [BTB.GCPEiTuner](https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel and an Expected Improvement acquisition function.
+- [BTB.Uniform](https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/uniform.py): Uses a Tuner that samples proposals randomly using a uniform distribution.
+- [BTB.GPTuner](https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel.
+- [BTB.GPEiTuner](https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.
+- [BTB.GCPTuner](https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel.
+- [BTB.GCPEiTuner](https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py): Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel and an Expected Improvement acquisition function.
 
 And the following external tuning functions:
 
@@ -86,7 +86,7 @@ def tuning_function(
     iterations: int) -> score: float
 ```
 
-Please see how we introduced `HyperOpt` with this [signature here](https://github.com/HDI-Project/BTB/blob/master/benchmark/btb_benchmark/tuners/hyperopt.py).
+Please see how we introduced `HyperOpt` with this [signature here](https://github.com/MLBazaar/BTB/blob/master/benchmark/btb_benchmark/tuners/hyperopt.py).
 
 ## Running the Benchmarking
 
@@ -110,7 +110,7 @@ You will have to install `BTB` from sources for development in order to use the 
 package. To do so, clone the repository and run `make install-develop`:
 
 ```bash
-git clone git@github.com:HDI-Project/BTB.git
+git clone git@github.com:MLBazaar/BTB.git
 cd BTB
 make install-develop
 ```
@@ -232,7 +232,7 @@ run_benchmark(output_path='path/to/my_results.csv')
 ## Our latest Results
 
 All the results obtained by the different BTB releases can be found inside the
-[results](https://github.com/HDI-Project/BTB/tree/master/benchmark/results) folder as CSV files.
+[results](https://github.com/MLBazaar/BTB/tree/master/benchmark/results) folder as CSV files.
 
 Additionally, all the previous results can be browsed and analyzed in the following [Google Sheets
 document](
@@ -243,7 +243,7 @@ https://docs.google.com/spreadsheets/d/15a-pAV_t7CCDvqDyloYmdVNFhiKJFOJ7bbgpmYIp
 
 Running the complete BTB Benchmarking suite can take a long time when executing against all our
 challenges. For this reason, it comes prepared to be executed distributedly over a dask cluster
-created using Kubernetes. Check our [documentation](https://hdi-project.github.io/BTB/kubernetes.html)
+created using Kubernetes. Check our [documentation](https://mlbazaar.github.io/BTB/kubernetes.html)
 on how to run on a kubernetes cluster.
 
 

@@ -111,7 +111,7 @@ setup(
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
-    url='https://github.com/HDI-Project/BTB',
+    url='https://github.com/MLBazaar/BTB',
     version='0.3.13.dev1',
     zip_safe=False,
 )
