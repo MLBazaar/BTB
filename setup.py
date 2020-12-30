@@ -23,18 +23,21 @@ except IOError:
 
 
 install_requires = [
-    'copulas>=0.3.2.dev0,<0.4',
+    'copulas>=0.3.2,<0.4',
     'numpy>=1.14.0',
-    'scikit-learn>0.20.0,<0.23',
+    'scikit-learn>=0.20.0',
     'scipy>=1.2,<2',
-    'pandas>=0.22.0,<0.25',
-    'tqdm>=4.36.1,<4.50.0',
+    'pandas>=1,<2',
+    'tqdm>=4.36.1,<5',
 ]
 
 
 tests_require = [
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
+    'pytest-rerunfailures>=9.1.1,<10',
+    'jupyter>=1.0.0,<2',
+    'rundoc>=0.4.3,<0.5',
 ]
 
 
@@ -57,7 +60,11 @@ development_requires = [
 
     # style check
     'flake8>=3.7.7,<4',
+    'flake8-absolute-import>=1.0,<2',
+    # 'flake8-docstrings>=1.5.0,<2',
+    # 'flake8-sfs>=0.0.3,<0.1',
     'isort>=4.3.4,<5',
+    'pylint>=2.5.3,<3',
 
     # fix style issues
     'autoflake>=1.1,<2',
@@ -70,9 +77,7 @@ development_requires = [
     # Advanced testing
     'coverage>=4.5.1,<6',
     'tox>=2.9.1,<4',
-
-    # others
-    'jupyter>=1.0.0',
+    'importlib-metadata<2.0.0,>=0.12'
 ]
 
 
@@ -85,9 +90,9 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     description='Bayesian Tuning and Bandits',
     extras_require={
@@ -102,11 +107,11 @@ setup(
     long_description_content_type='text/markdown',
     name='baytune',
     packages=find_packages(include=['btb', 'btb.*']),
-    python_requires='>=3.5',
+    python_requires='>=3.6,<3.9',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
-    url='https://github.com/HDI-Project/BTB',
-    version='0.3.12',
+    url='https://github.com/MLBazaar/BTB',
+    version='0.4.0.dev0',
     zip_safe=False,
 )

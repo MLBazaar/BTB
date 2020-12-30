@@ -6,12 +6,12 @@
     :target: https://pypi.python.org/pypi/baytune
     :alt: PyPI Shield
 
-.. image:: https://travis-ci.org/HDI-Project/BTB.svg?branch=master
-    :target: https://travis-ci.org/HDI-Project/BTB
+.. image:: https://travis-ci.com/MLBazaar/BTB.svg?branch=master
+    :target: https://travis-ci.com/MLBazaar/BTB
     :alt: Travis CI Shield
 
-.. image:: https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/HDI-Project/BTB
+.. image:: https://codecov.io/gh/MLBazaar/BTB/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/MLBazaar/BTB
     :alt: Codecov Shield
 
 .. image:: https://pepy.tech/badge/baytune
@@ -19,7 +19,7 @@
     :alt: Downloads Shield
 
 .. image:: https://mybinder.org/badge_logo.svg
-    :target: https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials
+    :target: https://mybinder.org/v2/gh/MLBazaar/BTB/master?filepath=tutorials
     :alt: My Binder Shield
 
 |
@@ -27,17 +27,17 @@
 .. image:: images/BTB-Icon-small.png
    :alt: BTB Logo
    :align: center
-   :target: https://github.com/HDI-Project/BTB
+   :target: https://github.com/MLBazaar/BTB
 
 .. centered:: A simple, extensible backend for developing auto-tuning systems
 
 Overview
 ========
 
-* License: `MIT <https://github.com/HDI-Project/BTB/blob/master/LICENSE>`_
+* License: `MIT <https://github.com/MLBazaar/BTB/blob/master/LICENSE>`_
 * Development Status: `Pre-Alpha <https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha>`_
-* Documentation: https://HDI-Project.github.io/BTB
-* Homepage: https://github.com/HDI-Project/BTB
+* Documentation: https://MLBazaar.github.io/BTB
+* Homepage: https://github.com/MLBazaar/BTB
 
 BTB ("Bayesian Tuning and Bandits") is a simple, extensible backend for developing auto-tuning
 systems such as AutoML systems. It provides an easy-to-use interface for *tuning* and *selection*.
@@ -48,7 +48,7 @@ It is currently being used in several AutoML systems:
   classifier tuning
 * `mit-d3m-ta2 <https://github.com/HDI-Project/mit-d3m-ta2/>`_, MIT's system for the DARPA
   `Data-driven discovery of models <https://www.darpa.mil/program/data-driven-discovery-of-models>`_ (D3M) program
-* `AutoBazaar <https://github.com/HDI-Project/AutoBazaar>`_, a flexible, general-purpose
+* `AutoBazaar <https://github.com/MLBazaar/AutoBazaar>`_, a flexible, general-purpose
   AutoML system
 
 History

@@ -5,7 +5,7 @@ from unittest import TestCase
 from unittest.mock import MagicMock, call, patch
 
 import numpy as np
-from tqdm.autonotebook import trange
+from tqdm.auto import trange
 
 from btb.session import BTBSession
 from btb.tuning.tuners.base import StopTuning

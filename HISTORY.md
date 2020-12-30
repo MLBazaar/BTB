@@ -1,5 +1,19 @@
 # History
 
+## 0.4.0 - 2020-12-30
+
+This release increases the supported version of python to 3.8 and also includes changes in the
+installation requirements, where ``pandas`` and ``scikit-optimize`` packages have been updated
+to support higher versions.
+
+## Internal improvements
+
+* Added github actions.
+
+### Resolved Issues
+
+* Issue #210: Integrate Scikit-Optimize for benchmarking.
+
 ## 0.3.12 - 2020-09-08
 
 In this release BTB includes two new tuners, `GCP` and `GCPEi`. which use a

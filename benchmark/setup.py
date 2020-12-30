@@ -24,6 +24,8 @@ except IOError:
 def github_dependency(user, name, commit):
     return f'{name} @ git+https://github.com/{user}/{name}@{commit}#egg={name}'
 
+github_req =  github_dependency(
+    'csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods')
 
 install_requires = [
     'dask>=2.15.0,<3',
@@ -34,15 +36,16 @@ install_requires = [
     'xgboost>=1.0.2,<1.1.0',
     'docutils>=0.10,<0.16',
     'boto3>=1.9.18,<1.10',
+    'urllib3<1.26,>=1.20',
     'numpy>=1.14.0',
-    'scikit-learn>=0.20.0,<0.23',
-    'pandas>=0.21.0,<0.26.0',
+    'scikit-learn>=0.20.0',
+    'pandas>=1,<2',
     'XlsxWriter>=1.2.8,<1.3',
-    github_dependency('csala', 'dask-kubernetes', 'issue-170-ssl-error-when-cleaning-up-pods'),
+    github_req,
     'ax-platform>=0.1.9,<0.1.13',
     'configspace==0.4.12',
     'smac>=0.12.1,<0.13',
-    'scikit-optimize>=0.7.4,<0.8',
+    'scikit-optimize>=0.7.4,<0.9',
     'emcee>=2.1.0,<3',
     'pyDOE>=0.3.8<0.4',
 ]
@@ -91,8 +94,9 @@ development_requires = [
     'wheel>=0.30.0',
 
     # Advanced testing
-    'tox>=2.9.1',
     'coverage>=4.5.1',
+    'tox>=2.9.1,<4',
+    'importlib-metadata<2.0.0,>=0.12'
 ]
 
 
@@ -105,9 +109,9 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     description='Bayesian Tuning and Bandits',
     entry_points={
@@ -128,11 +132,11 @@ setup(
     long_description_content_type='text/markdown',
     name='btb_benchmark',
     packages=find_packages(include=['btb_benchmark', 'btb_benchmark.*']),
-    python_requires='>=3.5',
+    python_requires='>=3.6,<3.9',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-Project/BTB',
-    version='0.3.12',
+    version='0.4.0.dev0',
     zip_safe=False,
 )
