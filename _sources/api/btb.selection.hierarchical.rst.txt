@@ -1,7 +1,0 @@
-btb.selection.hierarchical module
-=================================
-
-.. automodule:: btb.selection.hierarchical
-   :members:
-   :undoc-members:
-   :show-inheritance:

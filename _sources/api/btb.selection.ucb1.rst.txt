@@ -1,7 +1,0 @@
-btb.selection.ucb1 module
-=========================
-
-.. automodule:: btb.selection.ucb1
-   :members:
-   :undoc-members:
-   :show-inheritance:

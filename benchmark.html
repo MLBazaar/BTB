@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Benchmarking BTB &mdash; BTB 0.3.13.dev0 documentation</title>
+  <title>Benchmarking BTB &mdash; BTB 0.4.0 documentation</title>
   
 
   
@@ -28,8 +28,6 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -41,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Kubernetes" href="kubernetes.html" />
-    <link rel="prev" title="BTBSession" href="tutorials/03_Session.html" /> 
+    <link rel="prev" title="Installation" href="install.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -68,7 +66,7 @@
             
             
               <div class="version">
-                0.3.13.dev0
+                0.4.0
               </div>
             
           
@@ -99,75 +97,9 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html#from-source">From source</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/00_Quickstart.html">Quickstart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
-</ul>
-</li>
 </ul>
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="tutorials/01_Tuning.html">Tuning</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
-<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Propose">Propose</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Record">Record</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/02_Selection.html">Selection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Select">Select</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/03_Session.html">BTBSession</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Run">Run</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Resume-session">Resume session</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
-</ul>
-</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Benchmarking BTB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-benchmarking-process">The Benchmarking process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#challenges">Challenges</a><ul>
@@ -230,49 +162,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Resources</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.session.html">btb.session module</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
@@ -328,7 +217,7 @@
         
             
             
-              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/benchmark.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/MLBazaar/BTB/blob/master/docs/benchmark.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -418,11 +307,11 @@ been implemented using third party libraries to be able to compare their perform
 <h4>Tuning functions under comparison<a class="headerlink" href="#tuning-functions-under-comparison" title="Permalink to this headline">¶</a></h4>
 <p>Currently, benchmarking framework compares the following tuning functions from BTB:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/uniform.py">BTB.Uniform</a>: Uses a Tuner that samples proposals randomly using a uniform distribution.</p></li>
-<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GPTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel.</p></li>
-<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GPEiTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.</p></li>
-<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GCPTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel.</p></li>
-<li><p><a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GCPEiTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel and an Expected Improvement acquisition function.</p></li>
+<li><p><a class="reference external" href="https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/uniform.py">BTB.Uniform</a>: Uses a Tuner that samples proposals randomly using a uniform distribution.</p></li>
+<li><p><a class="reference external" href="https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GPTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel.</p></li>
+<li><p><a class="reference external" href="https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GPEiTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianProcess metamodel and an Expected Improvement acquisition function.</p></li>
+<li><p><a class="reference external" href="https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GCPTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel.</p></li>
+<li><p><a class="reference external" href="https://github.com/MLBazaar/BTB/blob/master/btb/tuning/tuners/gaussian_process.py">BTB.GCPEiTuner</a>: Uses a Bayesian Tuner that optimizes proposals using a GaussianCopulaProcess metamodel and an Expected Improvement acquisition function.</p></li>
 </ul>
 <p>And the following external tuning functions:</p>
 <ul class="simple">
@@ -446,7 +335,7 @@ been implemented using third party libraries to be able to compare their perform
     <span class="n">iterations</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span>
 </pre></div>
 </div>
-<p>Please see how we introduced <code class="docutils literal notranslate"><span class="pre">HyperOpt</span></code> with this <a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/benchmark/btb_benchmark/tuners/hyperopt.py">signature here</a>.</p>
+<p>Please see how we introduced <code class="docutils literal notranslate"><span class="pre">HyperOpt</span></code> with this <a class="reference external" href="https://github.com/MLBazaar/BTB/blob/master/benchmark/btb_benchmark/tuners/hyperopt.py">signature here</a>.</p>
 </div>
 </div>
 </div>
@@ -468,7 +357,7 @@ it on a Ubuntu based machine you can run the following command:</p>
 <h4>Python installation<a class="headerlink" href="#python-installation" title="Permalink to this headline">¶</a></h4>
 <p>You will have to install <code class="docutils literal notranslate"><span class="pre">BTB</span></code> from sources for development in order to use the benchmarking
 package. To do so, clone the repository and run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install-develop</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:HDI-Project/BTB.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:MLBazaar/BTB.git
 <span class="nb">cd</span> BTB
 make install-develop
 </pre></div>
@@ -575,7 +464,7 @@ would like to save our results, by adding the argument <code class="docutils lit
 <div class="section" id="our-latest-results">
 <h2>Our latest Results<a class="headerlink" href="#our-latest-results" title="Permalink to this headline">¶</a></h2>
 <p>All the results obtained by the different BTB releases can be found inside the
-<a class="reference external" href="https://github.com/HDI-Project/BTB/tree/master/benchmark/results">results</a> folder as CSV files.</p>
+<a class="reference external" href="https://github.com/MLBazaar/BTB/tree/master/benchmark/results">results</a> folder as CSV files.</p>
 <p>Additionally, all the previous results can be browsed and analyzed in the following <a class="reference external" href="https://docs.google.com/spreadsheets/d/15a-pAV_t7CCDvqDyloYmdVNFhiKJFOJ7bbgpmYIpyTs/edit?usp=sharing">Google Sheets
 document</a>.</p>
 </div>
@@ -583,7 +472,7 @@ document</a>.</p>
 <h2>Kubernetes<a class="headerlink" href="#kubernetes" title="Permalink to this headline">¶</a></h2>
 <p>Running the complete BTB Benchmarking suite can take a long time when executing against all our
 challenges. For this reason, it comes prepared to be executed distributedly over a dask cluster
-created using Kubernetes. Check our <a class="reference external" href="https://hdi-project.github.io/BTB/kubernetes.html">documentation</a>
+created using Kubernetes. Check our <a class="reference external" href="https://mlbazaar.github.io/BTB/kubernetes.html">documentation</a>
 on how to run on a kubernetes cluster.</p>
 </div>
 <div class="section" id="credits">
@@ -611,7 +500,7 @@ modifications were applied:</p>
         <a href="kubernetes.html" class="btn btn-neutral float-right" title="Kubernetes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tutorials/03_Session.html" class="btn btn-neutral float-left" title="BTBSession" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

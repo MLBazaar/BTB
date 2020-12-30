@@ -1,7 +1,0 @@
-btb.tuning.metamodels.base module
-=================================
-
-.. automodule:: btb.tuning.metamodels.base
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -1,7 +1,0 @@
-btb.tuning.hyperparams.boolean module
-=====================================
-
-.. automodule:: btb.tuning.hyperparams.boolean
-   :members:
-   :undoc-members:
-   :show-inheritance:

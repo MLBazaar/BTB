@@ -1,7 +1,0 @@
-btb.tuning.acquisition.base module
-==================================
-
-.. automodule:: btb.tuning.acquisition.base
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -1,7 +1,0 @@
-btb.session module
-==================
-
-.. automodule:: btb.session
-   :members:
-   :undoc-members:
-   :show-inheritance:

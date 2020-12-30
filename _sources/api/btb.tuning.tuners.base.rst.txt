@@ -1,7 +1,0 @@
-btb.tuning.tuners.base module
-=============================
-
-.. automodule:: btb.tuning.tuners.base
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -1,7 +1,0 @@
-btb.tuning.hyperparams.base module
-==================================
-
-.. automodule:: btb.tuning.hyperparams.base
-   :members:
-   :undoc-members:
-   :show-inheritance:

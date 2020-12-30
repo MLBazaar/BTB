@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview &mdash; BTB 0.3.13.dev0 documentation</title>
+  <title>Overview &mdash; BTB 0.4.0 documentation</title>
   
 
   
@@ -28,8 +28,6 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -67,7 +65,7 @@
             
             
               <div class="version">
-                0.3.13.dev0
+                0.4.0
               </div>
             
           
@@ -98,75 +96,9 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html#from-source">From source</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/00_Quickstart.html">Quickstart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
-</ul>
-</li>
 </ul>
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/01_Tuning.html">Tuning</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
-<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Propose">Propose</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Record">Record</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/02_Selection.html">Selection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Select">Select</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/03_Session.html">BTBSession</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Run">Run</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Resume-session">Resume session</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking BTB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="benchmark.html#challenges">Challenges</a><ul>
@@ -229,49 +161,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Resources</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.selection.html">btb.selection package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.best.html">btb.selection.best module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.pure.html">btb.selection.pure module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.recent.html">btb.selection.recent module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.selector.html">btb.selection.selector module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.tuning.html">btb.tuning package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api/btb.session.html">btb.session module</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
@@ -327,7 +216,7 @@
         
             
             
-              <a href="https://github.com/HDI-Project/BTB/blob/master/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/MLBazaar/BTB/blob/master/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -367,22 +256,22 @@
 </style>
 <a class="reference external image-reference" href="https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha"><img alt="Development Status Shield" src="https://img.shields.io/badge/Development%20Status-2%20--%20Pre--Alpha-yellow" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/baytune"><img alt="PyPI Shield" src="https://img.shields.io/pypi/v/baytune.svg" /></a>
-<a class="reference external image-reference" href="https://travis-ci.org/HDI-Project/BTB"><img alt="Travis CI Shield" src="https://travis-ci.org/HDI-Project/BTB.svg?branch=master" /></a>
-<a class="reference external image-reference" href="https://codecov.io/gh/HDI-Project/BTB"><img alt="Codecov Shield" src="https://codecov.io/gh/HDI-Project/BTB/branch/master/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://travis-ci.com/MLBazaar/BTB"><img alt="Travis CI Shield" src="https://travis-ci.com/MLBazaar/BTB.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/MLBazaar/BTB"><img alt="Codecov Shield" src="https://codecov.io/gh/MLBazaar/BTB/branch/master/graph/badge.svg" /></a>
 <a class="reference external image-reference" href="https://pepy.tech/project/baytune"><img alt="Downloads Shield" src="https://pepy.tech/badge/baytune" /></a>
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/HDI-Project/BTB/master?filepath=tutorials"><img alt="My Binder Shield" src="https://mybinder.org/badge_logo.svg" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/MLBazaar/BTB/master?filepath=tutorials"><img alt="My Binder Shield" src="https://mybinder.org/badge_logo.svg" /></a>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<a class="reference external image-reference" href="https://github.com/HDI-Project/BTB"><img alt="BTB Logo" class="align-center" src="_images/BTB-Icon-small.png" /></a>
+<a class="reference external image-reference" href="https://github.com/MLBazaar/BTB"><img alt="BTB Logo" class="align-center" src="_images/BTB-Icon-small.png" /></a>
 <p class="centered">
 <strong>A simple, extensible backend for developing auto-tuning systems</strong></p><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>License: <a class="reference external" href="https://github.com/HDI-Project/BTB/blob/master/LICENSE">MIT</a></p></li>
+<li><p>License: <a class="reference external" href="https://github.com/MLBazaar/BTB/blob/master/LICENSE">MIT</a></p></li>
 <li><p>Development Status: <a class="reference external" href="https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha">Pre-Alpha</a></p></li>
-<li><p>Documentation: <a class="reference external" href="https://HDI-Project.github.io/BTB">https://HDI-Project.github.io/BTB</a></p></li>
-<li><p>Homepage: <a class="reference external" href="https://github.com/HDI-Project/BTB">https://github.com/HDI-Project/BTB</a></p></li>
+<li><p>Documentation: <a class="reference external" href="https://MLBazaar.github.io/BTB">https://MLBazaar.github.io/BTB</a></p></li>
+<li><p>Homepage: <a class="reference external" href="https://github.com/MLBazaar/BTB">https://github.com/MLBazaar/BTB</a></p></li>
 </ul>
 <p>BTB (“Bayesian Tuning and Bandits”) is a simple, extensible backend for developing auto-tuning
 systems such as AutoML systems. It provides an easy-to-use interface for <em>tuning</em> and <em>selection</em>.</p>
@@ -392,7 +281,7 @@ systems such as AutoML systems. It provides an easy-to-use interface for <em>tun
 classifier tuning</p></li>
 <li><p><a class="reference external" href="https://github.com/HDI-Project/mit-d3m-ta2/">mit-d3m-ta2</a>, MIT’s system for the DARPA
 <a class="reference external" href="https://www.darpa.mil/program/data-driven-discovery-of-models">Data-driven discovery of models</a> (D3M) program</p></li>
-<li><p><a class="reference external" href="https://github.com/HDI-Project/AutoBazaar">AutoBazaar</a>, a flexible, general-purpose
+<li><p><a class="reference external" href="https://github.com/MLBazaar/AutoBazaar">AutoBazaar</a>, a flexible, general-purpose
 AutoML system</p></li>
 </ul>
 <div class="section" id="history">
@@ -419,9 +308,6 @@ Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. Sigmod
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/01_Tuning.html">Tuning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/02_Selection.html">Selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/03_Session.html">BTBSession</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking BTB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kubernetes.html">Kubernetes</a></li>
 </ul>
@@ -429,7 +315,6 @@ Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. Sigmod
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Resources</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/btb.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>

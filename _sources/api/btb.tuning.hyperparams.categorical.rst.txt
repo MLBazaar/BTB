@@ -1,7 +1,0 @@
-btb.tuning.hyperparams.categorical module
-=========================================
-
-.. automodule:: btb.tuning.hyperparams.categorical
-   :members:
-   :undoc-members:
-   :show-inheritance:
