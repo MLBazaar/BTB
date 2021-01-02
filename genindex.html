@@ -29,6 +29,8 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -96,9 +98,75 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html#from-source">From source</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">User Guides</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking BTB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="benchmark.html#challenges">Challenges</a><ul>

@@ -1,0 +1,320 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Selection\n",
+    "\n",
+    "## What is a Selection problem?\n",
+    "\n",
+    "There are some scenarios where we have a single goal which can be solved in multiple ways.\n",
+    "Each one of these solutions represents an individual Tuning Problem, and we have no prior knowledge about how good each solution will be once it is tuned.\n",
+    "\n",
+    "In these scenarios, one possibility would be to solve the problem using brute-force, which means tuning each solution candidate and then using the one that got the best score.\n",
+    "\n",
+    "However, in most cases we will not have the time or resources to tune all the possible solutions beforehand, and we will want to solve  what is called a Multi-armed Bandit Problem: start tuning all the solutions at once and optimally select which solutions to keep tuning depending on the scores that they obtain during the process.\n",
+    "\n",
+    "\n",
+    "[Multi-Armed Bandit](https://en.wikipedia.org/wiki/Multi-armed_bandit) instead is a solution that\n",
+    "tries to find the best candidate spending the minimum trials possible. This process is less time consuming\n",
+    "than the previous one as is based on the scores that the `candidates` are obtaining during the process.\n",
+    "\n",
+    "## What is a Selector ?\n",
+    "\n",
+    "In BTB, the selection problem is solved using the Selector family of classes.\n",
+    "\n",
+    "These classes have to be used in combination with multiple tuning problems, represented as multiple Tuner instances, each one of them created using a different Tunable, and the corresponding functions or Machine Learning algorithms.\n",
+    "\n",
+    "Currently, BTB implements the following Selectors:\n",
+    "\n",
+    "- `UCB1`: uses Upper Confidence Bound 1 algorithm (UCB1) for bandit selection.\n",
+    "- `BestKReward`: computes the average reward from the past scores by using only the highest k scores.\n",
+    "- `BestKVelocity`: compute the velocity of the best scores. The velocities are the $k$ distances between the $k+1$ best scores.\n",
+    "- `PureBestKVelocity`: returns the choice with the best best-K velocity.\n",
+    "- `RecentKReward`: recent $k$ reward selector, where $k$ is the number of best scores to consider.\n",
+    "- `RecentKVelocity`: compute the velocity of the $k+1$ most recent scores.\n",
+    "- `Uniform`: selects a choice uniformly at random.\n",
+    "\n",
+    "\n",
+    "## Using a Selector\n",
+    "\n",
+    "The selectors are intended to be used in combination with Tuners by\n",
+    "using their `select` method.\n",
+    "\n",
+    "\n",
+    "### Creating a Selector\n",
+    "\n",
+    "In order to create a selector you need to define a list\n",
+    "of candidates and then pass it as a positional argument."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "nbsphinx": "hidden"
+   },
+   "outputs": [],
+   "source": [
+    "import warnings\n",
+    "\n",
+    "# Ignoring warnings from external libraries that are irrelevant\n",
+    "warnings.filterwarnings('ignore')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from btb.selection import UCB1\n",
+    "\n",
+    "candidates = ['foo', 'bar']\n",
+    "\n",
+    "selector = UCB1(candidates)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Select \n",
+    "\n",
+    "Once we have evaluated some tuners and obtained scores, we have to\n",
+    "create a dictionary with the candidate as a key and a list of scores\n",
+    "that this has obtained.\n",
+    "\n",
+    "This dictionry has to be passed to the `select` method which will return\n",
+    "the name of the next tuner to use."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'foo'"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "tuner_scores = {\n",
+    "    'foo': [0.1, 0.2],\n",
+    "    'bar': [0.001, 0.002]\n",
+    "}\n",
+    "\n",
+    "next_choice = selector.select(tuner_scores)\n",
+    "next_choice"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Selection loop example\n",
+    "\n",
+    "Here is an example of how to use Selectors and Tuners together to solve a Machine Learning problem with two candidate algorithms.\n",
+    "\n",
+    "For this example we are going to use the [Iris dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html)\n",
+    "and tune two estimators:\n",
+    "- [DecisionTreeClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html)\n",
+    "- [SGDClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html)\n",
+    "\n",
+    "Next, we will load the dataset and split it in two partitions, train and test, which we will use later on to evaluate the performance of our machine learning model:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.datasets import load_iris\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "\n",
+    "# load the dataset\n",
+    "dataset = load_iris()\n",
+    "\n",
+    "# split the dataset\n",
+    "X_train, X_test, y_train, y_test = train_test_split(\n",
+    "    dataset.data, dataset.target, test_size=0.3, random_state=0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now we will create a dictionary of our \"candidates\" with a given name as a key, this will help us when selecting to pick the model:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.linear_model import SGDClassifier\n",
+    "from sklearn.tree import DecisionTreeClassifier\n",
+    "\n",
+    "candidates = {\n",
+    "    'DTC': DecisionTreeClassifier,\n",
+    "    'SGDC': SGDClassifier,\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In the following step we will create the hyperpams for each one of our models: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from btb.tuning import hyperparams as hp\n",
+    "\n",
+    "dtc_hyperparams = {\n",
+    "    'max_depth': hp.IntHyperParam(min=3, max=200),\n",
+    "    'min_samples_split': hp.FloatHyperParam(min=0.01, max=1)\n",
+    "}\n",
+    "\n",
+    "sgdc_hyperparams = {\n",
+    "    'max_iter': hp.IntHyperParam(min=1, max=5000, default=1000),\n",
+    "    'tol': hp.FloatHyperParam(min=1e-3, max=1, default=1e-3),\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now let's create the tunable and tuner for each one of them, and store those\n",
+    "in a dictionary like we did with the models, in order to be able to access them when\n",
+    "selecting:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from btb.tuning import GPTuner, Tunable\n",
+    "\n",
+    "# Creating the tunables for our tuners\n",
+    "dtc_tunable = Tunable(dtc_hyperparams)\n",
+    "sgdc_tunable = Tunable(sgdc_hyperparams)\n",
+    "\n",
+    "tuners = {\n",
+    "    'DTC': GPTuner(dtc_tunable),\n",
+    "    'SGDC': GPTuner(sgdc_tunable)\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, we can create a selector with the candidates \"DTC\" and \"SGDC\" as our selector will return one of those values, and we can access the\n",
+    "models / tuners using those keys:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from btb.selection import UCB1\n",
+    "\n",
+    "selector = UCB1(['DTC', 'SGDC'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Finally, we will proceed to loop with the following steps:\n",
+    "\n",
+    "1. select a candidate.\n",
+    "2. propose a set of parameters.\n",
+    "3. fit the model with those parameters.\n",
+    "4. score the model.\n",
+    "5. record the parameters and the score that we obtained.\n",
+    "6. evaluate if its the best score found so far."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Best score:  0.9777777777777777\n",
+      "Best model:  DTC\n",
+      "Best parameters:  {'max_depth': 26, 'min_samples_split': 0.2978860831816922}\n"
+     ]
+    }
+   ],
+   "source": [
+    "best_score = 0\n",
+    "for _ in range(100):\n",
+    "    candidate = selector.select({\n",
+    "        'DTC': tuners['DTC'].scores,\n",
+    "        'SGDC': tuners['SGDC'].scores\n",
+    "    })\n",
+    "    parameters = tuners[candidate].propose()\n",
+    "    model = candidates[candidate](**parameters)\n",
+    "    model.fit(X_train, y_train)\n",
+    "    score = model.score(X_test, y_test)\n",
+    "    tuners[candidate].record(parameters, score)\n",
+    "    \n",
+    "    if score > best_score:\n",
+    "        best_score = score\n",
+    "        best_model = candidate\n",
+    "        best_params = parameters\n",
+    "\n",
+    "print('Best score: ', best_score)\n",
+    "print('Best model: ', best_model)\n",
+    "print('Best parameters: ', best_params)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.11"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
