@@ -1,0 +1,19 @@
+btb.tuning.tuners package
+=========================
+
+Submodules
+----------
+
+.. toctree::
+
+   btb.tuning.tuners.base
+   btb.tuning.tuners.gaussian_process
+   btb.tuning.tuners.uniform
+
+Module contents
+---------------
+
+.. automodule:: btb.tuning.tuners
+   :members:
+   :undoc-members:
+   :show-inheritance:

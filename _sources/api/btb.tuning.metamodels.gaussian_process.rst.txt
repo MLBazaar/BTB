@@ -1,0 +1,7 @@
+btb.tuning.metamodels.gaussian\_process module
+==============================================
+
+.. automodule:: btb.tuning.metamodels.gaussian_process
+   :members:
+   :undoc-members:
+   :show-inheritance:

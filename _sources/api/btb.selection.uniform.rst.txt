@@ -1,0 +1,7 @@
+btb.selection.uniform module
+============================
+
+.. automodule:: btb.selection.uniform
+   :members:
+   :undoc-members:
+   :show-inheritance:

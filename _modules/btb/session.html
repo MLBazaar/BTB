@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.session &mdash; BTB 0.4.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BTB
+          
+
+          
+            
+            <img src="../../_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#stable-release">Stable Release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#from-source">From source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../benchmark.html#install">Install</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#system-requierements">System Requierements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#python-installation">Python installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../benchmark.html#runnig-the-benchmarking-using-python">Runnig the Benchmarking using python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../benchmark.html#kubernetes">Kubernetes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../benchmark.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../kubernetes.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../kubernetes.html#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../kubernetes.html#kubernetes-cluster">Kubernetes Cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../kubernetes.html#admin-access">Admin Access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../kubernetes.html#dask-function">Dask Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../kubernetes.html#benchmark-configuration">Benchmark Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../kubernetes.html#configuration-format">Configuration Format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../kubernetes.html#run">run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../kubernetes.html#dask-cluster">dask_cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../kubernetes.html#output">output</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../kubernetes.html#configuration-examples">Configuration Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../kubernetes.html#run-a-function-on-kubernetes">Run a function on Kubernetes.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../kubernetes.html#usage-example">Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../kubernetes.html#results">Results</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/btb.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/btb.session.html">btb.session module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>btb.session</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for btb.session</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">md5</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">trange</span>
+
+<span class="kn">from</span> <span class="nn">btb.selection.ucb1</span> <span class="kn">import</span> <span class="n">UCB1</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.tunable</span> <span class="kn">import</span> <span class="n">Tunable</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.tuners.base</span> <span class="kn">import</span> <span class="n">StopTuning</span>
+<span class="kn">from</span> <span class="nn">btb.tuning.tuners.gaussian_process</span> <span class="kn">import</span> <span class="n">GPTuner</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BTBSession"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession">[docs]</a><span class="k">class</span> <span class="nc">BTBSession</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;BTBSession class.</span>
+
+<span class="sd">    A ``BTBSession`` represents the process of selecting and tuning several tunables</span>
+<span class="sd">    until the best possible configuration for a specific ``scorer`` is found.</span>
+
+<span class="sd">    For this, a loop is run in which for each iteration a combination of a ``Selector`` and</span>
+<span class="sd">    ``Tuner`` is used to decide which tunable to score next and with which hyperparameters.</span>
+
+<span class="sd">    While running, the ``BTBSession`` handles the errors discarding, if configured to do so,</span>
+<span class="sd">    the tunables that have reached as many errors as the user specified.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        best_proposal (dict):</span>
+<span class="sd">            Best configuration found with the name of the tunable and the hyperparameters</span>
+<span class="sd">            and crossvalidated score obtained for it.</span>
+<span class="sd">        best_score (float):</span>
+<span class="sd">            Best score obtained for this session so far.</span>
+<span class="sd">        proposals (dict):</span>
+<span class="sd">            Dictionary containing all the proposals generated by the ``BTBSession``.</span>
+<span class="sd">        iterations (int):</span>
+<span class="sd">            Amount of iterations run.</span>
+<span class="sd">        errors (Counter):</span>
+<span class="sd">            A Counter of the errors that each Tunable had during the session.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tunables (dict):</span>
+<span class="sd">            Python dictionary that has as keys the name of the tunable and</span>
+<span class="sd">            as value a dictionary with the tunable hyperparameters or an</span>
+<span class="sd">            ``btb.tuning.tunable.Tunable`` instance.</span>
+<span class="sd">        scorer (callable object / function):</span>
+<span class="sd">            A callable object or function with signature ``scorer(tunable_name, config)``</span>
+<span class="sd">            wich should return only a single value.</span>
+<span class="sd">        tuner_class (btb.tuning.tuner.BaseTuner):</span>
+<span class="sd">            A tuner based on BTB ``BaseTuner`` class. This tuner will manage the new proposals.</span>
+<span class="sd">            Defaults to ``btb.tuning.tuners.gaussian_process.GPTuner``</span>
+<span class="sd">        selector_class (btb.selection.selector.Selector):</span>
+<span class="sd">            A selector based on BTB ``Selector`` class. This will determinate which one of</span>
+<span class="sd">            the tunables is performing better, and which one to test next. Defaults to</span>
+<span class="sd">            ``btb.selection.selectors.ucb1.UCB1``</span>
+<span class="sd">        maximize (bool):</span>
+<span class="sd">            If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller</span>
+<span class="sd">            is better, this should depend on the problem type (maximization or minimization).</span>
+<span class="sd">            Defaults to ``True``.</span>
+<span class="sd">        max_erors (int):</span>
+<span class="sd">            Amount of errors allowed for a tunable to not generate a score. Once this amount of</span>
+<span class="sd">            errors is reached, the tunable will be removed from the list. Defaults to 1.</span>
+<span class="sd">        verbose (bool):</span>
+<span class="sd">            If ``True`` a progress bar will be displayed for the ``run`` process.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_tunables</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_scorer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_tuner_class</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_selector</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_maximize</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_max_errors</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_best_normalized</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_tunable_names</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_normalized_scores</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_tuners</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_range</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">best_proposal</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">best_score</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">proposals</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">score</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximize</span> <span class="k">else</span> <span class="o">-</span><span class="n">score</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunables</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="n">tuner_class</span><span class="o">=</span><span class="n">GPTuner</span><span class="p">,</span> <span class="n">selector_class</span><span class="o">=</span><span class="n">UCB1</span><span class="p">,</span>
+                 <span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_errors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span> <span class="o">=</span> <span class="n">tunables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scorer</span> <span class="o">=</span> <span class="n">scorer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tuner_class</span> <span class="o">=</span> <span class="n">tuner_class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span> <span class="o">=</span> <span class="n">selector_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximize</span> <span class="o">=</span> <span class="n">maximize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_errors</span> <span class="o">=</span> <span class="n">max_errors</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_proposal</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_score</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_normalized</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_range</span> <span class="o">=</span> <span class="n">trange</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="nb">range</span>
+
+    <span class="k">def</span> <span class="nf">_make_dumpable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_dump</span><span class="p">):</span>
+        <span class="n">dumpable</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">to_dump</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;None&#39;</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="n">dumpable</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">dumpable</span>
+
+    <span class="k">def</span> <span class="nf">_make_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="n">dumpable_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_dumpable</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;config&#39;</span><span class="p">:</span> <span class="n">dumpable_config</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">hashable</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">md5</span><span class="p">(</span><span class="n">hashable</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_remove_tunable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove a tunable from the candidates list.</span>
+
+<span class="sd">        This is necessary when:</span>
+<span class="sd">            - Duplicates are not allowed and the tunable has exhausted all its</span>
+<span class="sd">              configurations.</span>
+<span class="sd">            - The tunable has failed more than ``max_errors`` times.</span>
+
+<span class="sd">        When this happens, the tunable is removved from the tunables dict</span>
+<span class="sd">        and its scores are removed from the normmalized_scores dict used by</span>
+<span class="sd">        the selectors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_next_tunable_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">:</span>
+            <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># if _normalized_scores is still empty the selector crashes</span>
+            <span class="c1"># this happens when max_errors &gt; 1, all tunables have tuners</span>
+            <span class="c1"># and all previous trials have crashed.</span>
+            <span class="n">tunable_name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+        <span class="k">return</span> <span class="n">tunable_name</span>
+
+<div class="viewcode-block" id="BTBSession.propose"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.propose">[docs]</a>    <span class="k">def</span> <span class="nf">propose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Propose a new configuration to score.</span>
+
+<span class="sd">        Every time ``propose`` is called, a new tunable will be selected and a new</span>
+<span class="sd">        hyperparameter proposal will be generated for it.</span>
+
+<span class="sd">        At the begining, the default hyperparameters of each one of the tunables</span>
+<span class="sd">        will be returned sequencially in the same order as they were passed to</span>
+<span class="sd">        the ``BTBSession``.</span>
+
+<span class="sd">        After that, once each tunable has been scored at least once, the tunable</span>
+<span class="sd">        used to generate the new proposals will be selected optimally each time</span>
+<span class="sd">        by the selector.</span>
+
+<span class="sd">        If a tunable runs out of proposals, it will be discarded from the list and will</span>
+<span class="sd">        not be proposed again.</span>
+
+<span class="sd">        Finally, when all the tunables have ran out of proposals, a ``StopTuning`` exception</span>
+<span class="sd">        will be raised.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple (str, dict):</span>
+<span class="sd">                * Name of the tunable to try next.</span>
+<span class="sd">                * Hyperparameters proposal.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            StopTuning:</span>
+<span class="sd">                If the ``BTBSession`` has run out of proposals to generate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span><span class="s1">&#39;There are no tunables left to try.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">):</span>
+            <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunable_names</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">)]</span>
+            <span class="n">tunable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunables</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tunable</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Creating Tunable instance from dict.&#39;</span><span class="p">)</span>
+                <span class="n">tunable</span> <span class="o">=</span> <span class="n">Tunable</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tunable</span><span class="p">,</span> <span class="n">Tunable</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Tunable can only be an instance of btb.tuning.Tunable or dict&#39;</span><span class="p">)</span>
+
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Obtaining default configuration for </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">tunable</span><span class="o">.</span><span class="n">get_defaults</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">tunable</span><span class="o">.</span><span class="n">cardinality</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Skipping tuner creation for Tunable </span><span class="si">%s</span><span class="s1"> with cardinality 1&#39;</span><span class="p">,</span>
+                            <span class="n">tunable_name</span><span class="p">)</span>
+                <span class="n">tuner</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tuner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuner_class</span><span class="p">(</span><span class="n">tunable</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tuner</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tunable_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_next_tunable_name</span><span class="p">()</span>
+            <span class="n">tuner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tuner</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">StopTuning</span><span class="p">(</span><span class="s1">&#39;Tunable </span><span class="si">%s</span><span class="s1"> has no tunable hyperparameters&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Generating new proposal configuration for </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">propose</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">StopTuning</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> has no more configs to propose.&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_remove_tunable</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span>
+                <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propose</span><span class="p">()</span>
+
+        <span class="n">proposal_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_id</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposals</span><span class="p">[</span><span class="n">proposal_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">proposal_id</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">tunable_name</span><span class="p">,</span>
+            <span class="s1">&#39;config&#39;</span><span class="p">:</span> <span class="n">config</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span></div>
+
+<div class="viewcode-block" id="BTBSession.handle_error"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.handle_error">[docs]</a>    <span class="k">def</span> <span class="nf">handle_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Handle errors when ``score`` is ``None``.</span>
+
+<span class="sd">        If the given ``tunable_name`` accumulates more errors than ``self._max_errors``</span>
+<span class="sd">        this is removed from the selector&#39;s choices.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tunable_name (str):</span>
+<span class="sd">                The name of the tunable to which this configuration belongs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">errors</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_errors</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Too many errors: </span><span class="si">%s</span><span class="s1">. Removing tunable </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_tunable</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BTBSession.record"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record the configuration and the obtained score to the tuner.</span>
+
+<span class="sd">        If the score is the best one so far, the ``best_proposal`` and ``best_score`` are</span>
+<span class="sd">        updated.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tunable_name (str):</span>
+<span class="sd">                The name of the tunable to which this configuration belongs.</span>
+<span class="sd">            config (dict):</span>
+<span class="sd">                Hyperparameter proposal, as given by the tunable.</span>
+<span class="sd">            score (float):</span>
+<span class="sd">                Obtained score with the given configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">proposal_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_id</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposals</span><span class="p">[</span><span class="n">proposal_id</span><span class="p">]</span>
+        <span class="n">proposal</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
+
+        <span class="k">if</span> <span class="n">score</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">normalized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_normalized_scores</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">normalized</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">normalized</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_normalized</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;New optimal found: </span><span class="si">%s</span><span class="s1"> - </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">best_proposal</span> <span class="o">=</span> <span class="n">proposal</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">best_score</span> <span class="o">=</span> <span class="n">score</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_best_normalized</span> <span class="o">=</span> <span class="n">normalized</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">tuner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuners</span><span class="p">[</span><span class="n">tunable_name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">tuner</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Skipping record for Tunable </span><span class="si">%s</span><span class="s1"> with cardinality 1&#39;</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tuner</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">normalized</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Could not record configuration and score for tuner </span><span class="si">%s</span><span class="s1">.&#39;</span><span class="p">,</span>
+                                 <span class="n">tunable_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BTBSession.run"><a class="viewcode-back" href="../../api/btb.session.html#btb.BTBSession.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run the selection and tuning loop for the given number of iterations.</span>
+
+<span class="sd">        At each iteration, the `BTBSession` will generate a new proposal calling</span>
+<span class="sd">        ``self.propose``, score it using the `self.scorer`, and finally record the</span>
+<span class="sd">        obtained score back to the tuner calling `self.record`.</span>
+
+<span class="sd">        If no iterations are given, run infinitely until interrupted or until all the</span>
+<span class="sd">        tuner proposals are exhausted.</span>
+
+<span class="sd">        Scoring errors will also be captured and recorded.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            best_proposal (dict):</span>
+<span class="sd">                Best configuration found with the name of the tunable and the hyperparameters</span>
+<span class="sd">                and crossvalidated score obtained for it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">iterations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">iterator</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_range</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propose</span><span class="p">()</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Scoring proposal </span><span class="si">%s</span><span class="s1"> - </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">,</span> <span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scorer</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                    <span class="s1">&#39;Proposal </span><span class="si">%s</span><span class="s1"> - </span><span class="si">%s</span><span class="s1"> crashed with the following configuration: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">,</span>
+                    <span class="n">tunable_name</span><span class="p">,</span>
+                    <span class="n">params</span>
+                <span class="p">)</span>
+
+                <span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">tunable_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_proposal</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

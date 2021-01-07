@@ -1,0 +1,7 @@
+btb.tuning.tuners.gaussian\_process module
+==========================================
+
+.. automodule:: btb.tuning.tuners.gaussian_process
+   :members:
+   :undoc-members:
+   :show-inheritance:

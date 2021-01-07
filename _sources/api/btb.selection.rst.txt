@@ -1,0 +1,24 @@
+btb.selection package
+=====================
+
+Submodules
+----------
+
+.. toctree::
+
+   btb.selection.best
+   btb.selection.custom_selector
+   btb.selection.hierarchical
+   btb.selection.pure
+   btb.selection.recent
+   btb.selection.selector
+   btb.selection.ucb1
+   btb.selection.uniform
+
+Module contents
+---------------
+
+.. automodule:: btb.selection
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,18 @@
+btb.tuning.metamodels package
+=============================
+
+Submodules
+----------
+
+.. toctree::
+
+   btb.tuning.metamodels.base
+   btb.tuning.metamodels.gaussian_process
+
+Module contents
+---------------
+
+.. automodule:: btb.tuning.metamodels
+   :members:
+   :undoc-members:
+   :show-inheritance:

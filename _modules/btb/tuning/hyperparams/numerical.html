@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btb.tuning.hyperparams.numerical &mdash; BTB 0.4.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> BTB
+          
+
+          
+            
+            <img src="../../../../_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../install.html#stable-release">Stable Release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../install.html#from-source">From source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/00_Quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/00_Quickstart.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/00_Quickstart.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/00_Quickstart.html#Start-the-searching-process">Start the searching process</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/01_Tuning.html">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Defining-a-Tuning-Problem">Defining a Tuning Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#What-is-a-Hyperparameter?">What is a Hyperparameter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Creating-a-HyperParam">Creating a HyperParam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#BooleanHyperParam">BooleanHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#CategoricalHyperParam">CategoricalHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#FloatHyperParam">FloatHyperParam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#IntHyperParam">IntHyperParam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#What-is-Tunable?">What is Tunable?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Creating-a-Tunable">Creating a Tunable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Using-HyperParam-instances">Using HyperParam instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Using-a-dict-representation">Using a dict representation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#What-is-a-Tuner?">What is a Tuner?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Using-a-Tuner">Using a Tuner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Creating-a-Tuner">Creating a Tuner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Propose">Propose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Record">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Tuning-loop-example">Tuning loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Implemented-tuners">Implemented tuners</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/01_Tuning.html#Leaderboard">Leaderboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/02_Selection.html">Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/02_Selection.html#What-is-a-Selection-problem?">What is a Selection problem?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/02_Selection.html#What-is-a-Selector-?">What is a Selector ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/02_Selection.html#Using-a-Selector">Using a Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/02_Selection.html#Creating-a-Selector">Creating a Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/02_Selection.html#Select">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/02_Selection.html#Selection-loop-example">Selection loop example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/03_Session.html">BTBSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/03_Session.html#What-is-BTBSession">What is BTBSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/03_Session.html#Creating-a-BTBSession">Creating a BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/03_Session.html#Prepare-a-scoring-function">Prepare a scoring function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/03_Session.html#Define-the-tunable-hyperparameters">Define the tunable hyperparameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/03_Session.html#Create-BTBSession-instance">Create BTBSession instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/03_Session.html#Using-BTBSession">Using BTBSession</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/03_Session.html#Run">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/03_Session.html#Exploring-the-result">Exploring the result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/03_Session.html#Resume-session">Resume session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/03_Session.html#Fitting-the-best-solution">Fitting the best solution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../benchmark.html">Benchmarking BTB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#the-benchmarking-process">The Benchmarking process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#challenges">Challenges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#machine-learning-challenges">Machine Learning Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#mathematical-optimization-challenges">Mathematical Optimization Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#tuning-functions">Tuning Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#tuning-functions-under-comparison">Tuning functions under comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#to-introduce-a-new-tuning-function">To introduce a new Tuning Function:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#running-the-benchmarking">Running the Benchmarking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#install">Install</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#system-requierements">System Requierements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#python-installation">Python installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#runnig-the-benchmarking-using-python">Runnig the Benchmarking using python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../benchmark.html#benchmark-arguments">Benchmark Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#tuners">Tuners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#id1">Challenges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#iterations">Iterations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../benchmark.html#storing-the-results">Storing the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#our-latest-results">Our latest Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#kubernetes">Kubernetes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../benchmark.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kubernetes.html">Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../kubernetes.html#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../kubernetes.html#kubernetes-cluster">Kubernetes Cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../kubernetes.html#admin-access">Admin Access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../kubernetes.html#dask-function">Dask Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../kubernetes.html#benchmark-configuration">Benchmark Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../kubernetes.html#configuration-format">Configuration Format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../kubernetes.html#run">run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../kubernetes.html#dask-cluster">dask_cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../kubernetes.html#output">output</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../kubernetes.html#configuration-examples">Configuration Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../kubernetes.html#run-a-function-on-kubernetes">Run a function on Kubernetes.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../kubernetes.html#usage-example">Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../kubernetes.html#results">Results</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/btb.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.selection.html">btb.selection package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.best.html">btb.selection.best module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.custom_selector.html">btb.selection.custom_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.hierarchical.html">btb.selection.hierarchical module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.pure.html">btb.selection.pure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.recent.html">btb.selection.recent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.selector.html">btb.selection.selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.ucb1.html">btb.selection.ucb1 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.selection.uniform.html">btb.selection.uniform module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.tuning.html">btb.tuning package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.tuning.acquisition.html">btb.tuning.acquisition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.acquisition.base.html">btb.tuning.acquisition.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.acquisition.expected_improvement.html">btb.tuning.acquisition.expected_improvement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.acquisition.predicted_score.html">btb.tuning.acquisition.predicted_score module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.tuning.hyperparams.html">btb.tuning.hyperparams package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.hyperparams.base.html">btb.tuning.hyperparams.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.hyperparams.boolean.html">btb.tuning.hyperparams.boolean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.hyperparams.categorical.html">btb.tuning.hyperparams.categorical module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.hyperparams.numerical.html">btb.tuning.hyperparams.numerical module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.tuning.metamodels.html">btb.tuning.metamodels package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.metamodels.base.html">btb.tuning.metamodels.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.metamodels.gaussian_process.html">btb.tuning.metamodels.gaussian_process module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.tuning.tuners.html">btb.tuning.tuners package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.tuners.base.html">btb.tuning.tuners.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.tuners.gaussian_process.html">btb.tuning.tuners.gaussian_process module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/btb.tuning.tuners.uniform.html">btb.tuning.tuners.uniform module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/btb.tuning.tunable.html">btb.tuning.tunable module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/btb.session.html">btb.session module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">BTB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>btb.tuning.hyperparams.numerical</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for btb.tuning.hyperparams.numerical</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;Package where the NumericalHyperParam class and it&#39;s childs are defined.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">btb.tuning.hyperparams.base</span> <span class="kn">import</span> <span class="n">BaseHyperParam</span>
+
+
+<div class="viewcode-block" id="NumericalHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.numerical.html#btb.tuning.NumericalHyperParam">[docs]</a><span class="k">class</span> <span class="nc">NumericalHyperParam</span><span class="p">(</span><span class="n">BaseHyperParam</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;NumericalHyperParam class.</span>
+
+<span class="sd">    The NumericalHyperParam class defines an abstraction to hyperparameters which ranges are</span>
+<span class="sd">    defined by a numerical value and can take any number within that range.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dimensions</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_within_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">values</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">values</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Value not within range [</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">]: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="FloatHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.numerical.html#btb.tuning.FloatHyperParam">[docs]</a><span class="k">class</span> <span class="nc">FloatHyperParam</span><span class="p">(</span><span class="n">NumericalHyperParam</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;FloatHyperParam class.</span>
+
+<span class="sd">    The FloatHyperParam class represents a single hyperparameter within a range of ``float``</span>
+<span class="sd">    numbers, where ``min`` and ``max`` can take as value any float number within that range,</span>
+<span class="sd">    having ``min`` to be smaller than ``max``.</span>
+
+<span class="sd">    Hyperparameter space:</span>
+<span class="sd">        :math:`h_1, h_2,... h_n` where :math:`h_i = i * (max - min) + min`</span>
+
+<span class="sd">    Search space:</span>
+<span class="sd">        :math:`s_1, s_2,... s_n` where :math:`s_i = (i - min) / (max - min)`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        min (float):</span>
+<span class="sd">            Float number to represent the minimum value that this hyperparameter can take,</span>
+<span class="sd">            by default is ``None`` which will take the system&#39;s minimum float value possible.</span>
+
+<span class="sd">        max (float):</span>
+<span class="sd">            Float number to represent the maximum value that this hyperparameter can take,</span>
+<span class="sd">            by default is ``None`` which will take the system&#39;s maximum float value possible.</span>
+
+<span class="sd">        default (float):</span>
+<span class="sd">            Float number that represents the default value for the hyperparameter. Defaults to</span>
+<span class="sd">            ``self.min``</span>
+
+<span class="sd">        include_min (bool):</span>
+<span class="sd">            Either or not to include the minimum value in the search space.</span>
+
+<span class="sd">        include_max (bool):</span>
+<span class="sd">            Either or not to include the maximum value in the search space.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cardinality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span> <span class="o">=</span> <span class="n">include_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span> <span class="o">=</span> <span class="n">include_max</span>
+
+        <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">min</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+            <span class="nb">min</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">min</span>
+
+        <span class="k">if</span> <span class="nb">max</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">max</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+            <span class="nb">max</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">max</span>
+
+        <span class="k">if</span> <span class="nb">min</span> <span class="o">&gt;=</span> <span class="nb">max</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The ``min`` value can not be greater or equal to ``max`` value.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="nb">max</span> <span class="o">-</span> <span class="nb">min</span>
+
+    <span class="k">def</span> <span class="nf">_inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Invert one or more search space values.</span>
+
+<span class="sd">        Converts a ``numpy.ndarray`` with normalized values from the search space :math:`s_1,</span>
+<span class="sd">        s_2,... s_n` to the hyperparameter space of :math:`h_1, h_2,... h_n`. This is</span>
+<span class="sd">        being computed by multiplying the hyperparameter&#39;s range with the values to be denormalized</span>
+<span class="sd">        and adding the ``self.min`` value to them.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values (numpy.ndarray):</span>
+<span class="sd">                2D array with values from the search space.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray:</span>
+<span class="sd">                2D ``numpy.ndarray`` containing values from the original hyperparameter space.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            The example below shows simple usage case where a FloatHyperParam is being created</span>
+<span class="sd">            with a range that goes from ``0.1`` to ``0.9`` and it&#39;s ``_inverse_transform`` method</span>
+<span class="sd">            is being called with a valid ``numpy.ndarray`` that contain values from the normalized</span>
+<span class="sd">            search space and values from the hyperparameter space are being returned.</span>
+
+<span class="sd">            &gt;&gt;&gt; instance = FloatHyperParam(min=0.1, max=0.9)</span>
+<span class="sd">            &gt;&gt;&gt; instance._inverse_transform(np.array([[0.], [1.]]))</span>
+<span class="sd">            array([[0.1],</span>
+<span class="sd">                   [0.9]])</span>
+<span class="sd">            &gt;&gt;&gt; instance._inverse_transform(np.array([[0.875]]))</span>
+<span class="sd">            array([[0.8]])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">values</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+
+    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transform one or more hyperparameter values.</span>
+
+<span class="sd">        Converts a ``numpy.ndarray`` with ``float`` values from the original hyperparameter space</span>
+<span class="sd">        :math:`h_1, h_2,... h_n` into the normalized search space :math:`s_1, s_2,... s_n`.</span>
+<span class="sd">        This is being computed by substracting the ``self.min`` value from the values to be</span>
+<span class="sd">        trasnformed and dividing them by the ``self.range`` of the hyperparameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values (numpy.ndarray):</span>
+<span class="sd">                2D array with values from the hyperparameter space to be converted into the</span>
+<span class="sd">                search space.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray:</span>
+<span class="sd">                2D ``numpy.ndarray`` of shape `(len(values), 1)` containing the search space</span>
+<span class="sd">                values.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            The example below shows simple usage case where a FloatHyperParam is being created</span>
+<span class="sd">            with a range that goes from ``0.1`` to ``0.9`` and it&#39;s ``_transform`` method</span>
+<span class="sd">            is being called with a valid ``numpy.ndarray`` that contain values from the</span>
+<span class="sd">            hyperparameter space and values from the search space are being returned.</span>
+
+<span class="sd">            &gt;&gt;&gt; instance = FloatHyperParam(min=0.1, max=0.9)</span>
+<span class="sd">            &gt;&gt;&gt; instance._transform(np.array([[0.1], [0.9]]))</span>
+<span class="sd">            array([[0.],</span>
+<span class="sd">                   [1.]])</span>
+<span class="sd">            &gt;&gt;&gt; instance._transform(np.array([[0.8]]))</span>
+<span class="sd">            array([[0.875]])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">values</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">range</span>
+
+<div class="viewcode-block" id="FloatHyperParam.sample"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.numerical.html#btb.tuning.FloatHyperParam.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate sample values in the hyperparameter search space :math:`{0, 1}`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n_samples (int):</span>
+<span class="sd">                Number of values to sample.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray:</span>
+<span class="sd">                2D array with shape of `(n_samples, 1)` with normalized values inside the</span>
+<span class="sd">                search space :math:`{0, 1}`.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            The example below shows simple usage case where a FloatHyperParam is being created</span>
+<span class="sd">            with a range that goes from ``0.1`` to ``0.9`` and it&#39;s ``sample`` method</span>
+<span class="sd">            is being called with a number of samples to be obtained. A ``numpy.ndarray`` with</span>
+<span class="sd">            values from the search space is being returned.</span>
+
+<span class="sd">            &gt;&gt;&gt; instance = FloatHyperParam(min=0.1, max=0.9)</span>
+<span class="sd">            &gt;&gt;&gt; instance.sample(2)</span>
+<span class="sd">            array([[0.52058728],</span>
+<span class="sd">                   [0.00582452]])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;min=</span><span class="si">{}</span><span class="s1">, max=</span><span class="si">{}</span><span class="s1">, default=</span><span class="si">{}</span><span class="s1">, include_min=</span><span class="si">{}</span><span class="s1">, include_max=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;FloatHyperParam(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="IntHyperParam"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.numerical.html#btb.tuning.IntHyperParam">[docs]</a><span class="k">class</span> <span class="nc">IntHyperParam</span><span class="p">(</span><span class="n">NumericalHyperParam</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;IntHyperParam class.</span>
+
+<span class="sd">    The IntHyperParam class represents a single hyperparameter within an range of ``int``</span>
+<span class="sd">    numbers, where ``min`` and ``max`` can take as value any ``int`` number that compose this range</span>
+<span class="sd">    having ``min`` to be smaller than ``max``.</span>
+
+<span class="sd">    Hyperparameter space:</span>
+<span class="sd">        :math:`h_1, h_2,... h_n` where :math:`h_i = min + (i - 1) * step`</span>
+
+<span class="sd">    Search space:</span>
+<span class="sd">        :math:`s_1, s_2,... s_n` where :math:`s_i = \\frac{interval}{2} + (i - 1) * interval`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        min (int):</span>
+<span class="sd">            Integer number to represent the minimum value that this hyperparameter can take,</span>
+<span class="sd">            by default is ``None`` which will take the system&#39;s minimum int value possible.</span>
+
+<span class="sd">        max (int):</span>
+<span class="sd">            Integer number to represent the maximum value that this hyperparameter can take,</span>
+<span class="sd">            by default is ``None`` which will take the system&#39;s maximum int value possible.</span>
+
+<span class="sd">        default (int):</span>
+<span class="sd">            Integer number that represents the default value for the hyperparameter. Defaults to</span>
+<span class="sd">            ``self.min``.</span>
+
+<span class="sd">        step (int):</span>
+<span class="sd">            Increase amount to take for each sample. Defaults to 1.</span>
+
+<span class="sd">        include_min (bool):</span>
+<span class="sd">            Either or not to include the minimum value in the search space.</span>
+
+<span class="sd">        include_max (bool):</span>
+<span class="sd">            Either or not to include the maximum value in the search space.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dimensions</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">include_min</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_max</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span> <span class="o">=</span> <span class="n">include_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span> <span class="o">=</span> <span class="n">include_max</span>
+
+        <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">min</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+            <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">max</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">max</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+            <span class="nb">max</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="k">if</span> <span class="nb">min</span> <span class="o">&gt;=</span> <span class="nb">max</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The `min` value can not be greater or equal to `max` value.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">min</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span> <span class="k">if</span> <span class="n">include_min</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="k">if</span> <span class="n">include_max</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cardinality</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">//</span> <span class="n">step</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid step of </span><span class="si">{}</span><span class="s2"> for values inside [</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Invert one or more search space values.</span>
+
+<span class="sd">        Converts a ``numpy.ndarray`` with normalized values from the search space :math:`s_1,</span>
+<span class="sd">        s_2,... s_n` to the hyperparameter space of :math:`h_1, h_2,... h_n`. This is</span>
+<span class="sd">        being computed by divinding the hyperparameter&#39;s interval with the values to be inverted</span>
+<span class="sd">        and adding the ``self.min`` value to them and resting the 0.5 that has been added during</span>
+<span class="sd">        the transformation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values (numpy.ndarray):</span>
+<span class="sd">                2D array with values from the search space.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray:</span>
+<span class="sd">                2D ``numpy.ndarray`` containing values from the original hyperparameter space.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            The example below shows simple usage case where an IntHyperParam is being created</span>
+<span class="sd">            with a range that goes from ``1`` to ``4`` and it&#39;s ``_inverse_transform`` method</span>
+<span class="sd">            is being called with a valid ``numpy.ndarray`` that contain values from the</span>
+<span class="sd">            search space and values from the hyperparameter space are being returned.</span>
+
+<span class="sd">            &gt;&gt;&gt; instance = IntHyperParam(min=1, max=4)</span>
+<span class="sd">            &gt;&gt;&gt; instance._inverse_transform(np.array([[0.125], [0.875]]))</span>
+<span class="sd">            array([[1],</span>
+<span class="sd">                   [4]])</span>
+<span class="sd">            &gt;&gt;&gt; instance._inverse_trasnfrom(np.array([[0.625]]))</span>
+<span class="sd">            array([[3]])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">unscaled_values</span> <span class="o">=</span> <span class="n">values</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+        <span class="n">rounded</span> <span class="o">=</span> <span class="n">unscaled_values</span><span class="o">.</span><span class="n">round</span><span class="p">()</span>
+
+        <span class="c1"># Restrict to make sure that we stay within the valid range</span>
+        <span class="n">restricted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rounded</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">restricted</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transform one or more hyperparameter values.</span>
+
+<span class="sd">        Converts a ``numpy.ndarray`` with ``int`` values from the original hyperparameter space</span>
+<span class="sd">        :math:`h_1, h_2,... h_n` into the normalized search space :math:`s_1, s_2,... s_n`.</span>
+<span class="sd">        This is being computed by substracting the ``min`` value that the hyperparameter can take</span>
+<span class="sd">        from the values to be trasnformed and adding them 0.5, then multiply by the interval.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values (numpy.ndarray):</span>
+<span class="sd">                2D array with values from the hyperparameter space to be converted into the</span>
+<span class="sd">                search space.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray:</span>
+<span class="sd">                2D ``numpy.ndarray`` of shape `(len(values), 1)` containing the search space</span>
+<span class="sd">                values.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            The example below shows simple usage case where an IntHyperParam is being created</span>
+<span class="sd">            with a range that goes from ``1`` to ``4`` and it&#39;s ``_transform`` method</span>
+<span class="sd">            is being called with a valid ``numpy.ndarray`` that contain values from the</span>
+<span class="sd">            hyperparameter space and values from the search space are being returned.</span>
+
+<span class="sd">            &gt;&gt;&gt; instance = IntHyperParam(min=1, max=4)</span>
+<span class="sd">            &gt;&gt;&gt; instance._transform(np.array([[1], [4]]))</span>
+<span class="sd">            array([[0.125],</span>
+<span class="sd">                   [0.875]])</span>
+<span class="sd">            &gt;&gt;&gt; instance._trasnfrom(np.array([[3]]))</span>
+<span class="sd">            array([[0.625]])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">values</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span>
+
+<div class="viewcode-block" id="IntHyperParam.sample"><a class="viewcode-back" href="../../../../api/btb.tuning.hyperparams.numerical.html#btb.tuning.IntHyperParam.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate sample values in the hyperparameter search space of [0, 1).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n_samples (int):</span>
+<span class="sd">                Number of values to sample.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray:</span>
+<span class="sd">                2D array with shape of `(n_samples, 1)` with normalized values inside the</span>
+<span class="sd">                search space :math:`{0, 1}`.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            The example below shows simple usage case where a IntHyperParam is being created</span>
+<span class="sd">            with a range that goes from ``1`` to ``4`` and it&#39;s ``sample`` method</span>
+<span class="sd">            is being called with a number of samples to be obtained. A ``numpy.ndarray`` with</span>
+<span class="sd">            values from the search space is being returned.</span>
+
+<span class="sd">            &gt;&gt;&gt; instance = IntHyperParam(min=1, max=4)</span>
+<span class="sd">            &gt;&gt;&gt; instance.sample(2)</span>
+<span class="sd">            array([[0.625],</span>
+<span class="sd">                   [0.375]])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sampled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">))</span>
+        <span class="n">inverted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inverse_transform</span><span class="p">(</span><span class="n">sampled</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">inverted</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;min=</span><span class="si">{}</span><span class="s1">, max=</span><span class="si">{}</span><span class="s1">, default=</span><span class="si">{}</span><span class="s1">, include_min=</span><span class="si">{}</span><span class="s1">, include_max=</span><span class="si">{}</span><span class="s1">, step=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;IntHyperParam(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, MIT Data To AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
