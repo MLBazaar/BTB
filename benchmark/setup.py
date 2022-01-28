@@ -112,6 +112,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
     description='Bayesian Tuning and Bandits',
     entry_points={
@@ -132,7 +133,7 @@ setup(
     long_description_content_type='text/markdown',
     name='btb_benchmark',
     packages=find_packages(include=['btb_benchmark', 'btb_benchmark.*']),
-    python_requires='>=3.6,<3.9',
+    python_requires='>=3.6,<3.10',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
