@@ -96,5 +96,9 @@ class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
     def _predict(self, candidates):
         trans_candidates = self._transform(candidates)
         predicted = super()._predict(trans_candidates)
+        
+        predictions = list()
+        for row in predicted:
+            predictions.append(self._score_distribution.ppf(scipy.stats.norm.cdf(row))[0])
 
-        return self._score_distribution.ppf(scipy.stats.norm.cdf(predicted))
+        return numpy.array(predictions)
