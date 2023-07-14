@@ -49,7 +49,7 @@ class CategoricalHyperParam(BaseHyperParam):
         self.dimensions = len(choices)
         self.cardinality = self.dimensions
         choices = np.array(choices, dtype='object')
-        self._encoder = OneHotEncoder(categories=[choices], sparse=False)
+        self._encoder = OneHotEncoder(categories=[choices], sparse_output=False)
         self._encoder.fit(choices.reshape(-1, 1))
 
     def _within_hyperparam_space(self, values):
