@@ -44,10 +44,10 @@ class BaseTuner:
 
     def __init__(self, tunable, maximize=True):
         self.tunable = tunable
-        self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float)
+        self.trials = np.empty((0, self.tunable.dimensions), dtype=np.float64)
         self._trials_set = set()
-        self.raw_scores = np.empty((0, 1), dtype=np.float)
-        self.scores = np.empty((0, 1), dtype=np.float)
+        self.raw_scores = np.empty((0, 1), dtype=np.float64)
+        self.scores = np.empty((0, 1), dtype=np.float64)
         self.maximize = maximize
         LOGGER.debug(
             ('Creating %s instance with %s hyperparameters and cardinality %s.'),

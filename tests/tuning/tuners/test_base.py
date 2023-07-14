@@ -244,11 +244,11 @@ class TestBaseTuner(TestCase):
         instance = MagicMock()
         instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.transform.return_value = np.array([[1, 0]])
-        instance.trials = np.empty((0, 2), dtype=np.float)
+        instance.trials = np.empty((0, 2), dtype=np.float64)
         instance._trials_set = set()
         instance.scores = None
         instance.maximize = True
-        instance.raw_scores = np.empty((0, 1), dtype=np.float)
+        instance.raw_scores = np.empty((0, 1), dtype=np.float64)
 
         # run
         BaseTuner.record(instance, [1], [0.1])
@@ -268,11 +268,11 @@ class TestBaseTuner(TestCase):
         instance = MagicMock()
         instance.tunable = MagicMock(spec_set=Tunable)
         instance.tunable.transform.return_value = np.array([[1, 0]])
-        instance.trials = np.empty((0, 2), dtype=np.float)
+        instance.trials = np.empty((0, 2), dtype=np.float64)
         instance._trials_set = set()
         instance.scores = None
         instance.maximize = False
-        instance.raw_scores = np.empty((0, 1), dtype=np.float)
+        instance.raw_scores = np.empty((0, 1), dtype=np.float64)
 
         # run
         BaseTuner.record(instance, [1], [0.1])
@@ -292,8 +292,8 @@ class TestBaseTuner(TestCase):
         # setup
         instance = MagicMock()
         instance.tunable = MagicMock(spec_set=Tunable)
-        instance.trials = np.empty((0, 2), dtype=np.float)
-        instance.raw_scores = np.empty((0, 1), dtype=np.float)
+        instance.trials = np.empty((0, 2), dtype=np.float64)
+        instance.raw_scores = np.empty((0, 1), dtype=np.float64)
         instance._trials_set = set()
         instance.tunable.transform.return_value = np.array([[1, 0]])
 
