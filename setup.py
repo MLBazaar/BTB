@@ -23,11 +23,11 @@ except IOError:
 
 
 install_requires = [
-    'copulas>=0.3.2,<0.4',
-    'numpy>=1.14.0',
+    'copulas>=0.3.2,<1',
+    'numpy>=1.20.0',
     'scikit-learn>=0.20.0',
     'scipy>=1.2,<2',
-    'pandas>=1,<2',
+    'pandas>=1',
     'tqdm>=4.36.1,<5',
 ]
 
@@ -93,6 +93,8 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     description='Bayesian Tuning and Bandits',
     extras_require={
