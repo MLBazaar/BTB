@@ -30,8 +30,8 @@ class TestBaseTuner(TestCase):
         assert instance.maximize
         assert instance.trials.shape == (0, 1)
         assert instance.raw_scores.shape == (0, 1)
-        assert instance.trials.dtype == np.float
-        assert instance.raw_scores.dtype == np.float
+        assert instance.trials.dtype == np.float64
+        assert instance.raw_scores.dtype == np.float64
 
     def test___init__maximize_false(self):
         # setup
