@@ -121,10 +121,10 @@ class TestBaseTuner(TestCase):
         instance._check_proposals.assert_called_once_with(1)
         instance._propose.assert_called_once_with(1, False)
         instance.tunable.inverse_transform.called_once_with(1)
-        inverse_return.to_dict.assert_called_once_with(orient='records')
+        inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == 1
 
-    @patch('btb.tuning.tuners.base.BaseTuner._check_proposals')
+    @patch("btb.tuning.tuners.base.BaseTuner._check_proposals")
     def test_propose_one_value_allow_duplicates(self, mock__check_proposals):
         """Test that ``propose`` method calls it's child implemented method with
         ``allow_duplicates`` as ``True``.
@@ -143,10 +143,10 @@ class TestBaseTuner(TestCase):
         instance._check_proposals.assert_not_called()
         instance._propose.assert_called_once_with(1, True)
         instance.tunable.inverse_transform.called_once_with(1)
-        inverse_return.to_dict.assert_called_once_with(orient='records')
+        inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == 1
 
-    @patch('btb.tuning.tuners.base.BaseTuner._check_proposals')
+    @patch("btb.tuning.tuners.base.BaseTuner._check_proposals")
     def test_propose_many_values_no_duplicates(self, mock__check_proposals):
         """Test that ``propose`` method calls it's child implemented method with more than one
         proposals and ``allow_duplicates`` as ``False``.
@@ -164,10 +164,10 @@ class TestBaseTuner(TestCase):
         # assert
         instance._propose.assert_called_once_with(2, False)
         instance.tunable.inverse_transform.called_once_with(2)
-        inverse_return.to_dict.assert_called_once_with(orient='records')
+        inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == [1, 2]
 
-    @patch('btb.tuning.tuners.base.BaseTuner._check_proposals')
+    @patch("btb.tuning.tuners.base.BaseTuner._check_proposals")
     def test_propose_many_values_allow_duplicates(self, mock__check_proposals):
         """Test that ``propose`` method calls it's child implemented method with more than one
         proposals and ``allow_duplicates`` as ``True``.
@@ -186,7 +186,7 @@ class TestBaseTuner(TestCase):
         # assert
         instance._propose.assert_called_once_with(2, True)
         instance.tunable.inverse_transform.called_once_with(2)
-        inverse_return.to_dict.assert_called_once_with(orient='records')
+        inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == [1, 2]
 
     def test__sample_allow_duplicates(self):
@@ -225,16 +225,26 @@ class TestBaseTuner(TestCase):
         # setup
         instance = MagicMock()
         instance.tunable = MagicMock(spec_set=Tunable)
-        instance._trials_set = set({(1, ), (2, )})
+        instance._trials_set = set({(1,), (2,)})
 
-        side_effect = [np.array([[3]]), np.array([[1]]), np.array([[1]]), np.array([[4]])]
+        side_effect = [
+            np.array([[3]]),
+            np.array([[1]]),
+            np.array([[1]]),
+            np.array([[4]]),
+        ]
         instance.tunable.sample.side_effect = side_effect
 
         # run
         result = BaseTuner._sample(instance, 2, False)
 
         # assert
-        assert instance.tunable.sample.call_args_list == [call(2), call(2), call(2), call(2)]
+        assert instance.tunable.sample.call_args_list == [
+            call(2),
+            call(2),
+            call(2),
+            call(2),
+        ]
         np.testing.assert_array_equal(result, np.array([[3], [4]]))
 
     def test_record_list_maximize_true(self):
@@ -324,7 +334,7 @@ class TestBaseTuner(TestCase):
 class TestBaseMetaModelTuner(TestCase):
     """Test BaseMetaModelTuner class."""
 
-    @patch('btb.tuning.tuners.base.super')
+    @patch("btb.tuning.tuners.base.super")
     def test___init___default_values(self, mock_super):
         # setup
         tunable = MagicMock(spec_set=Tunable)
@@ -341,14 +351,13 @@ class TestBaseMetaModelTuner(TestCase):
         instance.__init_metamodel__.assert_called_once_with()
         instance.__init_acquisition__.assert_called_once_with()
 
-    @patch('btb.tuning.tuners.base.super')
+    @patch("btb.tuning.tuners.base.super")
     def test___init___users_values(self, mock_super):
-
         # setup
         tunable = MagicMock(spec_set=Tunable)
         instance = MagicMock()
-        instance._metamodel_kwargs = {'a': 'test'}
-        instance._acquisition_kwargs = {'a': 'acquisition_test'}
+        instance._metamodel_kwargs = {"a": "test"}
+        instance._acquisition_kwargs = {"a": "acquisition_test"}
         instance.__init_metamodel__ = MagicMock()
         instance.__init_acquisition__ = MagicMock()
 
@@ -364,22 +373,22 @@ class TestBaseMetaModelTuner(TestCase):
         # assert
         assert instance.num_candidates == 5
         assert instance.min_trials == 20
-        instance.__init_metamodel__.assert_called_once_with(a='test')
-        instance.__init_acquisition__.assert_called_once_with(a='acquisition_test')
+        instance.__init_metamodel__.assert_called_once_with(a="test")
+        instance.__init_acquisition__.assert_called_once_with(a="acquisition_test")
 
     def test__proposemin_trials_gt__trials_set(self):
         # setup
         instance = MagicMock()
         instance.min_trials = 1
         instance._trials_set.__len__.return_value = 0
-        instance._sample.return_value = 'sample'
+        instance._sample.return_value = "sample"
 
         # run
         result = BaseMetaModelTuner._propose(instance, 1, True)
 
         # assert
         instance._sample.assert_called_once_with(1, True)
-        assert result == 'sample'
+        assert result == "sample"
 
     def test__proposemin_trials_lt__trials_set_allow_duplicates(self):
         # setup
@@ -390,7 +399,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance.num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
-        instance._predict.return_value = 'predicted'
+        instance._predict.return_value = "predicted"
         instance._acquire.return_value = 0
 
         # run
@@ -410,7 +419,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance.num_candidates = 10
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
-        instance._predict.return_value = 'predicted'
+        instance._predict.return_value = "predicted"
         instance._acquire.return_value = 0
 
         # run
@@ -419,10 +428,12 @@ class TestBaseMetaModelTuner(TestCase):
         # assert
         instance._sample.assert_called_once_with(2, False)
         instance._predict.assert_called_once_with(np.array([1]))
-        instance._acquire.assert_called_once_with('predicted', 1)
+        instance._acquire.assert_called_once_with("predicted", 1)
         assert result == 1
 
-    def test__proposemin_trials_lt__trials_set_not_allow_duplicates_num_samples_is_min(self):
+    def test__proposemin_trials_lt__trials_set_not_allow_duplicates_num_samples_is_min(
+        self,
+    ):
         # setup
         instance = MagicMock()
         instance.tunable = MagicMock(spec_set=Tunable)
@@ -431,7 +442,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance.num_candidates = 0
         instance._trials_set.__len__.return_value = 1
         instance._sample.return_value = np.array([1])
-        instance._predict.return_value = 'predicted'
+        instance._predict.return_value = "predicted"
         instance._acquire.return_value = 0
 
         # run
@@ -440,10 +451,10 @@ class TestBaseMetaModelTuner(TestCase):
         # assert
         instance._sample.assert_called_once_with(0, False)
         instance._predict.assert_called_once_with(np.array([1]))
-        instance._acquire.assert_called_once_with('predicted', 1)
+        instance._acquire.assert_called_once_with("predicted", 1)
         assert result == 1
 
-    @patch('btb.tuning.tuners.base.super')
+    @patch("btb.tuning.tuners.base.super")
     def test_record(self, mock_super):
         # setup
         instance = MagicMock()

@@ -7,7 +7,7 @@ from baytune.selection.selector import Selector
 # will be used.
 K_MIN = 3
 
-logger = logging.getLogger('btb')
+logger = logging.getLogger("btb")
 
 
 class PureBestKVelocity(Selector):
@@ -27,9 +27,10 @@ class PureBestKVelocity(Selector):
         that the count remains the same.
         """
         # get the k + 1 best scores in descending order
-        best_scores = sorted(scores, reverse=True)[:self.k + 1]
-        velocities = [best_scores[i] - best_scores[i + 1]
-                      for i in range(len(best_scores) - 1)]
+        best_scores = sorted(scores, reverse=True)[: self.k + 1]
+        velocities = [
+            best_scores[i] - best_scores[i + 1] for i in range(len(best_scores) - 1)
+        ]
 
         # pad the list out with zeros to maintain the length of the list
         zeros = (len(scores) - self.k) * [0]
@@ -43,13 +44,13 @@ class PureBestKVelocity(Selector):
         # if we don't have enough scores to do K-selection, fall back to UCB1
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
-            logger.info('PureBestKVelocity: using Pure Best K velocity selection')
+            logger.info("PureBestKVelocity: using Pure Best K velocity selection")
             reward_func = self.compute_rewards
         else:
             logger.warning(
-                '{klass}: Not enough choices to do K-selection; '
-                'returning choice with fewest scores'
-                .format(klass=type(self).__name__))
+                "{klass}: Not enough choices to do K-selection; "
+                "returning choice with fewest scores".format(klass=type(self).__name__)
+            )
             # reward choices with the fewest scores
             # NOTE: "reward_func = lambda " changed to "def reward_func"
             # as per flake8 suggestions

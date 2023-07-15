@@ -41,14 +41,14 @@ class CategoricalHyperParam(BaseHyperParam):
         if default is self.NO_DEFAULT:
             self.default = choices[0]
         elif default not in choices:
-            raise ValueError('`default` not within `choices`')
+            raise ValueError("`default` not within `choices`")
         else:
             self.default = default
 
         self.choices = deepcopy(choices)
         self.dimensions = len(choices)
         self.cardinality = self.dimensions
-        choices = np.array(choices, dtype='object')
+        choices = np.array(choices, dtype="object")
         self._encoder = OneHotEncoder(categories=[choices], sparse_output=False)
         self._encoder.fit(choices.reshape(-1, 1))
 
@@ -61,7 +61,9 @@ class CategoricalHyperParam(BaseHyperParam):
 
             not_in_space = values[~mask].tolist()
             raise ValueError(
-                'Values found outside of the valid space {}: {}'.format(self.choices, not_in_space)
+                "Values found outside of the valid space {}: {}".format(
+                    self.choices, not_in_space
+                )
             )
 
     def _inverse_transform(self, values):
@@ -95,7 +97,7 @@ class CategoricalHyperParam(BaseHyperParam):
         if len(values.shape) == 1:
             values = values.reshape(1, -1)
 
-        return self._encoder.inverse_transform(values.astype('object'))
+        return self._encoder.inverse_transform(values.astype("object"))
 
     def _transform(self, values):
         """Transform one or more categorical values.
@@ -127,7 +129,7 @@ class CategoricalHyperParam(BaseHyperParam):
             array([[1, 0, 0],
                    [0, 0, 1]])
         """
-        return self._encoder.transform(values.astype('object')).astype(int)
+        return self._encoder.transform(values.astype("object")).astype(int)
 
     def sample(self, n_samples):
         """Generate sample values in the hyperparameter search space of ``[0, 1]^K``.
@@ -160,4 +162,6 @@ class CategoricalHyperParam(BaseHyperParam):
         return self.transform(sampled)
 
     def __repr__(self):
-        return 'CategoricalHyperParam(choices={}, default={})'.format(self.choices, self.default)
+        return "CategoricalHyperParam(choices={}, default={})".format(
+            self.choices, self.default
+        )

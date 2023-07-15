@@ -50,8 +50,10 @@ class BaseTuner:
         self.scores = np.empty((0, 1), dtype=np.float64)
         self.maximize = maximize
         LOGGER.debug(
-            ('Creating %s instance with %s hyperparameters and cardinality %s.'),
-            self.__class__.__name__, len(self.tunable.hyperparams), self.tunable.cardinality
+            ("Creating %s instance with %s hyperparameters and cardinality %s."),
+            self.__class__.__name__,
+            len(self.tunable.hyperparams),
+            self.tunable.cardinality,
         )
 
     def _check_proposals(self, num_proposals):
@@ -70,24 +72,24 @@ class BaseTuner:
         """
         if num_proposals > self.tunable.cardinality:
             raise StopTuning(
-                'The number of proposals requested is bigger than the combinations: {} of the'
-                '``tunable``. Use ``allow_duplicates=True``, if you would like to generate that'
-                'amount of combinations.'.format(self.tunable.cardinality)
+                "The number of proposals requested is bigger than the combinations: {} of the"
+                "``tunable``. Use ``allow_duplicates=True``, if you would like to generate that"
+                "amount of combinations.".format(self.tunable.cardinality)
             )
 
         num_tried = len(self._trials_set)
         if num_tried == self.tunable.cardinality:
             raise StopTuning(
-                'All of the possible combinations where recorded. Use ``allow_duplicates=True``'
-                'to keep generating combinations.'
+                "All of the possible combinations where recorded. Use ``allow_duplicates=True``"
+                "to keep generating combinations."
             )
 
         if num_tried + num_proposals > self.tunable.cardinality:
             raise StopTuning(
-                'The maximum amount of new proposed combinations will exceed the amount of'
-                'possible combinations, either use ``num_proposals={}`` to generate the remaining'
-                'combinations or ``allow_duplicates=True`` to keep generating more'
-                'combinations.'.format(self.tunable.cardinality - num_tried)
+                "The maximum amount of new proposed combinations will exceed the amount of"
+                "possible combinations, either use ``num_proposals={}`` to generate the remaining"
+                "combinations or ``allow_duplicates=True`` to keep generating more"
+                "combinations.".format(self.tunable.cardinality - num_tried)
             )
 
     def _sample(self, num_proposals, allow_duplicates):
@@ -200,7 +202,7 @@ class BaseTuner:
         proposed = self._propose(n, allow_duplicates)
 
         hyperparameters = self.tunable.inverse_transform(proposed)
-        hyperparameters = hyperparameters.to_dict(orient='records')
+        hyperparameters = hyperparameters.to_dict(orient="records")
 
         if n == 1:
             hyperparameters = hyperparameters[0]
@@ -250,7 +252,9 @@ class BaseTuner:
         scores = scores if isinstance(scores, (list, np.ndarray)) else [scores]
 
         if len(trials) != len(scores):
-            raise ValueError('The amount of trials must be equal to the amount of scores.')
+            raise ValueError(
+                "The amount of trials must be equal to the amount of scores."
+            )
 
         self.trials = np.append(self.trials, trials, axis=0)
         self._trials_set.update(map(tuple, trials))
@@ -259,15 +263,12 @@ class BaseTuner:
 
     def __str__(self):
         return (
-            "{}\n"
-            "  hyperparameters: {}\n"
-            "  dimensions: {}\n"
-            "  cardinality: {}"
+            "{}\n" "  hyperparameters: {}\n" "  dimensions: {}\n" "  cardinality: {}"
         ).format(
             self.__class__.__name__,
             len(self.tunable.hyperparams),
             self.tunable.dimensions,
-            self.tunable.cardinality
+            self.tunable.cardinality,
         )
 
 
@@ -314,8 +315,10 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
 
     def _propose(self, num_proposals, allow_duplicates):
         if self.min_trials > len(self._trials_set):
-            LOGGER.debug('Not enough samples recorded to generate predictions, '
-                         'generating random proposal.')
+            LOGGER.debug(
+                "Not enough samples recorded to generate predictions, "
+                "generating random proposal."
+            )
             return self._sample(num_proposals, allow_duplicates)
 
         num_samples = num_proposals * self.num_candidates
@@ -372,5 +375,5 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
         """
         super().record(trials, scores)
         if len(self.trials) >= self.min_trials:
-            LOGGER.debug('Fitting the model with %s samples.' % len(self.trials))
+            LOGGER.debug("Fitting the model with %s samples." % len(self.trials))
             self._fit(self.trials, self.scores)

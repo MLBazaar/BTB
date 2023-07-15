@@ -9,7 +9,7 @@ from baytune.selection.ucb1 import UCB1
 # will be used.
 K_MIN = 2
 
-logger = logging.getLogger('btb')
+logger = logging.getLogger("btb")
 
 
 class BestKReward(UCB1):
@@ -31,7 +31,7 @@ class BestKReward(UCB1):
         """Retain the K best scores, and replace the rest with nans"""
         if len(scores) > self.k:
             scores = np.copy(scores)
-            inds = np.argsort(scores)[:-self.k]
+            inds = np.argsort(scores)[: -self.k]
             scores[inds] = np.nan
 
         return list(scores)
@@ -46,13 +46,17 @@ class BestKReward(UCB1):
         min_num_scores = min(len(s) for s in choice_scores.values())
         if min_num_scores >= K_MIN:
             logger.info(
-                '{klass}: using Best K bandit selection'
-                .format(klass=type(self).__name__))
+                "{klass}: using Best K bandit selection".format(
+                    klass=type(self).__name__
+                )
+            )
             compute_rewards = self.compute_rewards
         else:
             logger.warning(
-                '{klass}: Not enough choices to do K-selection; using plain UCB1'
-                .format(klass=type(self).__name__))
+                "{klass}: Not enough choices to do K-selection; using plain UCB1".format(
+                    klass=type(self).__name__
+                )
+            )
             compute_rewards = super(BestKReward, self).compute_rewards
 
         # convert the raw scores list for each choice to a "rewards" list
@@ -75,7 +79,7 @@ class BestKVelocity(BestKReward):
         """
         k = self.k
         m = max(len(scores) - k, 0)
-        best_scores = sorted(scores)[-k - 1:]
+        best_scores = sorted(scores)[-k - 1 :]
         velocities = np.diff(best_scores)
         nans = np.full(m, np.nan)
         return list(velocities) + list(nans)

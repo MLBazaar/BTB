@@ -6,7 +6,6 @@ from baytune.tuning.tuners.base import BaseTuner
 
 
 class UniformTuner(BaseTuner):
-
     def _propose(self, num_proposals, allow_duplicates):
         """Generate ``num_proposals`` number of candidates.
 

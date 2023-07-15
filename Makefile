@@ -9,10 +9,10 @@ clean:
 
 .PHONY: lint
 lint:
-	black  btb/ tests/ --check --config=./pyproject.toml
-	ruff  btb/ tests/ --config=./pyproject.toml
+	black  baytune/ tests/ --check --config=./pyproject.toml
+	ruff  baytune/ tests/ --config=./pyproject.toml
 
 .PHONY: lint-fix
 lint-fix:
-	black  btb/ tests/ --config=./pyproject.toml
-	ruff  btb/ tests/ --fix --config=./pyproject.toml
+	black  baytune/ tests/ --config=./pyproject.toml
+	ruff  baytune/ tests/ --fix --config=./pyproject.toml

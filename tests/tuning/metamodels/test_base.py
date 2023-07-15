@@ -15,40 +15,40 @@ class TestBaseMetaModel(TestCase):
         # setup
         instance = MagicMock()
         instance._MODEL_KWARGS_DEFAULT = None
-        instance._MODEL_CLASS.return_value = 'model_instance'
+        instance._MODEL_CLASS.return_value = "model_instance"
 
         # run
         BaseMetaModel._init_model(instance)
 
         # assert
-        assert instance._model_instance == 'model_instance'
+        assert instance._model_instance == "model_instance"
         instance._MODEL_CLASS.assert_called_once_with()
 
     def test__init_model__MODEL_KWARGS_DEFAULT(self):
         # setup
         instance = MagicMock()
-        instance._MODEL_KWARGS_DEFAULT = {'a': 1}
-        instance._MODEL_CLASS.return_value = 'model_instance'
+        instance._MODEL_KWARGS_DEFAULT = {"a": 1}
+        instance._MODEL_CLASS.return_value = "model_instance"
 
         # run
         BaseMetaModel._init_model(instance)
 
         # assert
-        assert instance._model_instance == 'model_instance'
+        assert instance._model_instance == "model_instance"
         instance._MODEL_CLASS.assert_called_once_with(a=1)
 
     def test__init_model__self_model_kwargs(self):
         # setup
         instance = MagicMock()
-        instance._model_kwargs = {'b': 2}
-        instance._MODEL_KWARGS_DEFAULT = {'a': 1}
-        instance._MODEL_CLASS.return_value = 'model_instance'
+        instance._model_kwargs = {"b": 2}
+        instance._MODEL_KWARGS_DEFAULT = {"a": 1}
+        instance._MODEL_CLASS.return_value = "model_instance"
 
         # run
         BaseMetaModel._init_model(instance)
 
         # assert
-        assert instance._model_instance == 'model_instance'
+        assert instance._model_instance == "model_instance"
         instance._MODEL_CLASS.assert_called_once_with(a=1, b=2)
 
     def test__fit(self):
@@ -56,11 +56,11 @@ class TestBaseMetaModel(TestCase):
         instance = MagicMock()
 
         # run
-        BaseMetaModel._fit(instance, 'trials', 'scores')
+        BaseMetaModel._fit(instance, "trials", "scores")
 
         # assert
         instance._init_model.called_once_with()
-        instance._model_instance.fit.called_once_with('trials', 'scores')
+        instance._model_instance.fit.called_once_with("trials", "scores")
 
     def test__predict(self):
         # setup
@@ -68,8 +68,8 @@ class TestBaseMetaModel(TestCase):
         instance._model_instance.predict.return_value = [1]
 
         # run
-        result = BaseMetaModel._predict(instance, 'trials')
+        result = BaseMetaModel._predict(instance, "trials")
 
         # assert
         np.testing.assert_array_equal(result, np.array([1]))
-        instance._model_instance.predict.assert_called_once_with('trials')
+        instance._model_instance.predict.assert_called_once_with("trials")

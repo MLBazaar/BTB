@@ -27,6 +27,7 @@ class Tunable:
         hyperparams (dict):
             Dictionary object that contains the name and the hyperparameter asociated to it.
     """
+
     hyperparams = None
     names = None
     dimensions = 0
@@ -151,9 +152,9 @@ class Tunable:
 
             for name in self.names:
                 hyperparam = self.hyperparams[name]
-                item = value[:hyperparam.dimensions]
+                item = value[: hyperparam.dimensions]
                 transformed.append(hyperparam.inverse_transform(item))
-                value = value[hyperparam.dimensions:]
+                value = value[hyperparam.dimensions :]
 
             transformed = np.array(transformed, dtype=object)
             inverse_transform.append(np.concatenate(transformed, axis=1))
@@ -203,8 +204,7 @@ class Tunable:
     def get_defaults(self):
         """Return the default combination for the hyperparameters."""
         return {
-            name: hyperparam.default
-            for name, hyperparam in self.hyperparams.items()
+            name: hyperparam.default for name, hyperparam in self.hyperparams.items()
         }
 
     @classmethod
@@ -239,36 +239,40 @@ class Tunable:
         """
 
         if not isinstance(dict_hyperparams, dict):
-            raise TypeError('Hyperparams must be a dictionary.')
+            raise TypeError("Hyperparams must be a dictionary.")
 
         hyperparams = {}
 
         for name, hyperparam in dict_hyperparams.items():
-            hp_type = hyperparam['type']
-            hp_default = hyperparam.get('default')
+            hp_type = hyperparam["type"]
+            hp_default = hyperparam.get("default")
 
-            if hp_type == 'int':
-                hp_range = hyperparam.get('range') or hyperparam.get('values')
+            if hp_type == "int":
+                hp_range = hyperparam.get("range") or hyperparam.get("values")
                 hp_min = min(hp_range) if hp_range else None
                 hp_max = max(hp_range) if hp_range else None
                 hp_instance = IntHyperParam(min=hp_min, max=hp_max, default=hp_default)
 
-            elif hp_type == 'float':
-                hp_range = hyperparam.get('range') or hyperparam.get('values')
+            elif hp_type == "float":
+                hp_range = hyperparam.get("range") or hyperparam.get("values")
                 hp_min = min(hp_range)
                 hp_max = max(hp_range)
-                hp_instance = FloatHyperParam(min=hp_min, max=hp_max, default=hp_default)
+                hp_instance = FloatHyperParam(
+                    min=hp_min, max=hp_max, default=hp_default
+                )
 
-            elif hp_type == 'bool':
+            elif hp_type == "bool":
                 hp_instance = BooleanHyperParam(default=hp_default)
 
-            elif hp_type == 'str':
-                hp_choices = hyperparam.get('range') or hyperparam.get('values')
-                hp_instance = CategoricalHyperParam(choices=hp_choices, default=hp_default)
+            elif hp_type == "str":
+                hp_choices = hyperparam.get("range") or hyperparam.get("values")
+                hp_instance = CategoricalHyperParam(
+                    choices=hp_choices, default=hp_default
+                )
 
             hyperparams[name] = hp_instance
 
         return cls(hyperparams)
 
     def __repr__(self):
-        return 'Tunable({})'.format(self.hyperparams)
+        return "Tunable({})".format(self.hyperparams)

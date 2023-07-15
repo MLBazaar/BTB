@@ -6,7 +6,12 @@ from baytune.selection.ucb1 import UCB1
 from baytune.selection.uniform import Uniform
 
 __all__ = (
-    'BestKReward', 'BestKVelocity', 'HierarchicalByAlgorithm',
-    'PureBestKVelocity', 'RecentKReward', 'RecentKVelocity',
-    'UCB1', 'Uniform',
+    "BestKReward",
+    "BestKVelocity",
+    "HierarchicalByAlgorithm",
+    "PureBestKVelocity",
+    "RecentKReward",
+    "RecentKVelocity",
+    "UCB1",
+    "Uniform",
 )

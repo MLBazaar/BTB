@@ -7,7 +7,7 @@ from baytune.selection.ucb1 import UCB1
 # selection will be used.
 K_MIN = 2
 
-logger = logging.getLogger('btb')
+logger = logging.getLogger("btb")
 
 
 class RecentKReward(UCB1):
@@ -25,7 +25,7 @@ class RecentKReward(UCB1):
         """Retain the K most recent scores, and replace the rest with zeros"""
         for i in range(len(scores)):
             if i >= self.k:
-                scores[i] = 0.
+                scores[i] = 0.0
         return scores
 
     def select(self, choice_scores):
@@ -33,12 +33,18 @@ class RecentKReward(UCB1):
         # if we don't have enough scores to do K-selection, fall back to UCB1
         min_num_scores = min([len(s) for s in choice_scores.values()])
         if min_num_scores >= K_MIN:
-            logger.info('{klass}: using Best K bandit selection'.format(klass=type(self).__name__))
+            logger.info(
+                "{klass}: using Best K bandit selection".format(
+                    klass=type(self).__name__
+                )
+            )
             reward_func = self.compute_rewards
         else:
             logger.warning(
-                '{klass}: Not enough choices to do K-selection; using plain UCB1'
-                .format(klass=type(self).__name__))
+                "{klass}: Not enough choices to do K-selection; using plain UCB1".format(
+                    klass=type(self).__name__
+                )
+            )
             reward_func = super(RecentKReward, self).compute_rewards
 
         choice_rewards = {}
@@ -60,9 +66,11 @@ class RecentKVelocity(RecentKReward):
         padded out with zeros so that the count remains the same.
         """
         # take the k + 1 most recent scores so we can get k velocities
-        recent_scores = scores[:-self.k - 2:-1]
-        velocities = [recent_scores[i] - recent_scores[i + 1] for i in
-                      range(len(recent_scores) - 1)]
+        recent_scores = scores[: -self.k - 2 : -1]
+        velocities = [
+            recent_scores[i] - recent_scores[i + 1]
+            for i in range(len(recent_scores) - 1)
+        ]
         # pad the list out with zeros, so the length of the list is
         # maintained
         zeros = (len(scores) - self.k) * [0]

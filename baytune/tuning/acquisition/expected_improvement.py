@@ -9,7 +9,6 @@ from baytune.tuning.acquisition.base import BaseAcquisition
 
 
 class ExpectedImprovementAcquisition(BaseAcquisition):
-
     def _acquire(self, candidates, num_candidates=1):
         Phi = norm.cdf
         N = norm.pdf

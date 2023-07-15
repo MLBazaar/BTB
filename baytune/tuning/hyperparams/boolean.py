@@ -29,10 +29,12 @@ class BooleanHyperParam(BaseHyperParam):
         self.default = default
 
     def _within_hyperparam_space(self, values):
-        if values.dtype is not np.dtype('bool'):
+        if values.dtype is not np.dtype("bool"):
             # values is expected to be np.ndarray(n, 1) [[False], [True]]
             if not all(isinstance(value[0], bool) for value in values):
-                raise ValueError('Values: {} not within hyperparameter space.'.format(values))
+                raise ValueError(
+                    "Values: {} not within hyperparameter space.".format(values)
+                )
 
     def _inverse_transform(self, values):
         """Invert one or more search space values.
@@ -118,4 +120,4 @@ class BooleanHyperParam(BaseHyperParam):
         return np.round(sampled).astype(int)
 
     def __repr__(self):
-        return 'BooleanHyperParam(default={})'.format(self.default)
+        return "BooleanHyperParam(default={})".format(self.default)

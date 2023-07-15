@@ -19,6 +19,7 @@ class BaseHyperParam(metaclass=ABCMeta):
         cardinality (int or np.inf):
             Number of possible values for this hyperparameter.
     """
+
     dimensions = 0
     cardinality = 0
     default = None
@@ -63,31 +64,35 @@ class BaseHyperParam(metaclass=ABCMeta):
             if self.dimensions == 1:
                 return np.array([[values]])
             else:
-                raise ValueError('Only lists or numpy.ndarrays are supported for dimensions > 1')
+                raise ValueError(
+                    "Only lists or numpy.ndarrays are supported for dimensions > 1"
+                )
 
         if isinstance(values, list):
             if not all(np.isscalar(value) for value in values):
                 if not all(isinstance(value, list) for value in values):
-                    raise ValueError('Only list of lists are supported')
+                    raise ValueError("Only list of lists are supported")
                 elif not all(len(value) == self.dimensions for value in values):
-                    raise ValueError('All sublists must have len == dimensions')
+                    raise ValueError("All sublists must have len == dimensions")
 
             values = np.array(values)
 
         if len(values.shape) > 2:
-            raise ValueError('Invalid shape: Too many dimensions')
+            raise ValueError("Invalid shape: Too many dimensions")
 
         if self.dimensions == 1:
             if len(values.shape) == 1:
                 values = values.reshape(-1, 1)
             elif values.shape[1] != 1:
-                raise ValueError('Invalid shape: Only 1 column is supported if dimensions == 1')
+                raise ValueError(
+                    "Invalid shape: Only 1 column is supported if dimensions == 1"
+                )
 
         elif len(values.shape) == 1:
             if len(values) != self.dimensions:
-                raise ValueError('Number of elements != number of dimensions')
+                raise ValueError("Number of elements != number of dimensions")
             elif not all(np.isscalar(value) for value in values):
-                raise ValueError('Numpy arrays must only contain scalars')
+                raise ValueError("Numpy arrays must only contain scalars")
 
             values = values.reshape(1, -1)
 
@@ -108,7 +113,9 @@ class BaseHyperParam(metaclass=ABCMeta):
         if inside_mask.any():
             outside = inside_mask[~inside_mask.mask].data.reshape(-1).tolist()
             raise ValueError(
-                'Values found outside of the valid range [{}, {}]: {}'.format(min, max, outside)
+                "Values found outside of the valid range [{}, {}]: {}".format(
+                    min, max, outside
+                )
             )
 
     def _within_hyperparam_space(self, values):
@@ -246,13 +253,13 @@ class BaseHyperParam(metaclass=ABCMeta):
 
         dimensions = len(values.shape)
         if dimensions > 2:
-            raise ValueError('Too many dimensions.')
+            raise ValueError("Too many dimensions.")
 
         elif dimensions < 2:
             values = values.reshape(-1, 1)
 
         if values.shape[1] > 1:
-            raise ValueError('Only one column is supported.')
+            raise ValueError("Only one column is supported.")
 
         self._within_hyperparam_space(values)
 

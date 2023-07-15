@@ -67,6 +67,7 @@ class BTBSession:
         verbose (bool):
             If ``True`` a progress bar will be displayed for the ``run`` process.
     """
+
     _tunables = None
     _scorer = None
     _tuner_class = None
@@ -89,9 +90,16 @@ class BTBSession:
         if score is not None:
             return score if self._maximize else -score
 
-    def __init__(self, tunables, scorer, tuner_class=GPTuner, selector_class=UCB1,
-                 maximize=True, max_errors=1, verbose=False):
-
+    def __init__(
+        self,
+        tunables,
+        scorer,
+        tuner_class=GPTuner,
+        selector_class=UCB1,
+        maximize=True,
+        max_errors=1,
+        verbose=False,
+    ):
         self._tunables = tunables
         self._scorer = scorer
         self._tuner_class = tuner_class
@@ -125,7 +133,7 @@ class BTBSession:
                 value = value.tolist()
             elif isinstance(value, np.bool_):
                 value = bool(value)
-            elif value == 'None':
+            elif value == "None":
                 value = None
 
             dumpable[key] = value
@@ -135,8 +143,8 @@ class BTBSession:
     def _make_id(self, name, config):
         dumpable_config = self._make_dumpable(config)
         proposal = {
-            'name': name,
-            'config': dumpable_config,
+            "name": name,
+            "config": dumpable_config,
         }
         hashable = json.dumps(proposal, sort_keys=True).encode()
 
@@ -198,25 +206,29 @@ class BTBSession:
                 If the ``BTBSession`` has run out of proposals to generate.
         """
         if not self._tunables:
-            raise StopTuning('There are no tunables left to try.')
+            raise StopTuning("There are no tunables left to try.")
 
         if len(self._tuners) < len(self._tunable_names):
             tunable_name = self._tunable_names[len(self._tuners)]
             tunable = self._tunables[tunable_name]
 
             if isinstance(tunable, dict):
-                LOGGER.info('Creating Tunable instance from dict.')
+                LOGGER.info("Creating Tunable instance from dict.")
                 tunable = Tunable.from_dict(tunable)
 
             if not isinstance(tunable, Tunable):
-                raise TypeError('Tunable can only be an instance of btb.tuning.Tunable or dict')
+                raise TypeError(
+                    "Tunable can only be an instance of btb.tuning.Tunable or dict"
+                )
 
-            LOGGER.info('Obtaining default configuration for %s', tunable_name)
+            LOGGER.info("Obtaining default configuration for %s", tunable_name)
             config = tunable.get_defaults()
 
             if tunable.cardinality == 1:
-                LOGGER.warn('Skipping tuner creation for Tunable %s with cardinality 1',
-                            tunable_name)
+                LOGGER.warn(
+                    "Skipping tuner creation for Tunable %s with cardinality 1",
+                    tunable_name,
+                )
                 tuner = None
             else:
                 tuner = self._tuner_class(tunable)
@@ -229,21 +241,25 @@ class BTBSession:
 
             try:
                 if tuner is None:
-                    raise StopTuning('Tunable %s has no tunable hyperparameters', tunable_name)
+                    raise StopTuning(
+                        "Tunable %s has no tunable hyperparameters", tunable_name
+                    )
 
-                LOGGER.info('Generating new proposal configuration for %s', tunable_name)
+                LOGGER.info(
+                    "Generating new proposal configuration for %s", tunable_name
+                )
                 config = tuner.propose(1)
 
             except StopTuning:
-                LOGGER.info('%s has no more configs to propose.', tunable_name)
+                LOGGER.info("%s has no more configs to propose.", tunable_name)
                 self._remove_tunable(tunable_name)
                 tunable_name, config = self.propose()
 
         proposal_id = self._make_id(tunable_name, config)
         self.proposals[proposal_id] = {
-            'id': proposal_id,
-            'name': tunable_name,
-            'config': config
+            "id": proposal_id,
+            "name": tunable_name,
+            "config": config,
         }
 
         return tunable_name, config
@@ -262,7 +278,9 @@ class BTBSession:
         errors = self.errors[tunable_name]
 
         if errors >= self._max_errors:
-            LOGGER.warning('Too many errors: %s. Removing tunable %s', errors, tunable_name)
+            LOGGER.warning(
+                "Too many errors: %s. Removing tunable %s", errors, tunable_name
+            )
             self._remove_tunable(tunable_name)
 
     def record(self, tunable_name, config, score):
@@ -281,7 +299,7 @@ class BTBSession:
         """
         proposal_id = self._make_id(tunable_name, config)
         proposal = self.proposals[proposal_id]
-        proposal['score'] = score
+        proposal["score"] = score
 
         if score is None:
             self.handle_error(tunable_name)
@@ -290,20 +308,25 @@ class BTBSession:
             self._normalized_scores[tunable_name].append(normalized)
 
             if normalized > self._best_normalized:
-                LOGGER.info('New optimal found: %s - %s', tunable_name, score)
+                LOGGER.info("New optimal found: %s - %s", tunable_name, score)
                 self.best_proposal = proposal
                 self.best_score = score
                 self._best_normalized = normalized
             try:
                 tuner = self._tuners[tunable_name]
                 if tuner is None:
-                    LOGGER.warn('Skipping record for Tunable %s with cardinality 1', tunable_name)
+                    LOGGER.warn(
+                        "Skipping record for Tunable %s with cardinality 1",
+                        tunable_name,
+                    )
                 else:
                     tuner.record(config, normalized)
 
             except Exception:
-                LOGGER.exception('Could not record configuration and score for tuner %s.',
-                                 tunable_name)
+                LOGGER.exception(
+                    "Could not record configuration and score for tuner %s.",
+                    tunable_name,
+                )
 
     def run(self, iterations=None):
         """Run the selection and tuning loop for the given number of iterations.
@@ -332,16 +355,21 @@ class BTBSession:
             tunable_name, config = self.propose()
 
             try:
-                LOGGER.debug('Scoring proposal %s - %s: %s', self.iterations, tunable_name, config)
+                LOGGER.debug(
+                    "Scoring proposal %s - %s: %s",
+                    self.iterations,
+                    tunable_name,
+                    config,
+                )
                 score = self._scorer(tunable_name, config)
 
             except Exception:
-                params = '\n'.join('{}: {}'.format(k, v) for k, v in config.items())
+                params = "\n".join("{}: {}".format(k, v) for k, v in config.items())
                 LOGGER.exception(
-                    'Proposal %s - %s crashed with the following configuration: %s',
+                    "Proposal %s - %s crashed with the following configuration: %s",
                     self.iterations,
                     tunable_name,
-                    params
+                    params,
                 )
 
                 score = None

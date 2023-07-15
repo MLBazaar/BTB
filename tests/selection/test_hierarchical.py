@@ -12,11 +12,10 @@ class TestHierarchicalByAlgorithm(TestCase):
     #     * Why not re-use choices instead of creating an extra argument?
 
     def test___init__(self):
-
         # Run
         by_algorithm = {
-            'DT': frozenset(('DT', 'RF', 'ET')),
-            'SVM': frozenset(('LSVC', 'NuSVC')),
+            "DT": frozenset(("DT", "RF", "ET")),
+            "SVM": frozenset(("LSVC", "NuSVC")),
         }
         selector = HierarchicalByAlgorithm(choices=None, by_algorithm=by_algorithm)
 
@@ -35,7 +34,7 @@ class TestHierarchicalByAlgorithm(TestCase):
     # TODO:
     #     * "if not condition: continue" should rather be "if condition: do something"
 
-    @patch('btb.selection.hierarchical.HierarchicalByAlgorithm.bandit')
+    @patch("btb.selection.hierarchical.HierarchicalByAlgorithm.bandit")
     def test_select(self, bandit_mock):
         """If min length is lt k_min, super().compute_rewards is used.
 
@@ -44,28 +43,28 @@ class TestHierarchicalByAlgorithm(TestCase):
 
         # Set-up
         by_algorithm = {
-            'DT': ('DT', 'RF', 'ET'),    # We use tuples here to
-            'SVM': ('LSVC', 'NuSVC'),    # preserve the order.
-            'KNN': ('KNN', ),
+            "DT": ("DT", "RF", "ET"),  # We use tuples here to
+            "SVM": ("LSVC", "NuSVC"),  # preserve the order.
+            "KNN": ("KNN",),
         }
         selector = HierarchicalByAlgorithm(choices=None, by_algorithm=by_algorithm)
 
-        bandit_mock.return_value = 'SVM'
+        bandit_mock.return_value = "SVM"
 
         # Run
         choice_scores = {
-            'DT': [0.7, 0.8, 0.9],
-            'RF': [0.94],
-            'LSVC': [0.88, 0.95, 0.93],
-            'NuSVC': [0.89, 0.91, 0.92],
+            "DT": [0.7, 0.8, 0.9],
+            "RF": [0.94],
+            "LSVC": [0.88, 0.95, 0.93],
+            "NuSVC": [0.89, 0.91, 0.92],
         }
         best = selector.select(choice_scores)
 
         # Assert
-        assert best == 'LSVC'
+        assert best == "LSVC"
 
         alg_scores = {
-            'DT': [0.7, 0.8, 0.9, 0.94],
-            'SVM': [0.88, 0.95, 0.93, 0.89, 0.91, 0.92]
+            "DT": [0.7, 0.8, 0.9, 0.94],
+            "SVM": [0.88, 0.95, 0.93, 0.89, 0.91, 0.92],
         }
         bandit_mock.assert_called_once_with(alg_scores)

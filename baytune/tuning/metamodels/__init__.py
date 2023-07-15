@@ -4,4 +4,4 @@
 
 from baytune.tuning.metamodels.gaussian_process import GaussianProcessMetaModel
 
-__all__ = ('GaussianProcessMetaModel', )
+__all__ = ("GaussianProcessMetaModel",)

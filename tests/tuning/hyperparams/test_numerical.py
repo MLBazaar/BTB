@@ -10,7 +10,6 @@ from baytune.tuning.hyperparams.numerical import FloatHyperParam, IntHyperParam
 
 
 class TestFloatHyperParam(TestCase):
-
     def test___init__no_min_no_max(self):
         """Test instantiation with ``min=None`` and ``max=None``"""
         # run
@@ -87,7 +86,7 @@ class TestFloatHyperParam(TestCase):
         self.assertEqual(instance.max, _max)
         self.assertEqual(instance.default, 1.0)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with no limit set on them.
@@ -103,12 +102,11 @@ class TestFloatHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.0009],
-                                    [0.1008]])
+        expected_result = np.array([[0.0009], [0.1008]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a min value set in.
@@ -124,12 +122,11 @@ class TestFloatHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.7],
-                                    [0.4]])
+        expected_result = np.array([[0.7], [0.4]])
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max value set in.
@@ -145,12 +142,11 @@ class TestFloatHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.1],
-                                    [0.9]])
+        expected_result = np.array([[0.1], [0.9]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max and min value set in.
@@ -165,12 +161,11 @@ class TestFloatHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.01],
-                                    [0.09]])
+        expected_result = np.array([[0.01], [0.09]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with no min or max set.
@@ -186,12 +181,11 @@ class TestFloatHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[100.],
-                                    [200.]])
+        expected_result = np.array([[100.0], [200.0]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with min value set up.
@@ -201,18 +195,17 @@ class TestFloatHyperParam(TestCase):
         _min = 1.0
 
         instance = FloatHyperParam(min=_min)
-        values = np.array([[0.1], [0.]])
+        values = np.array([[0.1], [0.0]])
 
         # run
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[1.9],
-                                    [1.0]])
+        expected_result = np.array([[1.9], [1.0]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a max value set up.
@@ -228,12 +221,11 @@ class TestFloatHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[0.1],
-                                    [0.9]])
+        expected_result = np.array([[0.1], [0.9]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a min and max value set up.
@@ -249,12 +241,11 @@ class TestFloatHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[1.],
-                                    [9.]])
+        expected_result = np.array([[1.0], [9.0]])
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.np.random.random')
+    @patch("btb.tuning.hyperparams.numerical.np.random.random")
     def test_sample(self, mock_np_random):
         """Test that the method ``sample`` is being called with `n_samples and
         `self.dimensions`.
@@ -275,7 +266,6 @@ class TestFloatHyperParam(TestCase):
 
 
 class TestIntHyperParam(TestCase):
-
     def test___init__no_min_no_max(self):
         """Test instantiation with ``min=None`` and ``max=None``"""
         # run
@@ -403,7 +393,7 @@ class TestIntHyperParam(TestCase):
         with self.assertRaises(ValueError):
             IntHyperParam(min=_min, max=_max, step=_step)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with no limit set on them.
@@ -417,12 +407,11 @@ class TestIntHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.50899101],
-                                    [0.5999001]])
+        expected_result = np.array([[0.50899101], [0.5999001]])
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a min value set in.
@@ -437,12 +426,11 @@ class TestIntHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.009],
-                                    [0.001]])
+        expected_result = np.array([[0.009], [0.001]])
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max value set in.
@@ -457,12 +445,11 @@ class TestIntHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.981409],
-                                    [0.99706458]])
+        expected_result = np.array([[0.981409], [0.99706458]])
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__transform_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max and min value set in.
@@ -478,12 +465,11 @@ class TestIntHyperParam(TestCase):
         result = instance._transform(values)
 
         # assert
-        expected_result = np.array([[0.86363636],
-                                    [0.13636364]])
+        expected_result = np.array([[0.86363636], [0.13636364]])
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with no min or max set.
@@ -497,12 +483,11 @@ class TestIntHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[-500],
-                                    [-400]])
+        expected_result = np.array([[-500], [-400]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with min value set up.
@@ -511,18 +496,17 @@ class TestIntHyperParam(TestCase):
         mock_sys.maxsize = 1000
         _min = 1
         instance = IntHyperParam(min=_min)
-        values = np.array([[0.1], [0.]])
+        values = np.array([[0.1], [0.0]])
 
         # run
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[50],
-                                    [1]])
+        expected_result = np.array([[50], [1]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a max value set up.
@@ -537,12 +521,11 @@ class TestIntHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[-400],
-                                    [400]])
+        expected_result = np.array([[-400], [400]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch('btb.tuning.hyperparams.numerical.sys')
+    @patch("btb.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a min and max value set up.
@@ -557,14 +540,13 @@ class TestIntHyperParam(TestCase):
         result = instance._inverse_transform(values)
 
         # assert
-        expected_result = np.array([[1],
-                                    [9]])
+        expected_result = np.array([[1], [9]])
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch('btb.tuning.hyperparams.numerical.np.random.random')
-    @patch('btb.tuning.hyperparams.numerical.IntHyperParam._transform')
-    @patch('btb.tuning.hyperparams.numerical.IntHyperParam._inverse_transform')
+    @patch("btb.tuning.hyperparams.numerical.np.random.random")
+    @patch("btb.tuning.hyperparams.numerical.IntHyperParam._transform")
+    @patch("btb.tuning.hyperparams.numerical.IntHyperParam._inverse_transform")
     def test_sample(self, mock__inverse_transform, mock__transform, mock_np_random):
         """Test that the method ``sample`` returns random generated numbers and process them thro
         the internal methods to convert them in the range of our search space."""

@@ -24,17 +24,16 @@ class GaussianProcessMetaModel(BaseMetaModel):
             Class to be instantiated and used for the ``self._model`` instantiation. In
             this case ``sklearn.gaussian_process.GaussainProcessRegressor``
     """
+
     _MODEL_CLASS = GaussianProcessRegressor
 
-    _MODEL_KWARGS_DEFAULT = {
-        'normalize_y': True
-    }
+    _MODEL_KWARGS_DEFAULT = {"normalize_y": True}
 
     def __init_metamodel__(self, length_scale=1):
         if self._model_kwargs is None:
             self._model_kwargs = {}
 
-        self._model_kwargs['kernel'] = RBF(length_scale=length_scale)
+        self._model_kwargs["kernel"] = RBF(length_scale=length_scale)
 
     def _predict(self, candidates):
         predictions = self._model_instance.predict(candidates, return_std=True)
@@ -66,11 +65,14 @@ class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
             Class to be instantiated and used for the ``self._model`` instantiation. In
             this case ``sklearn.gaussian_process.GaussainProcessRegressor``
     """
+
     def _transform(self, trials):
         transformed = []
         for column, distribution in zip(trials.T, self._distributions):
             transformed.append(
-                scipy.stats.norm.ppf(distribution.cdf(column).clip(0 + EPSILON, 1 - EPSILON))
+                scipy.stats.norm.ppf(
+                    distribution.cdf(column).clip(0 + EPSILON, 1 - EPSILON)
+                )
             )
 
         return numpy.column_stack(transformed)

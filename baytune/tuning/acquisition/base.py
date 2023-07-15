@@ -6,7 +6,6 @@ import numpy as np
 
 
 class BaseAcquisition(metaclass=ABCMeta):
-
     def __init_acquisition__(self, **kwargs):
         pass
 

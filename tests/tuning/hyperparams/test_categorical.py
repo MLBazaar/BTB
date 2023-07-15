@@ -16,17 +16,16 @@ def assert_called_with_np_array(mock_calls, real_calls):
 
 
 class TestCategoricalHyperParam(TestCase):
-
     @classmethod
     def setUpClass(cls):
-        cls.instance = CategoricalHyperParam(choices=['Cat', 'Dog', 'Horse', 'Tiger'])
+        cls.instance = CategoricalHyperParam(choices=["Cat", "Dog", "Horse", "Tiger"])
 
-    @patch('btb.tuning.hyperparams.categorical.OneHotEncoder')
+    @patch("btb.tuning.hyperparams.categorical.OneHotEncoder")
     def test___init__(self, mock_one_hot_encoder):
         """Test that during instantiation we create a OneHotEncoder and we fit it with the given
         choices."""
         # setup
-        choices = ['cat', 'dog', 'parrot']
+        choices = ["cat", "dog", "parrot"]
         encoder_instance = MagicMock()
         mock_one_hot_encoder.return_value = encoder_instance
 
@@ -35,7 +34,7 @@ class TestCategoricalHyperParam(TestCase):
 
         # assert
         self.assertEqual(instance.choices, choices)
-        self.assertEqual(instance.default, 'cat')
+        self.assertEqual(instance.default, "cat")
 
         # TODO: Fix / reimplmement assert_called_with_np
         # expected_encoder_calls = [
@@ -47,14 +46,16 @@ class TestCategoricalHyperParam(TestCase):
         #     expected_encoder_calls
         # )
         expected_encoder_fit_call = [call(np.array(choices).reshape(-1, 1))]
-        assert_called_with_np_array(encoder_instance.fit.call_args_list, expected_encoder_fit_call)
+        assert_called_with_np_array(
+            encoder_instance.fit.call_args_list, expected_encoder_fit_call
+        )
 
     def test__within_hyperparam_space_values_in_space(self):
         """Test that when we call ``_within_hyperparam_space`` with values in the hyperparameter
         search space does not raise an exception."""
         # setup
-        values = ['Cat']
-        values_2 = ['Dog', 'Horse']
+        values = ["Cat"]
+        values_2 = ["Dog", "Horse"]
 
         # run
         self.instance._within_hyperparam_space(values)
@@ -64,8 +65,8 @@ class TestCategoricalHyperParam(TestCase):
         """Test that when we call ``_within_hyperparam_space`` with values out of the
         hyperparameter search space does not raise an exception."""
         # setup
-        values = ['mat']
-        values_2 = ['pug', 'Horse']
+        values = ["mat"]
+        values_2 = ["pug", "Horse"]
 
         # run/assert
         with self.assertRaises(ValueError):
@@ -80,7 +81,7 @@ class TestCategoricalHyperParam(TestCase):
         """
 
         # setup
-        value = np.array([['Cat']])
+        value = np.array([["Cat"]])
 
         # run
         result = self.instance.transform(value)
@@ -96,7 +97,7 @@ class TestCategoricalHyperParam(TestCase):
         """
 
         # setup
-        values = np.array([['Cat'], ['Dog']])
+        values = np.array([["Cat"], ["Dog"]])
 
         # run
         results = self.instance.transform(values)
@@ -112,7 +113,7 @@ class TestCategoricalHyperParam(TestCase):
         """
         # run / assert
         with self.assertRaises(ValueError):
-            self.instance._transform(np.array([['cow']]))
+            self.instance._transform(np.array([["cow"]]))
 
     def test__inverse_transform_single_value(self):
         """Test that the method ``_inverse_transform`` performs a denormalization over the search
@@ -125,7 +126,7 @@ class TestCategoricalHyperParam(TestCase):
         result = self.instance.inverse_transform(value)
 
         # assert
-        np.testing.assert_array_equal(result, np.array([['Cat']]))
+        np.testing.assert_array_equal(result, np.array([["Cat"]]))
 
     def test__inverse_transform_multiple_values(self):
         """Test that the method ``_inverse_transform`` performs a denormalization over the search
@@ -138,16 +139,18 @@ class TestCategoricalHyperParam(TestCase):
         results = self.instance.inverse_transform(values)
 
         # assert
-        np.testing.assert_array_equal(results, np.array([['Cat'], ['Dog']]))
+        np.testing.assert_array_equal(results, np.array([["Cat"], ["Dog"]]))
 
-    @patch('btb.tuning.hyperparams.categorical.np.random.random')
+    @patch("btb.tuning.hyperparams.categorical.np.random.random")
     def test_sample(self, mock_np_random):
         """Test that sample returns values."""
         # setup
-        mock_np_random.return_value = np.array([
-            [0.5, 0.1, 0.2, 0.6],
-            [0.1, 0.9, 0.1, 0.6],
-        ])
+        mock_np_random.return_value = np.array(
+            [
+                [0.5, 0.1, 0.2, 0.6],
+                [0.1, 0.9, 0.1, 0.6],
+            ]
+        )
         n = 2
 
         # run

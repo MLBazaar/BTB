@@ -20,7 +20,9 @@ class NumericalHyperParam(BaseHyperParam):
 
     def _within_range(self, values, min=0, max=1):
         if (values < min).any() or (values > max).any():
-            raise ValueError('Value not within range [{}, {}]: {}'.format(min, max, values))
+            raise ValueError(
+                "Value not within range [{}, {}]: {}".format(min, max, values)
+            )
 
 
 class FloatHyperParam(NumericalHyperParam):
@@ -58,8 +60,9 @@ class FloatHyperParam(NumericalHyperParam):
 
     cardinality = np.inf
 
-    def __init__(self, min=None, max=None, default=None, include_min=True, include_max=True):
-
+    def __init__(
+        self, min=None, max=None, default=None, include_min=True, include_max=True
+    ):
         self.include_min = include_min
         self.include_max = include_max
 
@@ -70,7 +73,9 @@ class FloatHyperParam(NumericalHyperParam):
             max = sys.float_info.max
 
         if min >= max:
-            raise ValueError('The ``min`` value can not be greater or equal to ``max`` value.')
+            raise ValueError(
+                "The ``min`` value can not be greater or equal to ``max`` value."
+            )
 
         if default is None:
             self.default = float(min)
@@ -172,8 +177,10 @@ class FloatHyperParam(NumericalHyperParam):
 
     def __repr__(self):
         args = (self.min, self.max, self.default, self.include_min, self.include_max)
-        args = 'min={}, max={}, default={}, include_min={}, include_max={}'.format(*args)
-        return 'FloatHyperParam({})'.format(args)
+        args = "min={}, max={}, default={}, include_min={}, include_max={}".format(
+            *args
+        )
+        return "FloatHyperParam({})".format(args)
 
 
 class IntHyperParam(NumericalHyperParam):
@@ -214,9 +221,15 @@ class IntHyperParam(NumericalHyperParam):
 
     dimensions = 1
 
-    def __init__(self, min=None, max=None, default=None,
-                 include_min=True, include_max=True, step=1):
-
+    def __init__(
+        self,
+        min=None,
+        max=None,
+        default=None,
+        include_min=True,
+        include_max=True,
+        step=1,
+    ):
         self.include_min = include_min
         self.include_max = include_max
 
@@ -227,7 +240,9 @@ class IntHyperParam(NumericalHyperParam):
             max = sys.maxsize / 2
 
         if min >= max:
-            raise ValueError('The `min` value can not be greater or equal to `max` value.')
+            raise ValueError(
+                "The `min` value can not be greater or equal to `max` value."
+            )
 
         if default is None:
             self.default = min
@@ -241,7 +256,9 @@ class IntHyperParam(NumericalHyperParam):
 
         if (self.max - self.min) % self.step:
             raise ValueError(
-                "Invalid step of {} for values inside [{}, {}]".format(step, self.min, self.max)
+                "Invalid step of {} for values inside [{}, {}]".format(
+                    step, self.min, self.max
+                )
             )
 
         self.interval = self.step / (self.max - self.min + self.step)
@@ -346,6 +363,15 @@ class IntHyperParam(NumericalHyperParam):
         return self._transform(inverted)
 
     def __repr__(self):
-        args = (self.min, self.max, self.default, self.include_min, self.include_max, self.step)
-        args = 'min={}, max={}, default={}, include_min={}, include_max={}, step={}'.format(*args)
-        return 'IntHyperParam({})'.format(args)
+        args = (
+            self.min,
+            self.max,
+            self.default,
+            self.include_min,
+            self.include_max,
+            self.step,
+        )
+        args = "min={}, max={}, default={}, include_min={}, include_max={}, step={}".format(
+            *args
+        )
+        return "IntHyperParam({})".format(args)
