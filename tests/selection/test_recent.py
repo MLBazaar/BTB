@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from btb.selection.recent import RecentKReward, RecentKVelocity
+from baytune.selection.recent import RecentKReward, RecentKVelocity
 
 
 class TestRecentKReward(TestCase):

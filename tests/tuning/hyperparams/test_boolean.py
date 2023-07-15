@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from btb.tuning.hyperparams.boolean import BooleanHyperParam
+from baytune.tuning.hyperparams.boolean import BooleanHyperParam
 
 
 class TestBooleanHyperParam(TestCase):

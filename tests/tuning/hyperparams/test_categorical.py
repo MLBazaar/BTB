@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, call, patch
 
 import numpy as np
 
-from btb.tuning.hyperparams.categorical import CategoricalHyperParam
+from baytune.tuning.hyperparams.categorical import CategoricalHyperParam
 
 
 def assert_called_with_np_array(mock_calls, real_calls):

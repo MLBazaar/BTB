@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 
-from btb.selection.ucb1 import UCB1
+from baytune.selection.ucb1 import UCB1
 
 
 class TestUCB1(TestCase):

@@ -9,7 +9,7 @@ import pandas as pd
 from distributed.client import futures_of
 from distributed.diagnostics.progressbar import TextProgressBar
 
-from btb.tuning.tuners.base import BaseTuner
+from baytune.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
     MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
 from btb_benchmark.challenges.challenge import Challenge

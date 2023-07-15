@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, call
 
 import numpy as np
 
-from btb.tuning.acquisition.predicted_score import PredictedScoreAcquisition
+from baytune.tuning.acquisition.predicted_score import PredictedScoreAcquisition
 
 
 def assert_called_with_np_array(mock_calls, real_calls):

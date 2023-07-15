@@ -4,7 +4,7 @@ from unittest.mock import patch
 import numpy as np
 from pytest import approx
 
-from btb.selection.pure import PureBestKVelocity
+from baytune.selection.pure import PureBestKVelocity
 
 
 class TestPureBestKVelocity(TestCase):

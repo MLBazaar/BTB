@@ -2,8 +2,8 @@
 
 import numpy as np
 
-from btb.tuning.tunable import Tunable
-from btb.tuning.tuners import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner, UniformTuner
+from baytune.tuning.tunable import Tunable
+from baytune.tuning.tuners import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner, UniformTuner
 
 
 def _tuning_function(tuner_class, scoring_function, tunable_hyperparameters, iterations):

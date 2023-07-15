@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from btb.selection.selector import Selector
+from baytune.selection.selector import Selector
 
 
 class TestSelector(TestCase):

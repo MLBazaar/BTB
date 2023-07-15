@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 
-from btb.tuning.hyperparams.base import BaseHyperParam
+from baytune.tuning.hyperparams.base import BaseHyperParam
 
 
 class TestBaseHyperParam(TestCase):

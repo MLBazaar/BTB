@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 
 import numpy as np
 
-from btb.tuning.metamodels.base import BaseMetaModel
+from baytune.tuning.metamodels.base import BaseMetaModel
 
 
 class TestBaseMetaModel(TestCase):

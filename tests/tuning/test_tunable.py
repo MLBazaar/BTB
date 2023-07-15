@@ -6,10 +6,10 @@ from unittest.mock import MagicMock, call, patch
 import numpy as np
 import pandas as pd
 
-from btb.tuning.hyperparams.boolean import BooleanHyperParam
-from btb.tuning.hyperparams.categorical import CategoricalHyperParam
-from btb.tuning.hyperparams.numerical import IntHyperParam
-from btb.tuning.tunable import Tunable
+from baytune.tuning.hyperparams.boolean import BooleanHyperParam
+from baytune.tuning.hyperparams.categorical import CategoricalHyperParam
+from baytune.tuning.hyperparams.numerical import IntHyperParam
+from baytune.tuning.tunable import Tunable
 
 
 def assert_called_with_np_array(mock_calls, real_calls):

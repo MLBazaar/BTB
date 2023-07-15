@@ -4,7 +4,7 @@ from unittest import TestCase
 
 import numpy as np
 
-from btb.tuning.acquisition.expected_improvement import ExpectedImprovementAcquisition
+from baytune.tuning.acquisition.expected_improvement import ExpectedImprovementAcquisition
 
 
 class TestExpectedImprovementAcquisition(TestCase):

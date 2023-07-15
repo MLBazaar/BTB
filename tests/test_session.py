@@ -7,9 +7,9 @@ from unittest.mock import MagicMock, call, patch
 import numpy as np
 from tqdm.auto import trange
 
-from btb.session import BTBSession
-from btb.tuning.tuners.base import StopTuning
-from btb.tuning.tuners.gaussian_process import GPTuner
+from baytune.session import BTBSession
+from baytune.tuning.tuners.base import StopTuning
+from baytune.tuning.tuners.gaussian_process import GPTuner
 
 
 class TestBTBSession(TestCase):

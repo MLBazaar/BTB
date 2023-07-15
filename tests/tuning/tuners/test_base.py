@@ -5,8 +5,8 @@ from unittest.mock import MagicMock, call, patch
 
 import numpy as np
 
-from btb.tuning.tunable import Tunable
-from btb.tuning.tuners.base import BaseMetaModelTuner, BaseTuner, StopTuning
+from baytune.tuning.tunable import Tunable
+from baytune.tuning.tuners.base import BaseMetaModelTuner, BaseTuner, StopTuning
 
 
 class TestBaseTuner(TestCase):

@@ -2,8 +2,8 @@
 
 import random
 
-from btb.tuning import GPTuner, Tunable
-from btb.tuning.hyperparams import (
+from baytune.tuning import GPTuner, Tunable
+from baytune.tuning.hyperparams import (
     BooleanHyperParam, CategoricalHyperParam, FloatHyperParam, IntHyperParam)
 
 

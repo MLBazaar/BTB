@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from btb.tuning.hyperparams.numerical import FloatHyperParam, IntHyperParam
+from baytune.tuning.hyperparams.numerical import FloatHyperParam, IntHyperParam
 
 
 class TestFloatHyperParam(TestCase):

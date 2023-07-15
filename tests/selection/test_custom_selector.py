@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 
-from btb.selection.custom_selector import CustomSelector
+from baytune.selection.custom_selector import CustomSelector
 
 
 class TestCustomSelector(TestCase):

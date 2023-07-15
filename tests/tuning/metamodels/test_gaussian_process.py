@@ -7,7 +7,7 @@ import numpy as np
 from copulas.univariate import Univariate
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from btb.tuning.metamodels.gaussian_process import (
+from baytune.tuning.metamodels.gaussian_process import (
     GaussianCopulaProcessMetaModel, GaussianProcessMetaModel)
 
 

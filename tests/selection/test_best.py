@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from btb.selection.best import BestKReward, BestKVelocity
+from baytune.selection.best import BestKReward, BestKVelocity
 
 
 class TestBestKReward(TestCase):

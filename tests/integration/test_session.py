@@ -4,8 +4,8 @@ from unittest import TestCase
 
 import pytest
 
-from btb.session import BTBSession
-from btb.tuning import StopTuning
+from baytune.session import BTBSession
+from baytune.tuning import StopTuning
 
 
 class BTBSessionTest(TestCase):

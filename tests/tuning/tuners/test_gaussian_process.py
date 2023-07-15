@@ -5,8 +5,8 @@ from unittest.mock import MagicMock
 
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from btb.tuning.tunable import Tunable
-from btb.tuning.tuners.gaussian_process import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner
+from baytune.tuning.tunable import Tunable
+from baytune.tuning.tuners.gaussian_process import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner
 
 
 class TestGaussianProcessTuner(TestCase):
