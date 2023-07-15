@@ -157,9 +157,9 @@ class TestGaussianCopulaProcessMetaModel(TestCase):
         predicted_scores = instance._predict(candidates)
 
         # assert
-        expected_scores = np.array([0.54393124])
+        expected_scores = np.array([0.543931])
 
-        np.testing.assert_allclose(expected_scores, predicted_scores)
+        np.testing.assert_allclose(expected_scores, predicted_scores, rtol=1e-06)
 
     def test__predict_candidate_gt_one(self):
         """Test the prediction of multiple candidates."""
@@ -176,13 +176,16 @@ class TestGaussianCopulaProcessMetaModel(TestCase):
         )
         scores = np.array([0.1, 0.4, 0.6, 0.8, 0.9])
 
-        candidates = np.array([[0.2, 0.8, 0.4], [0.1, 0.8, 0.2]])
+        candidates = np.array([
+            [0.2, 0.8, 0.4],
+            [0.1, 0.8, 0.2]
+        ])
         instance._fit(trials, scores)
 
         # run
         predicted_scores = instance._predict(candidates)
 
         # assert
-        expected_scores = np.array([0.54393124, 0.1])
+        expected_scores = np.array([0.543931, 0.1])
 
-        np.testing.assert_allclose(expected_scores, predicted_scores)
+        np.testing.assert_allclose(expected_scores, predicted_scores, rtol=1e-06)

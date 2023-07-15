@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import numpy
+import numpy as np
 import scipy
 from copulas import EPSILON
 from copulas.univariate import Univariate
@@ -37,7 +37,7 @@ class GaussianProcessMetaModel(BaseMetaModel):
 
     def _predict(self, candidates):
         predictions = self._model_instance.predict(candidates, return_std=True)
-        return numpy.column_stack(predictions)
+        return np.column_stack(predictions)
 
 
 class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
@@ -75,7 +75,7 @@ class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
                 )
             )
 
-        return numpy.column_stack(transformed)
+        return np.column_stack(transformed)
 
     def _fit(self, trials, scores):
         self._distributions = []
@@ -98,4 +98,7 @@ class GaussianCopulaProcessMetaModel(GaussianProcessMetaModel):
     def _predict(self, candidates):
         trans_candidates = self._transform(candidates)
         predicted = super()._predict(trans_candidates)
-        return self._score_distribution.ppf(scipy.stats.norm.cdf(predicted))
+        cdf = scipy.stats.norm.cdf(predicted)
+        if len(cdf.shape) == 2:
+            cdf = cdf[:, 0]
+        return self._score_distribution.ppf(cdf)
