@@ -186,6 +186,7 @@ class TestGaussianCopulaProcessMetaModel(TestCase):
         predicted_scores = instance._predict(candidates)
 
         # assert
+        # not sure if 0.1 is correct
         expected_scores = np.array([0.543931, 0.1])
 
         np.testing.assert_allclose(expected_scores, predicted_scores, rtol=1e-06)
