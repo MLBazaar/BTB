@@ -27,7 +27,7 @@ jobs:
           python -m pip install "unpacked_sdist/."
       - name: Test by importing packages
         run: |
-          python -c "import trane"
+          python -c "import baytune"
       - name: Check package conflicts
         run: |
           python -m pip check
