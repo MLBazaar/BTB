@@ -11,7 +11,11 @@ from distributed.diagnostics.progressbar import TextProgressBar
 
 from baytune.tuning.tuners.base import BaseTuner
 from btb_benchmark.challenges import (
-    MATH_CHALLENGES, RandomForestChallenge, SGDChallenge, XGBoostChallenge)
+    MATH_CHALLENGES,
+    RandomForestChallenge,
+    SGDChallenge,
+    XGBoostChallenge,
+)
 from btb_benchmark.challenges.challenge import Challenge
 from btb_benchmark.challenges.datasets import get_dataset_names
 from btb_benchmark.results import load_results, write_results
@@ -19,7 +23,7 @@ from btb_benchmark.tuning_functions import get_all_tuning_functions
 from btb_benchmark.tuning_functions.btb import make_btb_tuning_function
 
 LOGGER = logging.getLogger(__name__)
-ALL_TYPES = ['math', 'xgboost']
+ALL_TYPES = ["math", "xgboost"]
 
 
 def get_math_challenge_instance(name, *args, **kwargs):
@@ -27,48 +31,48 @@ def get_math_challenge_instance(name, *args, **kwargs):
 
 
 CHALLENGE_GETTER = {
-    'math': get_math_challenge_instance,
-    'random_forest': RandomForestChallenge,
-    'sgd': SGDChallenge,
-    'xgboost': XGBoostChallenge,
+    "math": get_math_challenge_instance,
+    "random_forest": RandomForestChallenge,
+    "sgd": SGDChallenge,
+    "xgboost": XGBoostChallenge,
 }
 
 
 @dask.delayed
 def _evaluate_tuner_on_challenge(name, tuner, challenge, iterations):
     tunable_hyperparameters = challenge.get_tunable_hyperparameters()
-    LOGGER.info('Evaluating tuner %s on challenge %s for %s iterations',
+    LOGGER.info("Evaluating tuner %s on challenge %s for %s iterations",
                 name, challenge, iterations)
     try:
         start = datetime.utcnow()
         score = tuner(challenge.evaluate, tunable_hyperparameters, iterations)
         result = {
-            'challenge': str(challenge),
-            'tuner': name,
-            'score': score,
-            'iterations': iterations,
-            'elapsed': datetime.utcnow() - start,
-            'hostname': socket.gethostname()
+            "challenge": str(challenge),
+            "tuner": name,
+            "score": score,
+            "iterations": iterations,
+            "elapsed": datetime.utcnow() - start,
+            "hostname": socket.gethostname()
         }
-        if hasattr(challenge, 'data'):
-            result['rows'] = challenge.data[0].shape[0]
+        if hasattr(challenge, "data"):
+            result["rows"] = challenge.data[0].shape[0]
 
     except Exception as ex:
         LOGGER.warn(
-            'Could not score tuner %s with challenge %s, error: %s', name, challenge, ex)
+            "Could not score tuner %s with challenge %s, error: %s", name, challenge, ex)
         result = {
-            'challenge': str(challenge),
-            'tuner': name,
-            'score': None,
-            'elapsed': datetime.utcnow() - start,
-            'hostname': socket.gethostname()
+            "challenge": str(challenge),
+            "tuner": name,
+            "score": None,
+            "elapsed": datetime.utcnow() - start,
+            "hostname": socket.gethostname()
         }
 
     return result
 
 
 def _evaluate_tuners_on_challenge(tuners, challenge, iterations):
-    LOGGER.info('Evaluating challenge %s', challenge)
+    LOGGER.info("Evaluating challenge %s", challenge)
     results = []
     for name, tuner in tuners.items():
         try:
@@ -76,14 +80,14 @@ def _evaluate_tuners_on_challenge(tuners, challenge, iterations):
             results.append(result)
         except Exception as ex:
             LOGGER.warn(
-                'Could not score tuner %s with challenge %s, error: %s', name, challenge, ex)
+                "Could not score tuner %s with challenge %s, error: %s", name, challenge, ex)
 
     return results
 
 
 class LogProgressBar(TextProgressBar):
     last = 0
-    logger = logging.getLogger('distributed')
+    logger = logging.getLogger("distributed")
 
     def _draw_bar(self, remaining, all, **kwargs):
         frac = (1 - remaining / all) if all else 0
@@ -130,14 +134,14 @@ def benchmark(tuners, challenges, iterations, detailed_output=False):
 
                 * scorer (function):
                     A function that performs scoring over params.
-                * tunable (btb.tuning.Tunable):
+                * tunable (baytune.tuning.Tunable):
                     A ``Tunable`` instance used to instantiate a tuner.
                 * iterations (int):
                     Number of tuning iterations to perform.
 
         challenges (list):
             A list of ``chalenges``. This challenges must inherit from
-            ``btb.challenges.challenge.Challenge``.
+            ``baytune.challenges.challenge.Challenge``.
         iterations (int):
             Amount of tuning iterations to perform for each tuner and each challenge.
         detailed_output (bool):
@@ -168,7 +172,7 @@ def benchmark(tuners, challenges, iterations, detailed_output=False):
     if detailed_output:
         return df
 
-    df = df.pivot(index='challenge', columns='tuner', values='score')
+    df = df.pivot(index="challenge", columns="tuner", values="score")
     df.index.rename(None, inplace=True)
     df.columns.rename(None, inplace=True)
 
@@ -194,7 +198,7 @@ def _challenges_as_list(param):
 def _get_tuners_dict(tuners=None):
     all_tuners = get_all_tuning_functions()
     if tuners is None:
-        LOGGER.info('Using all tuning functions.')
+        LOGGER.info("Using all tuning functions.")
         return all_tuners
     else:
         selected_tuning_functions = {}
@@ -206,23 +210,23 @@ def _get_tuners_dict(tuners=None):
             else:
                 tuning_function = all_tuners.get(tuner)
                 if tuning_function:
-                    LOGGER.info('Loading tuning function: %s', tuner)
+                    LOGGER.info("Loading tuning function: %s", tuner)
                     selected_tuning_functions[tuner] = tuning_function
                 else:
-                    LOGGER.info('Could not load tuning function: %s', tuner)
+                    LOGGER.info("Could not load tuning function: %s", tuner)
 
         if not selected_tuning_functions:
-            raise ValueError('No tunable function was loaded.')
+            raise ValueError("No tunable function was loaded.")
 
         return selected_tuning_functions
 
 
 def _get_all_challenge_names(challenge_types=None):
     all_challenge_names = []
-    if 'math' in challenge_types:
+    if "math" in challenge_types:
         all_challenge_names += list(MATH_CHALLENGES.keys())
-    if any(name in challenge_types for name in ('sdg', 'xgboost', 'random_forest')):
-        all_challenge_names += get_dataset_names('all')
+    if any(name in challenge_types for name in ("sdg", "xgboost", "random_forest")):
+        all_challenge_names += get_dataset_names("all")
 
     return all_challenge_names
 
@@ -236,7 +240,7 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None, max
 
     if sample:
         if sample > len(challenges):
-            raise ValueError('Sample can not be greater than {}'.format(len(challenges)))
+            raise ValueError("Sample can not be greater than {}".format(len(challenges)))
 
         challenges = random.sample(challenges, sample)
 
@@ -260,10 +264,10 @@ def _get_challenges_list(challenges=None, challenge_types=None, sample=None, max
                 unknown.append(challenge)
 
     if unknown:
-        raise ValueError('Challenges {} not of type {}'.format(unknown, challenge_types))
+        raise ValueError("Challenges {} not of type {}".format(unknown, challenge_types))
 
     if not selected:
-        raise ValueError('No challenges selected!')
+        raise ValueError("No challenges selected!")
 
     return selected
 
@@ -277,8 +281,8 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None, sample=Non
     stored. If this path is not provided, a ``pandas.DataFrame`` will be returned.
 
     Args:
-        tuners (str, btb.tuning.tuners.base.BaseTuner or list):
-            Tuner name, ``btb.tuning.tuners.base.BaseTuner`` subclass or a list with the previously
+        tuners (str, baytune.tuning.tuners.base.BaseTuner or list):
+            Tuner name, ``baytune.tuning.tuners.base.BaseTuner`` subclass or a list with the previously
             described objects. If ``None`` all available ``tuners`` implemented in
             ``btb_benchmark`` will be used.
         challenge_types (str or list):
@@ -318,7 +322,7 @@ def run_benchmark(tuners=None, challenge_types=None, challenges=None, sample=Non
     results = benchmark(tuners, challenges, iterations, detailed_output)
 
     if output_path:
-        LOGGER.info('Saving benchmark report to %s', output_path)
+        LOGGER.info("Saving benchmark report to %s", output_path)
         results.to_csv(output_path)
 
     else:

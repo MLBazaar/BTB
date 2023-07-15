@@ -20,7 +20,7 @@ class TestCategoricalHyperParam(TestCase):
     def setUpClass(cls):
         cls.instance = CategoricalHyperParam(choices=["Cat", "Dog", "Horse", "Tiger"])
 
-    @patch("btb.tuning.hyperparams.categorical.OneHotEncoder")
+    @patch("baytune.tuning.hyperparams.categorical.OneHotEncoder")
     def test___init__(self, mock_one_hot_encoder):
         """Test that during instantiation we create a OneHotEncoder and we fit it with the given
         choices."""
@@ -141,7 +141,7 @@ class TestCategoricalHyperParam(TestCase):
         # assert
         np.testing.assert_array_equal(results, np.array([["Cat"], ["Dog"]]))
 
-    @patch("btb.tuning.hyperparams.categorical.np.random.random")
+    @patch("baytune.tuning.hyperparams.categorical.np.random.random")
     def test_sample(self, mock_np_random):
         """Test that sample returns values."""
         # setup

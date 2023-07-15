@@ -65,7 +65,7 @@ class TestBestKReward(TestCase):
     # NOTES:
     #     * Should this be >= self.k instead of >= K_MIN?
 
-    @patch("btb.selection.best.BestKReward.bandit")
+    @patch("baytune.selection.best.BestKReward.bandit")
     def test_select_more_scores_than_k_min(self, bandit_mock):
         """If min length is gt k_min, self.compute_rewards is used.
 
@@ -99,7 +99,7 @@ class TestBestKReward(TestCase):
             assert k in choice_rewards_expected
             np.testing.assert_array_equal(choice_rewards[k], choice_rewards_expected[k])
 
-    @patch("btb.selection.best.BestKReward.bandit")
+    @patch("baytune.selection.best.BestKReward.bandit")
     def test_select_less_scores_than_k_min(self, bandit_mock):
         """If min length is lt k_min, super().compute_rewards is used.
 

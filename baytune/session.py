@@ -46,17 +46,17 @@ class BTBSession:
         tunables (dict):
             Python dictionary that has as keys the name of the tunable and
             as value a dictionary with the tunable hyperparameters or an
-            ``btb.tuning.tunable.Tunable`` instance.
+            ``baytune.tuning.tunable.Tunable`` instance.
         scorer (callable object / function):
             A callable object or function with signature ``scorer(tunable_name, config)``
             wich should return only a single value.
-        tuner_class (btb.tuning.tuner.BaseTuner):
+        tuner_class (baytune.tuning.tuner.BaseTuner):
             A tuner based on BTB ``BaseTuner`` class. This tuner will manage the new proposals.
-            Defaults to ``btb.tuning.tuners.gaussian_process.GPTuner``
-        selector_class (btb.selection.selector.Selector):
+            Defaults to ``baytune.tuning.tuners.gaussian_process.GPTuner``
+        selector_class (baytune.selection.selector.Selector):
             A selector based on BTB ``Selector`` class. This will determinate which one of
             the tunables is performing better, and which one to test next. Defaults to
-            ``btb.selection.selectors.ucb1.UCB1``
+            ``baytune.selection.selectors.ucb1.UCB1``
         maximize (bool):
             If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller
             is better, this should depend on the problem type (maximization or minimization).
@@ -218,7 +218,7 @@ class BTBSession:
 
             if not isinstance(tunable, Tunable):
                 raise TypeError(
-                    "Tunable can only be an instance of btb.tuning.Tunable or dict"
+                    "Tunable can only be an instance of baytune.tuning.Tunable or dict"
                 )
 
             LOGGER.info("Obtaining default configuration for %s", tunable_name)

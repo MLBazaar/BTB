@@ -23,7 +23,7 @@ class BaseTuner:
     BaseTuner class is the abstract representation of a tuner that is not based on a model.
 
     Attributes:
-        tunable (btb.tuning.tunable.Tunable):
+        tunable (baytune.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         trials (numpy.ndarray):
             A ``numpy.ndarray`` with shape ``(n, self.tunable.dimensions)`` where ``n`` is the
@@ -35,7 +35,7 @@ class BaseTuner:
             scores recorded.
 
     Args:
-        tunable (btb.tuning.tunable.Tunable):
+        tunable (baytune.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         maximize (bool):
             If ``True`` the scores are interpreted as bigger is better, if ``False`` then smaller
@@ -180,10 +180,10 @@ class BaseTuner:
             three times, first with a single proposal, a second with two proposals forcing them to
             be different and once where the values can be repeated.
 
-            >>> from btb.tuning.tunable import Tunable
-            >>> from btb.tuning.hyperparams import BooleanHyperParam
-            >>> from btb.tuning.hyperparams import CategoricalHyperParam
-            >>> from btb.tuning.tuners import UniformTuner
+            >>> from baytune.tuning.tunable import Tunable
+            >>> from baytune.tuning.hyperparams import BooleanHyperParam
+            >>> from baytune.tuning.hyperparams import CategoricalHyperParam
+            >>> from baytune.tuning.tuners import UniformTuner
             >>> bhp = BooleanHyperParam()
             >>> chp = CategoricalHyperParam(['cat', 'dog'])
             >>> tunable = Tunable({'bhp': bhp, 'chp': chp})
@@ -234,10 +234,10 @@ class BaseTuner:
             instantiated with a ``tunable`` object and it's method record is being called two times
             with valid trials and scores.
 
-            >>> from btb.tuning.tunable import Tunable
-            >>> from btb.tuning.hyperparams import BooleanHyperParam
-            >>> from btb.tuning.hyperparams import CategoricalHyperParam
-            >>> from btb.tuning.tuners import UniformTuner
+            >>> from baytune.tuning.tunable import Tunable
+            >>> from baytune.tuning.hyperparams import BooleanHyperParam
+            >>> from baytune.tuning.hyperparams import CategoricalHyperParam
+            >>> from baytune.tuning.tuners import UniformTuner
             >>> bhp = BooleanHyperParam()
             >>> chp = CategoricalHyperParam(['cat', 'dog'])
             >>> tunable = Tunable({'bhp': bhp, 'chp': chp})
@@ -281,7 +281,7 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
     over the ``self.trials`` and ``self.raw_scores`` recorded by the user.
 
     Attributes:
-        tunable (btb.tuning.tunable.Tunable):
+        tunable (baytune.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         trials (numpy.ndarray):
             A ``numpy.ndarray`` with shape ``(n, self.tunable.dimensions)`` where ``n`` is the
@@ -290,7 +290,7 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
             A ``numpy.ndarray`` with shape ``(n, 1)`` where ``n`` is the number of scores recorded.
 
     Args:
-        tunable (btb.tuning.tunable.Tunable):
+        tunable (baytune.tuning.tunable.Tunable):
             Instance of a tunable class containing hyperparameters to be tuned.
         num_candidates (int):
             Number of samples to generate and select the best of it for each proposal. Defaults to
@@ -360,10 +360,10 @@ class BaseMetaModelTuner(BaseTuner, BaseMetaModel, BaseAcquisition):
             instantiated with a ``tunable`` object and it's method record is being called two times
             with valid trials and scores.
 
-            >>> from btb.tuning.tunable import Tunable
-            >>> from btb.tuning.hyperparams import BooleanHyperParam
-            >>> from btb.tuning.hyperparams import CategoricalHyperParam
-            >>> from btb.tuning.tuners import UniformTuner
+            >>> from baytune.tuning.tunable import Tunable
+            >>> from baytune.tuning.hyperparams import BooleanHyperParam
+            >>> from baytune.tuning.hyperparams import CategoricalHyperParam
+            >>> from baytune.tuning.tuners import UniformTuner
             >>> bhp = BooleanHyperParam()
             >>> chp = CategoricalHyperParam(['cat', 'dog'])
             >>> tunable = Tunable({'bhp': bhp, 'chp': chp})

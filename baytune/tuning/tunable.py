@@ -60,9 +60,9 @@ class Tunable:
             The example below shows a simple usage of a Tunable class which will transform a valid
             data from a 2D list and a ``numpy.ndarray`` is being returned.
 
-            >>> from btb.tuning.hyperparams.boolean import BooleanHyperParam
-            >>> from btb.tuning.hyperparams.categorical import CategoricalHyperParam
-            >>> from btb.tuning.hyperparams.numerical import IntHyperParam
+            >>> from baytune.tuning.hyperparams.boolean import BooleanHyperParam
+            >>> from baytune.tuning.hyperparams.categorical import CategoricalHyperParam
+            >>> from baytune.tuning.hyperparams.numerical import IntHyperParam
             >>> chp = CategoricalHyperParam(['cat', 'dog'])
             >>> bhp = BooleanHyperParam()
             >>> ihp = IntHyperParam(1, 10)
@@ -123,9 +123,9 @@ class Tunable:
             The example below shows a simple usage of a Tunable class which will inverse transform
             a valid data from a 2D list and a ``pandas.DataFrame`` will be returned.
 
-            >>> from btb.tuning.hyperparams.boolean import BooleanHyperParam
-            >>> from btb.tuning.hyperparams.categorical import CategoricalHyperParam
-            >>> from btb.tuning.hyperparams.numerical import IntHyperParam
+            >>> from baytune.tuning.hyperparams.boolean import BooleanHyperParam
+            >>> from baytune.tuning.hyperparams.categorical import CategoricalHyperParam
+            >>> from baytune.tuning.hyperparams.numerical import IntHyperParam
             >>> chp = CategoricalHyperParam(['cat', 'dog'])
             >>> bhp = BooleanHyperParam()
             >>> ihp = IntHyperParam(1, 10)
@@ -177,9 +177,9 @@ class Tunable:
             The example below shows a simple usage of a Tunable class which will generate 2
             samples by calling it's sample method. This will return a ``numpy.ndarray``.
 
-            >>> from btb.tuning.hyperparams.boolean import BooleanHyperParam
-            >>> from btb.tuning.hyperparams.categorical import CategoricalHyperParam
-            >>> from btb.tuning.hyperparams.numerical import IntHyperParam
+            >>> from baytune.tuning.hyperparams.boolean import BooleanHyperParam
+            >>> from baytune.tuning.hyperparams.categorical import CategoricalHyperParam
+            >>> from baytune.tuning.hyperparams.numerical import IntHyperParam
             >>> chp = CategoricalHyperParam(['cat', 'dog'])
             >>> bhp = BooleanHyperParam()
             >>> ihp = IntHyperParam(1, 10)

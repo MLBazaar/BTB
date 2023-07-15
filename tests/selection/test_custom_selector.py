@@ -11,7 +11,7 @@ class TestCustomSelector(TestCase):
     # NOTES:
     #     * randint will need to be mocked
 
-    @patch("btb.selection.custom_selector.random")
+    @patch("baytune.selection.custom_selector.random")
     def test_select(self, random_mock):
         # Set-up
         selector = CustomSelector(["DT", "RF", "SVM"])

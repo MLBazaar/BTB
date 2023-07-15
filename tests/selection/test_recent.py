@@ -43,7 +43,7 @@ class TestRecentKReward(TestCase):
     # TODO:
     #     * This code can be simplified to be more easy to understand
 
-    @patch("btb.selection.recent.RecentKReward.bandit")
+    @patch("baytune.selection.recent.RecentKReward.bandit")
     def test_select_more_scores_than_k_min(self, bandit_mock):
         """If min length is gt k_min, self.compute_rewards is used.
 
@@ -72,7 +72,7 @@ class TestRecentKReward(TestCase):
         }
         bandit_mock.assert_called_once_with(choice_rewards)
 
-    @patch("btb.selection.recent.RecentKReward.bandit")
+    @patch("baytune.selection.recent.RecentKReward.bandit")
     def test_select_less_scores_than_k_min(self, bandit_mock):
         """If min length is lt k_min, super().compute_rewards is used.
 

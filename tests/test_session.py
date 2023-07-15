@@ -107,7 +107,7 @@ class TestBTBSession(TestCase):
 
         assert result == expected_result
 
-    @patch("btb.session.np.random.choice")
+    @patch("baytune.session.np.random.choice")
     def test__get_next_tunable_name_normalized_scores(self, mock_np_random_choice):
         # setup
         mock_np_random_choice.return_value = "test_name"
@@ -131,7 +131,7 @@ class TestBTBSession(TestCase):
             ]
         )
 
-    @patch("btb.session.np.random.choice")
+    @patch("baytune.session.np.random.choice")
     def test__get_next_tunable_name_normalized_scores_none(self, mock_np_random_choice):
         # setup
         mock_np_random_choice.return_value = "test_name"
@@ -143,7 +143,7 @@ class TestBTBSession(TestCase):
             "second_test_name": "second_test",
         }
 
-        # python3.5 randomness issue, we read as in `btb.session`
+        # python3.5 randomness issue, we read as in `baytune.session`
         expected_mock_call = list(instance._tunables.keys())
 
         # run
@@ -163,8 +163,8 @@ class TestBTBSession(TestCase):
         with self.assertRaises(StopTuning):
             BTBSession.propose(instance)
 
-    @patch("btb.session.isinstance")
-    @patch("btb.session.Tunable")
+    @patch("baytune.session.isinstance")
+    @patch("baytune.session.Tunable")
     def test_propose_normalized_scores_lt_tunable_names(
         self, mock_tunable, mock_isinstance
     ):
@@ -259,8 +259,8 @@ class TestBTBSession(TestCase):
         with self.assertRaises(ValueError):
             BTBSession.propose(instance)
 
-    @patch("btb.session.isinstance")
-    @patch("btb.session.Tunable")
+    @patch("baytune.session.isinstance")
+    @patch("baytune.session.Tunable")
     def test_propose_tunable_cardinality_eq_one(self, mock_tunable, mock_isinstance):
         # setup
         mock_tunable.from_dict.return_value.cardinality = 1

@@ -80,7 +80,7 @@ class TestGaussianCopulaProcessMetaModel(TestCase):
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch("btb.tuning.metamodels.gaussian_process.super")
+    @patch("baytune.tuning.metamodels.gaussian_process.super")
     def test__fit(self, mock_super):
         # setup
         instance = GaussianCopulaProcessMetaModel()

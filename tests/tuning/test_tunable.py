@@ -22,7 +22,7 @@ def assert_called_with_np_array(mock_calls, real_calls):
 class TestTunable(TestCase):
     """Unit test for the class ``Tunable``."""
 
-    @patch("btb.tuning.tunable.list")
+    @patch("baytune.tuning.tunable.list")
     def setUp(self, list_mock):
         """Instantiate the ``Tunable`` and it's ``Hyperparameters`` that we will be using."""
         self.bhp = MagicMock(spec_set=BooleanHyperParam)
@@ -309,10 +309,10 @@ class TestTunable(TestCase):
         with self.assertRaises(TypeError):
             Tunable.from_dict(1)
 
-    @patch("btb.tuning.tunable.IntHyperParam")
-    @patch("btb.tuning.tunable.FloatHyperParam")
-    @patch("btb.tuning.tunable.CategoricalHyperParam")
-    @patch("btb.tuning.tunable.BooleanHyperParam")
+    @patch("baytune.tuning.tunable.IntHyperParam")
+    @patch("baytune.tuning.tunable.FloatHyperParam")
+    @patch("baytune.tuning.tunable.CategoricalHyperParam")
+    @patch("baytune.tuning.tunable.BooleanHyperParam")
     def test_from_dict(self, mock_bool, mock_cat, mock_float, mock_int):
         # setup
         mock_bool.return_value.dimensions = 1

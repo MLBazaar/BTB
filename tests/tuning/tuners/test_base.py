@@ -124,7 +124,7 @@ class TestBaseTuner(TestCase):
         inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == 1
 
-    @patch("btb.tuning.tuners.base.BaseTuner._check_proposals")
+    @patch("baytune.tuning.tuners.base.BaseTuner._check_proposals")
     def test_propose_one_value_allow_duplicates(self, mock__check_proposals):
         """Test that ``propose`` method calls it's child implemented method with
         ``allow_duplicates`` as ``True``.
@@ -146,7 +146,7 @@ class TestBaseTuner(TestCase):
         inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == 1
 
-    @patch("btb.tuning.tuners.base.BaseTuner._check_proposals")
+    @patch("baytune.tuning.tuners.base.BaseTuner._check_proposals")
     def test_propose_many_values_no_duplicates(self, mock__check_proposals):
         """Test that ``propose`` method calls it's child implemented method with more than one
         proposals and ``allow_duplicates`` as ``False``.
@@ -167,7 +167,7 @@ class TestBaseTuner(TestCase):
         inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == [1, 2]
 
-    @patch("btb.tuning.tuners.base.BaseTuner._check_proposals")
+    @patch("baytune.tuning.tuners.base.BaseTuner._check_proposals")
     def test_propose_many_values_allow_duplicates(self, mock__check_proposals):
         """Test that ``propose`` method calls it's child implemented method with more than one
         proposals and ``allow_duplicates`` as ``True``.
@@ -334,7 +334,7 @@ class TestBaseTuner(TestCase):
 class TestBaseMetaModelTuner(TestCase):
     """Test BaseMetaModelTuner class."""
 
-    @patch("btb.tuning.tuners.base.super")
+    @patch("baytune.tuning.tuners.base.super")
     def test___init___default_values(self, mock_super):
         # setup
         tunable = MagicMock(spec_set=Tunable)
@@ -351,7 +351,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance.__init_metamodel__.assert_called_once_with()
         instance.__init_acquisition__.assert_called_once_with()
 
-    @patch("btb.tuning.tuners.base.super")
+    @patch("baytune.tuning.tuners.base.super")
     def test___init___users_values(self, mock_super):
         # setup
         tunable = MagicMock(spec_set=Tunable)
@@ -454,7 +454,7 @@ class TestBaseMetaModelTuner(TestCase):
         instance._acquire.assert_called_once_with("predicted", 1)
         assert result == 1
 
-    @patch("btb.tuning.tuners.base.super")
+    @patch("baytune.tuning.tuners.base.super")
     def test_record(self, mock_super):
         # setup
         instance = MagicMock()

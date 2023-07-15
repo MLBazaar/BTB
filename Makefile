@@ -30,20 +30,12 @@ installdeps-test:
 installdeps-docs:
 	python -m pip install ".[docs]"
 
-PYTEST = python -m pytest -n auto -s -vv -x
+PYTEST = python -m pytest -s -vv -x
 COVERAGE = --cov=baytune/ --cov-report term-missing --cov-config=./pyproject.toml --cov-report=xml:./coverage.xml
 
 .PHONY: tests
 tests:
 	$(PYTEST) tests/
-
-.PHONY: unit-tests
-unit-tests:
-	$(PYTEST) tests/ --ignore=tests/integration_tests $(COVERAGE)
-
-.PHONY: integration-tests
-integration-tests:
-	$(PYTEST) tests/integration_tests --sample 100
 
 .PHONY: upgradepip
 upgradepip:

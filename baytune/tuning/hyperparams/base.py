@@ -166,7 +166,7 @@ class BaseHyperParam(metaclass=ABCMeta):
             called two times with a scalar from the search space and an array of two valid values
             from the search space.
 
-            >>> from btb.tuning.hyperparams.numerical import IntHyperParam
+            >>> from baytune.tuning.hyperparams.numerical import IntHyperParam
             >>> ihp = IntHyperParam(min=1, max=4)
             >>> ihp.inverse_transform(0.125)
             array([[1]])
@@ -197,7 +197,7 @@ class BaseHyperParam(metaclass=ABCMeta):
             with a number of samples to be obtained. A ``numpy.ndarray`` with values from the
             search space is being returned.
 
-            >>> from btb.tuning.hyperparams.numerical import IntHyperParam
+            >>> from baytune.tuning.hyperparams.numerical import IntHyperParam
             >>> instance = IntHyperParam(min=1, max=4)
             >>> instance.sample(2)
             array([[0.625],
@@ -236,7 +236,7 @@ class BaseHyperParam(metaclass=ABCMeta):
             three times with a single scalar value, an array of two valid values and a 2D array
             with 1 dimension.
 
-            >>> from btb.tuning.hyperparams.numerical import IntHyperParam
+            >>> from baytune.tuning.hyperparams.numerical import IntHyperParam
             >>> ihp = IntHyperParam(min=1, max=4)
             >>> ihp.transform(1)
             array([[0.125]])

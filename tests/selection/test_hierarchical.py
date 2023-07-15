@@ -34,7 +34,7 @@ class TestHierarchicalByAlgorithm(TestCase):
     # TODO:
     #     * "if not condition: continue" should rather be "if condition: do something"
 
-    @patch("btb.selection.hierarchical.HierarchicalByAlgorithm.bandit")
+    @patch("baytune.selection.hierarchical.HierarchicalByAlgorithm.bandit")
     def test_select(self, bandit_mock):
         """If min length is lt k_min, super().compute_rewards is used.
 

@@ -11,7 +11,7 @@ class TestUCB1(TestCase):
     # NOTES:
     #     * random.choice will need to be mocked
 
-    @patch("btb.selection.ucb1.UCB1._shuffle")
+    @patch("baytune.selection.ucb1.UCB1._shuffle")
     def test_bandit(self, mock__shuffle):
         """Only the choices with the highest scores are returned."""
         choices = ["DT", "SVM", "RF"]

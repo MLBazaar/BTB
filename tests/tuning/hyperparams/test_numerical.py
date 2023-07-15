@@ -86,7 +86,7 @@ class TestFloatHyperParam(TestCase):
         self.assertEqual(instance.max, _max)
         self.assertEqual(instance.default, 1.0)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with no limit set on them.
@@ -106,7 +106,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a min value set in.
@@ -126,7 +126,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max value set in.
@@ -146,7 +146,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max and min value set in.
@@ -165,7 +165,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with no min or max set.
@@ -185,7 +185,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with min value set up.
@@ -205,7 +205,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a max value set up.
@@ -225,7 +225,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a min and max value set up.
@@ -245,7 +245,7 @@ class TestFloatHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.np.random.random")
+    @patch("baytune.tuning.hyperparams.numerical.np.random.random")
     def test_sample(self, mock_np_random):
         """Test that the method ``sample`` is being called with `n_samples and
         `self.dimensions`.
@@ -393,7 +393,7 @@ class TestIntHyperParam(TestCase):
         with self.assertRaises(ValueError):
             IntHyperParam(min=_min, max=_max, step=_step)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with no limit set on them.
@@ -411,7 +411,7 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_min_no_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a min value set in.
@@ -430,7 +430,7 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_no_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max value set in.
@@ -449,7 +449,7 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__transform_min_max(self, mock_sys):
         """Test that the method ``_transform`` performs a normalization of values between ``min``
         and ``max`` with a max and min value set in.
@@ -469,7 +469,7 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_allclose(result, expected_result)
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with no min or max set.
@@ -487,7 +487,7 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_no_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with min value set up.
@@ -506,7 +506,7 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_no_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a max value set up.
@@ -525,7 +525,7 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch("btb.tuning.hyperparams.numerical.sys")
+    @patch("baytune.tuning.hyperparams.numerical.sys")
     def test__inverse_transform_min_max(self, mock_sys):
         """Test that the method ``_inverse_transform`` performs a normalization of values between
         ``min`` and ``max`` with a min and max value set up.
@@ -544,9 +544,9 @@ class TestIntHyperParam(TestCase):
 
         np.testing.assert_array_equal(result, expected_result.astype(int))
 
-    @patch("btb.tuning.hyperparams.numerical.np.random.random")
-    @patch("btb.tuning.hyperparams.numerical.IntHyperParam._transform")
-    @patch("btb.tuning.hyperparams.numerical.IntHyperParam._inverse_transform")
+    @patch("baytune.tuning.hyperparams.numerical.np.random.random")
+    @patch("baytune.tuning.hyperparams.numerical.IntHyperParam._transform")
+    @patch("baytune.tuning.hyperparams.numerical.IntHyperParam._inverse_transform")
     def test_sample(self, mock__inverse_transform, mock__transform, mock_np_random):
         """Test that the method ``sample`` returns random generated numbers and process them thro
         the internal methods to convert them in the range of our search space."""

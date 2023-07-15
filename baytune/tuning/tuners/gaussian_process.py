@@ -32,7 +32,7 @@ class GPTuner(GaussianProcessMetaModel, PredictedScoreAcquisition, BaseMetaModel
         """Create an instance of ``GPTuner``.
 
         Args:
-            tunable (btb.tuning.tunable.Tunable):
+            tunable (baytune.tuning.tunable.Tunable):
                 Instance of a tunable class containing hyperparameters to be tuned.
             num_candidates (int):
                 Number of samples to generate and select the best of it for each proposal.
@@ -86,7 +86,7 @@ class GPEiTuner(
         """Create an instance of ``GPEiTuner``.
 
         Args:
-            tunable (btb.tuning.tunable.Tunable):
+            tunable (baytune.tuning.tunable.Tunable):
                 Instance of a tunable class containing hyperparameters to be tuned.
             num_candidates (int):
                 Number of samples to generate and select the best of it for each proposal.
