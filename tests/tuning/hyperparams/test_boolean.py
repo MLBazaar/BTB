@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from btb.tuning.hyperparams.boolean import BooleanHyperParam
+from baytune.tuning.hyperparams.boolean import BooleanHyperParam
 
 
 class TestBooleanHyperParam(TestCase):
@@ -91,7 +91,7 @@ class TestBooleanHyperParam(TestCase):
         # assert
         np.testing.assert_array_equal(result, np.array([[1], [0]]))
 
-    @patch('btb.tuning.hyperparams.boolean.np.random.random')
+    @patch("baytune.tuning.hyperparams.boolean.np.random.random")
     def test_sample(self, mock_np_random):
         """Test that the method ``sample`` returns values from the search space and not the
         original hyperparameter space.

@@ -2,17 +2,21 @@
 
 import random
 
-from btb.tuning import GPTuner, Tunable
-from btb.tuning.hyperparams import (
-    BooleanHyperParam, CategoricalHyperParam, FloatHyperParam, IntHyperParam)
+from baytune.tuning import GPTuner, Tunable
+from baytune.tuning.hyperparams import (
+    BooleanHyperParam,
+    CategoricalHyperParam,
+    FloatHyperParam,
+    IntHyperParam,
+)
 
 
 def test_tuning():
     hyperparams = {
-        'bhp': BooleanHyperParam(default=False),
-        'chp': CategoricalHyperParam(choices=['a', 'b', None], default=None),
-        'fhp': FloatHyperParam(min=0.1, max=1.0, default=0.5),
-        'ihp': IntHyperParam(min=-1, max=1)
+        "bhp": BooleanHyperParam(default=False),
+        "chp": CategoricalHyperParam(choices=["a", "b", None], default=None),
+        "fhp": FloatHyperParam(min=0.1, max=1.0, default=0.5),
+        "ihp": IntHyperParam(min=-1, max=1),
     }
     tunable = Tunable(hyperparams)
     tuner = GPTuner(tunable)
@@ -31,10 +35,10 @@ def test_tuning():
 
 def test_tuning_minimize():
     hyperparams = {
-        'bhp': BooleanHyperParam(default=False),
-        'chp': CategoricalHyperParam(choices=['a', 'b', None], default=None),
-        'fhp': FloatHyperParam(min=0.1, max=1.0, default=0.5),
-        'ihp': IntHyperParam(min=-1, max=1)
+        "bhp": BooleanHyperParam(default=False),
+        "chp": CategoricalHyperParam(choices=["a", "b", None], default=None),
+        "fhp": FloatHyperParam(min=0.1, max=1.0, default=0.5),
+        "ihp": IntHyperParam(min=-1, max=1),
     }
     tunable = Tunable(hyperparams)
     tuner = GPTuner(tunable, maximize=False)

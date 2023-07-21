@@ -3,8 +3,8 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
-from btb.tuning.tunable import Tunable
-from btb.tuning.tuners.uniform import UniformTuner
+from baytune.tuning.tunable import Tunable
+from baytune.tuning.tuners.uniform import UniformTuner
 
 
 class TestUniformTuner(TestCase):

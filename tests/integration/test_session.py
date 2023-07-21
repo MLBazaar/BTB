@@ -4,29 +4,22 @@ from unittest import TestCase
 
 import pytest
 
-from btb.session import BTBSession
-from btb.tuning import StopTuning
+from baytune.session import BTBSession
+from baytune.tuning import StopTuning
 
 
 class BTBSessionTest(TestCase):
-
     @staticmethod
     def scorer(name, proposal):
         """score = name length + parameter.
 
         best proposal will be `a_tunable + a_parameter=0`
         """
-        return len(name) + proposal['a_parameter']
+        return len(name) + proposal["a_parameter"]
 
     def test_stop(self):
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
-            }
+            "a_tunable": {"a_parameter": {"type": "int", "default": 0, "range": [0, 2]}}
         }
 
         session = BTBSession(tunables, self.scorer)
@@ -36,13 +29,7 @@ class BTBSessionTest(TestCase):
 
     def test_maximize(self):
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
-            }
+            "a_tunable": {"a_parameter": {"type": "int", "default": 0, "range": [0, 2]}}
         }
 
         session = BTBSession(tunables, self.scorer)
@@ -51,18 +38,12 @@ class BTBSessionTest(TestCase):
 
         assert best == session.best_proposal
 
-        assert best['name'] == 'a_tunable'
-        assert best['config'] == {'a_parameter': 2}
+        assert best["name"] == "a_tunable"
+        assert best["config"] == {"a_parameter": 2}
 
     def test_minimize(self):
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
-            }
+            "a_tunable": {"a_parameter": {"type": "int", "default": 0, "range": [0, 2]}}
         }
 
         session = BTBSession(tunables, self.scorer, maximize=False)
@@ -70,64 +51,48 @@ class BTBSessionTest(TestCase):
         best = session.run(3)
 
         assert best == session.best_proposal
-        assert best['name'] == 'a_tunable'
-        assert best['config'] == {'a_parameter': 0}
+        assert best["name"] == "a_tunable"
+        assert best["config"] == {"a_parameter": 0}
 
     def test_multiple(self):
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
+            "a_tunable": {
+                "a_parameter": {"type": "int", "default": 0, "range": [0, 2]}
             },
-            'another_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
-            }
+            "another_tunable": {
+                "a_parameter": {"type": "int", "default": 0, "range": [0, 2]}
+            },
         }
 
         session = BTBSession(tunables, self.scorer)
 
         best = session.run(6)
 
-        assert best['name'] == 'another_tunable'
-        assert best['config'] == {'a_parameter': 2}
+        assert best["name"] == "another_tunable"
+        assert best["config"] == {"a_parameter": 2}
 
     def test_errors(self):
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
+            "a_tunable": {
+                "a_parameter": {"type": "int", "default": 0, "range": [0, 2]}
             },
-            'another_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
-            }
+            "another_tunable": {
+                "a_parameter": {"type": "int", "default": 0, "range": [0, 2]}
+            },
         }
 
         def scorer(name, proposal):
-            if name == 'another_tunable':
+            if name == "another_tunable":
                 raise Exception()
             else:
-                return proposal['a_parameter']
+                return proposal["a_parameter"]
 
         session = BTBSession(tunables, scorer)
 
         best = session.run(4)
 
-        assert best['name'] == 'a_tunable'
-        assert best['config'] == {'a_parameter': 2}
+        assert best["name"] == "a_tunable"
+        assert best["config"] == {"a_parameter": 2}
 
     def test_normalized_score_becomes_none(self):
         """Tunables that worked at some point but end up removed are not tried again.
@@ -150,26 +115,20 @@ class BTBSessionTest(TestCase):
         def scorer(name, proposal):
             """Produce a score for the first trial and then fail forever."""
             if not scores:
-                scores.append(1)   # boolean variable fails due to scope unles using global
+                scores.append(
+                    1
+                )  # boolean variable fails due to scope unles using global
                 return 1
 
             raise Exception()
 
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 10]
-                }
+            "a_tunable": {
+                "a_parameter": {"type": "int", "default": 0, "range": [0, 10]}
             },
-            'another_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 10]
-                }
-            }
+            "another_tunable": {
+                "a_parameter": {"type": "int", "default": 0, "range": [0, 10]}
+            },
         }
 
         session = BTBSession(tunables, scorer, max_errors=3)
@@ -177,40 +136,28 @@ class BTBSessionTest(TestCase):
         with pytest.raises(StopTuning):
             session.run(8)
 
-        assert session.errors == {'a_tunable': 3, 'another_tunable': 3}
+        assert session.errors == {"a_tunable": 3, "another_tunable": 3}
 
     @pytest.mark.skip(reason="This is not implemented yet")
     def test_allow_duplicates(self):
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 2]
-                }
-            }
+            "a_tunable": {"a_parameter": {"type": "int", "default": 0, "range": [0, 2]}}
         }
 
         session = BTBSession(tunables, self.scorer, allow_duplicates=True)
 
         best = session.run(10)
 
-        assert best['name'] == 'another_tunable'
-        assert best['config'] == {'a_parameter': 2}
+        assert best["name"] == "another_tunable"
+        assert best["config"] == {"a_parameter": 2}
 
     def test_allow_errors(self):
         tunables = {
-            'a_tunable': {
-                'a_parameter': {
-                    'type': 'int',
-                    'default': 0,
-                    'range': [0, 1]
-                }
-            }
+            "a_tunable": {"a_parameter": {"type": "int", "default": 0, "range": [0, 1]}}
         }
 
         def scorer(name, proposal):
-            if proposal['a_parameter'] == 0:
+            if proposal["a_parameter"] == 0:
                 raise Exception()
 
             return 1
@@ -219,5 +166,5 @@ class BTBSessionTest(TestCase):
 
         best = session.run(10)
 
-        assert best['name'] == 'a_tunable'
-        assert best['config'] == {'a_parameter': 1}
+        assert best["name"] == "a_tunable"
+        assert best["config"] == {"a_parameter": 1}

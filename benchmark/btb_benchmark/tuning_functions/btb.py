@@ -2,8 +2,8 @@
 
 import numpy as np
 
-from btb.tuning.tunable import Tunable
-from btb.tuning.tuners import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner, UniformTuner
+from baytune.tuning.tunable import Tunable
+from baytune.tuning.tuners import GCPEiTuner, GCPTuner, GPEiTuner, GPTuner, UniformTuner
 
 
 def _tuning_function(tuner_class, scoring_function, tunable_hyperparameters, iterations):
@@ -24,7 +24,7 @@ def make_btb_tuning_function(tuner_class):
     """Create a tuning function for a tuner class based on ``BTB``.
 
     Args:
-        tuner_class (btb.tuning.tuners.base.BaseTuner):
+        tuner_class (baytune.tuning.tuners.base.BaseTuner):
             A tuner class based on the BTB ``BaseTuner``.
 
     Return:

@@ -5,11 +5,10 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 
-from btb.tuning.hyperparams.base import BaseHyperParam
+from baytune.tuning.hyperparams.base import BaseHyperParam
 
 
 class TestBaseHyperParam(TestCase):
-
     def test__within_range_valid_range(self):
         # setup
         instance = MagicMock()
@@ -72,7 +71,7 @@ class TestBaseHyperParam(TestCase):
 
         assert result == 3
 
-    @patch('btb.tuning.hyperparams.base.np.asarray')
+    @patch("baytune.tuning.hyperparams.base.np.asarray")
     def test_transform_values_not_ndarray(self, mock_np_asarray):
         # setup
         instance = MagicMock()
@@ -103,7 +102,7 @@ class TestBaseHyperParam(TestCase):
         instance._transform.assert_called_once_with(np.array([[1]]))
         assert result == 2
 
-    @patch('btb.tuning.hyperparams.base.np.asarray')
+    @patch("baytune.tuning.hyperparams.base.np.asarray")
     def test_transform_dimensions_gt_two(self, mock_asarray):
         # setup
         array = MagicMock()
@@ -173,7 +172,6 @@ class TestBaseHyperParam(TestCase):
         np.testing.assert_array_equal(result, np.array([[1], [2], [3]]))
 
     def test__to_array_list_values_of_list_values_dimensions_two(self):
-
         # setup
         instance = MagicMock()
         instance.dimensions = 2
@@ -203,7 +201,7 @@ class TestBaseHyperParam(TestCase):
         with self.assertRaises(ValueError):
             BaseHyperParam._to_array(instance, values)
 
-    @patch('btb.tuning.hyperparams.base.np.array')
+    @patch("baytune.tuning.hyperparams.base.np.array")
     def test__to_array_len_shape_is_one(self, mock_np_array):
         # setup
         instance = MagicMock()
@@ -220,7 +218,7 @@ class TestBaseHyperParam(TestCase):
         # assert
         array.reshape.assert_called_once_with(-1, 1)
 
-    @patch('btb.tuning.hyperparams.base.np.array')
+    @patch("baytune.tuning.hyperparams.base.np.array")
     def test__to_array_more_than_one_column_for_dimensions_one(self, mock_np_array):
         # setup
         instance = MagicMock()
@@ -236,9 +234,8 @@ class TestBaseHyperParam(TestCase):
         with self.assertRaises(ValueError):
             BaseHyperParam._to_array(instance, values)
 
-    @patch('btb.tuning.hyperparams.base.np.array')
+    @patch("baytune.tuning.hyperparams.base.np.array")
     def test__to_array_values_shape_one_dimensions_two(self, mock_np_array):
-
         # setup
         instance = MagicMock()
         instance.dimensions = 2
@@ -253,10 +250,11 @@ class TestBaseHyperParam(TestCase):
         with self.assertRaises(ValueError):
             BaseHyperParam._to_array(instance, values)
 
-    @patch('btb.tuning.hyperparams.base.np.isscalar')
-    @patch('btb.tuning.hyperparams.base.np.array')
-    def test__to_array_values_not_scalar_dimensions_two(self, mock_np_array, mock_np_isscalar):
-
+    @patch("baytune.tuning.hyperparams.base.np.isscalar")
+    @patch("baytune.tuning.hyperparams.base.np.array")
+    def test__to_array_values_not_scalar_dimensions_two(
+        self, mock_np_array, mock_np_isscalar
+    ):
         # setup
         instance = MagicMock()
         instance.dimensions = 2
@@ -272,10 +270,11 @@ class TestBaseHyperParam(TestCase):
         with self.assertRaises(ValueError):
             BaseHyperParam._to_array(instance, values)
 
-    @patch('btb.tuning.hyperparams.base.np.isscalar')
-    @patch('btb.tuning.hyperparams.base.np.array')
-    def test__to_array_values_reshape_dimensions_two(self, mock_np_array, mock_np_isscalar):
-
+    @patch("baytune.tuning.hyperparams.base.np.isscalar")
+    @patch("baytune.tuning.hyperparams.base.np.array")
+    def test__to_array_values_reshape_dimensions_two(
+        self, mock_np_array, mock_np_isscalar
+    ):
         # setup
         mock_np_isscalar.side_effect = [False, True]
 
@@ -293,7 +292,7 @@ class TestBaseHyperParam(TestCase):
         BaseHyperParam._to_array(instance, values)
         array.reshape.assert_called_once_with(1, -1)
 
-    @patch('btb.tuning.hyperparams.base.np.array')
+    @patch("baytune.tuning.hyperparams.base.np.array")
     def test__to_array_len_shape_is_gt_two(self, mock_np_array):
         # setup
         instance = MagicMock()
@@ -308,8 +307,8 @@ class TestBaseHyperParam(TestCase):
         with self.assertRaises(ValueError):
             BaseHyperParam._to_array(instance, values)
 
-    @patch('btb.tuning.hyperparams.base.np.isscalar')
-    @patch('btb.tuning.hyperparams.base.np.array')
+    @patch("baytune.tuning.hyperparams.base.np.isscalar")
+    @patch("baytune.tuning.hyperparams.base.np.array")
     def test__to_array_not_all_scalars(self, mock_np_array, mock_np_isscalar):
         # setup
         instance = MagicMock()
