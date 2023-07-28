@@ -1,0 +1,44 @@
+name: Publish on PyPI
+on:
+  release:
+    types: [published]
+jobs:
+  pypi:
+    name: PyPI Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install setuptools --upgrade
+          python -m pip install packaging --upgrade
+      - name: Set pyproject version
+        run: |
+          echo "PACKAGE=$(python -c 'import setuptools; setuptools.setup()' --version)" >> $GITHUB_ENV
+      - name: Check package version (compare package version with tag)
+        id: check_package_version
+        shell: python
+        run: |
+          import os
+          from packaging.version import parse
+          package_version = os.getenv('PACKAGE')
+          if parse(package_version) != parse('${{ github.event.release.tag_name }}'):
+            print(f'version mismatch: {package_version} (in package) vs ${{ github.event.release.tag_name }} (GitHub tag)')
+            exit(1)
+          else:
+            print('version match')
+            exit(0)
+      - name: Create whl and tar.gz files in sdist
+        run: |
+          rm -rf docs/ Examples/ tests/
+          make package
+      - name: Publish a Python distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          username: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          repository_url: https://upload.pypi.org/legacy/
