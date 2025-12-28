@@ -59,8 +59,8 @@ class TestBaseMetaModel(TestCase):
         BaseMetaModel._fit(instance, "trials", "scores")
 
         # assert
-        instance._init_model.called_once_with()
-        instance._model_instance.fit.called_once_with("trials", "scores")
+        instance._init_model.assert_called_once_with()
+        instance._model_instance.fit.assert_called_once_with("trials", "scores")
 
     def test__predict(self):
         # setup

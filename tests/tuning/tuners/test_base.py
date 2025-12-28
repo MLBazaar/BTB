@@ -120,7 +120,7 @@ class TestBaseTuner(TestCase):
         # assert
         instance._check_proposals.assert_called_once_with(1)
         instance._propose.assert_called_once_with(1, False)
-        instance.tunable.inverse_transform.called_once_with(1)
+        instance.tunable.inverse_transform.assert_called_once_with(1)
         inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == 1
 
@@ -142,7 +142,7 @@ class TestBaseTuner(TestCase):
         # assert
         instance._check_proposals.assert_not_called()
         instance._propose.assert_called_once_with(1, True)
-        instance.tunable.inverse_transform.called_once_with(1)
+        instance.tunable.inverse_transform.assert_called_once_with(1)
         inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == 1
 
@@ -163,7 +163,7 @@ class TestBaseTuner(TestCase):
 
         # assert
         instance._propose.assert_called_once_with(2, False)
-        instance.tunable.inverse_transform.called_once_with(2)
+        instance.tunable.inverse_transform.assert_called_once_with(2)
         inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == [1, 2]
 
@@ -185,7 +185,7 @@ class TestBaseTuner(TestCase):
 
         # assert
         instance._propose.assert_called_once_with(2, True)
-        instance.tunable.inverse_transform.called_once_with(2)
+        instance.tunable.inverse_transform.assert_called_once_with(2)
         inverse_return.to_dict.assert_called_once_with(orient="records")
         assert result == [1, 2]
 

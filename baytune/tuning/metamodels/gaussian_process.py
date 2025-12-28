@@ -2,7 +2,7 @@
 
 import numpy as np
 import scipy
-from copulas import EPSILON
+from copulas.utils import EPSILON
 from copulas.univariate import Univariate
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF
